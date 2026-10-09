@@ -1,0 +1,90 @@
+VBench-Long, rollf200 x 60 s, generation seed 0
+x100; Quality = Recency Forcing Tab. 3; labels with all 200 prompts scored
+
+label                          Quality   Dynamic   Subject Background   Subj_in  Subj_c2c    Bg_c2c   Imaging Aesthetic  MotionSm   Flicker   description
+sf                               80.22     34.58     96.99     96.29     96.89     74.22     77.22     66.65     56.85     98.43     97.68   Self-Forcing, base (no sink, 21-frame window)
+sf+far_denoise                   79.99     47.75     95.99     95.55     94.54     77.47     83.39     67.36     57.15     97.48     96.32   sf + far history read in the last 2 denoising passes at layers 12-29 (commit reads recent frames)
+sf_sink                          81.33     57.52     96.72     96.03     96.27     75.18     80.64     67.08     57.61     98.00     96.44   Self-Forcing + 3-frame sink read in every pass (24-frame cache)
+sf_sink+rule                     81.63     59.58     96.87     96.17     96.19     78.56     83.31     68.03     58.41     97.75     96.33   sf_sink + Commit Forcing (commit reads the newest 21 real frames)
+sf_sink+commit_self              81.28     67.80     96.56     95.93     96.01     74.69     81.33     67.14     57.45     97.30     95.47   sf_sink, commit reads only its own chunk
+rf                               82.01     63.20     96.59     95.83     96.01     75.02     80.79     68.11     57.99     98.19     96.42   Recency Forcing, training-free reading (Self-Forcing weights)
+rf+rule                          82.47     63.93     96.83     96.03     96.05     78.88     83.51     68.91     59.58     98.12     96.38   rf + Commit Forcing
+idf_sf                           82.20     61.95     97.03     96.24     96.39     79.07     84.42     69.30     59.32     97.90     96.17   ID-Forcing on Self-Forcing (authors' code)
+idf_sf+rule                      82.44     60.78     97.22     96.31     96.50     81.60     86.21     69.55     59.86     98.01     96.39   ID-Forcing + Commit Forcing (commit reads the previous 2 chunks, not the sink)
+sgf                              83.58     54.92     98.03     96.71     97.57     86.54     89.78     70.83     62.83     98.64     97.32   Self Gradient Forcing, base
+sgf+rule                         84.62     68.30     98.29     96.84     97.69     90.93     92.46     71.19     63.94     98.43     96.88   sgf + Commit Forcing (commit reads the newest 9 real frames)
+rf_v2                            81.89     62.13     96.57     95.80     96.02     74.75     80.58     68.04     57.78     98.21     96.42   rf, second implementation (SGF code base, 21-frame cache)
+rf_v2+rule                       82.38     62.65     96.91     96.07     96.13     79.46     84.03     69.03     59.40     98.11     96.38   rf_v2 + Commit Forcing
+context_forcing                  82.78     60.62     97.36     96.44     97.15     78.72     82.29     67.81     60.60     98.40     97.01   Context Forcing, base
+context_forcing+rule             82.91     59.57     97.65     96.65     97.33     81.95     85.08     68.50     61.21     98.28     96.94   context_forcing + Commit Forcing (commit reads the recent real frames)
+context_forcing+sink_only        83.11     67.32     97.36     96.43     96.92     80.52     84.09     68.13     60.80     98.18     96.64   context_forcing, sink removed from the commit only
+longlive                         82.23     42.98     97.76     96.54     97.13     86.01     88.40     68.69     61.53     98.74     97.61   LongLive, base (sink 3 + local window 9 in every pass)
+longlive+rule                    82.65     49.38     97.70     96.49     96.92     86.93     89.17     69.39     61.68     98.59     97.37   longlive + Commit Forcing (commit reads the newest 12 real frames)
+longlive+commit_self             82.73     53.03     97.69     96.52     96.98     86.21     88.79     69.18     61.66     98.46     97.11   longlive, commit reads only its own chunk
+idf_longlive                     82.54     52.52     97.69     96.46     97.28     82.83     86.21     69.23     60.93     98.50     97.00   ID-Forcing on LongLive (authors' code)
+idf_longlive+rule                82.45     47.05     97.84     96.61     97.41     84.88     87.83     69.26     61.10     98.65     97.37   ID-Forcing + Commit Forcing (commit reads the previous 1-2 chunks, not the sink)
+rolling_sink                     82.61     45.85     97.93     96.74     97.49     86.00     88.82     70.01     60.58     98.69     97.76   Rolling Sink, base (replayed frames)
+rolling_sink+rule                82.72     49.53     97.79     96.64     97.15     86.67     89.39     70.01     60.78     98.57     97.53   rolling_sink + Commit Forcing (commit reads real committed history)
+
+paired contrasts (a - b), by prompt, bootstrap 4000, 95% CI ('*' = excludes 0)
+
+[Self-Forcing] far history at denoising only - base (sf+far_denoise - sf)
+    Quality -0.23 [-0.92, +0.35]  n = 200 prompts
+    Dynamic +13.17*  Subject -1.01*  Background -0.74*  Subj_in -2.35*  Subj_c2c +3.25*  Bg_c2c +6.17*  Imaging +0.71  Aesthetic +0.30  MotionSm -0.95*  Flicker -1.36*
+
+[Self-Forcing] sink + Commit Forcing - sink (sf_sink+rule - sf_sink)
+    Quality +0.31 [-0.30, +0.83]  n = 200 prompts
+    Dynamic +2.07  Subject +0.15*  Background +0.14*  Subj_in -0.08  Subj_c2c +3.38*  Bg_c2c +2.66*  Imaging +0.95*  Aesthetic +0.80*  MotionSm -0.25  Flicker -0.12
+
+[Self-Forcing] RF + Commit Forcing - RF (rf+rule - rf)
+    Quality +0.46 [+0.27, +0.65]  n = 200 prompts
+    Dynamic +0.73  Subject +0.24*  Background +0.20*  Subj_in +0.04  Subj_c2c +3.86*  Bg_c2c +2.72*  Imaging +0.80*  Aesthetic +1.59*  MotionSm -0.07*  Flicker -0.03
+
+[Self-Forcing] ID-Forcing + Commit Forcing - ID-Forcing (idf_sf+rule - idf_sf)
+    Quality +0.23 [+0.07, +0.40]  n = 200 prompts
+    Dynamic -1.17  Subject +0.19*  Background +0.07*  Subj_in +0.11  Subj_c2c +2.53*  Bg_c2c +1.79*  Imaging +0.26  Aesthetic +0.54*  MotionSm +0.11*  Flicker +0.22*
+
+[Self-Forcing] sink + commit self-only - sink (sf_sink+commit_self - sf_sink)
+    Quality -0.05 [-0.71, +0.49]  n = 200 prompts
+    Dynamic +10.28*  Subject -0.16  Background -0.10*  Subj_in -0.26  Subj_c2c -0.49  Bg_c2c +0.69*  Imaging +0.05  Aesthetic -0.16  MotionSm -0.70*  Flicker -0.97*
+
+[Self-Forcing] sink + Commit Forcing - sink + commit self-only (sf_sink+rule - sf_sink+commit_self)
+    Quality +0.36 [-0.16, +0.81]  n = 200 prompts
+    Dynamic -8.22*  Subject +0.32*  Background +0.24*  Subj_in +0.18  Subj_c2c +3.87*  Bg_c2c +1.97*  Imaging +0.90*  Aesthetic +0.96*  MotionSm +0.46*  Flicker +0.85*
+
+[LongLive] Commit Forcing - base (longlive+rule - longlive)
+    Quality +0.42 [+0.27, +0.57]  n = 200 prompts
+    Dynamic +6.40*  Subject -0.06*  Background -0.05*  Subj_in -0.22*  Subj_c2c +0.92*  Bg_c2c +0.77*  Imaging +0.69*  Aesthetic +0.15  MotionSm -0.15*  Flicker -0.24*
+
+[LongLive] ID-Forcing + Commit Forcing - ID-Forcing (idf_longlive+rule - idf_longlive)
+    Quality -0.09 [-0.25, +0.06]  n = 200 prompts
+    Dynamic -5.47*  Subject +0.15*  Background +0.15*  Subj_in +0.13*  Subj_c2c +2.05*  Bg_c2c +1.62*  Imaging +0.03  Aesthetic +0.17  MotionSm +0.15*  Flicker +0.38*
+
+[LongLive] commit self-only - base (longlive+commit_self - longlive)
+    Quality +0.49 [+0.29, +0.70]  n = 200 prompts
+    Dynamic +10.05*  Subject -0.06  Background -0.02  Subj_in -0.15*  Subj_c2c +0.20  Bg_c2c +0.39*  Imaging +0.49*  Aesthetic +0.13  MotionSm -0.28*  Flicker -0.50*
+
+[LongLive] Commit Forcing - commit self-only (longlive+rule - longlive+commit_self)
+    Quality -0.08 [-0.21, +0.06]  n = 200 prompts
+    Dynamic -3.65*  Subject +0.00  Background -0.03  Subj_in -0.07  Subj_c2c +0.72*  Bg_c2c +0.38*  Imaging +0.20  Aesthetic +0.02  MotionSm +0.13*  Flicker +0.26*
+
+[SGF] Commit Forcing - base (sgf+rule - sgf)
+    Quality +1.04 [+0.67, +1.41]  n = 200 prompts
+    Dynamic +13.38*  Subject +0.26*  Background +0.13*  Subj_in +0.11  Subj_c2c +4.40*  Bg_c2c +2.68*  Imaging +0.36  Aesthetic +1.10*  MotionSm -0.21*  Flicker -0.44*
+
+[Self-Forcing (rf_v2)] RF reading + Commit Forcing - RF reading (rf_v2+rule - rf_v2)
+    Quality +0.49 [+0.26, +0.72]  n = 200 prompts
+    Dynamic +0.52  Subject +0.33*  Background +0.27*  Subj_in +0.11  Subj_c2c +4.71*  Bg_c2c +3.45*  Imaging +0.99*  Aesthetic +1.61*  MotionSm -0.10*  Flicker -0.04
+
+[Context Forcing] Commit Forcing - base (context_forcing+rule - context_forcing)
+    Quality +0.13 [-0.10, +0.35]  n = 200 prompts
+    Dynamic -1.05  Subject +0.30*  Background +0.20*  Subj_in +0.19*  Subj_c2c +3.23*  Bg_c2c +2.79*  Imaging +0.69*  Aesthetic +0.61*  MotionSm -0.12*  Flicker -0.06
+
+[Context Forcing] sink out of the commit - base (context_forcing+sink_only - context_forcing)
+    Quality +0.32 [+0.11, +0.54]  n = 200 prompts
+    Dynamic +6.70*  Subject +0.00  Background -0.02  Subj_in -0.22*  Subj_c2c +1.80*  Bg_c2c +1.80*  Imaging +0.32  Aesthetic +0.20  MotionSm -0.22*  Flicker -0.37*
+
+[Rolling Sink] Commit Forcing - base (rolling_sink+rule - rolling_sink)
+    Quality +0.11 [-0.02, +0.24]  n = 200 prompts
+    Dynamic +3.68*  Subject -0.15*  Background -0.10*  Subj_in -0.34*  Subj_c2c +0.67*  Bg_c2c +0.57*  Imaging -0.01  Aesthetic +0.20  MotionSm -0.12*  Flicker -0.23*
+

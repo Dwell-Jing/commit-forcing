@@ -1,0 +1,20 @@
+{
+ "title": "VBench-Long, rollf200 x 60 s, generation seed 0: LongLive, the commit pass reads the newest 3 / 6 / 9 / 12 real frames",
+ "scores": "../vbench_long_60s.csv",
+ "seed": 0,
+ "num_prompts": 200,
+ "labels": {
+  "longlive": "LongLive, base (sink 3 + local window 9 in every pass)",
+  "longlive+commit_self": "longlive, commit reads only its own chunk",
+  "longlive+commit6": "longlive, commit reads the newest 6 real frames",
+  "longlive+commit9": "longlive, commit reads the newest 9 real frames",
+  "longlive+rule": "longlive + Commit Forcing (commit reads the newest 12 real frames)"
+ },
+ "contrasts": [
+  ["LongLive, commit window", "commit 6 - base", "longlive+commit6", "longlive"],
+  ["LongLive, commit window", "commit 9 - base", "longlive+commit9", "longlive"],
+  ["LongLive, commit window", "commit 6 - commit self-only", "longlive+commit6", "longlive+commit_self"],
+  ["LongLive, commit window", "commit 9 - commit 6", "longlive+commit9", "longlive+commit6"],
+  ["LongLive, commit window", "Commit Forcing (commit 12) - commit 9", "longlive+rule", "longlive+commit9"]
+ ]
+}

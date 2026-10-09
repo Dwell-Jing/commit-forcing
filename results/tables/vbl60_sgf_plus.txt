@@ -1,0 +1,13 @@
+VBench-Long, rollf200 x 60 s, generation seed 0: SGF+ with and without Commit Forcing
+x100; Quality = Recency Forcing Tab. 3; labels with all 200 prompts scored
+
+label                          Quality   Dynamic   Subject Background   Subj_in  Subj_c2c    Bg_c2c   Imaging Aesthetic  MotionSm   Flicker   description
+sgf_plus                         84.23     55.32     98.28     96.93     97.78     89.83     91.85     71.47     63.82     98.77     97.80   SGF+, base (separate memory-writing expert)
+sgf_plus+rule                    84.34     59.58     98.44     97.09     97.87     92.66     94.02     71.15     63.87     98.57     97.49   sgf_plus + Commit Forcing (commit reads the newest 9 real frames)
+
+paired contrasts (a - b), by prompt, bootstrap 4000, 95% CI ('*' = excludes 0)
+
+[SGF+] Commit Forcing - base (sgf_plus+rule - sgf_plus)
+    Quality +0.12 [-0.26, +0.48]  n = 200 prompts
+    Dynamic +4.27  Subject +0.16*  Background +0.16*  Subj_in +0.09  Subj_c2c +2.84*  Bg_c2c +2.17*  Imaging -0.32  Aesthetic +0.04  MotionSm -0.20*  Flicker -0.30*
+

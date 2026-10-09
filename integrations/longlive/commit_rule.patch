@@ -1,0 +1,81 @@
+diff --git a/pipeline/causal_inference.py b/pipeline/causal_inference.py
+index 17af1f7..304550b
+--- a/pipeline/causal_inference.py
++++ b/pipeline/causal_inference.py
+@@ -44,6 +44,8 @@ class CausalInferencePipeline(torch.nn.Module):
+         self.args = args
+         self.num_frame_per_block = getattr(args, "num_frame_per_block", 1)
+         self.local_attn_size = args.model_kwargs.local_attn_size
++        # Commit Forcing: the commit pass reads the newest local_attn_size frames, no sink
++        self.commit_rule = getattr(args, "commit_rule", False)
+ 
+         # Normalize to list if sequence-like (e.g., OmegaConf ListConfig)
+ 
+@@ -112,6 +114,9 @@ class CausalInferencePipeline(torch.nn.Module):
+         if local_attn_cfg != -1:
+             # local attention
+             kv_cache_size = local_attn_cfg * self.frame_seq_length
++            if self.commit_rule:
++                # keep the sink and local_attn_size recent frames
++                kv_cache_size += getattr(self.args.model_kwargs, "sink_size", 0) * self.frame_seq_length
+             kv_policy = f"int->local, size={local_attn_cfg}"
+         else:
+             # global attention
+@@ -190,6 +195,7 @@ class CausalInferencePipeline(torch.nn.Module):
+             output[:, current_start_frame:current_start_frame + current_num_frames] = denoised_pred.to(output.device)
+             # Step 2.3: rerun with timestep zero to update KV cache using clean context
+             context_timestep = torch.ones_like(timestep) * self.args.context_noise
++            self._set_all_modules_read_sink(not self.commit_rule)  # no sink in the commit pass
+             self.generator(
+                 noisy_image_or_video=denoised_pred,
+                 conditional_dict=conditional_dict,
+@@ -198,6 +204,7 @@ class CausalInferencePipeline(torch.nn.Module):
+                 crossattn_cache=self.crossattn_cache,
+                 current_start=current_start_frame * self.frame_seq_length,
+             )
++            self._set_all_modules_read_sink(True)
+ 
+             if profile:
+                 block_end.record()
+@@ -317,3 +324,9 @@ class CausalInferencePipeline(torch.nn.Module):
+                     updated_modules.append(name if name else module.__class__.__name__)
+                 except Exception:
+                     pass
++
++    def _set_all_modules_read_sink(self, read_sink: bool):
++        """Switch the sink read on every attention module."""
++        for module in self.generator.model.modules():
++            if hasattr(module, "read_sink"):
++                module.read_sink = read_sink
+diff --git a/wan/modules/causal_model.py b/wan/modules/causal_model.py
+index a2170ef..49aaedd
+--- a/wan/modules/causal_model.py
++++ b/wan/modules/causal_model.py
+@@ -86,6 +86,9 @@ class CausalWanSelfAttention(nn.Module):
+         non_neg_vals = [int(v) for v in values if int(v) != -1]
+         max_local = max(non_neg_vals) if len(non_neg_vals) > 0 else -1
+         self.max_attention_size = 32760 if max_local == -1 else max_local * 1560
++        # read_sink=False: read only the newest max_attention_size tokens
++        self.read_sink = True
++        self.sinkless_reads = 0  # calls that skipped the sink
+         # layers
+         self.q = nn.Linear(dim, dim)
+         self.k = nn.Linear(dim, dim)
+@@ -318,7 +321,7 @@ class CausalWanSelfAttention(nn.Module):
+             #     print(f"local_start_index: {local_start_index}, local_end_index: {local_end_index}")
+ 
+             # Use temporary k, v to compute attention
+-            if sink_tokens > 0:
++            if sink_tokens > 0 and self.read_sink:
+                 # Concatenate sink tokens and local window tokens, keeping total length strictly below max_attention_size
+                 local_budget = self.max_attention_size - sink_tokens
+                 k_sink = temp_k[:, :sink_tokens]
+@@ -340,6 +343,8 @@ class CausalWanSelfAttention(nn.Module):
+                     v_cat
+                 )
+             else:
++                if sink_tokens > 0:  # sink cached but not read
++                    self.sinkless_reads += 1
+                 window_start = max(0, local_end_index - self.max_attention_size)
+                 x = attention(
+                     roped_query,

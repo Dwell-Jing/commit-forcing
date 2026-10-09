@@ -1,0 +1,13 @@
+{
+ "title": "VBench-Long, rollf200 x 48 s (192 latent frames), generation seed 1: Self-Forcing (no sink), far anchors read at denoising pass s3 x layers 20-29 vs no far read",
+ "scores": "../data/vbench_long_48s.csv",
+ "seed": 1,
+ "num_prompts": 200,
+ "labels": {
+  "MM_R12": "every pass reads the newest 12 latent frames, no far history (reference)",
+  "MM_S3_L20_29": "far anchors (stride 4, +ln4) read only at denoising pass s3 in layers 20-29; the commit pass reads the newest 12"
+ },
+ "contrasts": [
+  ["read locus", "far anchors at s3 x layers 20-29 - no far read", "MM_S3_L20_29", "MM_R12"]
+ ]
+}

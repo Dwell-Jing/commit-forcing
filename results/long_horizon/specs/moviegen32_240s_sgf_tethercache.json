@@ -1,0 +1,22 @@
+{
+ "title": "VBench-Long, MovieGen 32 x 240 s, generation seed 0: SGF and TetherCache",
+ "scores": "../vbench_long_240s_moviegen32.csv",
+ "drift": "../quality_drift_240s_moviegen32.csv",
+ "seed": 0,
+ "num_prompts": 32,
+ "labels": {
+  "sgf": "Self Gradient Forcing, base",
+  "sgf+rule": "sgf + Commit Forcing (commit reads the newest 9 real frames)",
+  "tethercache_fifo": "TetherCache's FIFO baseline: sink 3 + newest 18 frames (Self-Forcing weights)",
+  "tethercache_fifo+rule": "tethercache_fifo + Commit Forcing (commit reads the newest 18 real frames)",
+  "tethercache": "TetherCache, base: sink 3 + memory 14 + recent 4",
+  "tethercache+rule": "tethercache + Commit Forcing (commit reads only the recent frames)"
+ },
+ "contrasts": [
+  ["SGF", "Commit Forcing - base", "sgf+rule", "sgf"],
+  ["TetherCache FIFO baseline", "Commit Forcing - base", "tethercache_fifo+rule", "tethercache_fifo"],
+  ["TetherCache", "TetherCache - FIFO baseline", "tethercache", "tethercache_fifo"],
+  ["TetherCache", "Commit Forcing - base", "tethercache+rule", "tethercache"],
+  ["TetherCache", "TetherCache + Commit Forcing - FIFO baseline + Commit Forcing", "tethercache+rule", "tethercache_fifo+rule"]
+ ]
+}

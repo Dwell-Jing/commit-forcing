@@ -1,0 +1,376 @@
+diff --git a/pipeline/causal_inference.py b/pipeline/causal_inference.py
+index a98626f..b6967a3
+--- a/pipeline/causal_inference.py
++++ b/pipeline/causal_inference.py
+@@ -147,6 +147,7 @@ class CausalInferencePipeline(torch.nn.Module):
+                     kv_cache=self.kv_cache1,
+                     crossattn_cache=self.crossattn_cache,
+                     current_start=current_start_frame * self.frame_seq_length,
++                    kv_pass="c",
+                 )
+                 current_start_frame += 1
+             else:
+@@ -165,6 +166,7 @@ class CausalInferencePipeline(torch.nn.Module):
+                     kv_cache=self.kv_cache1,
+                     crossattn_cache=self.crossattn_cache,
+                     current_start=current_start_frame * self.frame_seq_length,
++                    kv_pass="c",
+                 )
+                 current_start_frame += self.num_frame_per_block
+ 
+@@ -200,7 +202,8 @@ class CausalInferencePipeline(torch.nn.Module):
+                         timestep=timestep,
+                         kv_cache=self.kv_cache1,
+                         crossattn_cache=self.crossattn_cache,
+-                        current_start=current_start_frame * self.frame_seq_length
++                        current_start=current_start_frame * self.frame_seq_length,
++                        kv_pass=f"s{index}"  # denoising pass s0-s3
+                     )
+                     next_timestep = self.denoising_step_list[index + 1]
+                     noisy_input = self.scheduler.add_noise(
+@@ -217,7 +220,8 @@ class CausalInferencePipeline(torch.nn.Module):
+                         timestep=timestep,
+                         kv_cache=self.kv_cache1,
+                         crossattn_cache=self.crossattn_cache,
+-                        current_start=current_start_frame * self.frame_seq_length
++                        current_start=current_start_frame * self.frame_seq_length,
++                        kv_pass=f"s{index}"  # denoising pass s0-s3
+                     )
+ 
+             # Step 3.2: record the model's output
+@@ -232,6 +236,7 @@ class CausalInferencePipeline(torch.nn.Module):
+                 kv_cache=self.kv_cache1,
+                 crossattn_cache=self.crossattn_cache,
+                 current_start=current_start_frame * self.frame_seq_length,
++                kv_pass="c",  # commit pass
+             )
+ 
+             if profile:
+diff --git a/utils/wan_wrapper.py b/utils/wan_wrapper.py
+index c719d59..903863e
+--- a/utils/wan_wrapper.py
++++ b/utils/wan_wrapper.py
+@@ -225,7 +225,8 @@ class WanDiffusionWrapper(torch.nn.Module):
+         concat_time_embeddings: Optional[bool] = False,
+         clean_x: Optional[torch.Tensor] = None,
+         aug_t: Optional[torch.Tensor] = None,
+-        cache_start: Optional[int] = None
++        cache_start: Optional[int] = None,
++        kv_pass: Optional[str] = None
+     ) -> torch.Tensor:
+         prompt_embeds = conditional_dict["prompt_embeds"]
+ 
+@@ -245,7 +246,8 @@ class WanDiffusionWrapper(torch.nn.Module):
+                 kv_cache=kv_cache,
+                 crossattn_cache=crossattn_cache,
+                 current_start=current_start,
+-                cache_start=cache_start
++                cache_start=cache_start,
++                kv_pass=kv_pass
+             ).permute(0, 2, 1, 3, 4)
+         else:
+             if clean_x is not None:
+diff --git a/wan/modules/causal_model.py b/wan/modules/causal_model.py
+index 98e398a..6c3a113
+--- a/wan/modules/causal_model.py
++++ b/wan/modules/causal_model.py
+@@ -74,6 +74,9 @@ class CausalWanSelfAttention(nn.Module):
+         self.qk_norm = qk_norm
+         self.eps = eps
+         self.max_attention_size = 32760 if local_attn_size == -1 else local_attn_size * 1560
++        # set by CausalWanModel.set_router; None = upstream reading
++        self.layer = 0
++        self.router = None
+ 
+         # layers
+         self.q = nn.Linear(dim, dim)
+@@ -92,7 +95,8 @@ class CausalWanSelfAttention(nn.Module):
+         block_mask,
+         kv_cache=None,
+         current_start=0,
+-        cache_start=None
++        cache_start=None,
++        kv_pass=None
+     ):
+         r"""
+         Args:
+@@ -226,11 +230,15 @@ class CausalWanSelfAttention(nn.Module):
+                 local_start_index = local_end_index - num_new_tokens
+                 kv_cache["k"][:, local_start_index:local_end_index] = roped_key
+                 kv_cache["v"][:, local_start_index:local_end_index] = v
+-            x = attention(
+-                roped_query,
+-                kv_cache["k"][:, max(0, local_end_index - self.max_attention_size):local_end_index],
+-                kv_cache["v"][:, max(0, local_end_index - self.max_attention_size):local_end_index]
+-            )
++            if self.router is not None and kv_pass is not None:
++                # window and far reading of this pass at this layer
++                x = self.router.attend(roped_query, kv_cache, local_end_index, current_start_frame, kv_pass, self.layer)
++            else:
++                x = attention(
++                    roped_query,
++                    kv_cache["k"][:, max(0, local_end_index - self.max_attention_size):local_end_index],
++                    kv_cache["v"][:, max(0, local_end_index - self.max_attention_size):local_end_index]
++                )
+             kv_cache["global_end_index"].fill_(current_end)
+             kv_cache["local_end_index"].fill_(local_end_index)
+ 
+@@ -293,7 +301,8 @@ class CausalWanAttentionBlock(nn.Module):
+         kv_cache=None,
+         crossattn_cache=None,
+         current_start=0,
+-        cache_start=None
++        cache_start=None,
++        kv_pass=None
+     ):
+         r"""
+         Args:
+@@ -313,7 +322,7 @@ class CausalWanAttentionBlock(nn.Module):
+         y = self.self_attn(
+             (self.norm1(x).unflatten(dim=1, sizes=(num_frames, frame_seqlen)) * (1 + e[1]) + e[0]).flatten(1, 2),
+             seq_lens, grid_sizes,
+-            freqs, block_mask, kv_cache, current_start, cache_start)
++            freqs, block_mask, kv_cache, current_start, cache_start, kv_pass)
+ 
+         # with amp.autocast(dtype=torch.float32):
+         x = x + (y.unflatten(dim=1, sizes=(num_frames, frame_seqlen)) * e[2]).flatten(1, 2)
+@@ -472,6 +481,9 @@ class CausalWanModel(ModelMixin, ConfigMixin):
+                                     local_attn_size, sink_size, qk_norm, cross_attn_norm, eps)
+             for _ in range(num_layers)
+         ])
++        for layer, block in enumerate(self.blocks):
++            block.self_attn.layer = layer
++        self.router = None
+ 
+         # head
+         self.head = CausalHead(dim, out_dim, patch_size, eps)
+@@ -502,6 +514,12 @@ class CausalWanModel(ModelMixin, ConfigMixin):
+     def _set_gradient_checkpointing(self, module, value=False):
+         self.gradient_checkpointing = value
+ 
++    def set_router(self, router):
++        """Set how each pass reads the KV cache in each layer (a KVRouter); None = upstream."""
++        self.router = router
++        for block in self.blocks:
++            block.self_attn.router = router
++
+     @staticmethod
+     def _prepare_blockwise_causal_attn_mask(
+         device: torch.device | str, num_frames: int = 21,
+@@ -720,7 +738,8 @@ class CausalWanModel(ModelMixin, ConfigMixin):
+         kv_cache: dict = None,
+         crossattn_cache: dict = None,
+         current_start: int = 0,
+-        cache_start: int = 0
++        cache_start: int = 0,
++        kv_pass: str = None
+     ):
+         r"""
+         Run the diffusion model with kv caching.
+@@ -741,6 +760,8 @@ class CausalWanModel(ModelMixin, ConfigMixin):
+                 CLIP image features for image-to-video mode
+             y (List[Tensor], *optional*):
+                 Conditional video inputs for image-to-video mode, same shape as x
++            kv_pass (`str`, *optional*):
++                KV router: "s0".."s3" for the denoising passes, "c" for the commit pass (clean block, timestep 0)
+ 
+         Returns:
+             List[Tensor]:
+@@ -753,6 +774,9 @@ class CausalWanModel(ModelMixin, ConfigMixin):
+         device = self.patch_embedding.weight.device
+         if self.freqs.device != device:
+             self.freqs = self.freqs.to(device)
++        routed = self.router is not None and kv_pass is not None
++        if routed:
++            self.router.begin_call(kv_pass)
+ 
+         if y is not None:
+             x = [torch.cat([u, v], dim=0) for u, v in zip(x, y)]
+@@ -815,7 +839,8 @@ class CausalWanModel(ModelMixin, ConfigMixin):
+                     {
+                         "kv_cache": kv_cache[block_index],
+                         "current_start": current_start,
+-                        "cache_start": cache_start
++                        "cache_start": cache_start,
++                        "kv_pass": kv_pass
+                     }
+                 )
+                 x = torch.utils.checkpoint.checkpoint(
+@@ -829,7 +854,8 @@ class CausalWanModel(ModelMixin, ConfigMixin):
+                         "kv_cache": kv_cache[block_index],
+                         "crossattn_cache": crossattn_cache[block_index],
+                         "current_start": current_start,
+-                        "cache_start": cache_start
++                        "cache_start": cache_start,
++                        "kv_pass": kv_pass
+                     }
+                 )
+                 x = block(x, **kwargs)
+@@ -838,6 +864,8 @@ class CausalWanModel(ModelMixin, ConfigMixin):
+         x = self.head(x, e.unflatten(dim=0, sizes=t.shape).unsqueeze(2))
+         # unpatchify
+         x = self.unpatchify(x, grid_sizes)
++        if routed:
++            self.router.end_call(kv_pass)
+         return torch.stack(x)
+ 
+     def _forward_train(
+diff --git a/wan/modules/kv_router.py b/wan/modules/kv_router.py
+new file mode 100644
+index 0000000..c25ad9e
+--- /dev/null
++++ b/wan/modules/kv_router.py
+@@ -0,0 +1,153 @@
++"""KV router: per pass and per layer, how the cached self-attention reads the KV cache.
++
++A route sets, per pass (s0-s3, commit c) and layer, how many of the newest frames are read: `dense` (all of them) or
++`anchors` (the near window plus every stride-th older frame, merged by log-sum-exp with the far mass raised by
++ln(stride)). `content` and `commit_switch` are controls; see analysis/sf_router/README.md.
++"""
++import math
++
++import torch
++
++from wan.modules.attention import attention
++
++FRAME_TOKENS = 1560
++PASSES = ("s0", "s1", "s2", "s3", "c")
++
++
++def parse_windows(spec, n_layers=30):
++    """'12,20-29=160': 12 frames in every layer, 160 in layers 20-29"""
++    parts = str(spec).split(",")
++    w = [int(parts[0])] * n_layers
++    for seg in parts[1:]:
++        rng, val = seg.split("=")
++        lo, hi = (int(x) for x in rng.split("-")) if "-" in rng else (int(rng), int(rng))
++        for i in range(lo, hi + 1):
++            w[i] = int(val)
++    return w
++
++
++def flash_with_lse(q, k, v):
++    """softmax attention of q [B, L, H, D] over k, v [B, S, H, D]: output and fp32 log-sum-exp [B, L, H, 1]"""
++    r = torch.ops.aten._scaled_dot_product_flash_attention(
++        q.transpose(1, 2).to(torch.bfloat16), k.transpose(1, 2).to(torch.bfloat16),
++        v.transpose(1, 2).to(torch.bfloat16), 0.0, False, False)
++    return r[0].transpose(1, 2), r[1].transpose(1, 2).unsqueeze(-1)
++
++
++class KVRouter:
++
++    def __init__(self, windows, near, far="dense", stride=4, far_log_mass_offset=0.0, content=None,
++                 commit_switch=None, commit_far_window=None, frames_per_block=3, n_layers=30):
++        assert far in ("dense", "anchors") and content in (None, "recent", "rand", "mean")
++        assert content is None or far == "anchors"
++        self.windows = {p: parse_windows(windows[p], n_layers) for p in PASSES}
++        self.near, self.far, self.stride = near, far, stride
++        self.far_log_mass_offset = far_log_mass_offset
++        self.content = content
++        self.commit_switch = commit_switch
++        if commit_switch is not None:
++            assert commit_switch[1] in ("before", "from") and commit_far_window
++            self.commit_far = [commit_far_window] * n_layers
++        self.frames_per_block = frames_per_block
++        self.reset()
++
++    def reset(self, noise_seed=0):
++        self.noise_seed = noise_seed  # seeds the "rand" anchor content
++        self.calls = {p: 0 for p in PASSES}
++        self.seen = {p: set() for p in PASSES}
++        self.far_reads = {}
++        self.far_in = self.far_out = 0
++        self.mass = {}
++        self.content_calls = 0
++        self.commit_windows = []
++        self.events = {p: [] for p in PASSES}
++
++    # per generator call
++    def layer_windows(self, kv_pass, block):
++        if kv_pass == "c" and self.commit_switch is not None:
++            switch_block, when = self.commit_switch
++            far = block < switch_block if when == "before" else block >= switch_block
++            return self.commit_far if far else [self.near] * len(self.windows["c"])
++        return self.windows[kv_pass]
++
++    def begin_call(self, kv_pass):
++        self.calls[kv_pass] += 1
++        start, end = torch.cuda.Event(enable_timing=True), torch.cuda.Event(enable_timing=True)
++        start.record()
++        self.events[kv_pass].append((start, end))
++
++    def end_call(self, kv_pass):
++        self.events[kv_pass][-1][1].record()
++
++    # per layer
++    def attend(self, q, kv_cache, local_end_index, current_start_frame, kv_pass, layer):
++        block = current_start_frame // self.frames_per_block
++        windows = self.layer_windows(kv_pass, block)
++        if layer == 0:
++            self.seen[kv_pass].add((min(windows), max(windows), sum(windows)))
++            if kv_pass == "c":
++                self.commit_windows.append(max(windows))
++        start = max(0, local_end_index - windows[layer] * FRAME_TOKENS)
++        k, v = kv_cache["k"][:, start:local_end_index], kv_cache["v"][:, start:local_end_index]
++        near_tok, r = self.near * FRAME_TOKENS, self.stride
++        if self.far == "dense" or k.shape[1] <= near_tok + r * FRAME_TOKENS:
++            return attention(q, k, v)
++        # far anchors: newest frame of each group of r, counted back from the near window
++        kf, kn = k[:, :-near_tok], k[:, -near_tok:]
++        vf, vn = v[:, :-near_tok], v[:, -near_tok:]
++        B, T, H, D = kf.shape
++        nf = T // FRAME_TOKENS
++        keep = (nf // r) * r
++
++        def anchors(x):
++            return x.view(B, nf, FRAME_TOKENS, H, D)[:, nf - keep:].view(B, keep // r, r, FRAME_TOKENS, H, D)[:, :, r - 1]
++
++        ks, vs = anchors(kf), anchors(vf)
++        if self.content is not None:
++            ks, vs = self.replace(ks, vs, kn, vn, kv_pass, layer, block)
++        self.far_in += nf * FRAME_TOKENS
++        self.far_out += ks.shape[1] * FRAME_TOKENS
++        self.far_reads[kv_pass] = self.far_reads.get(kv_pass, 0) + 1
++        on, ln_ = flash_with_lse(q, kn, vn)
++        of, lf = flash_with_lse(q, ks.reshape(B, -1, H, D), vs.reshape(B, -1, H, D))
++        lf = lf + math.log(r) + self.far_log_mass_offset  # two fp32 additions, in this order
++        m = torch.maximum(ln_, lf)
++        wn, wf = torch.exp(ln_ - m), torch.exp(lf - m)
++        acc = self.mass.setdefault((kv_pass, layer), [torch.zeros((), device=q.device, dtype=torch.float32), 0])
++        acc[0] += (wf / (wn + wf)).float().mean()
++        acc[1] += 1
++        return ((on.float() * wn + of.float() * wf) / (wn + wf)).to(torch.bfloat16)
++
++    def replace(self, ks, vs, kn, vn, kv_pass, layer, block):
++        """anchor content controls; ks, vs: [B, n_anchors, FRAME_TOKENS, H, D], kn, vn: the near window"""
++        B, na, S, H, D = ks.shape
++        self.content_calls += 1
++        if self.content == "recent":
++            nn_ = kn.shape[1] // S
++            idx = torch.arange(na, device=ks.device) % nn_
++            return (kn.view(B, nn_, S, H, D).index_select(1, idx).contiguous(),
++                    vn.view(B, nn_, S, H, D).index_select(1, idx).contiguous())
++        if self.content == "mean":
++            return (ks.float().mean(1, keepdim=True).to(ks.dtype).expand_as(ks).contiguous(),
++                    vs.float().mean(1, keepdim=True).to(vs.dtype).expand_as(vs).contiguous())
++        g = torch.Generator(device=ks.device)
++        g.manual_seed(int(self.noise_seed) * 4099 + block * 97 + layer * 7 + 2 * PASSES.index(kv_pass))
++
++        def gaussian(x):
++            xf = x.float()
++            mean, std = xf.mean((1, 2), keepdim=True), xf.std((1, 2), keepdim=True)
++            return (mean + std * torch.randn(xf.shape, generator=g, device=x.device)).to(x.dtype)
++        return gaussian(ks), gaussian(vs)
++
++    # per video
++    def summary(self):
++        torch.cuda.synchronize()
++        ms = {p: float(sum(a.elapsed_time(b) for a, b in ev)) for p, ev in self.events.items()}
++        far_mass = {}
++        for (p, layer), (s, n) in sorted(self.mass.items(), key=lambda kv: (kv[0][0], kv[0][1])):
++            far_mass.setdefault(p, {})[str(layer)] = float(s) / n
++        return dict(calls=dict(self.calls), windows={p: sorted(v) for p, v in self.seen.items()},
++                    far_reads=dict(self.far_reads), far_kept=self.far_out / max(1, self.far_in), far_mass=far_mass,
++                    far_mass_calls={p: {str(l): n for (q, l), (_, n) in sorted(self.mass.items()) if q == p}
++                                    for p in far_mass},
++                    content_calls=self.content_calls, commit_windows=list(self.commit_windows), dit_ms=ms)

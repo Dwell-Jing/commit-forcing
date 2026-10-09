@@ -1,0 +1,25 @@
+Commit Forcing
+Licensed under the Apache License, Version 2.0 (see LICENSE), except for the folders listed below.
+
+Folders under other licenses
+- integrations/rolling_sink/   modifies Rolling Sink (https://github.com/Rolling-Sink/Rolling-Sink).
+                               Copyright (c) 2026, Adobe Inc. and its licensors. Adobe Research License
+                               (integrations/rolling_sink/LICENSE): noncommercial research use only.
+- integrations/context_forcing/ adapts Context Forcing (https://github.com/chenshuo20/Context-Forcing).
+                               Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+                               (integrations/context_forcing/LICENSE.md).
+
+Third-party code we patch or call (not included in this repository; fetched by setup/fetch.sh)
+- Self Gradient Forcing   https://github.com/zhuang2002/Self_Gradient_Forcing        Apache-2.0
+- SGF+                    https://github.com/Zihan-Su/Self_Gradient_Forcing_Plus      Apache-2.0
+- Self-Forcing            https://github.com/guandeh17/Self-Forcing                   Apache-2.0
+- LongLive                https://github.com/NVlabs/LongLive                          Apache-2.0
+- ID-Forcing              https://github.com/In-Distribution-Forcing/ID-Forcing       no license file; we import it
+                                                                                      from the user's checkout and
+                                                                                      copy none of its code
+- TetherCache             https://github.com/my4f175/TetherCache                       Apache-2.0
+- VBench                  https://github.com/Vchitect/VBench                          Apache-2.0
+
+Data
+- eval/prompts/rollf200.txt lists 200 prompts of prompts/MovieGenVideoBench_extended.txt from Self-Forcing
+  (Apache-2.0), selected by the indices in Rolling Forcing (arXiv 2509.25161) App. B.

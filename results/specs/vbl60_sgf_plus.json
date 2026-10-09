@@ -1,0 +1,13 @@
+{
+ "title": "VBench-Long, rollf200 x 60 s, generation seed 0: SGF+ with and without Commit Forcing",
+ "scores": "../vbench_long_60s.csv",
+ "seed": 0,
+ "num_prompts": 200,
+ "labels": {
+  "sgf_plus": "SGF+, base (separate memory-writing expert)",
+  "sgf_plus+rule": "sgf_plus + Commit Forcing (commit reads the newest 9 real frames)"
+ },
+ "contrasts": [
+  ["SGF+", "Commit Forcing - base", "sgf_plus+rule", "sgf_plus"]
+ ]
+}

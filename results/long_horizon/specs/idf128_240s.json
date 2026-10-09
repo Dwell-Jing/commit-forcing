@@ -1,0 +1,18 @@
+{
+ "title": "VBench-Long, ID-Forcing's 128 MovieGen prompts x 240 s, generation seed 0",
+ "scores": "../vbench_long_240s_idf128.csv",
+ "seed": 0,
+ "num_prompts": 128,
+ "labels": {
+  "rf+rule": "Recency Forcing, training-free reading (Self-Forcing weights) + Commit Forcing",
+  "idf_sf": "ID-Forcing on Self-Forcing (authors' code)",
+  "idf_sf+rule": "ID-Forcing + Commit Forcing (commit reads the previous 2 chunks, not the sink)",
+  "longlive": "LongLive, base (sink 3 + local window 9 in every pass)",
+  "longlive+rule": "longlive + Commit Forcing (commit reads the newest 12 real frames)"
+ },
+ "contrasts": [
+  ["Self-Forcing", "ID-Forcing + Commit Forcing - ID-Forcing", "idf_sf+rule", "idf_sf"],
+  ["Self-Forcing", "RF + Commit Forcing - ID-Forcing", "rf+rule", "idf_sf", "hidden"],
+  ["LongLive", "Commit Forcing - base", "longlive+rule", "longlive"]
+ ]
+}

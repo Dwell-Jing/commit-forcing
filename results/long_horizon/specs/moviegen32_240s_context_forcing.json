@@ -1,0 +1,19 @@
+{
+ "title": "VBench-Long, MovieGen 32 x 240 s, generation seed 0: Context Forcing",
+ "scores": "../vbench_long_240s_moviegen32.csv",
+ "drift": "../quality_drift_240s_moviegen32.csv",
+ "seed": 0,
+ "num_prompts": 32,
+ "labels": {
+  "context_forcing": "Context Forcing, base",
+  "context_forcing+rule": "context_forcing + Commit Forcing (commit reads the recent real frames)",
+  "context_forcing+sink_only": "context_forcing, sink removed from the commit only",
+  "context_forcing+memory_only": "context_forcing, slow memory and older frames removed from the commit only"
+ },
+ "contrasts": [
+  ["Context Forcing", "memory out of the commit only - base", "context_forcing+memory_only", "context_forcing"],
+  ["Context Forcing", "Commit Forcing - base", "context_forcing+rule", "context_forcing"],
+  ["Context Forcing", "sink out of the commit only - base", "context_forcing+sink_only", "context_forcing"],
+  ["Context Forcing", "memory out of the commit only - sink out of the commit only", "context_forcing+memory_only", "context_forcing+sink_only"]
+ ]
+}

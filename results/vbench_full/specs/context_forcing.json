@@ -1,0 +1,13 @@
+{
+ "title": "Full VBench, 946 prompts x 60 s, generation seed 0: Context Forcing",
+ "scores": "../vbench_full_60s.csv",
+ "shards": "../vbench_full_60s_shards.csv",
+ "seed": 0,
+ "labels": {
+  "context_forcing": "Context Forcing, base",
+  "context_forcing+rule": "context_forcing + Commit Forcing (commit reads the recent real frames)"
+ },
+ "contrasts": [
+  ["Context Forcing", "Commit Forcing - base", "context_forcing+rule", "context_forcing"]
+ ]
+}

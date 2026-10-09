@@ -1,0 +1,31 @@
+VBench-Long, rollf200 x 60 s, generation seed 0: SGF, native vs RF reading, with and without Commit Forcing
+x100; Quality = Recency Forcing Tab. 3; labels with all 200 prompts scored
+
+label                          Quality   Dynamic   Subject Background   Subj_in  Subj_c2c    Bg_c2c   Imaging Aesthetic  MotionSm   Flicker   description
+sgf                              83.58     54.92     98.03     96.71     97.57     86.54     89.78     70.83     62.83     98.64     97.32   Self Gradient Forcing, base
+sgf+rule                         84.62     68.30     98.29     96.84     97.69     90.93     92.46     71.19     63.94     98.43     96.88   sgf + Commit Forcing (commit reads the newest 9 real frames)
+sgf_rf                           84.42     66.67     97.97     96.62     97.34     87.71     90.39     71.03     63.31     98.56     97.07   SGF weights + RF reading (21-frame cache)
+sgf_rf+rule                      84.72     69.52     98.23     96.85     97.57     91.06     92.53     71.02     63.84     98.49     96.94   sgf_rf + Commit Forcing (commit reads the newest 18 real frames)
+
+paired contrasts (a - b), by prompt, bootstrap 4000, 95% CI ('*' = excludes 0)
+
+[SGF] Commit Forcing - base (sgf+rule - sgf)
+    Quality +1.04 [+0.67, +1.40]  n = 200 prompts
+    Dynamic +13.38*  Subject +0.26*  Background +0.13*  Subj_in +0.11*  Subj_c2c +4.40*  Bg_c2c +2.68*  Imaging +0.36  Aesthetic +1.10*  MotionSm -0.21*  Flicker -0.44*
+
+[SGF] RF reading - base (sgf_rf - sgf)
+    Quality +0.84 [+0.56, +1.14]  n = 200 prompts
+    Dynamic +11.75*  Subject -0.06  Background -0.09*  Subj_in -0.23*  Subj_c2c +1.17*  Bg_c2c +0.61*  Imaging +0.21  Aesthetic +0.47  MotionSm -0.07*  Flicker -0.25*
+
+[SGF] RF reading + Commit Forcing - RF reading (sgf_rf+rule - sgf_rf)
+    Quality +0.30 [+0.00, +0.61]  n = 200 prompts
+    Dynamic +2.85  Subject +0.26*  Background +0.23*  Subj_in +0.23*  Subj_c2c +3.35*  Bg_c2c +2.14*  Imaging -0.02  Aesthetic +0.53*  MotionSm -0.08*  Flicker -0.13*
+
+[SGF] RF reading + Commit Forcing - Commit Forcing (sgf_rf+rule - sgf+rule)
+    Quality +0.10 [-0.19, +0.39]  n = 200 prompts
+    Dynamic +1.22  Subject -0.05  Background +0.01  Subj_in -0.12*  Subj_c2c +0.12  Bg_c2c +0.07  Imaging -0.17  Aesthetic -0.10  MotionSm +0.06*  Flicker +0.06
+
+[SGF] Commit Forcing - RF reading (sgf+rule - sgf_rf)
+    Quality +0.20 [-0.13, +0.55]  n = 200 prompts
+    Dynamic +1.63  Subject +0.31*  Background +0.22*  Subj_in +0.34*  Subj_c2c +3.23*  Bg_c2c +2.07*  Imaging +0.15  Aesthetic +0.63*  MotionSm -0.13*  Flicker -0.19*
+

@@ -1,0 +1,13 @@
+{
+ "title": "VBench-Long, rollf200 x 60 s, generation seed 0: LongLive, the commit pass reads the newest 6 vs 12 real frames",
+ "scores": "../vbench_long_60s.csv",
+ "seed": 0,
+ "num_prompts": 200,
+ "labels": {
+  "longlive+commit6": "longlive, commit reads the newest 6 real frames",
+  "longlive+rule": "longlive + Commit Forcing (commit reads the newest 12 real frames)"
+ },
+ "contrasts": [
+  ["LongLive knob", "commit 6 - Commit Forcing (commit 12)", "longlive+commit6", "longlive+rule"]
+ ]
+}

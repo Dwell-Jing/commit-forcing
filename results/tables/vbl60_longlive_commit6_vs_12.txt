@@ -1,0 +1,13 @@
+VBench-Long, rollf200 x 60 s, generation seed 0: LongLive, the commit pass reads the newest 6 vs 12 real frames
+x100; Quality = Recency Forcing Tab. 3; labels with all 200 prompts scored
+
+label                          Quality   Dynamic   Subject Background   Subj_in  Subj_c2c    Bg_c2c   Imaging Aesthetic  MotionSm   Flicker   description
+longlive+commit6                 82.73     49.40     97.82     96.63     97.14     87.21     89.53     69.29     61.75     98.61     97.42   longlive, commit reads the newest 6 real frames
+longlive+rule                    82.65     49.38     97.70     96.49     96.92     86.93     89.17     69.39     61.68     98.59     97.37   longlive + Commit Forcing (commit reads the newest 12 real frames)
+
+paired contrasts (a - b), by prompt, bootstrap 4000, 95% CI ('*' = excludes 0)
+
+[LongLive knob] commit 6 - Commit Forcing (commit 12) (longlive+commit6 - longlive+rule)
+    Quality +0.08 [-0.01, +0.17]  n = 200 prompts
+    Dynamic +0.02  Subject +0.12*  Background +0.14*  Subj_in +0.22*  Subj_c2c +0.28*  Bg_c2c +0.36*  Imaging -0.10  Aesthetic +0.07  MotionSm +0.02*  Flicker +0.05*
+
