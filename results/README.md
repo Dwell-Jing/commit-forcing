@@ -1,8 +1,10 @@
 # Results
 
-Per-video scores and the specs behind every table of [RESULTS.md](../RESULTS.md). The 60 s results are VBench-Long on
-[`rollf200`](../eval/prompts/README.md), 60 s per video, following the protocol of Recency Forcing Tab. 3
-([evaluation](../eval/vbench_long/README.md)).
+Per-video scores and the specs behind every table of [RESULTS.md](../RESULTS.md). The 60 s results below use
+VBench-Long on 200 fixed [`rollf200`](../eval/prompts/README.md) MovieGen prompts, 60 s per video, with the official
+seven-dimensional Quality formula ([evaluation](../eval/vbench_long/README.md)). The
+[standard-suite results](vbench_full/README.md) use different prompts, dimension-specific subsets and Flickering
+filtering; both sets retain their own paired Base / + Commit Forcing comparisons.
 
 | File | Content |
 |---|---|

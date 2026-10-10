@@ -56,15 +56,14 @@ reads the recent cache and the current block. The sink stays available to the ne
 
 ## Results
 
-**VBench-Long, 60 s videos**, 200 [rollf200](eval/prompts/README.md) prompts, the protocol and Quality score of
-Recency Forcing Tab. 3:
+**VBench-Long on rollf200, 60 s videos**, 200 fixed [MovieGen prompts](eval/prompts/README.md), generation seed 0.
+Quality combines VBench's seven visual dimensions using its official normalization and weights.
 
 | Model | Base | + Commit Forcing | Δ Quality | Δ Consistency |
 |:---|--:|--:|--:|--:|
 | SGF + RF reading | 84.42 | **84.72** | **+0.30** | **+3.35** |
 | SGF | 83.58 | <ins>84.62</ins> | **+1.04** | **+4.40** |
 | SGF+ | 84.23 | 84.34 | +0.12 | **+2.84** |
-| *Best in RF Tab. 3: Recency Forcing, trained* | *84.02* | | | |
 | Context Forcing | 82.78 | 82.91 | +0.13 | **+3.23** |
 | Rolling Sink | 82.61 | 82.72 | +0.11 | **+0.67** |
 | LongLive | 82.23 | 82.65 | **+0.42** | **+0.92** |
@@ -76,15 +75,21 @@ Base: the original model. + Commit Forcing: the same weights and initial noise, 
 Consistency: VBench-Long's clip-to-clip subject consistency, our measure of long-range consistency.
 **Bold** / <ins>underline</ins>: the two highest Quality scores in this table;
 **bold Δ**: the paired 95% bootstrap interval excludes 0. RF reading: Recency Forcing's training-free cache reading,
-applied to SGF. † Our implementation. Second seed, intervals and the other published entries: [RESULTS.md](RESULTS.md).
+applied to SGF. † Our implementation. Second seed, intervals and separate published references: [RESULTS.md](RESULTS.md).
 
-**Full VBench**, 946 prompts × 60 s, Total score:
+**Full VBench, 60 s videos**, 946 entries from the standard suite, generation seed 0.
+Quality uses seven visual dimensions; Total combines Quality with the nine semantic dimensions.
 
-| Model | Base | + Commit Forcing | Δ Total | Δ Consistency |
+| Model | Quality: Base → + Commit Forcing | Total: Base → + Commit Forcing | Δ Total | Δ Consistency |
 |:---|--:|--:|--:|--:|
-| SGF | 83.84 | 84.93 | **+1.08** | **+2.71** |
-| Recency Forcing, training-free † | 82.23 | 83.08 | **+0.85** | **+4.44** |
-| Context Forcing | 82.23 | 82.68 | **+0.43** | **+2.35** |
+| SGF | 86.06 → **87.22** | 83.84 → 84.93 | **+1.08** | **+2.71** |
+| Recency Forcing, training-free † | 84.77 → 85.24 | 82.23 → 83.08 | **+0.85** | **+4.44** |
+| Context Forcing | 84.79 → 85.25 | 82.23 → 82.68 | **+0.43** | **+2.35** |
+
+The standard suite uses dimension-specific prompt subsets and static filtering for Flickering. The rollf200
+evaluation scores all seven dimensions on every prompt and leaves Flickering unfiltered. The two tables use
+different evaluation sets and settings; each Base / + Commit Forcing pair shares its protocol.
+See the [standard-suite pipeline](eval/vbench_full/README.md) and [rollf200 pipeline](eval/vbench_long/README.md).
 
 **Longer videos, 240 s**, VBench-Long Quality:
 

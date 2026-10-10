@@ -1,9 +1,9 @@
 # VBench-Long evaluation
 
-We follow the protocol of Recency Forcing Tab. 3: 200 MovieGen prompts ([`rollf200`](../prompts/README.md)),
-one 60 s video per prompt, VBench-Long, and Quality = the min-max normalised mean of 7 dimensions with dynamic degree
-weighted 0.5. We add the clip-to-clip part of subject consistency, which VBench-Long computes from the first frame of
-every 2 s clip, as our long-range measure.
+We evaluate 200 fixed MovieGen prompts ([`rollf200`](../prompts/README.md)), with one 60 s video per prompt and
+VBench-Long's seven visual dimensions. Quality uses VBench's official min-max normalization and weights:
+Dynamic Degree has weight 0.5, and each other dimension has weight 1. We also report the clip-to-clip part of
+Subject Consistency, which VBench-Long computes from the first frame of every 2 s clip, as our long-range measure.
 
 ## Setup
 
@@ -36,6 +36,10 @@ python eval/vbench_long/compare.py --scores scores.csv --seed 0 --pair sgf+rule:
 
 `score.sh` runs VBench-Long with `--mode long_custom_input --dev_flag`; `--dev_flag` fuses the in-clip and
 clip-to-clip parts of subject and background consistency (0.5 / 0.5, `configs/slow_fast_params.yaml`).
+All seven dimensions are scored on every prompt, and Flickering is unfiltered. The separate
+[standard-suite evaluation](../vbench_full/README.md) uses dimension-specific prompt subsets and static filtering
+for Flickering. Recency Forcing Tab. 3 motivates the 200-prompt, 60 s setup; its exact prompt list and scoring
+settings have not been verified as identical to this release.
 On our GPUs one arm of 200 videos takes about 10 GPU-hours.
 
 `prep.py` refuses unfinished videos (a json sidecar without `frames_md5`), videos of different lengths, and a label

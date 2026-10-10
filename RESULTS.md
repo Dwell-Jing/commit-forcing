@@ -10,7 +10,9 @@ our measure of long-range consistency. † Our implementation of Recency Forcing
 
 ## 60 s videos
 
-VBench-Long, 200 [rollf200](eval/prompts/README.md) prompts, the protocol of Recency Forcing Tab. 3.
+VBench-Long on 200 fixed [rollf200](eval/prompts/README.md) MovieGen prompts, using the official seven-dimensional
+Quality formula. All seven dimensions are scored on each prompt, with fused Subject / Background consistency
+and unfiltered Flickering ([pipeline](eval/vbench_long/README.md)).
 
 | Model | Base | + Commit Forcing | Δ Quality | Δ Consistency |
 |:---|---:|---:|:---|:---|
@@ -35,9 +37,11 @@ VBench-Long, 200 [rollf200](eval/prompts/README.md) prompts, the protocol of Rec
 | Rolling Sink | 82.40 | 82.55 | +0.16*&nbsp;[+0.02,&nbsp;+0.30] | +0.98*&nbsp;[+0.58,&nbsp;+1.41] |
 | ID-Forcing on Self-Forcing | 82.47 | 82.67 | +0.20*&nbsp;[+0.04,&nbsp;+0.37] | +2.27*&nbsp;[+1.70,&nbsp;+2.81] |
 
-**Published entries of Recency Forcing Tab. 3**, and our evaluation of the same models:
+**Published reference scores from [Recency Forcing Tab. 3](https://arxiv.org/abs/2609.19729).**
+The published scores use the authors' evaluation; the local scores use rollf200. The exact author prompt list
+and scoring settings have not been matched, so these columns do not establish a shared-protocol ranking.
 
-| Method | Tab. 3 | Our evaluation |
+| Method | Published Tab. 3 | Our rollf200 evaluation |
 |:---|--:|--:|
 | Recency Forcing, trained | 84.02 | – |
 | Recency Forcing, training-free | 82.63 | 82.01 † |
@@ -766,11 +770,14 @@ Source: [`results/tables/vbl60_seed1_b.txt`](results/tables/vbl60_seed1_b.txt) �
 
 The 946 prompts of VBench's standard suite, one 60 s video each, all 16 dimensions; Total, Quality and Semantic as VBench computes them ([pipeline](eval/vbench_full/README.md)).
 
-| Model | Base | + Commit Forcing | Δ Total | Δ Quality | Δ Semantic | Δ Consistency |
+Quality uses the same seven-dimensional aggregation as above. This suite uses dimension-specific prompt subsets
+and static filtering for Flickering, while rollf200 uses a different prompt set and leaves Flickering unfiltered.
+
+| Model | Quality: Base → + Commit Forcing | Total: Base → + Commit Forcing | Δ Total | Δ Quality | Δ Semantic | Δ Consistency |
 |:---|---:|---:|:---|:---|:---|:---|
-| SGF | 83.84 | 84.93 | +1.08*&nbsp;[+0.53,&nbsp;+1.64] | +1.17* | +0.72 | +2.71* |
-| Recency Forcing, training-free † | 82.23 | 83.08 | +0.85*&nbsp;[+0.56,&nbsp;+1.15] | +0.47* | +2.37* | +4.44* |
-| Context Forcing | 82.23 | 82.68 | +0.43*&nbsp;[+0.09,&nbsp;+0.79] | +0.46* | +0.33 | +2.35* |
+| SGF | 86.06 → 87.22 | 83.84 → 84.93 | +1.08*&nbsp;[+0.53,&nbsp;+1.64] | +1.17* | +0.72 | +2.71* |
+| Recency Forcing, training-free † | 84.77 → 85.24 | 82.23 → 83.08 | +0.85*&nbsp;[+0.56,&nbsp;+1.15] | +0.47* | +2.37* | +4.44* |
+| Context Forcing | 84.79 → 85.25 | 82.23 → 82.68 | +0.43*&nbsp;[+0.09,&nbsp;+0.79] | +0.46* | +0.33 | +2.35* |
 
 <details>
 <summary>All 16 dimensions</summary>
