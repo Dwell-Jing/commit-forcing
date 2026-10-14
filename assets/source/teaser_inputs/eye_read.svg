@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="130" viewBox="0 0 180 130">
+  <!-- Original vector pictogram. Concept: visual reading. No scientific values encoded. -->
+  <g stroke="#202B33" stroke-width="3.7" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M15 68 C34 40 57 27 90 27 C122 27 147 40 165 68 C147 96 122 109 90 109 C57 109 34 96 15 68 Z" fill="#FFFFFF"/>
+    <circle cx="90" cy="68" r="30" fill="#DCE7DE"/>
+    <circle cx="90" cy="68" r="15" fill="#607C68"/>
+    <circle cx="90" cy="68" r="6" fill="#202B33" stroke="none"/>
+    <circle cx="99" cy="59" r="5" fill="#FFFFFF" stroke="none"/>
+    <path d="M31 39 C47 24 66 17 86 16" fill="none"/>
+    <path d="M103 17 C122 20 139 28 150 39" fill="none"/>
+  </g>
+</svg>

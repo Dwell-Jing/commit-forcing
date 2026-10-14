@@ -1,0 +1,9 @@
+# The 9 semantic dimensions of full VBench use VBench's own pins, from a separate folder (eval/vbench_full):
+#   pip install --no-deps --target semantic_pkgs -r setup/requirements_semantic.txt
+#   git clone https://github.com/facebookresearch/detectron2 && git -C detectron2 checkout b4a4a3bd
+#   pip install --no-deps --no-build-isolation --target semantic_pkgs ./detectron2
+transformers==4.33.2
+tokenizers==0.13.3
+timm==1.0.12
+fairscale==0.4.13
+lvis

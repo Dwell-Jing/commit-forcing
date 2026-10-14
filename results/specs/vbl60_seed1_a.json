@@ -1,0 +1,28 @@
+{
+ "title": "VBench-Long, rollf200 x 60 s, generation seed 1 (SGF, LongLive, ID-Forcing)",
+ "scores": "../vbench_long_60s.csv",
+ "seed": 1,
+ "num_prompts": 200,
+ "labels": {
+  "sgf": "Self Gradient Forcing, base",
+  "sgf+rule": "sgf + Commit Forcing (commit reads the newest 9 real frames)",
+  "longlive": "LongLive, base (sink 3 + local window 9 in every pass)",
+  "longlive+rule": "longlive + Commit Forcing (commit reads the newest 12 real frames)",
+  "idf_longlive": "ID-Forcing on LongLive (authors' code)",
+  "idf_sf": "ID-Forcing on Self-Forcing (authors' code)",
+  "idf_sf+rule": "ID-Forcing + Commit Forcing (commit reads the previous 2 chunks, not the sink)",
+  "longlive+commit_self": "longlive, commit reads only its own chunk",
+  "longlive+commit6": "longlive, commit reads the newest 6 real frames"
+ },
+ "contrasts": [
+  ["SGF", "Commit Forcing - base", "sgf+rule", "sgf"],
+  ["LongLive", "Commit Forcing - base", "longlive+rule", "longlive"],
+  ["LongLive", "ID-Forcing - base", "idf_longlive", "longlive", "hidden"],
+  ["LongLive", "Commit Forcing - ID-Forcing", "longlive+rule", "idf_longlive", "hidden"],
+  ["Self-Forcing", "ID-Forcing + Commit Forcing - ID-Forcing", "idf_sf+rule", "idf_sf"],
+  ["LongLive, commit window", "commit 6 - Commit Forcing (commit 12)", "longlive+commit6", "longlive+rule"],
+  ["LongLive, commit window", "commit 6 - commit self-only", "longlive+commit6", "longlive+commit_self"],
+  ["LongLive, commit window", "commit 6 - base", "longlive+commit6", "longlive"],
+  ["LongLive, commit window", "commit self-only - base", "longlive+commit_self", "longlive"]
+ ]
+}

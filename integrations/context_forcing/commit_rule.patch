@@ -1,0 +1,109 @@
+diff --git a/pipeline/causal_long_inference.py b/pipeline/causal_long_inference.py
+index 300de7b..55b1ba5
+--- a/pipeline/causal_long_inference.py
++++ b/pipeline/causal_long_inference.py
+@@ -48,6 +48,7 @@ class CausalLongInferencePipeline(torch.nn.Module):
+         self.cache_size = cache_size
+         self.kv_cache_size = cache_size * 1560 if cache_size > 0 else 32760 # 32760 # self.local_attn_size * self.frame_seq_length
+         self.sink_size = sink_size
++        self.commit_read = getattr(args, "commit_read", None)  # None or a mode of set_commit_read
+ 
+ 
+     def _predict_from_context(
+@@ -230,6 +231,7 @@ class CausalLongInferencePipeline(torch.nn.Module):
+                     )
+             else:
+                 print(f"Fill the kv, range:[{current_start_frame}, {current_start_frame + current_num_frames}]")
++                self.generator.model.set_commit_read(self.commit_read)  # commit pass
+                 with torch.no_grad():
+                     _, _, self.kv_cache1 = self.generator(
+                         noisy_image_or_video=denoised_pred,
+@@ -239,6 +241,7 @@ class CausalLongInferencePipeline(torch.nn.Module):
+                         crossattn_cache=self.crossattn_cache,
+                         current_start=current_start_frame * self.frame_seq_length
+                     )
++                self.generator.model.set_commit_read(None)  # denoising passes read the whole cache
+                 print(f"Token_source_global_idx:", self.kv_cache1[0]["token_source_frame"])
+ 
+             if profile:
+diff --git a/wan/modules/attention.py b/wan/modules/attention.py
+index ba83436..ac892fc
+--- a/wan/modules/attention.py
++++ b/wan/modules/attention.py
+@@ -23,6 +23,11 @@ except ModuleNotFoundError:
+ # FLASH_ATTN_3_AVAILABLE = False
+ 
+ import warnings
++from torch.nn.attention import sdpa_kernel, SDPBackend
++
++# calls without padding run PyTorch SDPA, cuDNN backend first (generate.py --attn cudnn);
++# False keeps the original flash-attn path.
++USE_CUDNN_SDPA = False
+ 
+ __all__ = [
+     'flash_attention',
+@@ -62,6 +67,13 @@ def flash_attention(
+     """
+     half_dtypes = (torch.float16, torch.bfloat16)
+     assert dtype in half_dtypes
++    if (USE_CUDNN_SDPA and q_lens is None and k_lens is None and q_scale is None and dropout_p == 0
++            and tuple(window_size) == (-1, -1)):  # see USE_CUDNN_SDPA
++        with sdpa_kernel([SDPBackend.CUDNN_ATTENTION, SDPBackend.FLASH_ATTENTION], set_priority=True):
++            x = torch.nn.functional.scaled_dot_product_attention(
++                q.transpose(1, 2).to(dtype), k.transpose(1, 2).to(dtype), v.transpose(1, 2).to(dtype),
++                is_causal=causal, scale=softmax_scale)
++        return x.transpose(1, 2).contiguous().type(q.dtype)
+     assert q.device.type == 'cuda' and q.size(-1) <= 256
+ 
+     # params
+diff --git a/wan/modules/causal_model.py b/wan/modules/causal_model.py
+index 5a7f79c..0ccd5db
+--- a/wan/modules/causal_model.py
++++ b/wan/modules/causal_model.py
+@@ -83,6 +83,8 @@ class CausalWanSelfAttention(nn.Module):
+         self.keyframe_interval = keyframe_interval
+         self.num_new_context_tokens = num_new_context_tokens * 1560
+         self.rope_length = rope_length
++        self.commit_read = None  # set by set_commit_read during the commit pass
++        self.commit_log = []  # (cached frames, hi, lo) per commit pass; [hi, lo) is not read
+ 
+         # layers
+         self.q = nn.Linear(dim, dim)
+@@ -500,6 +502,24 @@ class CausalWanSelfAttention(nn.Module):
+                 roped_keys_for_attn = sink_roped_keys_for_attn
+                 vals_for_attn = sink_vals_for_attn
+ 
++            if self.commit_read is not None:  # read only [0, hi) and [lo, local_end_index)
++                lo = max(0, local_end_index - local_tokens)  # start of the fast window
++                hi = 0
++                if self.commit_read == "full":  # everything (base)
++                    lo = 0
++                elif self.commit_read == "no_sink":  # all but the sink, once it has left the window
++                    lo = min(lo, sink_tokens)
++                elif current_context_tokens_count > 0:  # "recent", "no_memory": window without slow memory
++                    lo = max(lo, sink_tokens + current_context_tokens_count)
++                if self.commit_read == "no_memory":  # "recent" plus the sink
++                    hi = min(sink_tokens, lo)
++                if hi == 0:
++                    roped_keys_for_attn, vals_for_attn = roped_keys_for_attn[:, lo:], vals_for_attn[:, lo:]
++                elif hi < lo:
++                    roped_keys_for_attn = torch.cat([roped_keys_for_attn[:, :hi], roped_keys_for_attn[:, lo:]], dim=1)
++                    vals_for_attn = torch.cat([vals_for_attn[:, :hi], vals_for_attn[:, lo:]], dim=1)
++                self.commit_log.append((local_end_index // frame_seqlen, hi // frame_seqlen, lo // frame_seqlen))
++
+             x = attention(
+                 roped_query, 
+                 roped_keys_for_attn,  
+@@ -862,6 +882,12 @@ class CausalWanModel(ModelMixin, ConfigMixin):
+     def _set_gradient_checkpointing(self, enable: bool = True, gradient_checkpointing_func = torch.utils.checkpoint.checkpoint):
+         self.gradient_checkpointing = enable
+ 
++    def set_commit_read(self, mode):
++        """What the commit pass reads: "full", "recent" (fast window), "no_sink" or "no_memory"; None otherwise."""
++        assert mode in (None, "full", "recent", "no_sink", "no_memory"), mode
++        for block in self.blocks:
++            block.self_attn.commit_read = mode
++
+     @staticmethod
+     def _prepare_blockwise_causal_attn_mask(
+         device: torch.device | str, num_frames: int = 21,

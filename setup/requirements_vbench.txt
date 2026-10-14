@@ -1,0 +1,7 @@
+# VBench extras, installed without their dependencies (setup/requirements.txt has the ones they use):
+#   pip install --no-deps -r setup/requirements_vbench.txt
+# pyiqa 0.1.16 declares transformers>=5, which the generators do not run with; we scored with transformers 4.57.1.
+pyiqa==0.1.16
+openai-clip==1.0.1
+dreamsim==0.2.1
+scenedetect==0.7.1

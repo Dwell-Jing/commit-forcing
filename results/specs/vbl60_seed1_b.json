@@ -1,0 +1,27 @@
+{
+ "title": "VBench-Long, rollf200 x 60 s, generation seed 1 (Self-Forcing, Recency Forcing, Context Forcing, Rolling Sink)",
+ "scores": "../vbench_long_60s.csv",
+ "seed": 1,
+ "num_prompts": 200,
+ "labels": {
+  "rf": "Recency Forcing, training-free reading (Self-Forcing weights)",
+  "rf+rule": "rf + Commit Forcing",
+  "context_forcing": "Context Forcing, base",
+  "context_forcing+sink_only": "context_forcing, sink removed from the commit only",
+  "context_forcing+rule": "context_forcing + Commit Forcing (commit reads the recent real frames)",
+  "sf": "Self-Forcing, base (no sink, 21-frame window)",
+  "sf+far_denoise": "sf + far history read in the last 2 denoising passes at layers 12-29 (commit reads recent frames)",
+  "rolling_sink": "Rolling Sink, base (replayed frames)",
+  "rolling_sink+rule": "rolling_sink + Commit Forcing (commit reads real committed history)",
+  "sf_sink": "Self-Forcing + 3-frame sink read in every pass (24-frame cache)",
+  "sf_sink+rule": "sf_sink + Commit Forcing (commit reads the newest 21 real frames)"
+ },
+ "contrasts": [
+  ["Self-Forcing", "RF + Commit Forcing - RF", "rf+rule", "rf"],
+  ["Context Forcing", "sink out of the commit - base", "context_forcing+sink_only", "context_forcing"],
+  ["Context Forcing", "Commit Forcing - base", "context_forcing+rule", "context_forcing"],
+  ["Self-Forcing", "far history at denoising only - base", "sf+far_denoise", "sf"],
+  ["Rolling Sink", "Commit Forcing - base", "rolling_sink+rule", "rolling_sink"],
+  ["Self-Forcing", "sink + Commit Forcing - sink", "sf_sink+rule", "sf_sink"]
+ ]
+}

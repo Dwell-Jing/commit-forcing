@@ -1,0 +1,334 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="168mm" height="43.866667mm" viewBox="0 0 1800 470">
+<title>SGF controlled committing read sets</title>
+<desc>Two parallel experimental-design panels with equal dimensions. Same-frame-count comparison: sink3 plus latest recent3 plus current3 versus recent6 plus current3, both nine frames. Recent-versus-self-only comparison: recent6 plus current3 versus current3, nine versus three frames. Each panel preserves the original sink3, older-to-newer recent6, current3 order. Unselected historical entries remain stored, physical cache capacity is twelve, denoising is unchanged, and current K/V is computed from the clean block. The sets depict the full-cache steady state. No measured outcomes or confidence intervals are drawn.</desc>
+<defs><pattern id="not-attended" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M0 10 L10 0 M-3 3 L3 -3 M7 13 L13 7" fill="none" stroke="#DEE3E6" stroke-width="1.1"/></pattern></defs>
+<rect width="1800" height="470" fill="white"/>
+<g font-family="Helvetica, Arial, sans-serif" fill="#202B33">
+<g id="panel-a" data-panel-width="860" data-panel-height="350">
+<text x="20" y="46" font-size="40" fill="#202B33" text-anchor="start" font-weight="bold">(a) Same frame count</text>
+<text x="325" y="104" font-size="36" fill="#607C68" text-anchor="middle" font-weight="normal">Sink</text>
+<text x="548" y="104" font-size="36" fill="#557F9C" text-anchor="middle" font-weight="normal">Recent</text>
+<text x="771" y="104" font-size="36" fill="#AD5036" text-anchor="middle" font-weight="normal">Current</text>
+<g id="read-set-a-D" data-group="D" data-total-read="9">
+<text x="20" y="176" font-size="36" fill="#202B33" text-anchor="start" font-weight="bold">Sink + recent</text>
+<text x="20" y="218" font-size="34" fill="#67717A" text-anchor="start" font-weight="normal">9 frames</text>
+<g class="frame-kv" data-frame-index="0" data-source="sink" data-attended="true">
+<path d="M260 143 L265 138 H303 V202 L298 207Z" fill="white" stroke="#607C68" stroke-width="1.8"/>
+<rect x="260" y="143" width="38" height="64" fill="#DCE8DF" stroke="#607C68" stroke-width="2.5"/>
+<path d="M279 143 L279 207" fill="none" stroke="#607C68" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M260 164.33333333333334 L298 164.33333333333334" fill="none" stroke="#607C68" stroke-width="1" stroke-linecap="round"/>
+<path d="M260 185.66666666666666 L298 185.66666666666666" fill="none" stroke="#607C68" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="1" data-source="sink" data-attended="true">
+<path d="M306 143 L311 138 H349 V202 L344 207Z" fill="white" stroke="#607C68" stroke-width="1.8"/>
+<rect x="306" y="143" width="38" height="64" fill="#DCE8DF" stroke="#607C68" stroke-width="2.5"/>
+<path d="M325 143 L325 207" fill="none" stroke="#607C68" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M306 164.33333333333334 L344 164.33333333333334" fill="none" stroke="#607C68" stroke-width="1" stroke-linecap="round"/>
+<path d="M306 185.66666666666666 L344 185.66666666666666" fill="none" stroke="#607C68" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="2" data-source="sink" data-attended="true">
+<path d="M352 143 L357 138 H395 V202 L390 207Z" fill="white" stroke="#607C68" stroke-width="1.8"/>
+<rect x="352" y="143" width="38" height="64" fill="#DCE8DF" stroke="#607C68" stroke-width="2.5"/>
+<path d="M371 143 L371 207" fill="none" stroke="#607C68" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M352 164.33333333333334 L390 164.33333333333334" fill="none" stroke="#607C68" stroke-width="1" stroke-linecap="round"/>
+<path d="M352 185.66666666666666 L390 185.66666666666666" fill="none" stroke="#607C68" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="3" data-source="recent" data-attended="false">
+<path d="M414 143 L419 138 H457 V202 L452 207Z" fill="white" stroke="#B8C0C6" stroke-width="1.8"/>
+<rect x="414" y="143" width="38" height="64" fill="url(#not-attended)" stroke="#B8C0C6" stroke-width="2.5"/>
+</g>
+<g class="frame-kv" data-frame-index="4" data-source="recent" data-attended="false">
+<path d="M460 143 L465 138 H503 V202 L498 207Z" fill="white" stroke="#B8C0C6" stroke-width="1.8"/>
+<rect x="460" y="143" width="38" height="64" fill="url(#not-attended)" stroke="#B8C0C6" stroke-width="2.5"/>
+</g>
+<g class="frame-kv" data-frame-index="5" data-source="recent" data-attended="false">
+<path d="M506 143 L511 138 H549 V202 L544 207Z" fill="white" stroke="#B8C0C6" stroke-width="1.8"/>
+<rect x="506" y="143" width="38" height="64" fill="url(#not-attended)" stroke="#B8C0C6" stroke-width="2.5"/>
+</g>
+<g class="frame-kv" data-frame-index="6" data-source="recent" data-attended="true">
+<path d="M552 143 L557 138 H595 V202 L590 207Z" fill="white" stroke="#557F9C" stroke-width="1.8"/>
+<rect x="552" y="143" width="38" height="64" fill="#D7E6F0" stroke="#557F9C" stroke-width="2.5"/>
+<path d="M571 143 L571 207" fill="none" stroke="#557F9C" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M552 164.33333333333334 L590 164.33333333333334" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+<path d="M552 185.66666666666666 L590 185.66666666666666" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="7" data-source="recent" data-attended="true">
+<path d="M598 143 L603 138 H641 V202 L636 207Z" fill="white" stroke="#557F9C" stroke-width="1.8"/>
+<rect x="598" y="143" width="38" height="64" fill="#D7E6F0" stroke="#557F9C" stroke-width="2.5"/>
+<path d="M617 143 L617 207" fill="none" stroke="#557F9C" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M598 164.33333333333334 L636 164.33333333333334" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+<path d="M598 185.66666666666666 L636 185.66666666666666" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="8" data-source="recent" data-attended="true">
+<path d="M644 143 L649 138 H687 V202 L682 207Z" fill="white" stroke="#557F9C" stroke-width="1.8"/>
+<rect x="644" y="143" width="38" height="64" fill="#D7E6F0" stroke="#557F9C" stroke-width="2.5"/>
+<path d="M663 143 L663 207" fill="none" stroke="#557F9C" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M644 164.33333333333334 L682 164.33333333333334" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+<path d="M644 185.66666666666666 L682 185.66666666666666" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="9" data-source="current" data-attended="true">
+<path d="M706 143 L711 138 H749 V202 L744 207Z" fill="white" stroke="#AD5036" stroke-width="1.8"/>
+<rect x="706" y="143" width="38" height="64" fill="#F0D4C7" stroke="#AD5036" stroke-width="2.5"/>
+<path d="M725 143 L725 207" fill="none" stroke="#AD5036" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M706 164.33333333333334 L744 164.33333333333334" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+<path d="M706 185.66666666666666 L744 185.66666666666666" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="10" data-source="current" data-attended="true">
+<path d="M752 143 L757 138 H795 V202 L790 207Z" fill="white" stroke="#AD5036" stroke-width="1.8"/>
+<rect x="752" y="143" width="38" height="64" fill="#F0D4C7" stroke="#AD5036" stroke-width="2.5"/>
+<path d="M771 143 L771 207" fill="none" stroke="#AD5036" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M752 164.33333333333334 L790 164.33333333333334" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+<path d="M752 185.66666666666666 L790 185.66666666666666" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="11" data-source="current" data-attended="true">
+<path d="M798 143 L803 138 H841 V202 L836 207Z" fill="white" stroke="#AD5036" stroke-width="1.8"/>
+<rect x="798" y="143" width="38" height="64" fill="#F0D4C7" stroke="#AD5036" stroke-width="2.5"/>
+<path d="M817 143 L817 207" fill="none" stroke="#AD5036" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M798 164.33333333333334 L836 164.33333333333334" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+<path d="M798 185.66666666666666 L836 185.66666666666666" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+</g>
+</g>
+<g id="read-set-a-B" data-group="B" data-total-read="9">
+<text x="20" y="316" font-size="36" fill="#202B33" text-anchor="start" font-weight="bold">Recent</text>
+<text x="20" y="358" font-size="34" fill="#67717A" text-anchor="start" font-weight="normal">9 frames</text>
+<g class="frame-kv" data-frame-index="0" data-source="sink" data-attended="false">
+<path d="M260 283 L265 278 H303 V342 L298 347Z" fill="white" stroke="#B8C0C6" stroke-width="1.8"/>
+<rect x="260" y="283" width="38" height="64" fill="url(#not-attended)" stroke="#B8C0C6" stroke-width="2.5"/>
+</g>
+<g class="frame-kv" data-frame-index="1" data-source="sink" data-attended="false">
+<path d="M306 283 L311 278 H349 V342 L344 347Z" fill="white" stroke="#B8C0C6" stroke-width="1.8"/>
+<rect x="306" y="283" width="38" height="64" fill="url(#not-attended)" stroke="#B8C0C6" stroke-width="2.5"/>
+</g>
+<g class="frame-kv" data-frame-index="2" data-source="sink" data-attended="false">
+<path d="M352 283 L357 278 H395 V342 L390 347Z" fill="white" stroke="#B8C0C6" stroke-width="1.8"/>
+<rect x="352" y="283" width="38" height="64" fill="url(#not-attended)" stroke="#B8C0C6" stroke-width="2.5"/>
+</g>
+<g class="frame-kv" data-frame-index="3" data-source="recent" data-attended="true">
+<path d="M414 283 L419 278 H457 V342 L452 347Z" fill="white" stroke="#557F9C" stroke-width="1.8"/>
+<rect x="414" y="283" width="38" height="64" fill="#D7E6F0" stroke="#557F9C" stroke-width="2.5"/>
+<path d="M433 283 L433 347" fill="none" stroke="#557F9C" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M414 304.3333333333333 L452 304.3333333333333" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+<path d="M414 325.6666666666667 L452 325.6666666666667" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="4" data-source="recent" data-attended="true">
+<path d="M460 283 L465 278 H503 V342 L498 347Z" fill="white" stroke="#557F9C" stroke-width="1.8"/>
+<rect x="460" y="283" width="38" height="64" fill="#D7E6F0" stroke="#557F9C" stroke-width="2.5"/>
+<path d="M479 283 L479 347" fill="none" stroke="#557F9C" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M460 304.3333333333333 L498 304.3333333333333" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+<path d="M460 325.6666666666667 L498 325.6666666666667" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="5" data-source="recent" data-attended="true">
+<path d="M506 283 L511 278 H549 V342 L544 347Z" fill="white" stroke="#557F9C" stroke-width="1.8"/>
+<rect x="506" y="283" width="38" height="64" fill="#D7E6F0" stroke="#557F9C" stroke-width="2.5"/>
+<path d="M525 283 L525 347" fill="none" stroke="#557F9C" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M506 304.3333333333333 L544 304.3333333333333" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+<path d="M506 325.6666666666667 L544 325.6666666666667" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="6" data-source="recent" data-attended="true">
+<path d="M552 283 L557 278 H595 V342 L590 347Z" fill="white" stroke="#557F9C" stroke-width="1.8"/>
+<rect x="552" y="283" width="38" height="64" fill="#D7E6F0" stroke="#557F9C" stroke-width="2.5"/>
+<path d="M571 283 L571 347" fill="none" stroke="#557F9C" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M552 304.3333333333333 L590 304.3333333333333" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+<path d="M552 325.6666666666667 L590 325.6666666666667" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="7" data-source="recent" data-attended="true">
+<path d="M598 283 L603 278 H641 V342 L636 347Z" fill="white" stroke="#557F9C" stroke-width="1.8"/>
+<rect x="598" y="283" width="38" height="64" fill="#D7E6F0" stroke="#557F9C" stroke-width="2.5"/>
+<path d="M617 283 L617 347" fill="none" stroke="#557F9C" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M598 304.3333333333333 L636 304.3333333333333" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+<path d="M598 325.6666666666667 L636 325.6666666666667" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="8" data-source="recent" data-attended="true">
+<path d="M644 283 L649 278 H687 V342 L682 347Z" fill="white" stroke="#557F9C" stroke-width="1.8"/>
+<rect x="644" y="283" width="38" height="64" fill="#D7E6F0" stroke="#557F9C" stroke-width="2.5"/>
+<path d="M663 283 L663 347" fill="none" stroke="#557F9C" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M644 304.3333333333333 L682 304.3333333333333" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+<path d="M644 325.6666666666667 L682 325.6666666666667" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="9" data-source="current" data-attended="true">
+<path d="M706 283 L711 278 H749 V342 L744 347Z" fill="white" stroke="#AD5036" stroke-width="1.8"/>
+<rect x="706" y="283" width="38" height="64" fill="#F0D4C7" stroke="#AD5036" stroke-width="2.5"/>
+<path d="M725 283 L725 347" fill="none" stroke="#AD5036" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M706 304.3333333333333 L744 304.3333333333333" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+<path d="M706 325.6666666666667 L744 325.6666666666667" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="10" data-source="current" data-attended="true">
+<path d="M752 283 L757 278 H795 V342 L790 347Z" fill="white" stroke="#AD5036" stroke-width="1.8"/>
+<rect x="752" y="283" width="38" height="64" fill="#F0D4C7" stroke="#AD5036" stroke-width="2.5"/>
+<path d="M771 283 L771 347" fill="none" stroke="#AD5036" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M752 304.3333333333333 L790 304.3333333333333" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+<path d="M752 325.6666666666667 L790 325.6666666666667" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="11" data-source="current" data-attended="true">
+<path d="M798 283 L803 278 H841 V342 L836 347Z" fill="white" stroke="#AD5036" stroke-width="1.8"/>
+<rect x="798" y="283" width="38" height="64" fill="#F0D4C7" stroke="#AD5036" stroke-width="2.5"/>
+<path d="M817 283 L817 347" fill="none" stroke="#AD5036" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M798 304.3333333333333 L836 304.3333333333333" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+<path d="M798 325.6666666666667 L836 325.6666666666667" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+</g>
+</g>
+<path d="M862 175 H878 V315 H862" fill="none" stroke="#67717A" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="panel-b" data-panel-width="860" data-panel-height="350">
+<text x="920" y="46" font-size="40" fill="#202B33" text-anchor="start" font-weight="bold">(b) Recent vs self-only</text>
+<text x="1225" y="104" font-size="36" fill="#607C68" text-anchor="middle" font-weight="normal">Sink</text>
+<text x="1448" y="104" font-size="36" fill="#557F9C" text-anchor="middle" font-weight="normal">Recent</text>
+<text x="1671" y="104" font-size="36" fill="#AD5036" text-anchor="middle" font-weight="normal">Current</text>
+<g id="read-set-b-B" data-group="B" data-total-read="9">
+<text x="920" y="176" font-size="36" fill="#202B33" text-anchor="start" font-weight="bold">Recent</text>
+<text x="920" y="218" font-size="34" fill="#67717A" text-anchor="start" font-weight="normal">9 frames</text>
+<g class="frame-kv" data-frame-index="0" data-source="sink" data-attended="false">
+<path d="M1160 143 L1165 138 H1203 V202 L1198 207Z" fill="white" stroke="#B8C0C6" stroke-width="1.8"/>
+<rect x="1160" y="143" width="38" height="64" fill="url(#not-attended)" stroke="#B8C0C6" stroke-width="2.5"/>
+</g>
+<g class="frame-kv" data-frame-index="1" data-source="sink" data-attended="false">
+<path d="M1206 143 L1211 138 H1249 V202 L1244 207Z" fill="white" stroke="#B8C0C6" stroke-width="1.8"/>
+<rect x="1206" y="143" width="38" height="64" fill="url(#not-attended)" stroke="#B8C0C6" stroke-width="2.5"/>
+</g>
+<g class="frame-kv" data-frame-index="2" data-source="sink" data-attended="false">
+<path d="M1252 143 L1257 138 H1295 V202 L1290 207Z" fill="white" stroke="#B8C0C6" stroke-width="1.8"/>
+<rect x="1252" y="143" width="38" height="64" fill="url(#not-attended)" stroke="#B8C0C6" stroke-width="2.5"/>
+</g>
+<g class="frame-kv" data-frame-index="3" data-source="recent" data-attended="true">
+<path d="M1314 143 L1319 138 H1357 V202 L1352 207Z" fill="white" stroke="#557F9C" stroke-width="1.8"/>
+<rect x="1314" y="143" width="38" height="64" fill="#D7E6F0" stroke="#557F9C" stroke-width="2.5"/>
+<path d="M1333 143 L1333 207" fill="none" stroke="#557F9C" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M1314 164.33333333333334 L1352 164.33333333333334" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+<path d="M1314 185.66666666666666 L1352 185.66666666666666" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="4" data-source="recent" data-attended="true">
+<path d="M1360 143 L1365 138 H1403 V202 L1398 207Z" fill="white" stroke="#557F9C" stroke-width="1.8"/>
+<rect x="1360" y="143" width="38" height="64" fill="#D7E6F0" stroke="#557F9C" stroke-width="2.5"/>
+<path d="M1379 143 L1379 207" fill="none" stroke="#557F9C" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M1360 164.33333333333334 L1398 164.33333333333334" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+<path d="M1360 185.66666666666666 L1398 185.66666666666666" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="5" data-source="recent" data-attended="true">
+<path d="M1406 143 L1411 138 H1449 V202 L1444 207Z" fill="white" stroke="#557F9C" stroke-width="1.8"/>
+<rect x="1406" y="143" width="38" height="64" fill="#D7E6F0" stroke="#557F9C" stroke-width="2.5"/>
+<path d="M1425 143 L1425 207" fill="none" stroke="#557F9C" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M1406 164.33333333333334 L1444 164.33333333333334" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+<path d="M1406 185.66666666666666 L1444 185.66666666666666" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="6" data-source="recent" data-attended="true">
+<path d="M1452 143 L1457 138 H1495 V202 L1490 207Z" fill="white" stroke="#557F9C" stroke-width="1.8"/>
+<rect x="1452" y="143" width="38" height="64" fill="#D7E6F0" stroke="#557F9C" stroke-width="2.5"/>
+<path d="M1471 143 L1471 207" fill="none" stroke="#557F9C" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M1452 164.33333333333334 L1490 164.33333333333334" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+<path d="M1452 185.66666666666666 L1490 185.66666666666666" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="7" data-source="recent" data-attended="true">
+<path d="M1498 143 L1503 138 H1541 V202 L1536 207Z" fill="white" stroke="#557F9C" stroke-width="1.8"/>
+<rect x="1498" y="143" width="38" height="64" fill="#D7E6F0" stroke="#557F9C" stroke-width="2.5"/>
+<path d="M1517 143 L1517 207" fill="none" stroke="#557F9C" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M1498 164.33333333333334 L1536 164.33333333333334" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+<path d="M1498 185.66666666666666 L1536 185.66666666666666" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="8" data-source="recent" data-attended="true">
+<path d="M1544 143 L1549 138 H1587 V202 L1582 207Z" fill="white" stroke="#557F9C" stroke-width="1.8"/>
+<rect x="1544" y="143" width="38" height="64" fill="#D7E6F0" stroke="#557F9C" stroke-width="2.5"/>
+<path d="M1563 143 L1563 207" fill="none" stroke="#557F9C" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M1544 164.33333333333334 L1582 164.33333333333334" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+<path d="M1544 185.66666666666666 L1582 185.66666666666666" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="9" data-source="current" data-attended="true">
+<path d="M1606 143 L1611 138 H1649 V202 L1644 207Z" fill="white" stroke="#AD5036" stroke-width="1.8"/>
+<rect x="1606" y="143" width="38" height="64" fill="#F0D4C7" stroke="#AD5036" stroke-width="2.5"/>
+<path d="M1625 143 L1625 207" fill="none" stroke="#AD5036" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M1606 164.33333333333334 L1644 164.33333333333334" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+<path d="M1606 185.66666666666666 L1644 185.66666666666666" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="10" data-source="current" data-attended="true">
+<path d="M1652 143 L1657 138 H1695 V202 L1690 207Z" fill="white" stroke="#AD5036" stroke-width="1.8"/>
+<rect x="1652" y="143" width="38" height="64" fill="#F0D4C7" stroke="#AD5036" stroke-width="2.5"/>
+<path d="M1671 143 L1671 207" fill="none" stroke="#AD5036" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M1652 164.33333333333334 L1690 164.33333333333334" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+<path d="M1652 185.66666666666666 L1690 185.66666666666666" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="11" data-source="current" data-attended="true">
+<path d="M1698 143 L1703 138 H1741 V202 L1736 207Z" fill="white" stroke="#AD5036" stroke-width="1.8"/>
+<rect x="1698" y="143" width="38" height="64" fill="#F0D4C7" stroke="#AD5036" stroke-width="2.5"/>
+<path d="M1717 143 L1717 207" fill="none" stroke="#AD5036" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M1698 164.33333333333334 L1736 164.33333333333334" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+<path d="M1698 185.66666666666666 L1736 185.66666666666666" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+</g>
+</g>
+<g id="read-set-b-C" data-group="C" data-total-read="3">
+<text x="920" y="316" font-size="36" fill="#202B33" text-anchor="start" font-weight="bold">Self-only</text>
+<text x="920" y="358" font-size="34" fill="#67717A" text-anchor="start" font-weight="normal">3 frames</text>
+<g class="frame-kv" data-frame-index="0" data-source="sink" data-attended="false">
+<path d="M1160 283 L1165 278 H1203 V342 L1198 347Z" fill="white" stroke="#B8C0C6" stroke-width="1.8"/>
+<rect x="1160" y="283" width="38" height="64" fill="url(#not-attended)" stroke="#B8C0C6" stroke-width="2.5"/>
+</g>
+<g class="frame-kv" data-frame-index="1" data-source="sink" data-attended="false">
+<path d="M1206 283 L1211 278 H1249 V342 L1244 347Z" fill="white" stroke="#B8C0C6" stroke-width="1.8"/>
+<rect x="1206" y="283" width="38" height="64" fill="url(#not-attended)" stroke="#B8C0C6" stroke-width="2.5"/>
+</g>
+<g class="frame-kv" data-frame-index="2" data-source="sink" data-attended="false">
+<path d="M1252 283 L1257 278 H1295 V342 L1290 347Z" fill="white" stroke="#B8C0C6" stroke-width="1.8"/>
+<rect x="1252" y="283" width="38" height="64" fill="url(#not-attended)" stroke="#B8C0C6" stroke-width="2.5"/>
+</g>
+<g class="frame-kv" data-frame-index="3" data-source="recent" data-attended="false">
+<path d="M1314 283 L1319 278 H1357 V342 L1352 347Z" fill="white" stroke="#B8C0C6" stroke-width="1.8"/>
+<rect x="1314" y="283" width="38" height="64" fill="url(#not-attended)" stroke="#B8C0C6" stroke-width="2.5"/>
+</g>
+<g class="frame-kv" data-frame-index="4" data-source="recent" data-attended="false">
+<path d="M1360 283 L1365 278 H1403 V342 L1398 347Z" fill="white" stroke="#B8C0C6" stroke-width="1.8"/>
+<rect x="1360" y="283" width="38" height="64" fill="url(#not-attended)" stroke="#B8C0C6" stroke-width="2.5"/>
+</g>
+<g class="frame-kv" data-frame-index="5" data-source="recent" data-attended="false">
+<path d="M1406 283 L1411 278 H1449 V342 L1444 347Z" fill="white" stroke="#B8C0C6" stroke-width="1.8"/>
+<rect x="1406" y="283" width="38" height="64" fill="url(#not-attended)" stroke="#B8C0C6" stroke-width="2.5"/>
+</g>
+<g class="frame-kv" data-frame-index="6" data-source="recent" data-attended="false">
+<path d="M1452 283 L1457 278 H1495 V342 L1490 347Z" fill="white" stroke="#B8C0C6" stroke-width="1.8"/>
+<rect x="1452" y="283" width="38" height="64" fill="url(#not-attended)" stroke="#B8C0C6" stroke-width="2.5"/>
+</g>
+<g class="frame-kv" data-frame-index="7" data-source="recent" data-attended="false">
+<path d="M1498 283 L1503 278 H1541 V342 L1536 347Z" fill="white" stroke="#B8C0C6" stroke-width="1.8"/>
+<rect x="1498" y="283" width="38" height="64" fill="url(#not-attended)" stroke="#B8C0C6" stroke-width="2.5"/>
+</g>
+<g class="frame-kv" data-frame-index="8" data-source="recent" data-attended="false">
+<path d="M1544 283 L1549 278 H1587 V342 L1582 347Z" fill="white" stroke="#B8C0C6" stroke-width="1.8"/>
+<rect x="1544" y="283" width="38" height="64" fill="url(#not-attended)" stroke="#B8C0C6" stroke-width="2.5"/>
+</g>
+<g class="frame-kv" data-frame-index="9" data-source="current" data-attended="true">
+<path d="M1606 283 L1611 278 H1649 V342 L1644 347Z" fill="white" stroke="#AD5036" stroke-width="1.8"/>
+<rect x="1606" y="283" width="38" height="64" fill="#F0D4C7" stroke="#AD5036" stroke-width="2.5"/>
+<path d="M1625 283 L1625 347" fill="none" stroke="#AD5036" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M1606 304.3333333333333 L1644 304.3333333333333" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+<path d="M1606 325.6666666666667 L1644 325.6666666666667" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="10" data-source="current" data-attended="true">
+<path d="M1652 283 L1657 278 H1695 V342 L1690 347Z" fill="white" stroke="#AD5036" stroke-width="1.8"/>
+<rect x="1652" y="283" width="38" height="64" fill="#F0D4C7" stroke="#AD5036" stroke-width="2.5"/>
+<path d="M1671 283 L1671 347" fill="none" stroke="#AD5036" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M1652 304.3333333333333 L1690 304.3333333333333" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+<path d="M1652 325.6666666666667 L1690 325.6666666666667" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+</g>
+<g class="frame-kv" data-frame-index="11" data-source="current" data-attended="true">
+<path d="M1698 283 L1703 278 H1741 V342 L1736 347Z" fill="white" stroke="#AD5036" stroke-width="1.8"/>
+<rect x="1698" y="283" width="38" height="64" fill="#F0D4C7" stroke="#AD5036" stroke-width="2.5"/>
+<path d="M1717 283 L1717 347" fill="none" stroke="#AD5036" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M1698 304.3333333333333 L1736 304.3333333333333" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+<path d="M1698 325.6666666666667 L1736 325.6666666666667" fill="none" stroke="#AD5036" stroke-width="1" stroke-linecap="round"/>
+</g>
+</g>
+<path d="M1762 175 H1778 V315 H1762" fill="none" stroke="#67717A" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<path d="M900 25 L900 360" fill="none" stroke="#D8DDE0" stroke-width="1.8" stroke-linecap="round"/>
+<g class="frame-kv" data-frame-index="-1" data-source="recent" data-attended="true">
+<path d="M255 397 L260 392 H298 V456 L293 461Z" fill="white" stroke="#557F9C" stroke-width="1.8"/>
+<rect x="255" y="397" width="38" height="64" fill="#D7E6F0" stroke="#557F9C" stroke-width="2.5"/>
+<path d="M274 397 L274 461" fill="none" stroke="#557F9C" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M255 418.3333333333333 L293 418.3333333333333" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+<path d="M255 439.6666666666667 L293 439.6666666666667" fill="none" stroke="#557F9C" stroke-width="1" stroke-linecap="round"/>
+</g>
+<text x="310" y="438" font-size="34" fill="#202B33" text-anchor="start" font-weight="normal">Attended</text>
+<g class="frame-kv" data-frame-index="-1" data-source="recent" data-attended="false">
+<path d="M530 397 L535 392 H573 V456 L568 461Z" fill="white" stroke="#B8C0C6" stroke-width="1.8"/>
+<rect x="530" y="397" width="38" height="64" fill="url(#not-attended)" stroke="#B8C0C6" stroke-width="2.5"/>
+</g>
+<text x="585" y="438" font-size="34" fill="#202B33" text-anchor="start" font-weight="normal">Not attended</text>
+<text x="1010" y="438" font-size="32" fill="#202B33" text-anchor="start" font-weight="normal">Cache capacity: 12 · same denoising</text>
+</g></svg>

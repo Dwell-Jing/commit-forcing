@@ -1,0 +1,21 @@
+VBench-Long, ID-Forcing's 128 MovieGen prompts x 120 s, generation seed 0
+x100; Quality = Recency Forcing Tab. 3; labels with all 128 prompts scored
+
+label                          Quality   Dynamic   Subject Background   Subj_in  Subj_c2c    Bg_c2c   Imaging Aesthetic  MotionSm   Flicker   description
+sf                               77.63     29.57     96.15     96.12     96.66     64.02     69.22     62.00     49.99     98.06     97.55   Self-Forcing, base (no sink, 21-frame window)
+rf+rule                          81.78     66.07     96.40     95.79     95.59     76.27     81.47     68.35     57.11     97.83     96.13   Recency Forcing, training-free reading (Self-Forcing weights) + Commit Forcing
+idf_sf                           81.62     64.27     96.88     96.06     96.48     76.47     82.05     68.12     56.37     97.77     96.17   ID-Forcing on Self-Forcing (authors' code)
+idf_sf+rule                      81.68     60.49     97.07     96.19     96.50     79.51     84.11     68.55     56.95     97.88     96.36   ID-Forcing + Commit Forcing (commit reads the previous 2 chunks, not the sink)
+longlive                         81.72     42.96     97.69     96.46     97.21     84.16     87.17     68.19     58.92     98.74     97.61   LongLive, base (sink 3 + local window 9 in every pass)
+longlive+rule                    81.93     46.42     97.62     96.46     97.00     85.25     88.36     68.98     58.99     98.59     97.37   longlive + Commit Forcing (commit reads the newest 12 real frames)
+
+paired contrasts (a - b), by prompt, bootstrap 4000, 95% CI ('*' = excludes 0)
+
+[Self-Forcing] ID-Forcing + Commit Forcing - ID-Forcing (idf_sf+rule - idf_sf)
+    Quality +0.06 [-0.15, +0.26]  n = 128 prompts
+    Dynamic -3.78*  Subject +0.19*  Background +0.12*  Subj_in +0.02  Subj_c2c +3.05*  Bg_c2c +2.05*  Imaging +0.44*  Aesthetic +0.57*  MotionSm +0.11  Flicker +0.18*
+
+[LongLive] Commit Forcing - base (longlive+rule - longlive)
+    Quality +0.21 [+0.05, +0.37]  n = 128 prompts
+    Dynamic +3.46*  Subject -0.06*  Background -0.00  Subj_in -0.21*  Subj_c2c +1.09*  Bg_c2c +1.19*  Imaging +0.79*  Aesthetic +0.06  MotionSm -0.15*  Flicker -0.24*
+

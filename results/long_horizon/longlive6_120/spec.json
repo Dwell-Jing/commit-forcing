@@ -1,0 +1,140 @@
+{
+  "title": "LongLive six-frame committing, 128 ID-Forcing MovieGen prompts, 120 seconds, generation seed 0",
+  "scores": "scores.csv",
+  "baseline_scores": "../vbench_long_120s_idf128.csv",
+  "reported": "source_summary.json",
+  "seed": 0,
+  "num_prompts": 128,
+  "bootstrap_draws": 4000,
+  "bootstrap_seed": 0,
+  "labels": {
+    "sf": "SF native (21-frame window)",
+    "rf+rule": "Recency Forcing (training-free, SF weights) + write rule",
+    "idf_sf": "ID-Forcing on SF (authors' code)",
+    "idf_sf+rule": "ID-Forcing machinery + write rule on SF",
+    "longlive": "LongLive, release",
+    "longlive+rule": "LongLive + write rule",
+    "idf_longlive": "ID-Forcing on LongLive (authors' code)",
+    "idf_longlive+rule": "ID-Forcing machinery + write rule on LongLive",
+    "longlive+commit6": "LongLive + write rule, 6-frame commit window"
+  },
+  "source_label_map": {
+    "G3_R21": "sf",
+    "K_RFw": "rf+rule",
+    "IDF_SF": "idf_sf",
+    "IDF_SF_W": "idf_sf+rule",
+    "LLS_33": "longlive",
+    "LLS_c0": "longlive+rule",
+    "IDF_LL": "idf_longlive",
+    "IDF_LL_W": "idf_longlive+rule",
+    "LLS_cw6": "longlive+commit6"
+  },
+  "contrasts": [
+    [
+      "SF weights @120s",
+      "ID-Forcing - native",
+      "idf_sf",
+      "sf"
+    ],
+    [
+      "SF weights @120s",
+      "ID-Forcing machinery + rule - ID-Forcing [commit context]",
+      "idf_sf+rule",
+      "idf_sf"
+    ],
+    [
+      "SF weights @120s",
+      "RF + rule - ID-Forcing",
+      "rf+rule",
+      "idf_sf"
+    ],
+    [
+      "LongLive @120s",
+      "rule - native",
+      "longlive+rule",
+      "longlive"
+    ],
+    [
+      "LongLive @120s",
+      "ID-Forcing - native",
+      "idf_longlive",
+      "longlive"
+    ],
+    [
+      "LongLive @120s",
+      "rule - ID-Forcing",
+      "longlive+rule",
+      "idf_longlive"
+    ],
+    [
+      "LongLive @120s",
+      "ID-Forcing machinery + rule - ID-Forcing [commit context]",
+      "idf_longlive+rule",
+      "idf_longlive"
+    ],
+    [
+      "LongLive @120s",
+      "rule6 - native",
+      "longlive+commit6",
+      "longlive"
+    ],
+    [
+      "LongLive @120s",
+      "rule6 - rule12",
+      "longlive+commit6",
+      "longlive+rule"
+    ],
+    [
+      "LongLive @120s",
+      "rule6 - ID-Forcing",
+      "longlive+commit6",
+      "idf_longlive"
+    ]
+  ],
+  "metric_order": [
+    [
+      "quality",
+      "Quality"
+    ],
+    [
+      "dynamic_degree",
+      "Dynamic"
+    ],
+    [
+      "subject_consistency",
+      "Subject"
+    ],
+    [
+      "background_consistency",
+      "Background"
+    ],
+    [
+      "subject_inclip",
+      "Subj_in"
+    ],
+    [
+      "subject_clip2clip",
+      "Subj_c2c"
+    ],
+    [
+      "background_clip2clip",
+      "Bg_c2c"
+    ],
+    [
+      "imaging_quality",
+      "Imaging"
+    ],
+    [
+      "aesthetic_quality",
+      "Aesthetic"
+    ],
+    [
+      "motion_smoothness",
+      "MotionSm"
+    ],
+    [
+      "temporal_flickering",
+      "Flicker"
+    ]
+  ]
+}

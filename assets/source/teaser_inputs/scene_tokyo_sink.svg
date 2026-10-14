@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="416" height="240" viewBox="0 0 416 240">
+  <title>Initial Tokyo crossing in a warm street palette, schematic</title>
+  <desc>Original flat vector illustration of an initial wide Tokyo crossing with warm sandstone and brown buildings: the woman faces the camera in a black jacket, red dress and sunglasses. The warm street palette distinguishes initial history content from the cool storefront of recent history. Represents initial history content, not an experimental video frame or accessed KV.</desc>
+  <g id="street">
+    <rect width="416" height="240" fill="#eee8dd"/>
+    <path d="M0 0H122L183 90V156L0 210Z" fill="#756352"/>
+    <path d="M0 0H55V194L0 210Z" fill="#594b42"/>
+    <path d="M57 0H113L147 52V174L57 194Z" fill="#94806b"/>
+    <path d="M117 19L156 60V164L149 176V52Z" fill="#665243"/>
+    <path d="M158 60L187 90V157L158 166Z" fill="#b09b82"/>
+    <path d="M416 0H296L233 90V156L416 210Z" fill="#806b56"/>
+    <path d="M350 0H416V210L350 193Z" fill="#675748"/>
+    <path d="M298 0H346V194L269 173V52Z" fill="#a18b71"/>
+    <path d="M293 21L258 60V166L269 174V52Z" fill="#6c5948"/>
+    <path d="M254 62L233 90V156L254 165Z" fill="#b4a189"/>
+    <path d="M0 210L183 150H233L416 210V240H0Z" fill="#9a9184"/>
+    <path d="M110 240L194 151H222L307 240Z" fill="#b3a99a"/>
+    <path d="M0 224L186 151M416 224L230 151" fill="none" stroke="#d6cbb9" stroke-width="3"/>
+    <path d="M166 240L202 170M266 240L217 170" fill="none" stroke="#e8e0d2" stroke-width="2"/>
+    <path d="M17 22H45V111H17Z" fill="#b9694d"/>
+    <path d="M23 34H39V40H23ZM23 52H39V58H23ZM23 70H39V76H23ZM23 88H39V94H23Z" fill="#efe2c7"/>
+    <path d="M18 105H43V144H18Z" fill="#b6c0ad"/>
+    <path d="M70 42L99 47V86L70 82Z" fill="#c08d68"/>
+    <path d="M70 111L107 109V155L70 162Z" fill="#dac39b"/>
+    <path d="M125 65L142 77V108L125 102Z" fill="#a2b1a5"/>
+    <path d="M165 104L178 111V133L165 135Z" fill="#d3b684"/>
+    <path d="M369 27H396V102H369Z" fill="#bac1ab"/>
+    <path d="M363 121H398V157L363 152Z" fill="#d8bb8b"/>
+    <path d="M305 43L334 35V86L305 93Z" fill="#bf865f"/>
+    <path d="M287 115L331 121V157L287 148Z" fill="#b6baa5"/>
+    <path d="M258 76L273 64V104L258 110Z" fill="#d8bd88"/>
+    <path d="M239 112L250 104V136L239 133Z" fill="#bd9a7e"/>
+    <g fill="#d7be91">
+      <path d="M35 220L83 207L87 211L37 226Z"/>
+      <path d="M315 222L366 232L358 237L307 226Z"/>
+      <path d="M83 195L109 189L111 193L85 200Z"/>
+    </g>
+    <g fill="#b8bda8">
+      <path d="M37 236L101 217L109 220L51 240H37Z"/>
+      <path d="M296 204L339 213L334 218L290 208Z"/>
+    </g>
+    <g fill="#f1ebdd">
+      <path d="M119 207L126 201H288L295 207Z"/>
+      <path d="M105 222L114 214H302L311 222Z"/>
+      <path d="M87 239L99 230H318L330 239Z"/>
+    </g>
+    <g fill="#6e6357">
+      <circle cx="156" cy="135" r="4"/><path d="M150 142H161L164 160H147Z"/>
+      <circle cx="270" cy="136" r="4"/><path d="M265 142H275L278 163H262Z"/>
+    </g>
+  </g>
+  <g id="woman" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M207 63C192 62 188 73 189 85L185 105L202 106L207 101L214 106L229 104L225 84C226 71 220 62 207 63Z" fill="#252e34"/>
+    <path d="M198 75Q207 70 219 75L218 90Q215 99 208 100Q201 97 198 90Z" fill="#c8967c"/>
+    <path d="M203 97H213L215 108L208 112L200 106Z" fill="#c8967c"/>
+    <path d="M196 81H207L206 88H198ZM211 81H222L220 88H212Z" fill="#27343c"/>
+    <path d="M205 83H213M196 82L192 80M222 82L225 80" stroke="#27343c" stroke-width="2"/>
+    <path d="M197 107L209 110L216 106L226 124L223 157L195 159L188 132Z" fill="#222f38"/>
+    <path d="M209 110L211 153L201 155L203 116Z" fill="#c8443e"/>
+    <path d="M198 108L204 124L199 132M218 110L211 125L217 133" fill="none" stroke="#5d6a70" stroke-width="2"/>
+    <path d="M193 118L181 141L177 157L184 160L190 143L201 128Z" fill="#283943"/>
+    <path d="M178 157L184 159L182 167L176 168L174 164Z" fill="#c8967c"/>
+    <path d="M219 119L225 146L235 163L228 167L217 147L211 126Z" fill="#283943"/>
+    <path d="M228 166L235 163L239 169L235 174L230 172Z" fill="#c8967c"/>
+    <path d="M197 151L222 150L230 178L238 194L218 201L193 196L183 193L190 171Z" fill="#c9463f"/>
+    <path d="M211 157L207 190M221 161L226 192" fill="none" stroke="#a92f32" stroke-width="2"/>
+    <path d="M194 196L205 198L202 216L198 224L188 224L193 212Z" fill="#c8967c"/>
+    <path d="M216 200L226 198L232 211L235 223L224 225L220 213Z" fill="#c8967c"/>
+    <path d="M188 218H199L199 227L205 230V234H183V229Z" fill="#25343c"/>
+    <path d="M224 217L234 216L236 225L246 229L245 233H225Z" fill="#25343c"/>
+    <path d="M193 114C179 123 176 144 176 158" fill="none" stroke="#172b35" stroke-width="3"/>
+    <path d="M164 154L182 152L187 172L166 176Z" fill="#253943" stroke="#637781" stroke-width="1.5"/>
+  </g>
+</svg>

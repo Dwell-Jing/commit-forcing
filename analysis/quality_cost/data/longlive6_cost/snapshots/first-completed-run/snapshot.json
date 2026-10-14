@@ -1,0 +1,30 @@
+{
+  "snapshot_id": "first-completed-run",
+  "scope": "8 original JSON observations, wall timing and Torch allocation only; device peaks not established",
+  "original_source_hashes": {
+    "LL_native_r0.json": "5901d55b1f3a98008f81f0a6840f914fdc755c398c87a92673b6c4d3519705a6",
+    "LL_native_r1.json": "7c9430ee2e327dda6a89369f440c10f3b062655b5d49ce1d70f6c664b17088b3",
+    "LL_native_r2.json": "c73b6841440bc99077e36675a29dfa39e47353fbd89fa185ced684a98662f527",
+    "LL_native_r3.json": "f69ee03f48638613042705923451531010d51d35b17921bf954d218195987143",
+    "LL_w6_r0.json": "f05036dc85b5ce7df70a497d1077740f0b4eb6832d9db62f44440b766d550e52",
+    "LL_w6_r1.json": "31d7ef4966811116f8f6510a94952aaa7c71c33c28ed25c9e16110d5af895b0a",
+    "LL_w6_r2.json": "f4b6ed0a5545a4c7d579e93574937fa52018019aaf70f14ad8a76a7e773e5a85",
+    "LL_w6_r3.json": "68174b04a7cc0c58ad91d54c28d856f01dece9618628d7539bbbb1d4689bcc53"
+  },
+  "published_numeric_hashes": {
+    "LL_native_r0.json": "0dfa2dd7436e8636e5e4d7104a68a37fcf2821657bcc9322bbe56af4d0969138",
+    "LL_native_r1.json": "9729699de6ed0e0f55eb76dc155e7b7fd1f915d1c37d354276b7d5e61514e134",
+    "LL_native_r2.json": "c067e5d6d02136bcb7b3bb05a8c357be425ab84dd5a0ec69d6f490d52f9c8ad9",
+    "LL_native_r3.json": "6de8ee18f8599b8eb3b05d7aec5f228d50cce683dea4df0a574272725b9cae71",
+    "LL_w6_r0.json": "cc4ade3a7024e0c656fe14f200d409496e0a447cc2efb26fbde599db2c270556",
+    "LL_w6_r1.json": "8e924cff94326f40e522c80a00b6769f8962c8377fbb3a6821af3c51e3bf3406",
+    "LL_w6_r2.json": "b9d8b2c36107ee94a80d0b2999deda9b8e918a2b423a7603caea813a4c329576",
+    "LL_w6_r3.json": "47a1f311108a5d2d10797950dd6acb1f9089dcb67547b83cc807c02fe64b4716"
+  },
+  "mean_wall_s": {
+    "LL_native": 230.82452696561813,
+    "LL_w6": 223.66346138715744
+  },
+  "wall_ratio": 0.96897615,
+  "torch_allocated_gib": 30.689143180847168
+}

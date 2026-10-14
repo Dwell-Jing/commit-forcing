@@ -1,0 +1,139 @@
+diff --git a/wan/modules/causal_model.py b/wan/modules/causal_model.py
+index a6615da..e60c74b
+--- a/wan/modules/causal_model.py
++++ b/wan/modules/causal_model.py
+@@ -143,6 +143,75 @@ def _trb_attention(q, k, v, bias, fs):
+     return attention(qa, ka, va, softmax_scale=1.0 / math.sqrt(D))[..., :D]
+ 
+ 
++# Boundary analysis switches and counters (analysis/boundaries/sgf).
++#   far:          None or dict(stride, layers, steps, cap, mass): far anchors for the denoising passes
++#   far_bias:     None or a constant TRB term for every far anchor
++#   far_pos:      None (true positions), "sink" or "oldest"
++#   sink:         False skips the pinned sink in the denoising passes
++#   early_window: None or W: denoising steps 0 and 1 read only the newest W frames
++BOUNDARY = dict(far=None, far_bias=None, far_pos=None, sink=True, early_window=None,
++                far_reads=0, far_anchors=0, sink_dropped=0, pos_mapped=0, pos_dropped=0, early_reads=0)
++
++
++def _far_positions(p_far, pos, sink):
++    """RoPE positions of the far anchors and the number of window frames they replace."""
++    mode = BOUNDARY["far_pos"]
++    if mode is None:
++        return p_far, 0
++    c = TRB["chunk"]
++    j = torch.arange(p_far.shape[0], device=pos.device)
++    if mode == "sink":
++        p, drop = pos[j % sink], 0
++    elif mode == "oldest":
++        assert pos.shape[0] >= sink + 2 * c, ("window too short to give up its oldest block", tuple(pos.shape))
++        p, drop = pos[sink + j % c], c
++    else:
++        raise ValueError(f"unknown far_pos {mode!r}")
++    BOUNDARY["pos_mapped"] += 1
++    return p.to(device=p_far.device, dtype=torch.long), drop
++
++
++def _far_trb_read(q, kv_cache, grid_sizes, freqs, pos, q_pos, num_occ, fs, cur_frames, sink, step):
++    """One TRB attention call over [far anchors | cache], positions shifted to be non-negative."""
++    st, far = kv_cache["far"], BOUNDARY["far"]
++    abs_list = kv_cache["stream_abs"]
++    n_far, p_last, q_last = len(st["abs"]), int(pos[-1]), int(abs_list[-1])
++    p_far = torch.tensor([p_last - (q_last - a) for a in st["abs"]], dtype=torch.long, device=q.device)
++    p_far, drop = _far_positions(p_far, pos, sink)
++    off = max(0, -int(p_far.min()))
++    assert off + p_last < freqs.shape[0], ("RoPE table too short", off, p_last, tuple(freqs.shape))
++    gq, gn, gf = grid_sizes.clone(), grid_sizes.clone(), grid_sizes.clone()
++    gq[:, 0], gn[:, 0], gf[:, 0] = cur_frames, num_occ, n_far
++    vn = kv_cache["v"][:, :num_occ * fs]
++    rq = causal_rope_apply_frames(q, gq, freqs, q_pos + off).type_as(vn)
++    rkn = causal_rope_apply_frames(kv_cache["k"][:, :num_occ * fs], gn, freqs, pos + off).type_as(vn)
++    rkf = causal_rope_apply_frames(torch.cat(st["k"], 1), gf, freqs, p_far + off).type_as(vn)
++    vf = torch.cat(st["v"], 1)
++    near_bias, _ = _trb_bias(abs_list, sink, q_last - cur_frames + 1, cur_frames, step)
++    c, lr, lh = TRB["chunk"], TRB["l_recent"], TRB["l_history"]
++    gamma = TRB["gamma_base"] * 2.0 ** (step + 1)
++    mass = math.log(far["stride"]) if far["mass"] else 0.0
++    far_bias = []
++    for a in st["abs"]:
++        d = (q_last - a) // c
++        b = -TRB["beta"] * min((d - lr) / lh, 1.0) ** gamma if d > lr else 0.0
++        if BOUNDARY["far_bias"] is not None:
++            b = float(BOUNDARY["far_bias"])
++        far_bias.append(mass + b)
++    if not BOUNDARY["sink"] and len(abs_list) > sink and abs_list[sink] > sink:  # pinned sink left out
++        rkn, vn, near_bias = rkn[:, sink * fs:], vn[:, sink * fs:], near_bias[sink:]
++        BOUNDARY["sink_dropped"] += 1
++    if drop:   # far_pos = "oldest": anchors replace the oldest window block
++        assert BOUNDARY["sink"], "far_pos 'oldest' together with sink removal is not defined"
++        lo, hi = sink * fs, (sink + drop) * fs
++        rkn, vn = torch.cat([rkn[:, :lo], rkn[:, hi:]], 1), torch.cat([vn[:, :lo], vn[:, hi:]], 1)
++        near_bias = near_bias[:sink] + near_bias[sink + drop:]
++        BOUNDARY["pos_dropped"] += drop
++    BOUNDARY["far_reads"] += 1
++    BOUNDARY["far_anchors"] += n_far
++    return _trb_attention(rq, torch.cat([rkf, rkn], 1), torch.cat([vf, vn], 1), far_bias + near_bias, fs)
++
++
+ class CausalWanSelfAttention(nn.Module):
+ 
+     def __init__(self,
+@@ -329,6 +398,20 @@ class CausalWanSelfAttention(nn.Module):
+                     # Evict the oldest non-sink frame(s); shift the kept window
+                     # left, leaving the first `sink` frame(s) pinned in place.
+                     num_evict = n_after - max_frames
++                    far = BOUNDARY["far"]  # keep evicted frames as far anchors
++                    if far is not None and far["layers"][0] <= getattr(self, "boundary_layer", -1) <= far["layers"][1]:
++                        st = kv_cache.setdefault("far", dict(abs=[], k=[], v=[]))
++                        for i in range(num_evict):
++                            a = abs_list[sink + i]
++                            if a % far["stride"] == far["stride"] - 1:
++                                sl = (sink + i) * fs
++                                st["abs"].append(a)
++                                st["k"].append(kv_cache["k"][:, sl:sl + fs].clone())
++                                st["v"].append(kv_cache["v"][:, sl:sl + fs].clone())
++                        while len(st["abs"]) > far["cap"]:
++                            st["abs"].pop(0)
++                            st["k"].pop(0)
++                            st["v"].pop(0)
+                     src_lo = (sink + num_evict) * fs
+                     src_hi = len(abs_list) * fs
+                     dst_lo = sink * fs
+@@ -385,7 +468,19 @@ class CausalWanSelfAttention(nn.Module):
+             n_hist = 0
+             if COMMIT_RULE["trb"] and not COMMIT_RULE["commit"] and COMMIT_RULE["step"] >= 0:
+                 trb_bias, n_hist = _trb_bias(abs_list, sink, cur_abs, cur_frames, COMMIT_RULE["step"])
+-            if n_hist > 0:
++            far = BOUNDARY["far"]  # far reads and sink removal
++            if n_hist > 0 and far is not None and COMMIT_RULE["step"] in far["steps"] \
++                    and far["layers"][0] <= getattr(self, "boundary_layer", -1) <= far["layers"][1] \
++                    and kv_cache.get("far") is not None and len(kv_cache["far"]["abs"]) > 0:
++                x = _far_trb_read(q, kv_cache, grid_sizes, freqs, pos, q_pos, num_occ, fs, cur_frames, sink,
++                                  COMMIT_RULE["step"])
++                COMMIT_RULE["trb_calls"] += 1
++            elif n_hist > 0 and not BOUNDARY["sink"] and len(abs_list) > sink and abs_list[sink] > sink:
++                x = _trb_attention(roped_query, roped_key[:, sink * fs:], kv_cache["v"][:, sink * fs:num_occ * fs],
++                                   trb_bias[sink:], fs)
++                BOUNDARY["sink_dropped"] += 1
++                COMMIT_RULE["trb_calls"] += 1
++            elif n_hist > 0:
+                 x = _trb_attention(roped_query, roped_key, kv_cache["v"][:, :num_occ * fs], trb_bias, fs)
+                 COMMIT_RULE["trb_calls"] += 1
+             elif COMMIT_RULE["commit"] and COMMIT_RULE["window"] is not None:
+@@ -398,6 +493,16 @@ class CausalWanSelfAttention(nn.Module):
+                     kv_cache["v"][:, first * fs:num_occ * fs]
+                 )
+                 COMMIT_RULE["rule_reads"] += 1
++            elif BOUNDARY["early_window"] is not None and not COMMIT_RULE["commit"] and COMMIT_RULE["step"] in (0, 1):
++                # steps 0 and 1 read only the newest early_window frames
++                lo = cur_abs + cur_frames - BOUNDARY["early_window"]
++                first = next(j for j, a in enumerate(abs_list) if a >= lo)
++                x = attention(
++                    roped_query,
++                    roped_key[:, first * fs:],
++                    kv_cache["v"][:, first * fs:num_occ * fs]
++                )
++                BOUNDARY["early_reads"] += 1
+             else:
+                 x = attention(
+                     roped_query,

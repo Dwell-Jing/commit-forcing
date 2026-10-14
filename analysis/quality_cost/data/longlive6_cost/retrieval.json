@@ -1,0 +1,159 @@
+{
+  "snapshot_id": "second-completed-run",
+  "source_metadata_sha256": "a294a464796de608e693f31f89f1755f9d6d6404bb78808df8c6f6c95adb4b09",
+  "retrieved_at": "2026-10-14T12:20:25.155422+08:00",
+  "stable_stat_check": true,
+  "completion_marker_after_outputs": true,
+  "files": [
+    {
+      "size": 0,
+      "mtime_ns": 1791951229747061966,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "ALL_DONE"
+    },
+    {
+      "size": 691,
+      "mtime_ns": 1791951225529268264,
+      "sha256": "f933512b586db5e9ceec310102b5b79f6af8b9f9d9f611a79ea6e169822ed0bd",
+      "name": "LL_native_r0.json"
+    },
+    {
+      "size": 6,
+      "mtime_ns": 1791951227662202235,
+      "sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "name": "LL_native_r0.mem"
+    },
+    {
+      "size": 0,
+      "mtime_ns": 1791951227543222886,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "LL_native_r0.stop"
+    },
+    {
+      "size": 691,
+      "mtime_ns": 1791951220424194411,
+      "sha256": "44372a9214b70508566a0dacef65dfd9a12d09cd6c534f3a835d18c808ee487a",
+      "name": "LL_native_r1.json"
+    },
+    {
+      "size": 6,
+      "mtime_ns": 1791951221960770247,
+      "sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "name": "LL_native_r1.mem"
+    },
+    {
+      "size": 0,
+      "mtime_ns": 1791951222274105437,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "LL_native_r1.stop"
+    },
+    {
+      "size": 692,
+      "mtime_ns": 1791951227365677858,
+      "sha256": "981e7ee6c39efe054994fd91c0b46d39dedf113afec45531afa6f512f9684852",
+      "name": "LL_native_r2.json"
+    },
+    {
+      "size": 6,
+      "mtime_ns": 1791951228743159462,
+      "sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "name": "LL_native_r2.mem"
+    },
+    {
+      "size": 0,
+      "mtime_ns": 1791951228906076736,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "LL_native_r2.stop"
+    },
+    {
+      "size": 692,
+      "mtime_ns": 1791951170804215165,
+      "sha256": "741d32db5243ffe06661253439c9d4bd3fb7add47bb1d85968e4c913bf1fce62",
+      "name": "LL_native_r3.json"
+    },
+    {
+      "size": 6,
+      "mtime_ns": 1791951172085857253,
+      "sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "name": "LL_native_r3.mem"
+    },
+    {
+      "size": 0,
+      "mtime_ns": 1791951172369632625,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "LL_native_r3.stop"
+    },
+    {
+      "size": 873,
+      "mtime_ns": 1791951212368871718,
+      "sha256": "c0664eb18d101ca60eec6be2557f2328aebb07554f6d198ef661139878a1b083",
+      "name": "LL_w6_r0.json"
+    },
+    {
+      "size": 6,
+      "mtime_ns": 1791951213868674231,
+      "sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "name": "LL_w6_r0.mem"
+    },
+    {
+      "size": 0,
+      "mtime_ns": 1791951214051285526,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "LL_w6_r0.stop"
+    },
+    {
+      "size": 874,
+      "mtime_ns": 1791951195658272878,
+      "sha256": "5ad0f690134a101be808af589f7056c7669953b276bf7d403401e54af2ea2ef0",
+      "name": "LL_w6_r1.json"
+    },
+    {
+      "size": 6,
+      "mtime_ns": 1791951196913388361,
+      "sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "name": "LL_w6_r1.mem"
+    },
+    {
+      "size": 0,
+      "mtime_ns": 1791951197299123323,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "LL_w6_r1.stop"
+    },
+    {
+      "size": 873,
+      "mtime_ns": 1791951211275555968,
+      "sha256": "09560e0191330f4c5efdce28de006928b73e9548bbff35ae8e6d795ff0cbfe62",
+      "name": "LL_w6_r2.json"
+    },
+    {
+      "size": 6,
+      "mtime_ns": 1791951212755056705,
+      "sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "name": "LL_w6_r2.mem"
+    },
+    {
+      "size": 0,
+      "mtime_ns": 1791951213211263093,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "LL_w6_r2.stop"
+    },
+    {
+      "size": 872,
+      "mtime_ns": 1791951168333246938,
+      "sha256": "1338aa982ba4fcfafc56c42900c13f8deded62d582f06003490029a096461ce3",
+      "name": "LL_w6_r3.json"
+    },
+    {
+      "size": 6,
+      "mtime_ns": 1791951169891567836,
+      "sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "name": "LL_w6_r3.mem"
+    },
+    {
+      "size": 0,
+      "mtime_ns": 1791951169858572386,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "LL_w6_r3.stop"
+    }
+  ]
+}

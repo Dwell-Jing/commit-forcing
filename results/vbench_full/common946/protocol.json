@@ -1,0 +1,186 @@
+{
+  "protocol_id": "vbench-long-wan-full946-60s-seed0-20261011",
+  "samples_per_prompt": 1,
+  "generation_seed": 0,
+  "frames_latent": 240,
+  "frames_pixel": 957,
+  "fps": 16,
+  "width": 832,
+  "height": 480,
+  "benchmark_commit": "45e79ec14e69a2187202c675d2dbce1a71843d53",
+  "source_full_info_sha256": "5dd2de80ee43cda750b2b72ea7023657c0b90d3702041c7e4608c65dbe50dccd",
+  "generation_prompt_file_sha256": "54fb940aea8f1ede1e8728f62d3e67efacdd7b341fb8a6c91308bcba874d5d5d",
+  "seed_convention": "generation_seed * 100003 + global_idx; seed0; shared full per-prompt RNG reset across each native/rule pair; record actual noise hashes",
+  "scoring": {
+    "mode": "long_vbench_standard",
+    "dev_flag": true,
+    "static_filter_flag": "temporal_flickering_only",
+    "num_of_samples_per_prompt": 1,
+    "clip_length_config": "clip_length_mix.yaml",
+    "semantic_splitting": false,
+    "subject_background_fusion": "official_dev_slow_fast_yaml_0.5_0.5",
+    "prompt_metadata": "original full records including extra_info; dimension-specific subsets unchanged",
+    "clip_duration_rule": "Official full-info get_duration_from_json: max over all dimensions for the canonical text, including its duplicate rows; matches existing vbs_prep.py"
+  },
+  "generation_prompt_source": "VBench/prompts/augmented_prompts/Wan2.1-T2V-1.3B/all_dimension_aug_wanx_seed42.txt",
+  "models": {
+    "SGFP": {
+      "upstream_commit": "0ddc62188b7d995a9089b2cfe53d5cc67934937a",
+      "integration": "sgf_plus",
+      "config": "configs/sgf_plus_chunkwise.yaml",
+      "weights": "generator_ema",
+      "geometry": {
+        "kv_cache_max_frames": 12,
+        "kv_cache_sink": 3,
+        "kv_cache_train_frames": 12,
+        "kv_cache_position_mode": "contiguous"
+      },
+      "commit_window": 9,
+      "sampling": "official CUDA bf16 full240 tape; preserve subsequent RNG advancement",
+      "checkpoint_sha256": "53e07965caef6bcc13a0ab123c7aa6fc3281200b1097dcaecf785e332fc51469",
+      "weight_sha256": {
+        "model.pt": "53e07965caef6bcc13a0ab123c7aa6fc3281200b1097dcaecf785e332fc51469"
+      }
+    },
+    "LL": {
+      "upstream_commit": "e52d9ef6865d843282a6b5e9d46d03b35f88929d",
+      "integration": "longlive",
+      "config": "configs/longlive_inference.yaml",
+      "weights": "official_longlive_base_plus_lora",
+      "geometry": {
+        "local_attn_size": 12,
+        "sink_size": 3,
+        "native_physical_frames": 12,
+        "cf_physical_frames": 12,
+        "rank": 256,
+        "alpha": 256
+      },
+      "commit_window": 6,
+      "sampling": "official CUDA bf16 full240 tape",
+      "checkpoint_sha256": "10a2aa8fcf89c77d9033f4c117405412a690e289625766619d293f0c5a208ee7",
+      "weight_sha256": {
+        "longlive_base.pt": "10a2aa8fcf89c77d9033f4c117405412a690e289625766619d293f0c5a208ee7",
+        "lora.pt": "c4e43b87d62d4b0614b496773639f1ab170a7ee486dc23407901e9d3a5ebc07a"
+      },
+      "arm_sources": {
+        "LL_N": "original common946 LongLive native arm",
+        "LL_W": "W946_W6S"
+      },
+      "committing_context": "3 recent trajectory frames plus the current 3-frame block; warm-up can read 3",
+      "denoising_context": "sink 3 + newest 9; native configuration retained",
+      "source_update": {
+        "date": "2026-10-14",
+        "source_results": "longlive6_source_results.json",
+        "source_results_sha256": "f12804d586c3e8cdbef89fb70d72235daf4f7e77420c09e996b675c601a6548d",
+        "source_contributions_sha256": "c8a007e988eba696be812d15ef0a6a9c9aa99b74b815484080beb37d4f6a0e23",
+        "source_coverage_sha256": "bfbbedc207d395e770092f15dd7b7bd0e88ecd692c1655d518ec3f026a61f0e2",
+        "source_protocol_sha256": "0966b5c7025395ea1925b876740203cb637453303b0511e5e18ad9449994e31c",
+        "completed_jobs": 128,
+        "archive": "ablation12/original_package.zip",
+        "archive_manifest": "ablation12/archive_manifest.json",
+        "new_main_physical_frames": 12,
+        "old_control_physical_frames": 15
+      }
+    },
+    "RS": {
+      "upstream_commit": "e384dc7c08e8848b03df29968b34574bbf96fc3b",
+      "integration": "rolling_sink",
+      "config": "configs/self_forcing_dmd.yaml",
+      "weights": "generator_ema",
+      "geometry": {
+        "local_attn_size": 21,
+        "replay": true,
+        "real_writer_only_cf": true
+      },
+      "commit_window": 21,
+      "sampling": "official CUDA bf16 3-frame tape repeated80; native internal replay RNG preserved",
+      "checkpoint_sha256": "a0413986d9734e02c09504e1520f5697ba6df731bb2f0f35577485e9cc8f56a3",
+      "weight_sha256": {
+        "self_forcing_dmd.pt": "a0413986d9734e02c09504e1520f5697ba6df731bb2f0f35577485e9cc8f56a3"
+      }
+    },
+    "IDFSF": {
+      "upstream_commit": "4cd6a4c572ba6a9725a08ff590f9661ad2ea3cb2",
+      "integration": "id_forcing",
+      "config": "self_forcing/configs/self_forcing_dmd.yaml",
+      "weights": "generator_ema",
+      "geometry": {
+        "cache_frames": 21,
+        "read_frames": 12,
+        "sink_size": 3,
+        "native_chunks": 7,
+        "cf_history_chunks": 2,
+        "cf_removes_reencoding": true
+      },
+      "commit_window": 9,
+      "sampling": "official CUDA bf16 full240 tape; sampler independently reseeded rng_seed+1",
+      "checkpoint_sha256": "a0413986d9734e02c09504e1520f5697ba6df731bb2f0f35577485e9cc8f56a3",
+      "weight_sha256": {
+        "self_forcing_dmd.pt": "a0413986d9734e02c09504e1520f5697ba6df731bb2f0f35577485e9cc8f56a3"
+      }
+    },
+    "IDFLL": {
+      "upstream_commit": "4cd6a4c572ba6a9725a08ff590f9661ad2ea3cb2",
+      "integration": "id_forcing",
+      "config": "longlive/configs/longlive_inference.yaml",
+      "weights": "official_longlive_base_plus_lora",
+      "geometry": {
+        "cache_frames": 12,
+        "sink_size": 3,
+        "native_chunks": 80,
+        "cf_takeover_chunk": 1,
+        "cf_history_chunks": 2,
+        "rank": 256,
+        "alpha": 256
+      },
+      "commit_window": 9,
+      "sampling": "official CUDA bf16 first80chunk tape; no continuation tape at60s",
+      "checkpoint_sha256": "c4e43b87d62d4b0614b496773639f1ab170a7ee486dc23407901e9d3a5ebc07a",
+      "weight_sha256": {
+        "lora.pt": "c4e43b87d62d4b0614b496773639f1ab170a7ee486dc23407901e9d3a5ebc07a",
+        "longlive_base.pt": "10a2aa8fcf89c77d9033f4c117405412a690e289625766619d293f0c5a208ee7"
+      }
+    }
+  },
+  "legacy_arms": [
+    "SGF_N",
+    "SGF_W",
+    "RF_N",
+    "RF_W",
+    "CF_N",
+    "CF_W"
+  ],
+  "legacy_provenance": "Completed videos and raw scores reused after coverage and input-binding checks. Historical outputs do not retain complete initial-noise/RNG fingerprints.",
+  "bootstrap": {
+    "repetitions": 4000,
+    "seed": 20261011,
+    "clusters": 944,
+    "unit": "paired canonical original prompt",
+    "aggregation": "Each arm retains its own official surviving-record numerator and denominator; no intersection of survivors."
+  },
+  "public_scope": {
+    "paired_configurations": 8,
+    "arms": [
+      "SGF_N",
+      "SGF_W",
+      "RF_N",
+      "RF_W",
+      "CF_N",
+      "CF_W",
+      "SGFP_N",
+      "SGFP_W",
+      "LL_N",
+      "LL_W",
+      "RS_N",
+      "RS_W",
+      "IDFSF_N",
+      "IDFSF_W",
+      "IDFLL_N",
+      "IDFLL_W"
+    ],
+    "dimensions": 16,
+    "metadata_entries": 946,
+    "distinct_original_prompts": 944,
+    "provenance": "Seven configurations retain the original accepted common946 results; LongLive + Commit Forcing uses the subsequent same-protocol 6-frame W946_W6S arm. Baselines and other configurations are unchanged."
+  }
+}

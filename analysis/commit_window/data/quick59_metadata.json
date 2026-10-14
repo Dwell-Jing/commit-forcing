@@ -1,0 +1,8 @@
+{
+  "excluded_prompt_ids": [
+    43
+  ],
+  "quick60_source_sha256": "974846ce05b17cb4e2f3a5e76b5214bb91d8503d435ef29a65778c93219e2831",
+  "calibration_source_sha256": "6429b4fa64921b710babb6dbf178dc453f447c2812d31b41c8a8107fd4a4b095",
+  "static_fraction_definition": "Fraction of recorded commit_windows equal to 3, preserving the original subgroup statistic"
+}

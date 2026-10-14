@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="190" viewBox="0 0 160 190">
+  <!-- Original vector fountain pen; no hand. Tip at (130,170). -->
+  <g transform="rotate(-28 130 170)" stroke="#202B33" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M117 31 Q117 19 130 19 Q143 19 143 31 L143 128 L117 128 Z" fill="#37434A"/>
+    <path d="M123 34 L123 113" fill="none" stroke="#68777F" stroke-width="3"/>
+    <path d="M137 32 L137 65 Q137 70 131 70" fill="none" stroke="#CED4D7" stroke-width="3.8"/>
+    <path d="M117 118 H143 V132 H117 Z" fill="#AD5036"/>
+    <path d="M117 132 L143 132 L130 170 Z" fill="#F9F3EA"/>
+    <path d="M130 145 V168" fill="none" stroke-width="2.4"/>
+    <circle cx="130" cy="144" r="3" fill="#202B33" stroke="none"/>
+    <path d="M127 165 L130 170 L133 165" fill="#202B33" stroke="none"/>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+{
+ "title": "Full VBench, 946 prompts x 60 s, generation seed 0: SGF",
+ "scores": "../vbench_full_60s.csv",
+ "shards": "../vbench_full_60s_shards.csv",
+ "seed": 0,
+ "labels": {
+  "sgf": "Self Gradient Forcing, base",
+  "sgf+rule": "sgf + Commit Forcing (commit reads the newest 9 real frames)"
+ },
+ "contrasts": [
+  ["SGF", "Commit Forcing - base", "sgf+rule", "sgf"]
+ ]
+}

@@ -1,0 +1,90 @@
+{
+  "artifact": "Rolling Sink committing-source reported evidence",
+  "updated": "2026-10-14",
+  "protocol": {
+    "nominal_seconds": 48,
+    "latent_frames": 192,
+    "prompts": 20,
+    "seeds": [
+      0,
+      1
+    ],
+    "paired_videos": 40,
+    "committing_capacity_latent_frames_both_arms": 21,
+    "includes_current_block": true,
+    "contrast": "RS_real - RS_off",
+    "denoising_policy": "retained",
+    "replay_policy": "retained"
+  },
+  "intervals": {
+    "kind": "reported paired prompt-bootstrap 95% intervals",
+    "bootstrap_implementation": "source/rs_verdict.py",
+    "draws": 4000,
+    "random_generator": "numpy.random.default_rng(0)",
+    "percentiles": [
+      2.5,
+      97.5
+    ],
+    "reestimated_for_this_release": false,
+    "identity_lower_bound": 1.7281547188758977e-05,
+    "consistency_reproduction": "../similarity_components/reproduce.py"
+  },
+  "sources": {
+    "recovered_report": "data/readout_rs.out",
+    "original_evaluator": "source/rs_verdict.py",
+    "transcribed_contrasts": "data/reported_contrasts.csv",
+    "identity_motion_intervals": "recovered original readout",
+    "brightness_saturation_intervals": "supplied original experiment handoff, experiment 2 results (2026-09-29)",
+    "consistency_components": "../similarity_components/data/dino_rs.json"
+  },
+  "availability": {
+    "raw_40_cell_inputs_included": false,
+    "complete_video_set_included": false,
+    "per_video_sidecars_included": false,
+    "summary_can_recompute_intervals": false,
+    "reported_summary_can_be_reprinted": true,
+    "opening_tail_embeddings_included": true,
+    "consistency_intervals_reproducible": true
+  },
+  "interpretation_limits": [
+    "rollout-policy comparison with repeat-run variation",
+    "equal committing capacity does not isolate content, trajectory age and position independently",
+    "equal read capacity does not imply equal physical storage or memory cost",
+    "brightness-level increase differs from an absolute drift reduction",
+    "historical verdict text in archived evidence does not override the current README"
+  ],
+  "not_reconstructed": [
+    "arm-level confidence intervals",
+    "40-cell distributions",
+    "time curves",
+    "exact old/recent source counts",
+    "absolute drift-magnitude CI endpoints"
+  ],
+  "files": [
+    {
+      "path": "data/readout_rs.out",
+      "sha256": "7f2030587ace75253e8954588df79bc2694e933ad352bfd85f56946d954340ca",
+      "bytes": 708
+    },
+    {
+      "path": "source/rs_verdict.py",
+      "sha256": "021daa0c86292ea7578254e9fdf0396214c209dce1de3ab50308e46b9debfee2",
+      "bytes": 2853
+    },
+    {
+      "path": "data/reported_contrasts.csv",
+      "sha256": "0a726eddf84fd2e14aa7b4635698ccbb9f48d7c5f0f4280b284d5c98c198ef58",
+      "bytes": 986
+    },
+    {
+      "path": "../similarity_components/data/dino_rs.npz",
+      "sha256": "080ee30a75e32d10baef20f33c85308f64a9da0f70605834fae0dab876e3f533",
+      "bytes": 457115
+    },
+    {
+      "path": "../similarity_components/data/dino_rs.json",
+      "sha256": "fa96934dcf7ee124c543d0ac8ba8a26d6a64fbf4f119fbc202904ca41965415b",
+      "bytes": 1923
+    }
+  ]
+}

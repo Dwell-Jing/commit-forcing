@@ -1,0 +1,32 @@
+VBench-Long, rollf200 x 60 s, generation seed 0: LongLive, the commit pass reads the newest 3 / 6 / 9 / 12 real frames
+x100; Quality = Recency Forcing Tab. 3; labels with all 200 prompts scored
+
+label                          Quality   Dynamic   Subject Background   Subj_in  Subj_c2c    Bg_c2c   Imaging Aesthetic  MotionSm   Flicker   description
+longlive                         82.23     42.98     97.76     96.54     97.13     86.01     88.40     68.69     61.53     98.74     97.61   LongLive, base (sink 3 + local window 9 in every pass)
+longlive+commit_self             82.73     53.03     97.69     96.52     96.98     86.21     88.79     69.18     61.66     98.46     97.11   longlive, commit reads only its own chunk
+longlive+commit6                 82.73     49.40     97.82     96.63     97.14     87.21     89.53     69.29     61.75     98.61     97.42   longlive, commit reads the newest 6 real frames
+longlive+commit9                 82.72     49.47     97.77     96.57     97.04     87.23     89.55     69.32     61.66     98.62     97.44   longlive, commit reads the newest 9 real frames
+longlive+rule                    82.65     49.38     97.70     96.49     96.92     86.93     89.17     69.39     61.68     98.59     97.37   longlive + Commit Forcing (commit reads the newest 12 real frames)
+
+paired contrasts (a - b), by prompt, bootstrap 4000, 95% CI ('*' = excludes 0)
+
+[LongLive, commit window] commit 6 - base (longlive+commit6 - longlive)
+    Quality +0.49 [+0.33, +0.66]  n = 200 prompts
+    Dynamic +6.42*  Subject +0.06*  Background +0.08*  Subj_in +0.01  Subj_c2c +1.20*  Bg_c2c +1.13*  Imaging +0.60*  Aesthetic +0.22  MotionSm -0.14*  Flicker -0.19*
+
+[LongLive, commit window] commit 9 - base (longlive+commit9 - longlive)
+    Quality +0.48 [+0.33, +0.64]  n = 200 prompts
+    Dynamic +6.48*  Subject +0.01  Background +0.03  Subj_in -0.10*  Subj_c2c +1.22*  Bg_c2c +1.15*  Imaging +0.63*  Aesthetic +0.13  MotionSm -0.13*  Flicker -0.17*
+
+[LongLive, commit window] commit 6 - commit self-only (longlive+commit6 - longlive+commit_self)
+    Quality +0.00 [-0.12, +0.12]  n = 200 prompts
+    Dynamic -3.63*  Subject +0.13*  Background +0.11*  Subj_in +0.16*  Subj_c2c +1.00*  Bg_c2c +0.74*  Imaging +0.11  Aesthetic +0.09  MotionSm +0.15*  Flicker +0.31*
+
+[LongLive, commit window] commit 9 - commit 6 (longlive+commit9 - longlive+commit6)
+    Quality -0.01 [-0.09, +0.07]  n = 200 prompts
+    Dynamic +0.07  Subject -0.05*  Background -0.05*  Subj_in -0.10*  Subj_c2c +0.02  Bg_c2c +0.02  Imaging +0.03  Aesthetic -0.09  MotionSm +0.01  Flicker +0.02
+
+[LongLive, commit window] Commit Forcing (commit 12) - commit 9 (longlive+rule - longlive+commit9)
+    Quality -0.07 [-0.15, +0.02]  n = 200 prompts
+    Dynamic -0.08  Subject -0.07*  Background -0.08*  Subj_in -0.12*  Subj_c2c -0.30*  Bg_c2c -0.38*  Imaging +0.07  Aesthetic +0.01  MotionSm -0.03*  Flicker -0.07*
+

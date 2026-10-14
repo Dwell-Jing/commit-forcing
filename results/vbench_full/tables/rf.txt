@@ -1,0 +1,42 @@
+Full VBench, 946 prompts x 60 s, generation seed 0: Recency Forcing (training-free)
+x100; Quality / Semantic / Total as VBench's cal_final_score.py
+
+            Subject   Backgr  Flicker MotionSm    Aesth  Imaging  Dynamic   Object MultiObj   Action    Color  Spatial    Scene AppStyle TmpStyle OverallC   Quality Semantic    Total
+rf            96.73    95.92    98.88    98.37    62.65    70.34    70.28    88.05    63.58    92.83    87.88    73.15    35.47    20.64    21.96    24.59     84.77    72.08    82.23
+rf+rule       96.98    96.23    99.02    98.23    64.06    71.24    70.56    89.04    69.33    94.17    89.20    74.82    41.53    20.55    22.62    25.03     85.24    74.43    83.08
+
+check: max over dimensions of |VBench score - mean of the per-video scores| x100
+rf         0.482 (color)
+rf+rule    0.610 (color)
+
+in-clip vs clip-to-clip consistency (x100, mean over videos)
+             Subj_in  Subj_c2c     Bg_in    Bg_c2c
+rf             96.46     74.21     95.38     81.01
+rf+rule        96.48     78.65     95.65     85.38
+
+paired contrasts (a - b) x100: per-video scores paired by prompt; 4000 joint resamples of the 944 distinct prompts; 95% CI ('*' = excludes 0)
+
+[Recency Forcing (training-free)] Commit Forcing - base (rf+rule - rf)
+    Total       +0.85 [  +0.56,   +1.15]*  n = 944
+    Quality     +0.47 [  +0.17,   +0.79]*  n = 944
+    Semantic    +2.37 [  +1.64,   +3.15]*  n = 944
+    Subject     +0.26 [  +0.08,   +0.41]*  n = 72
+    Backgr      +0.30 [  +0.23,   +0.37]*  n = 86
+    Flicker     +0.15 [  +0.10,   +0.21]*  n = 73
+    MotionSm    -0.14 [  -0.24,   -0.05]*  n = 72
+    Aesth       +1.41 [  +0.89,   +1.94]*  n = 93
+    Imaging     +0.90 [  +0.29,   +1.52]*  n = 93
+    Dynamic     +0.28 [  -3.28,   +3.97]   n = 72
+    Object      +1.00 [  -1.56,   +3.52]   n = 79
+    MultiObj    +5.75 [  +2.63,   +8.99]*  n = 82
+    Action      +1.33 [  -0.00,   +2.72]   n = 100
+    Color       +1.60 [  -0.40,   +3.83]   n = 84
+    Spatial     +1.67 [  -1.36,   +4.66]   n = 84
+    Scene       +6.06 [  +3.12,   +9.06]*  n = 86
+    AppStyle    -0.12 [  -0.27,   +0.02]   n = 90
+    TmpStyle    +0.66 [  +0.29,   +1.06]*  n = 100
+    OverallC    +0.44 [  +0.17,   +0.71]*  n = 93
+    Subj_in     +0.03 [  -0.19,   +0.23]   n = 72
+    Subj_c2c    +4.44 [  +3.14,   +5.67]*  n = 72
+    Bg_in       +0.27 [  +0.15,   +0.39]*  n = 86
+    Bg_c2c      +4.37 [  +3.78,   +4.97]*  n = 86

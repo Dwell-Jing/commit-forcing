@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "updated": "2026-10-14",
+  "assets": {
+    "assets/teaser.png": {
+      "sha256": "3723861b6d32cf155e972b510fa09e1202c59921235f37d58ee7d8bb1d723e3e",
+      "bytes": 720013,
+      "width": 2200,
+      "height": 825
+    },
+    "assets/teaser.svg": {
+      "sha256": "c7a9841ce9ca3044a73b98a5adafa6819f0f4a682b46c5060dec42c1da82e1f1",
+      "bytes": 547136
+    },
+    "assets/teaser.pdf": {
+      "sha256": "478217692bfbc9209327ce98ac7ded4c747ef2eec93781297fa82ef7e82a11da",
+      "bytes": 557579
+    },
+    "assets/method.png": {
+      "sha256": "1b3e1bb0c270277f76d8dcfa4cbeb78ba0f3229ce97ba96e778c120c1a407cb1",
+      "bytes": 124619,
+      "width": 2200,
+      "height": 1161
+    },
+    "assets/archive/teaser_denoising_legacy.png": {
+      "sha256": "fc00d576661ad43204571c6aacebd766cfaf3cbe5dad46a3a00c79f422c86c68",
+      "bytes": 885381,
+      "width": 2400,
+      "height": 1599
+    },
+    "assets/source/make_teaser.py": {
+      "sha256": "42e12e80fdb7d66628c24b88a90c5af1d87bc9f454f6f194b27342eecb491791",
+      "bytes": 9752
+    },
+    "assets/source/teaser_inputs/eye_read.svg": {
+      "sha256": "99504fb6e64175b75fdedbdcb6544588f61f149a96b9c712a7a5b47119fe8e79",
+      "bytes": 754
+    },
+    "assets/source/teaser_inputs/pen_write.svg": {
+      "sha256": "8680d0698ba94eb74ec4c12148345364824e7a750eeb575c464cca4523e9c414",
+      "bytes": 869
+    },
+    "assets/source/teaser_inputs/scene_tokyo_recent.svg": {
+      "sha256": "6f656c51ab3e10ffc3b14bf956ce84215524ea69b0cde27878c529d53ae1afbf",
+      "bytes": 4707
+    },
+    "assets/source/teaser_inputs/scene_tokyo_sink.svg": {
+      "sha256": "2f911853a21215938e2bbb2ce0ab2a7ad65fbda5bf4875598adb069b18bfd304",
+      "bytes": 4786
+    },
+    "assets/source/teaser_inputs/sgf_p000_s0_commit_238s.png": {
+      "sha256": "9e39361944106808815f4d433155eab33c8ad5d833d79ac56997724ff96bf7db",
+      "bytes": 196251,
+      "width": 416,
+      "height": 240
+    },
+    "assets/source/teaser_inputs/sgf_p000_s0_native_238s.png": {
+      "sha256": "db8c1f57dea9834b7dc09b122b953b905c97ab10d6913c711c3cc9f14cf9f262",
+      "bytes": 181553,
+      "width": 416,
+      "height": 240
+    },
+    "assets/sgf_committing_controls.png": {
+      "sha256": "00a6d444432eb15148070a991fea0fcfbaa3668965761168959e09830dddbde2",
+      "bytes": 67741,
+      "width": 1800,
+      "height": 471
+    },
+    "assets/sgf_committing_controls.svg": {
+      "sha256": "3f295a92b07ef1f43ec15590cf1638f6f86daf9c0da7562030c39d6579eb44f1",
+      "bytes": 29754
+    },
+    "assets/sgf_committing_controls.pdf": {
+      "sha256": "8533a89e724ca6ac4e7e32ea2170b8ac1b1391aa85b68349e4b0b17a43676b7d",
+      "bytes": 53309
+    },
+    "assets/sgf_committing_controls.provenance.json": {
+      "sha256": "0fcbbd740cae5e0ffc9b9ae0d266a44572fba677d074ae8d259674a08f793288",
+      "bytes": 7905
+    },
+    "assets/source/make_sgf_committing_controls.py": {
+      "sha256": "caaf5cac5691b577be4948d3466142b0bf0317a5d95a32c534387bcf04983255",
+      "bytes": 10892
+    },
+    "assets/commit_effects.png": {
+      "sha256": "a008d27c4e61008a2ce74275e70b155f2d79520d32fe68ba4d1d10ff5a58ed16",
+      "bytes": 84519,
+      "width": 1861,
+      "height": 970
+    },
+    "assets/commit_effects.svg": {
+      "sha256": "c0da188ee5632a5e783ab0815211f2904f4ec48d5137de59074788968012eeb7",
+      "bytes": 30721
+    },
+    "assets/commit_effects.pdf": {
+      "sha256": "1555a6ce8966ca5a0d7fb6fc36f8629d12f5edb9985754495da4cf68ede5e781",
+      "bytes": 39495
+    },
+    "assets/commit_effects.provenance.json": {
+      "sha256": "b6ebaab1096ac7658c6be3270d2b02bb17ff8ba6d9451b139fe9226fe3e3e0d8",
+      "bytes": 10366
+    },
+    "assets/source/make_commit_effects.py": {
+      "sha256": "284f927680e85eb50c6028dd51baeb571320499709f5ac00ea6ce7aa5d93bcf8",
+      "bytes": 8710
+    },
+    "assets/source/commit_effects_style.py": {
+      "sha256": "5dc93cfb8fd16148ac0dac9ae56eebafcd21ced0fb6f36151df8d6eb39206397",
+      "bytes": 2542
+    },
+    "assets/source/commit_effects_data.json": {
+      "sha256": "a42bbe4991c9adf9036155b080221be16d0798cb95adcb181924d65420ab946e",
+      "bytes": 10912
+    }
+  },
+  "teaser": {
+    "renderer": "assets/source/make_teaser.py",
+    "inputs": "assets/source/teaser_inputs",
+    "source_case": {
+      "model": "SGF",
+      "prompt_id": 0,
+      "generation_seed": 0,
+      "rollout_seconds": 240,
+      "frame_seconds": 238
+    },
+    "roles": "Sink/recent cards are editable schematics; right-hand photographs are unchanged generated result frames.",
+    "intervention": "Retain denoising access policy; exclude direct sink access during committing.",
+    "previous_figure": "assets/archive/teaser_denoising_legacy.png",
+    "reproduction": "python assets/source/make_teaser.py"
+  },
+  "method": {
+    "instance": "SGF",
+    "intervention": "Mask direct committing-query access to sink KV; retain base denoising access and sink storage.",
+    "source_version": "Current paper method overview"
+  },
+  "sgf_committing_controls": {
+    "renderer": "assets/source/make_sgf_committing_controls.py",
+    "provenance": "assets/sgf_committing_controls.provenance.json",
+    "results": "analysis/sgf_committing_controls/README.md",
+    "reproduction": "python assets/source/make_sgf_committing_controls.py",
+    "content": "Two parallel read-set schematics: equal frame count and recent versus self-only"
+  },
+  "commit_effects": {
+    "renderer": "assets/source/make_commit_effects.py",
+    "provenance": "assets/commit_effects.provenance.json",
+    "data": "assets/source/commit_effects_data.json",
+    "reproduction": "python assets/source/make_commit_effects.py",
+    "content": "Paired Quality and clip-to-clip Subject changes for 7 committing configurations, 200 prompts and 2 generation seeds; LongLive reads 6 frames"
+  }
+}

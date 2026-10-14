@@ -1,0 +1,8 @@
+16:17 rs cells 80/80
+merged ident2 2 arms
+cells 40  prompts 20  ref RS_off  no-far RS_off  (ref identity gain over no-far +0.0000)
+arm               ret    late  m_med  static  sat_le  bri_le   ms/blk  gain_ret   dIdent vs ref [CI] / ANCOVA                  dlog m vs ref [CI]       verdict
+RS_off          0.922  0.1434   0.96    0.15   1.004   0.985     3342       nan   +0.0000 [+0.0000,+0.0000] / +0.0000   +0.000 [+0.000,+0.000]   
+RS_real         0.987  0.1540   1.13    0.00   0.990   1.011     3351       nan   +0.0106 [+0.0000,+0.0234] / +0.0175   +0.168 [+0.132,+0.208]   PARETO (no identity loss, less frozen)
+vs RS_off: RS_real        dIdent +0.0106 [+0.0000,+0.0234]  -> far memory carried
+DONE

@@ -1,0 +1,36 @@
+{
+  "model": "LL",
+  "rule": "cf-w6s",
+  "gpu": "NVIDIA H20",
+  "repeat": 0,
+  "snapshot_id": "second-completed-run",
+  "original_source_sha256": "c0664eb18d101ca60eec6be2557f2328aebb07554f6d198ef661139878a1b083",
+  "videos": [
+    {
+      "idx": 0,
+      "wall_s": 224.61740946769714,
+      "peak_alloc_gib": 30.669543266296387,
+      "peak_reserved_gib": 35.02734375,
+      "counters": {
+        "blocks": 80,
+        "kv_cache_frames": 12,
+        "sinkless_attention_calls": 2400,
+        "clean_model_calls": 80,
+        "denoise_model_calls": 320
+      }
+    },
+    {
+      "idx": 1,
+      "wall_s": 224.5841987133026,
+      "peak_alloc_gib": 30.669543266296387,
+      "peak_reserved_gib": 35.4375,
+      "counters": {
+        "blocks": 80,
+        "kv_cache_frames": 12,
+        "sinkless_attention_calls": 2400,
+        "clean_model_calls": 80,
+        "denoise_model_calls": 320
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+ID-Forcing drift metrics: 128 MovieGen prompts, 120 seconds, generation seed 0
+arm           color drift      n  motion drift  symmetric static->mv      n
+G3_R21              23.96    128         46.88      44.53       2.3%    128
+IDF_LL              70.35    128         96.88      79.69      17.2%    128
+IDF_LL_W            71.45    128         94.53      78.91      15.6%    128
+IDF_SF              68.29    128         94.53      87.50       7.0%    128
+IDF_SF_W            73.63    128         88.28      83.59       4.7%    128
+K_RFw               65.33    128         92.19      83.59       8.6%    128
+LLS_33              60.15    128         94.53      89.84       4.7%    128
+LLS_c0              74.71    128         93.75      86.72       7.0%    128
+LLS_cw6             74.45    128         93.75      85.16       8.6%    128

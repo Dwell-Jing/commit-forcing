@@ -1,0 +1,281 @@
+diff --git a/pipeline/causal_inference.py b/pipeline/causal_inference.py
+index a98626f..063a37c
+--- a/pipeline/causal_inference.py
++++ b/pipeline/causal_inference.py
+@@ -147,6 +147,7 @@ class CausalInferencePipeline(torch.nn.Module):
+                     kv_cache=self.kv_cache1,
+                     crossattn_cache=self.crossattn_cache,
+                     current_start=current_start_frame * self.frame_seq_length,
++                    commit=True,
+                 )
+                 current_start_frame += 1
+             else:
+@@ -165,6 +166,7 @@ class CausalInferencePipeline(torch.nn.Module):
+                     kv_cache=self.kv_cache1,
+                     crossattn_cache=self.crossattn_cache,
+                     current_start=current_start_frame * self.frame_seq_length,
++                    commit=True,
+                 )
+                 current_start_frame += self.num_frame_per_block
+ 
+@@ -200,7 +202,8 @@ class CausalInferencePipeline(torch.nn.Module):
+                         timestep=timestep,
+                         kv_cache=self.kv_cache1,
+                         crossattn_cache=self.crossattn_cache,
+-                        current_start=current_start_frame * self.frame_seq_length
++                        current_start=current_start_frame * self.frame_seq_length,
++                        denoising_step=index
+                     )
+                     next_timestep = self.denoising_step_list[index + 1]
+                     noisy_input = self.scheduler.add_noise(
+@@ -217,7 +220,8 @@ class CausalInferencePipeline(torch.nn.Module):
+                         timestep=timestep,
+                         kv_cache=self.kv_cache1,
+                         crossattn_cache=self.crossattn_cache,
+-                        current_start=current_start_frame * self.frame_seq_length
++                        current_start=current_start_frame * self.frame_seq_length,
++                        denoising_step=index
+                     )
+ 
+             # Step 3.2: record the model's output
+@@ -232,6 +236,7 @@ class CausalInferencePipeline(torch.nn.Module):
+                 kv_cache=self.kv_cache1,
+                 crossattn_cache=self.crossattn_cache,
+                 current_start=current_start_frame * self.frame_seq_length,
++                commit=True,  # commit pass
+             )
+ 
+             if profile:
+diff --git a/utils/wan_wrapper.py b/utils/wan_wrapper.py
+index c719d59..b374176
+--- a/utils/wan_wrapper.py
++++ b/utils/wan_wrapper.py
+@@ -225,7 +225,9 @@ class WanDiffusionWrapper(torch.nn.Module):
+         concat_time_embeddings: Optional[bool] = False,
+         clean_x: Optional[torch.Tensor] = None,
+         aug_t: Optional[torch.Tensor] = None,
+-        cache_start: Optional[int] = None
++        cache_start: Optional[int] = None,
++        commit: bool = False,
++        denoising_step: Optional[int] = None
+     ) -> torch.Tensor:
+         prompt_embeds = conditional_dict["prompt_embeds"]
+ 
+@@ -245,7 +247,9 @@ class WanDiffusionWrapper(torch.nn.Module):
+                 kv_cache=kv_cache,
+                 crossattn_cache=crossattn_cache,
+                 current_start=current_start,
+-                cache_start=cache_start
++                cache_start=cache_start,
++                commit=commit,
++                denoising_step=denoising_step
+             ).permute(0, 2, 1, 3, 4)
+         else:
+             if clean_x is not None:
+diff --git a/wan/modules/causal_model.py b/wan/modules/causal_model.py
+index 98e398a..b5a1bfd
+--- a/wan/modules/causal_model.py
++++ b/wan/modules/causal_model.py
+@@ -55,6 +55,54 @@ def causal_rope_apply(x, grid_sizes, freqs, start_frame=0):
+     return torch.stack(output).type_as(x)
+ 
+ 
++# Recency Forcing (arXiv 2609.19729, App. B) temporal recency bias on history chunks:
++#   bias = -beta * dt^gamma(t), dt = min(1, max(0, d - recent) / history), gamma(t) = 0.1 * 2^t, t = 1..4,
++# d = chunk distance of a key frame (0 = current chunk)
++TRB_BETA = 4.0
++TRB_GAMMA0 = 0.1
++TRB_RECENT_CHUNKS = 1
++TRB_HISTORY_CHUNKS = 4
++
++
++def shift_temporal_rope(k, freqs, delta):
++    # shift post-RoPE keys [B, L, N, D] by `delta` frames along the temporal axis
++    b, s, n, d = k.shape
++    c = d // 2
++    t = c - 2 * (c // 3)
++    x = torch.view_as_complex(k.float().reshape(b, s, n, c, 2).contiguous())
++    x[..., :t] = x[..., :t] * freqs[delta, :t]
++    return torch.view_as_real(x).reshape(b, s, n, d).to(k.dtype)
++
++
++def temporal_recency_bias(num_frames, chunk_frames, step, sink_frames, device):
++    # TRB of `num_frames` key frames (oldest first) at step t = step + 1;
++    # sink, recent and current chunks get none
++    d = (num_frames - 1 - torch.arange(num_frames, device=device)) // chunk_frames
++    dt = ((d - TRB_RECENT_CHUNKS).clamp(min=0).float() / TRB_HISTORY_CHUNKS).clamp(max=1.0)
++    bias = -TRB_BETA * dt.pow(TRB_GAMMA0 * 2 ** (step + 1))
++    bias = torch.where(d > TRB_RECENT_CHUNKS, bias, torch.zeros_like(bias))
++    bias[:sink_frames] = 0.0
++    return bias
++
++
++def biased_attention(q, k, v, frame_bias, frame_seqlen):
++    # softmax(q k^T / sqrt(D) + bias) v: one flash-attention call per group of frames
++    # that share a bias, merged by log-sum-exp
++    rounded = frame_bias.round(decimals=6)
++    tokens = torch.arange(frame_seqlen, device=q.device)
++    outs, lses = [], []
++    for value in sorted(set(round(float(b), 6) for b in frame_bias.tolist())):
++        idx = ((rounded == value).nonzero().flatten()[:, None] * frame_seqlen + tokens[None]).flatten()
++        out, lse = torch.ops.aten._scaled_dot_product_flash_attention(
++            q.transpose(1, 2), k.index_select(1, idx).transpose(1, 2), v.index_select(1, idx).transpose(1, 2),
++            0.0, False, False)[:2]
++        outs.append(out.transpose(1, 2).float())
++        lses.append(lse.transpose(1, 2).unsqueeze(-1) + value)
++    lse = torch.stack(lses, 0)
++    w = torch.exp(lse - lse.max(0).values)
++    return ((torch.stack(outs, 0) * w).sum(0) / w.sum(0)).to(q.dtype)
++
++
+ class CausalWanSelfAttention(nn.Module):
+ 
+     def __init__(self,
+@@ -74,6 +122,11 @@ class CausalWanSelfAttention(nn.Module):
+         self.qk_norm = qk_norm
+         self.eps = eps
+         self.max_attention_size = 32760 if local_attn_size == -1 else local_attn_size * 1560
++        # set by CausalWanModel.set_cache_reading
++        self.recent_frames = None
++        self.recency_bias = False
++        self.commit_frames = None
++        self.counts = {}
+ 
+         # layers
+         self.q = nn.Linear(dim, dim)
+@@ -83,6 +136,39 @@ class CausalWanSelfAttention(nn.Module):
+         self.norm_q = WanRMSNorm(dim, eps=eps) if qk_norm else nn.Identity()
+         self.norm_k = WanRMSNorm(dim, eps=eps) if qk_norm else nn.Identity()
+ 
++    def record(self, event, pass_name):
++        self.counts.setdefault(event, {})
++        self.counts[event][pass_name] = self.counts[event].get(pass_name, 0) + 1
++
++    def read_cache(self, q, k, v, freqs, frame_seqlen, current_end, commit, denoising_step):
++        """Attention of the new tokens q over the cached keys / values k, v (oldest frame first)."""
++        num_frames, chunk = k.shape[1] // frame_seqlen, q.shape[1] // frame_seqlen
++        pass_name = "commit" if commit else f"step{denoising_step}"
++        if commit and self.commit_frames is not None:
++            # Commit Forcing: the commit pass reads only the newest real frames
++            if num_frames > self.commit_frames:
++                self.record("commit_rule", pass_name)
++            n = self.commit_frames * frame_seqlen
++            return attention(q, k[:, -n:], v[:, -n:])
++        if self.recent_frames is None:
++            return attention(q, k, v)
++        # read the sink and the newest `recent_frames` frames; the sink's RoPE is
++        # shifted to sit right before the oldest frame read
++        sink, n = self.sink_size, self.recent_frames * frame_seqlen
++        if num_frames > sink + self.recent_frames:
++            delta = current_end // frame_seqlen - self.recent_frames - sink
++            k = torch.cat([shift_temporal_rope(k[:, :sink * frame_seqlen], freqs, delta), k[:, -n:]], dim=1)
++            v = torch.cat([v[:, :sink * frame_seqlen], v[:, -n:]], dim=1)
++            num_frames = sink + self.recent_frames
++            self.record("sink_shifted", pass_name)
++        elif (num_frames - 1) // chunk > TRB_RECENT_CHUNKS:
++            self.record("sink_in_place", pass_name)  # cache not full: read the sink where it is
++        if commit or not self.recency_bias:
++            return attention(q, k, v)
++        self.record("recency_bias", pass_name)
++        bias = temporal_recency_bias(num_frames, chunk, denoising_step, sink, q.device)
++        return biased_attention(q, k, v, bias, frame_seqlen)
++
+     def forward(
+         self,
+         x,
+@@ -92,7 +178,9 @@ class CausalWanSelfAttention(nn.Module):
+         block_mask,
+         kv_cache=None,
+         current_start=0,
+-        cache_start=None
++        cache_start=None,
++        commit=False,
++        denoising_step=None
+     ):
+         r"""
+         Args:
+@@ -226,10 +314,11 @@ class CausalWanSelfAttention(nn.Module):
+                 local_start_index = local_end_index - num_new_tokens
+                 kv_cache["k"][:, local_start_index:local_end_index] = roped_key
+                 kv_cache["v"][:, local_start_index:local_end_index] = v
+-            x = attention(
++            x = self.read_cache(
+                 roped_query,
+                 kv_cache["k"][:, max(0, local_end_index - self.max_attention_size):local_end_index],
+-                kv_cache["v"][:, max(0, local_end_index - self.max_attention_size):local_end_index]
++                kv_cache["v"][:, max(0, local_end_index - self.max_attention_size):local_end_index],
++                freqs, frame_seqlen, current_end, commit, denoising_step
+             )
+             kv_cache["global_end_index"].fill_(current_end)
+             kv_cache["local_end_index"].fill_(local_end_index)
+@@ -293,7 +382,9 @@ class CausalWanAttentionBlock(nn.Module):
+         kv_cache=None,
+         crossattn_cache=None,
+         current_start=0,
+-        cache_start=None
++        cache_start=None,
++        commit=False,
++        denoising_step=None
+     ):
+         r"""
+         Args:
+@@ -313,7 +404,7 @@ class CausalWanAttentionBlock(nn.Module):
+         y = self.self_attn(
+             (self.norm1(x).unflatten(dim=1, sizes=(num_frames, frame_seqlen)) * (1 + e[1]) + e[0]).flatten(1, 2),
+             seq_lens, grid_sizes,
+-            freqs, block_mask, kv_cache, current_start, cache_start)
++            freqs, block_mask, kv_cache, current_start, cache_start, commit, denoising_step)
+ 
+         # with amp.autocast(dtype=torch.float32):
+         x = x + (y.unflatten(dim=1, sizes=(num_frames, frame_seqlen)) * e[2]).flatten(1, 2)
+@@ -502,6 +593,17 @@ class CausalWanModel(ModelMixin, ConfigMixin):
+     def _set_gradient_checkpointing(self, module, value=False):
+         self.gradient_checkpointing = value
+ 
++    def set_cache_reading(self, recent_frames=None, recency_bias=False, commit_frames=None):
++        """Set how the cached self-attention reads the KV cache (defaults: upstream); returns the shared counts.
++        recent_frames: sink + newest frames; recency_bias: TRB in denoising; commit_frames: commit-pass window."""
++        counts = {}
++        for block in self.blocks:
++            block.self_attn.recent_frames = recent_frames
++            block.self_attn.recency_bias = recency_bias
++            block.self_attn.commit_frames = commit_frames
++            block.self_attn.counts = counts
++        return counts
++
+     @staticmethod
+     def _prepare_blockwise_causal_attn_mask(
+         device: torch.device | str, num_frames: int = 21,
+@@ -720,7 +822,9 @@ class CausalWanModel(ModelMixin, ConfigMixin):
+         kv_cache: dict = None,
+         crossattn_cache: dict = None,
+         current_start: int = 0,
+-        cache_start: int = 0
++        cache_start: int = 0,
++        commit: bool = False,
++        denoising_step: int = None
+     ):
+         r"""
+         Run the diffusion model with kv caching.
+@@ -741,6 +845,10 @@ class CausalWanModel(ModelMixin, ConfigMixin):
+                 CLIP image features for image-to-video mode
+             y (List[Tensor], *optional*):
+                 Conditional video inputs for image-to-video mode, same shape as x
++            commit (`bool`):
++                commit rule: True for the commit pass, which writes the K/V of a clean block into the cache
++            denoising_step (`int`, *optional*):
++                recency forcing: index of the denoising step (None for the commit pass)
+ 
+         Returns:
+             List[Tensor]:
+@@ -801,7 +909,9 @@ class CausalWanModel(ModelMixin, ConfigMixin):
+             freqs=self.freqs,
+             context=context,
+             context_lens=context_lens,
+-            block_mask=self.block_mask
++            block_mask=self.block_mask,
++            commit=commit,
++            denoising_step=denoising_step
+         )
+ 
+         def create_custom_forward(module):

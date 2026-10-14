@@ -1,0 +1,91 @@
+diff --git a/pipeline/causal_inference.py b/pipeline/causal_inference.py
+--- a/pipeline/causal_inference.py
++++ b/pipeline/causal_inference.py
+@@ -11,6 +11,8 @@
+ import torch.distributed as dist
+
+ class CausalInferencePipeline(torch.nn.Module):
++    COMMIT_RULE_VERSION = 2
++
+     def __init__(
+             self,
+             args,
+@@ -44,6 +46,9 @@
+         self.args = args
+         self.num_frame_per_block = getattr(args, "num_frame_per_block", 1)
+         self.local_attn_size = args.model_kwargs.local_attn_size
++        self.commit_rule = getattr(args, "commit_rule", False)
++        self.commit_frames = getattr(args, "commit_frames", 6)
++        self.commit_cache_extra_frames = getattr(args, "commit_cache_extra_frames", 0)
+
+         # Normalize to list if sequence-like (e.g., OmegaConf ListConfig)
+
+@@ -112,6 +117,8 @@
+         if local_attn_cfg != -1:
+             # local attention
+             kv_cache_size = local_attn_cfg * self.frame_seq_length
++            if self.commit_rule:
++                kv_cache_size += self.commit_cache_extra_frames * self.frame_seq_length
+             kv_policy = f"int->local, size={local_attn_cfg}"
+         else:
+             # global attention
+@@ -190,6 +197,7 @@
+             output[:, current_start_frame:current_start_frame + current_num_frames] = denoised_pred.to(output.device)
+             # Step 2.3: rerun with timestep zero to update KV cache using clean context
+             context_timestep = torch.ones_like(timestep) * self.args.context_noise
++            self._set_all_modules_read_sink(not self.commit_rule)
+             self.generator(
+                 noisy_image_or_video=denoised_pred,
+                 conditional_dict=conditional_dict,
+@@ -198,6 +206,7 @@
+                 crossattn_cache=self.crossattn_cache,
+                 current_start=current_start_frame * self.frame_seq_length,
+             )
++            self._set_all_modules_read_sink(True)
+
+             if profile:
+                 block_end.record()
+@@ -317,3 +326,11 @@
+                     updated_modules.append(name if name else module.__class__.__name__)
+                 except Exception:
+                     pass
++
++    def _set_all_modules_read_sink(self, read_sink: bool):
++        """Switch sink access and the matching per-pass attention window."""
++        for module in self.generator.model.modules():
++            if hasattr(module, "read_sink"):
++                module.read_sink = read_sink
++        frames = self.local_attn_size if read_sink else self.commit_frames
++        self._set_all_modules_max_attention_size(frames)
+diff --git a/wan/modules/causal_model.py b/wan/modules/causal_model.py
+--- a/wan/modules/causal_model.py
++++ b/wan/modules/causal_model.py
+@@ -86,6 +86,9 @@
+         non_neg_vals = [int(v) for v in values if int(v) != -1]
+         max_local = max(non_neg_vals) if len(non_neg_vals) > 0 else -1
+         self.max_attention_size = 32760 if max_local == -1 else max_local * 1560
++        self.read_sink = True
++        self.sinkless_reads = 0
++        self.sinkless_read_tokens = []
+         # layers
+         self.q = nn.Linear(dim, dim)
+         self.k = nn.Linear(dim, dim)
+@@ -318,7 +321,7 @@
+             #     print(f"local_start_index: {local_start_index}, local_end_index: {local_end_index}")
+
+             # Use temporary k, v to compute attention
+-            if sink_tokens > 0:
++            if sink_tokens > 0 and self.read_sink:
+                 # Concatenate sink tokens and local window tokens, keeping total length strictly below max_attention_size
+                 local_budget = self.max_attention_size - sink_tokens
+                 k_sink = temp_k[:, :sink_tokens]
+@@ -341,6 +344,9 @@
+                 )
+             else:
+                 window_start = max(0, local_end_index - self.max_attention_size)
++                if sink_tokens > 0:
++                    self.sinkless_reads += 1
++                    self.sinkless_read_tokens.append(local_end_index - window_start)
+                 x = attention(
+                     roped_query,
+                     temp_k[:, window_start:local_end_index],

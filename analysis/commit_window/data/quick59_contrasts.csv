@@ -1,0 +1,222 @@
+section,arm,seed,subgroup,metric,reported_value
+levels,LLS_c0,0,,Quality,82.64
+levels,LLS_c0,0,,Dynamic,42.30
+levels,LLS_c0,0,,Subj_c2c,86.25
+levels,LLS_c0,0,,Bg_c2c,90.01
+levels,LLS_c0,0,,Subj_in,97.31
+levels,LLS_c0,1,,Quality,82.71
+levels,LLS_c0,1,,Dynamic,42.23
+levels,LLS_c0,1,,Subj_c2c,86.74
+levels,LLS_c0,1,,Bg_c2c,90.48
+levels,LLS_c0,1,,Subj_in,97.34
+levels,LLS_c0,2,,Quality,82.72
+levels,LLS_c0,2,,Dynamic,43.01
+levels,LLS_c0,2,,Subj_c2c,86.81
+levels,LLS_c0,2,,Bg_c2c,90.61
+levels,LLS_c0,2,,Subj_in,97.36
+levels,LLW_ad,0,,Quality,82.90
+levels,LLW_ad,0,,Dynamic,45.41
+levels,LLW_ad,0,,Subj_c2c,85.85
+levels,LLW_ad,0,,Bg_c2c,89.80
+levels,LLW_ad,0,,Subj_in,97.35
+levels,LLW_ad,1,,Quality,82.94
+levels,LLW_ad,1,,Dynamic,45.34
+levels,LLW_ad,1,,Subj_c2c,86.45
+levels,LLW_ad,1,,Bg_c2c,90.21
+levels,LLW_ad,1,,Subj_in,97.39
+levels,LLW_ad,2,,Quality,83.04
+levels,LLW_ad,2,,Dynamic,47.32
+levels,LLW_ad,2,,Subj_c2c,86.20
+levels,LLW_ad,2,,Bg_c2c,90.21
+levels,LLW_ad,2,,Subj_in,97.39
+levels,LLW_ad6,0,,Quality,82.80
+levels,LLW_ad6,0,,Dynamic,43.01
+levels,LLW_ad6,0,,Subj_c2c,86.51
+levels,LLW_ad6,0,,Bg_c2c,90.24
+levels,LLW_ad6,0,,Subj_in,97.40
+levels,LLW_ad6,1,,Quality,82.84
+levels,LLW_ad6,1,,Dynamic,42.94
+levels,LLW_ad6,1,,Subj_c2c,87.08
+levels,LLW_ad6,1,,Bg_c2c,90.69
+levels,LLW_ad6,1,,Subj_in,97.45
+levels,LLW_ad6,2,,Quality,82.81
+levels,LLW_ad6,2,,Dynamic,42.94
+levels,LLW_ad6,2,,Subj_c2c,87.14
+levels,LLW_ad6,2,,Bg_c2c,90.92
+levels,LLW_ad6,2,,Subj_in,97.51
+levels,LLW_adh6,0,,Quality,82.85
+levels,LLW_adh6,0,,Dynamic,44.21
+levels,LLW_adh6,0,,Subj_c2c,86.28
+levels,LLW_adh6,0,,Bg_c2c,90.22
+levels,LLW_adh6,0,,Subj_in,97.38
+levels,LLW_adh6,1,,Quality,82.88
+levels,LLW_adh6,1,,Dynamic,43.64
+levels,LLW_adh6,1,,Subj_c2c,87.00
+levels,LLW_adh6,1,,Bg_c2c,90.66
+levels,LLW_adh6,1,,Subj_in,97.46
+levels,LLW_adh6,2,,Quality,82.81
+levels,LLW_adh6,2,,Dynamic,43.36
+levels,LLW_adh6,2,,Subj_c2c,86.77
+levels,LLW_adh6,2,,Bg_c2c,90.82
+levels,LLW_adh6,2,,Subj_in,97.46
+levels,LLW_w6,0,,Quality,82.82
+levels,LLW_w6,0,,Dynamic,43.79
+levels,LLW_w6,0,,Subj_c2c,86.95
+levels,LLW_w6,0,,Bg_c2c,90.52
+levels,LLW_w6,0,,Subj_in,97.49
+levels,LLW_w6,1,,Quality,82.92
+levels,LLW_w6,1,,Dynamic,43.36
+levels,LLW_w6,1,,Subj_c2c,87.30
+levels,LLW_w6,1,,Bg_c2c,90.87
+levels,LLW_w6,1,,Subj_in,97.60
+levels,LLW_w6,2,,Quality,82.80
+levels,LLW_w6,2,,Dynamic,43.36
+levels,LLW_w6,2,,Subj_c2c,87.21
+levels,LLW_w6,2,,Bg_c2c,91.00
+levels,LLW_w6,2,,Subj_in,97.54
+against_reference,LLW_ad,0,,Quality,"+0.26* [+0.12, +0.42]"
+against_reference,LLW_ad,0,,Dynamic,"+3.11* [+1.20, +5.51]"
+against_reference,LLW_ad,0,,Subj_c2c,"-0.40 [-1.15, +0.22]"
+against_reference,LLW_ad,0,,Bg_c2c,"-0.21 [-0.58, +0.17]"
+against_reference,LLW_ad,0,,Subj_in,"+0.04 [-0.03, +0.11]"
+against_reference,LLW_ad,0,,Subj_c2c at equal motion,"+0.04 [-0.66, +0.54]"
+against_reference,LLW_ad,1,,Quality,"+0.23* [+0.02, +0.44]"
+against_reference,LLW_ad,1,,Dynamic,"+3.11* [+0.56, +5.79]"
+against_reference,LLW_ad,1,,Subj_c2c,"-0.29 [-0.74, +0.14]"
+against_reference,LLW_ad,1,,Bg_c2c,"-0.27 [-0.55, +0.04]"
+against_reference,LLW_ad,1,,Subj_in,"+0.05 [-0.01, +0.13]"
+against_reference,LLW_ad,1,,Subj_c2c at equal motion,"-0.22 [-0.64, +0.17]"
+against_reference,LLW_ad,2,,Quality,"+0.32* [+0.08, +0.57]"
+against_reference,LLW_ad,2,,Dynamic,"+4.31* [+0.92, +7.91]"
+against_reference,LLW_ad,2,,Subj_c2c,"-0.62* [-1.10, -0.17]"
+against_reference,LLW_ad,2,,Bg_c2c,"-0.41* [-0.78, -0.03]"
+against_reference,LLW_ad,2,,Subj_in,"+0.03 [-0.04, +0.10]"
+against_reference,LLW_ad,2,,Subj_c2c at equal motion,"-0.39 [-0.84, +0.05]"
+against_reference,LLW_ad,"pooled 0,1,2",,Quality,"+0.27* [+0.13, +0.41]"
+against_reference,LLW_ad,"pooled 0,1,2",,Dynamic,"+3.51* [+1.55, +5.65]"
+against_reference,LLW_ad,"pooled 0,1,2",,Subj_c2c,"-0.44* [-0.90, -0.01]"
+against_reference,LLW_ad,"pooled 0,1,2",,Bg_c2c,"-0.30 [-0.58, +0.01]"
+against_reference,LLW_ad,"pooled 0,1,2",,Subj_in,"+0.04 [-0.01, +0.09]"
+against_reference,LLW_ad,"pooled 0,1,2",,Subj_c2c at equal motion,"-0.22 [-0.54, +0.10]"
+against_reference,LLW_ad6,0,,Quality,"+0.16* [+0.06, +0.25]"
+against_reference,LLW_ad6,0,,Dynamic,"+0.71 [-0.42, +1.91]"
+against_reference,LLW_ad6,0,,Subj_c2c,"+0.26* [+0.02, +0.50]"
+against_reference,LLW_ad6,0,,Bg_c2c,"+0.23* [+0.09, +0.39]"
+against_reference,LLW_ad6,0,,Subj_in,"+0.08* [+0.04, +0.12]"
+against_reference,LLW_ad6,0,,Subj_c2c at equal motion,"+0.28* [+0.06, +0.50]"
+against_reference,LLW_ad6,1,,Quality,"+0.13 [-0.01, +0.27]"
+against_reference,LLW_ad6,1,,Dynamic,"+0.71 [-1.20, +2.68]"
+against_reference,LLW_ad6,1,,Subj_c2c,"+0.34 [-0.01, +0.68]"
+against_reference,LLW_ad6,1,,Bg_c2c,"+0.21* [+0.01, +0.43]"
+against_reference,LLW_ad6,1,,Subj_in,"+0.11* [+0.06, +0.17]"
+against_reference,LLW_ad6,1,,Subj_c2c at equal motion,"+0.39* [+0.13, +0.67]"
+against_reference,LLW_ad6,2,,Quality,"+0.09 [-0.03, +0.22]"
+against_reference,LLW_ad6,2,,Dynamic,"-0.07 [-2.12, +2.19]"
+against_reference,LLW_ad6,2,,Subj_c2c,"+0.33* [+0.03, +0.63]"
+against_reference,LLW_ad6,2,,Bg_c2c,"+0.30* [+0.09, +0.52]"
+against_reference,LLW_ad6,2,,Subj_in,"+0.15* [+0.10, +0.21]"
+against_reference,LLW_ad6,2,,Subj_c2c at equal motion,"+0.33* [+0.06, +0.62]"
+against_reference,LLW_ad6,"pooled 0,1,2",,Quality,"+0.12* [+0.05, +0.20]"
+against_reference,LLW_ad6,"pooled 0,1,2",,Dynamic,"+0.45 [-0.45, +1.34]"
+against_reference,LLW_ad6,"pooled 0,1,2",,Subj_c2c,"+0.31* [+0.14, +0.50]"
+against_reference,LLW_ad6,"pooled 0,1,2",,Bg_c2c,"+0.25* [+0.12, +0.41]"
+against_reference,LLW_ad6,"pooled 0,1,2",,Subj_in,"+0.12* [+0.09, +0.15]"
+against_reference,LLW_ad6,"pooled 0,1,2",,Subj_c2c at equal motion,"+0.34* [+0.17, +0.55]"
+against_reference,LLW_adh6,0,,Quality,"+0.20* [+0.11, +0.30]"
+against_reference,LLW_adh6,0,,Dynamic,"+1.91* [+0.78, +3.11]"
+against_reference,LLW_adh6,0,,Subj_c2c,"+0.03 [-0.37, +0.39]"
+against_reference,LLW_adh6,0,,Bg_c2c,"+0.20 [-0.02, +0.46]"
+against_reference,LLW_adh6,0,,Subj_in,"+0.07* [+0.03, +0.11]"
+against_reference,LLW_adh6,0,,Subj_c2c at equal motion,"+0.07 [-0.24, +0.37]"
+against_reference,LLW_adh6,1,,Quality,"+0.16 [-0.01, +0.34]"
+against_reference,LLW_adh6,1,,Dynamic,"+1.41 [-1.13, +3.74]"
+against_reference,LLW_adh6,1,,Subj_c2c,"+0.26 [-0.11, +0.64]"
+against_reference,LLW_adh6,1,,Bg_c2c,"+0.19 [-0.06, +0.46]"
+against_reference,LLW_adh6,1,,Subj_in,"+0.12* [+0.03, +0.21]"
+against_reference,LLW_adh6,1,,Subj_c2c at equal motion,"+0.34 [-0.11, +0.68]"
+against_reference,LLW_adh6,2,,Quality,"+0.09 [-0.06, +0.27]"
+against_reference,LLW_adh6,2,,Dynamic,"+0.35 [-1.62, +2.47]"
+against_reference,LLW_adh6,2,,Subj_c2c,"-0.04 [-0.38, +0.28]"
+against_reference,LLW_adh6,2,,Bg_c2c,"+0.20* [+0.01, +0.42]"
+against_reference,LLW_adh6,2,,Subj_in,"+0.10* [+0.05, +0.16]"
+against_reference,LLW_adh6,2,,Subj_c2c at equal motion,"-0.05 [-0.39, +0.28]"
+against_reference,LLW_adh6,"pooled 0,1,2",,Quality,"+0.15* [+0.07, +0.24]"
+against_reference,LLW_adh6,"pooled 0,1,2",,Dynamic,"+1.22* [+0.07, +2.38]"
+against_reference,LLW_adh6,"pooled 0,1,2",,Subj_c2c,"+0.08 [-0.16, +0.32]"
+against_reference,LLW_adh6,"pooled 0,1,2",,Bg_c2c,"+0.20* [+0.02, +0.40]"
+against_reference,LLW_adh6,"pooled 0,1,2",,Subj_in,"+0.10* [+0.05, +0.14]"
+against_reference,LLW_adh6,"pooled 0,1,2",,Subj_c2c at equal motion,"+0.11 [-0.11, +0.33]"
+against_reference,LLW_w6,0,,Quality,"+0.18* [+0.03, +0.33]"
+against_reference,LLW_w6,0,,Dynamic,"+1.48 [-0.14, +3.18]"
+against_reference,LLW_w6,0,,Subj_c2c,"+0.70* [+0.33, +1.08]"
+against_reference,LLW_w6,0,,Bg_c2c,"+0.51* [+0.24, +0.82]"
+against_reference,LLW_w6,0,,Subj_in,"+0.18* [+0.11, +0.26]"
+against_reference,LLW_w6,0,,Subj_c2c at equal motion,"+0.75* [+0.36, +1.12]"
+against_reference,LLW_w6,1,,Quality,"+0.21* [+0.07, +0.35]"
+against_reference,LLW_w6,1,,Dynamic,"+1.13 [-0.71, +3.11]"
+against_reference,LLW_w6,1,,Subj_c2c,"+0.55* [+0.13, +0.98]"
+against_reference,LLW_w6,1,,Bg_c2c,"+0.39* [+0.12, +0.69]"
+against_reference,LLW_w6,1,,Subj_in,"+0.27* [+0.17, +0.37]"
+against_reference,LLW_w6,1,,Subj_c2c at equal motion,"+0.64* [+0.26, +1.06]"
+against_reference,LLW_w6,2,,Quality,"+0.08 [-0.14, +0.29]"
+against_reference,LLW_w6,2,,Dynamic,"+0.35 [-2.90, +3.25]"
+against_reference,LLW_w6,2,,Subj_c2c,"+0.40* [+0.06, +0.76]"
+against_reference,LLW_w6,2,,Bg_c2c,"+0.38* [+0.15, +0.64]"
+against_reference,LLW_w6,2,,Subj_in,"+0.18* [+0.12, +0.24]"
+against_reference,LLW_w6,2,,Subj_c2c at equal motion,"+0.41* [+0.10, +0.77]"
+against_reference,LLW_w6,"pooled 0,1,2",,Quality,"+0.16* [+0.05, +0.27]"
+against_reference,LLW_w6,"pooled 0,1,2",,Dynamic,"+0.99 [-0.47, +2.45]"
+against_reference,LLW_w6,"pooled 0,1,2",,Subj_c2c,"+0.55* [+0.30, +0.81]"
+against_reference,LLW_w6,"pooled 0,1,2",,Bg_c2c,"+0.43* [+0.24, +0.64]"
+against_reference,LLW_w6,"pooled 0,1,2",,Subj_in,"+0.21* [+0.16, +0.26]"
+against_reference,LLW_w6,"pooled 0,1,2",,Subj_c2c at equal motion,"+0.59* [+0.33, +0.86]"
+subgroups,LLW_ad,pooled,never,Quality,"+0.00 [-0.00, +0.00]"
+subgroups,LLW_ad,pooled,never,Dynamic,"+0.00 [+0.00, +0.00]"
+subgroups,LLW_ad,pooled,never,Subj_c2c,"+0.08 [-0.07, +0.31]"
+subgroups,LLW_ad,pooled,partly (<90%),Quality,"+0.47* [+0.13, +0.81]"
+subgroups,LLW_ad,pooled,partly (<90%),Dynamic,"+8.33* [+3.65, +13.12]"
+subgroups,LLW_ad,pooled,partly (<90%),Subj_c2c,"-0.12 [-1.15, +1.12]"
+subgroups,LLW_ad,pooled,>= 90%,Quality,"+0.34* [+0.14, +0.55]"
+subgroups,LLW_ad,pooled,>= 90%,Dynamic,"+4.09* [+1.35, +7.42]"
+subgroups,LLW_ad,pooled,>= 90%,Subj_c2c,"-0.70* [-1.35, -0.10]"
+subgroups,LLW_ad6,pooled,never,Quality,"-0.01* [-0.03, -0.00]"
+subgroups,LLW_ad6,pooled,never,Dynamic,"-0.09 [-0.30, +0.00]"
+subgroups,LLW_ad6,pooled,never,Subj_c2c,"+0.02 [-0.11, +0.15]"
+subgroups,LLW_ad6,pooled,partly (<90%),Quality,"+0.27* [+0.00, +0.58]"
+subgroups,LLW_ad6,pooled,partly (<90%),Dynamic,"+2.98 [-1.04, +7.58]"
+subgroups,LLW_ad6,pooled,partly (<90%),Subj_c2c,"+0.21 [-0.53, +1.00]"
+subgroups,LLW_ad6,pooled,>= 90%,Quality,"+0.16* [+0.06, +0.25]"
+subgroups,LLW_ad6,pooled,>= 90%,Dynamic,"+0.35 [-0.93, +1.64]"
+subgroups,LLW_ad6,pooled,>= 90%,Subj_c2c,"+0.43* [+0.21, +0.67]"
+subgroups,LLW_adh6,pooled,never,Quality,"-0.01 [-0.04, +0.02]"
+subgroups,LLW_adh6,pooled,never,Dynamic,"-0.09 [-0.40, +0.21]"
+subgroups,LLW_adh6,pooled,never,Subj_c2c,"+0.09 [-0.09, +0.34]"
+subgroups,LLW_adh6,pooled,partly (<90%),Quality,"+0.24 [-0.04, +0.62]"
+subgroups,LLW_adh6,pooled,partly (<90%),Dynamic,"+2.98 [-0.74, +7.29]"
+subgroups,LLW_adh6,pooled,partly (<90%),Subj_c2c,"-0.46 [-1.19, +0.67]"
+subgroups,LLW_adh6,pooled,>= 90%,Quality,"+0.21* [+0.09, +0.32]"
+subgroups,LLW_adh6,pooled,>= 90%,Dynamic,"+1.52 [-0.17, +3.22]"
+subgroups,LLW_adh6,pooled,>= 90%,Subj_c2c,"+0.15 [-0.16, +0.45]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,0,,Quality,"-0.02 [-0.14, +0.10]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,0,,Dynamic,"-0.78 [-2.12, +0.49]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,0,,Subj_c2c,"-0.44* [-0.76, -0.13]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,0,,Bg_c2c,"-0.27* [-0.53, -0.05]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,0,,Subj_in,"-0.10* [-0.19, -0.02]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,0,,Subj_c2c at equal motion,"-0.46* [-0.79, -0.14]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,1,,Quality,"-0.08 [-0.26, +0.08]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,1,,Dynamic,"-0.42 [-2.33, +1.41]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,1,,Subj_c2c,"-0.21 [-0.55, +0.06]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,1,,Bg_c2c,"-0.18 [-0.41, +0.03]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,1,,Subj_in,"-0.15* [-0.25, -0.06]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,1,,Subj_c2c at equal motion,"-0.22 [-0.53, +0.07]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,2,,Quality,"+0.00 [-0.18, +0.18]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,2,,Dynamic,"-0.42 [-2.82, +1.91]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,2,,Subj_c2c,"-0.07 [-0.42, +0.27]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,2,,Bg_c2c,"-0.08 [-0.28, +0.11]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,2,,Subj_in,"-0.03 [-0.09, +0.03]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,2,,Subj_c2c at equal motion,"-0.08 [-0.44, +0.26]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,pooled,,Quality,"-0.03 [-0.14, +0.07]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,pooled,,Dynamic,"-0.54 [-1.77, +0.61]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,pooled,,Subj_c2c,"-0.24* [-0.48, -0.04]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,pooled,,Bg_c2c,"-0.18* [-0.35, -0.03]"
+adaptive6_minus_fixed6,LLW_ad6 - LLW_w6,pooled,,Subj_in,"-0.09* [-0.15, -0.05]"

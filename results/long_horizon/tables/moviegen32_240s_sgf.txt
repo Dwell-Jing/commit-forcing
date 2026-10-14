@@ -1,0 +1,29 @@
+VBench-Long, MovieGen 32 x 240 s, generation seed 0: SGF
+x100; dDrift<k> = imaging quality of the first k 2 s clips - of the last k clips; labels with all 32 prompts scored
+
+label       Quality    Dynamic   MotionSm    Flicker    Imaging  Aesthetic    Subject Background    dDrift1    dDrift5   description
+sgf           83.97      49.11      98.68      97.38      73.45      64.96      98.26      96.75      -0.27      +0.42   Self Gradient Forcing, base
+sgf+rule      84.69      59.69      98.50      96.96      73.05      65.82      98.53      97.02      +0.01      +0.10   sgf + Commit Forcing (commit reads the newest 9 real frames)
+
+in-clip vs clip-to-clip consistency (x100)
+label      Subj_in  Subj_c2c     Bg_in    Bg_c2c
+sgf          97.92     87.34     96.29     89.81
+sgf+rule     98.05     92.41     96.38     94.27
+
+paired contrasts (a - b) x100, by prompt, bootstrap 4000, 95% CI ('*' = excludes 0)
+
+[SGF] Commit Forcing - base (sgf+rule - sgf)
+    Quality      +0.72 [  +0.07,   +1.37]*  n = 32
+    Dynamic     +10.57 [  +2.24,  +18.99]*  n = 32
+    MotionSm     -0.18 [  -0.35,   -0.04]*  n = 32
+    Flicker      -0.42 [  -0.79,   -0.09]*  n = 32
+    Imaging      -0.40 [  -1.56,   +0.67]   n = 32
+    Aesthetic    +0.86 [  -0.88,   +2.69]   n = 32
+    Subject      +0.28 [  +0.10,   +0.46]*  n = 32
+    Background   +0.26 [  +0.06,   +0.47]*  n = 32
+    dDrift1      +0.28 [  -0.94,   +1.41]   n = 32
+    dDrift5      -0.31 [  -1.74,   +0.81]   n = 32
+    Subj_in      +0.13 [  -0.09,   +0.34]   n = 32
+    Subj_c2c     +5.07 [  +2.98,   +7.30]*  n = 32
+    Bg_in        +0.09 [  -0.21,   +0.41]   n = 32
+    Bg_c2c       +4.46 [  +2.88,   +6.15]*  n = 32

@@ -1,0 +1,18 @@
+{
+  "kind": "original byte-exact common946 package before LongLive6 replacement",
+  "sha256": {
+    "component_paired_ci.csv": "75189e0d555c4f792764ec7b078b837fd7bf029d30275dcb0fafffd9b8971e76",
+    "coverage.csv": "c840509b793e202407981848a637528235d1d7c3a4107a4c3131e03c40fa5f3e",
+    "official_prompt_contributions.json": "39cf89c96ac9bb0e679969f5f5b31245670e3183dcfddcaef1bd36a965cabd18",
+    "aggregate_paired_ci.csv": "9a0df58508dd085b7f5ab07e3ede5dbc3608de4e7a220fafcdc74ce7c9e1a391",
+    "README.md": "674c7bd2c6f8f6a5fc6f068dae0fc560fdb86d5b58cc64aec966b55c0a536674",
+    "prompt_clusters.csv": "71730f2cbe082ae8f39dcb3b637dbd71c94a0f0242a49c717f5558b1bb0b44ad",
+    "protocol.json": "688cdcd4664269692fc90525970044437f4cad05c24a3a3e8861e0e006f4993d",
+    "full_scores.csv": "fbd6aea1871af6347d23ee6817d959408384446d18bfe69aacbfd2d26674c6ed",
+    "data_manifest.json": "a0db572d31cd50e2ab02f79cc32c4bf30a70f0b34819c11b4c288b60aa619325"
+  },
+  "zip_sha256": "36babb4a41c4ed2555aa0d9fd504bae88b84373df9e8301c488528e3040c0270",
+  "files": 9,
+  "LongLive_commit_frames": 12,
+  "LongLive_cf_physical_frames": 15
+}

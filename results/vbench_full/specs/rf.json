@@ -1,0 +1,13 @@
+{
+ "title": "Full VBench, 946 prompts x 60 s, generation seed 0: Recency Forcing (training-free)",
+ "scores": "../vbench_full_60s.csv",
+ "shards": "../vbench_full_60s_shards.csv",
+ "seed": 0,
+ "labels": {
+  "rf": "Recency Forcing, training-free reading (Self-Forcing weights)",
+  "rf+rule": "rf + Commit Forcing (commit reads the newest 21 real frames)"
+ },
+ "contrasts": [
+  ["Recency Forcing (training-free)", "Commit Forcing - base", "rf+rule", "rf"]
+ ]
+}

@@ -1,0 +1,76 @@
+{
+  "LL_native": {
+    "repetitions": [
+      {
+        "wall_s": 230.94736909866333,
+        "device_peak_gib": 35.8857421875,
+        "torch_peak_allocated_gib": 30.669543266296387,
+        "torch_peak_reserved_gib": 35.4375
+      },
+      {
+        "wall_s": 230.42555475234985,
+        "device_peak_gib": 35.8857421875,
+        "torch_peak_allocated_gib": 30.669543266296387,
+        "torch_peak_reserved_gib": 35.4375
+      },
+      {
+        "wall_s": 232.34061241149902,
+        "device_peak_gib": 35.8857421875,
+        "torch_peak_allocated_gib": 30.669543266296387,
+        "torch_peak_reserved_gib": 35.4375
+      },
+      {
+        "wall_s": 230.83728909492493,
+        "device_peak_gib": 35.8857421875,
+        "torch_peak_allocated_gib": 30.669543266296387,
+        "torch_peak_reserved_gib": 35.4375
+      }
+    ],
+    "mean_wall_s": 231.13770633935928,
+    "mean_device_peak_gib": 35.8857421875,
+    "mean_torch_peak_allocated_gib": 30.669543266296387,
+    "physical_cache_frames": 12,
+    "clean_calls": 80,
+    "denoising_calls": 320
+  },
+  "LL_w6": {
+    "repetitions": [
+      {
+        "wall_s": 224.5841987133026,
+        "device_peak_gib": 35.8857421875,
+        "torch_peak_allocated_gib": 30.669543266296387,
+        "torch_peak_reserved_gib": 35.4375
+      },
+      {
+        "wall_s": 224.18477964401245,
+        "device_peak_gib": 35.8857421875,
+        "torch_peak_allocated_gib": 30.669543266296387,
+        "torch_peak_reserved_gib": 35.4375
+      },
+      {
+        "wall_s": 223.4898238182068,
+        "device_peak_gib": 35.8857421875,
+        "torch_peak_allocated_gib": 30.669543266296387,
+        "torch_peak_reserved_gib": 35.4375
+      },
+      {
+        "wall_s": 222.8118200302124,
+        "device_peak_gib": 35.8857421875,
+        "torch_peak_allocated_gib": 30.669543266296387,
+        "torch_peak_reserved_gib": 35.4375
+      }
+    ],
+    "mean_wall_s": 223.76765555143356,
+    "mean_device_peak_gib": 35.8857421875,
+    "mean_torch_peak_allocated_gib": 30.669543266296387,
+    "physical_cache_frames": 12,
+    "clean_calls": 80,
+    "denoising_calls": 320
+  },
+  "snapshot": "second completed run, version-consistent JSON/memory/completion records",
+  "scope": "4 repeats of one 60-second prompt, second video timed after warm-up",
+  "wall_ratio": 0.9681140264621951,
+  "observed_wall_reduction_percent": 3.188597353780487,
+  "original_source_sha256": "c59aadbe465185e0d4d49162051fb1c036b13d05963f325eeb932cab13bc552e",
+  "device_peak_definition": "maximum recorded nvidia-smi memory.used in each .mem log, MiB / 1024; average of four per-arm peaks"
+}

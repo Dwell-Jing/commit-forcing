@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "sha256": {
+    "full_scores.csv": "4b9a99f02978cf7a2143931157617ff763eded29202f512dc647e8ea1c04667a",
+    "aggregate_paired_ci.csv": "48dc11f2b16c7bcd2926baefb242064471e655a159d4a78b3cdc4ca176eca466",
+    "component_paired_ci.csv": "6bfa6331816c4f9e874106e2b95f9631b71bcab879ea5a895eda625de2fe96cf",
+    "coverage.csv": "3b5e8b856e729d62bf91813077e1d2e3cd89001fe42f9443ad40c32b57204513",
+    "official_prompt_contributions.json": "e9dbba593b7107d2426c9c28299a98a53d3bbd10659cc8aae11091a4d684c70b",
+    "prompt_clusters.csv": "71730f2cbe082ae8f39dcb3b637dbd71c94a0f0242a49c717f5558b1bb0b44ad",
+    "protocol.json": "720af356b1da2d5c862783041e1b6dcf8b5ba3ad8c19b73284b636353d9309ec",
+    "longlive6_source_results.json": "f12804d586c3e8cdbef89fb70d72235daf4f7e77420c09e996b675c601a6548d",
+    "longlive6_coverage_jobs.json": "db7d3735872f8f411584b2e780d6cfd162543a61153c5d16336cde21b618e3fe"
+  },
+  "row_counts": {
+    "full_scores.csv": 16,
+    "aggregate_paired_ci.csv": 24,
+    "component_paired_ci.csv": 128,
+    "coverage.csv": 256,
+    "prompt_clusters.csv": 946,
+    "official_prompt_contributions.json": 21689
+  },
+  "source_arm_alias": {
+    "LL_W": "W946_W6S"
+  },
+  "replaced_control_archive": "ablation12/original_package.zip",
+  "replaced_control_archive_sha256": "36babb4a41c4ed2555aa0d9fd504bae88b84373df9e8301c488528e3040c0270"
+}

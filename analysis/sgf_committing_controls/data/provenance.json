@@ -1,0 +1,114 @@
+{
+  "experiment": "SGF committing-context controls",
+  "generation": {
+    "prompts": 200,
+    "seconds": 60,
+    "seeds": [
+      0,
+      1
+    ],
+    "groups": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "fixed_physical_cache_latent_frames": 12,
+    "paired_initial_noise_seed_convention": "seed * 100003 + prompt_index",
+    "identical_intermediate_device_rng_states": false
+  },
+  "sources": {
+    "original_prereg": {
+      "filename": "PREREG.md",
+      "sha256": "c4b7e8f0e11705b280a5eaaa76ae5beb455fd282871137235631aed20f70327f"
+    },
+    "original_completed_readout": {
+      "filename": "READOUT.md",
+      "sha256": "cfc109eb99cd30d5b3f4294f9c5c5d74380b0888b3d5abfa2428bde588638bd3"
+    },
+    "original_statistical_script": {
+      "filename": "sgfcw_readout.py",
+      "sha256": "e646f7f98fb16ff32764d06bc96730374ee637ec2b5dfd76d2245781b516989b"
+    },
+    "exported_per_video_scores": {
+      "filename": "per_video_scores.csv",
+      "sha256": "f77309965c76d0c00d702a76052f9e21ac4e8733a10448284a19b5046e130008"
+    }
+  },
+  "public_files": {
+    "PREREG.md": "protocol transcription; infrastructure paths and private coordination notes removed",
+    "READOUT.md": "completed reported tables; infrastructure labels in narrative replaced with public descriptions",
+    "levels.csv": "reported rounded arm-level summaries",
+    "reported_contrasts.csv": "reported rounded estimates, intervals, and significance markers",
+    "per_video_scores.csv": "actual scored inputs exported from the original VBench-Long aggregation, 1600 rows",
+    "../source/sgfcw_readout.py": "portable CSV adaptation retaining the original contrast order, metric order, bootstrap algorithm and RNG"
+  },
+  "statistics": {
+    "prompt_bootstrap_draws": 4000,
+    "regression_bootstrap_draws": 2000,
+    "rng": "numpy.random.default_rng(0)",
+    "contrast_order": [
+      "B - A",
+      "B - C",
+      "B - D"
+    ],
+    "metric_order": [
+      "Subj_c2c",
+      "Quality",
+      "Dynamic",
+      "MotionSm",
+      "Flicker",
+      "Bg_c2c",
+      "Subject",
+      "Aesthetic",
+      "Imaging",
+      "Subj_c2c at equal motion"
+    ],
+    "pooled_unit": "mean over two generation seeds within each prompt; bootstrap prompts",
+    "motion_adjusted_readout": "OLS intercept on paired Dynamic Degree difference; prompt-cluster bootstrap retains seeds"
+  },
+  "limits": [
+    "The equal-count contrast jointly changes historical content, age, and position.",
+    "Motion adjustment is descriptive, not a matched-motion generation experiment.",
+    "Historical outputs share their initial-noise seed convention, not a fixed complete re-noising RNG trajectory."
+  ],
+  "public_artifacts": {
+    "README.md": {
+      "sha256": "2250fb2b0b16f6d7e6a64d9bdd96a0f76f50f3fbdb55ffc7a15d860696d44bbe",
+      "bytes": 5478
+    },
+    "tables.py": {
+      "sha256": "16214d4a35b07a1af5d26348c5acb516cc3a68a0548a933be103a54c21437291",
+      "bytes": 729
+    },
+    "source/sgfcw_readout.py": {
+      "sha256": "f57d2044374df71258e9ce6709c702f079e8da5c594dde0a7c51b01cbb6dd97c",
+      "bytes": 5853
+    },
+    "data/PREREG.md": {
+      "sha256": "fcb5bbc464e6bcb543e85880837093c28d520b518519f13ec60bedbe219424e5",
+      "bytes": 3384
+    },
+    "data/READOUT.md": {
+      "sha256": "8c0d534b3131dbb9d3fd9115d95172e1015d86b72f8d8af4b63a98f0b49fb06e",
+      "bytes": 3911
+    },
+    "data/levels.csv": {
+      "sha256": "82b0fde3fe9edf02a191264e8374ccd2938d17014f9dc57cb89085f05eee98e6",
+      "bytes": 550
+    },
+    "data/reported_contrasts.csv": {
+      "sha256": "ed3f962803f5a7108b13260a4e66c7ab9c14d309435db5f3cb84657f748bf180",
+      "bytes": 3947
+    },
+    "data/per_video_scores.csv": {
+      "sha256": "f77309965c76d0c00d702a76052f9e21ac4e8733a10448284a19b5046e130008",
+      "bytes": 270158
+    }
+  },
+  "verification": {
+    "method": "CPU replay from the actual scored inputs, retaining original bootstrap/RNG order",
+    "reported_metric_cells_verified": 90,
+    "all_rounded_estimates_intervals_and_significance_markers_match": true
+  }
+}

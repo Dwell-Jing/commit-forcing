@@ -1,0 +1,19 @@
+{
+  "title": "VBench-Long, MovieGen 32 x 240 s, generation seed 0: SGF",
+  "scores": "../vbench_long_240s_moviegen32.csv",
+  "drift": "../quality_drift_240s_moviegen32.csv",
+  "seed": 0,
+  "num_prompts": 32,
+  "labels": {
+    "sgf": "Self Gradient Forcing, base",
+    "sgf+rule": "sgf + Commit Forcing (commit reads the newest 9 real frames)"
+  },
+  "contrasts": [
+    [
+      "SGF",
+      "Commit Forcing - base",
+      "sgf+rule",
+      "sgf"
+    ]
+  ]
+}

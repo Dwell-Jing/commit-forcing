@@ -1,0 +1,134 @@
+diff --git a/pipeline/causal_inference.py b/pipeline/causal_inference.py
+index 4473078..1c258a2
+--- a/pipeline/causal_inference.py
++++ b/pipeline/causal_inference.py
+@@ -3,6 +3,7 @@ import time
+ import torch
+ 
+ from utils.wan_wrapper import WanDiffusionWrapper, WanTextEncoder, WanVAEWrapper
++from wan.modules.causal_model import COMMIT_RULE
+ 
+ from demo_utils.memory import gpu, get_cuda_free_memory_gb, DynamicSwapInstaller, move_model_to_device_with_memory_preservation
+ import tqdm
+@@ -255,6 +256,7 @@ class CausalInferencePipeline(torch.nn.Module):
+                     [batch_size, current_num_frames],
+                     device=noise.device,
+                     dtype=torch.int64) * current_timestep
++                COMMIT_RULE["step"] = index  # denoising step, for the optional TRB
+ 
+                 if index < len(current_denoising_list) - 1:
+                     _, denoised_pred = self.generator(
+@@ -295,6 +297,9 @@ class CausalInferencePipeline(torch.nn.Module):
+             # Step 3.3: rerun with timestep zero to update KV cache using clean context
+             context_timestep = torch.ones_like(timestep) * self.args.context_noise
+ 
++            # commit pass
++            COMMIT_RULE.update(commit=True, step=-1)
++            COMMIT_RULE["commit_calls"] += 1
+             self.generator(
+                 noisy_image_or_video=denoised_pred,
+                 conditional_dict=conditional_dict,
+@@ -303,6 +308,7 @@ class CausalInferencePipeline(torch.nn.Module):
+                 crossattn_cache=self.crossattn_cache,
+                 current_start=current_start_frame * self.frame_seq_length,
+             )
++            COMMIT_RULE["commit"] = False
+ 
+             if profile:
+                 block_end.record()
+diff --git a/wan/modules/causal_model.py b/wan/modules/causal_model.py
+index b98d89d..a6615da
+--- a/wan/modules/causal_model.py
++++ b/wan/modules/causal_model.py
+@@ -1,4 +1,5 @@
+ from wan.modules.attention import attention
++from wan.modules.attention import FLASH_ATTN_2_AVAILABLE, FLASH_ATTN_3_AVAILABLE
+ from wan.modules.model import (
+     WanRMSNorm,
+     rope_apply,
+@@ -98,6 +99,50 @@ def causal_rope_apply_frames(x, grid_sizes, freqs, frame_indices):
+     return torch.stack(output).type_as(x)
+ 
+ 
++# Commit Forcing: switches, per-call state (set by pipeline/causal_inference.py) and counters.
++#   window: None = the commit pass reads the whole cache; W = only the newest W frames
++#   trb:    optional Recency Forcing reading (TRB) in the denoising passes
++COMMIT_RULE = dict(window=None, trb=False, commit=False, step=-1, commit_calls=0, rule_reads=0, trb_calls=0)
++TRB = dict(beta=4.0, gamma_base=0.1, l_recent=1, l_history=4, chunk=3)
++_TRB_COLUMNS = {}
++
++
++def _trb_bias(abs_list, sink, cur_abs, cur_frames, step):
++    """TRB bias per cache slot at denoising step `step` (0..3); returns (bias, number of history chunks)."""
++    c, lr = TRB["chunk"], TRB["l_recent"]
++    assert cur_frames == c and cur_abs % c == 0 and 0 <= step <= 3, (cur_abs, cur_frames, step)
++    g = TRB["gamma_base"] * 2.0 ** (step + 1)
++    q_last = cur_abs + cur_frames - 1
++    bias, hist = [], set()
++    for j, a in enumerate(abs_list):
++        d = (q_last - a) // c
++        if j >= sink and d > lr:
++            bias.append(-TRB["beta"] * min((d - lr) / TRB["l_history"], 1.0) ** g)
++            hist.add(d)
++        else:
++            bias.append(0.0)
++    return bias, len(hist)
++
++
++def _trb_attention(q, k, v, bias, fs):
++    """softmax(q k^T / sqrt(D) + b) v in one flash-attention call; two extra head channels carry the bias."""
++    assert FLASH_ATTN_2_AVAILABLE or FLASH_ATTN_3_AVAILABLE, "TRB needs flash-attn (the SDPA fallback has no softmax_scale)"
++    B, Lq, H, D = q.shape
++    Lk, P = k.shape[1], 8
++    assert Lk == len(bias) * fs and v.shape[1] == Lk, (Lk, len(bias), fs, tuple(v.shape))
++    key = (tuple(bias), fs, D, k.dtype, str(k.device))
++    col = _TRB_COLUMNS.get(key)
++    if col is None:
++        b = torch.tensor(bias, dtype=torch.float64).repeat_interleave(fs) * math.sqrt(D)
++        hi = b.to(k.dtype)
++        col = torch.stack([hi, (b - hi.double()).to(k.dtype)], -1).view(1, Lk, 1, 2).to(k.device)
++        _TRB_COLUMNS[key] = col
++    qa = torch.cat([q, q.new_ones(B, Lq, H, 2), q.new_zeros(B, Lq, H, P - 2)], -1)
++    ka = torch.cat([k, col.expand(B, Lk, H, 2), k.new_zeros(B, Lk, H, P - 2)], -1)
++    va = torch.cat([v, v.new_zeros(B, Lk, H, P)], -1)
++    return attention(qa, ka, va, softmax_scale=1.0 / math.sqrt(D))[..., :D]
++
++
+ class CausalWanSelfAttention(nn.Module):
+ 
+     def __init__(self,
+@@ -336,11 +381,29 @@ class CausalWanSelfAttention(nn.Module):
+             roped_query = causal_rope_apply_frames(
+                 q, grid_sizes, freqs, q_pos).type_as(v)
+ 
+-            x = attention(
+-                roped_query,
+-                roped_key,
+-                kv_cache["v"][:, :num_occ * fs]
+-            )
++            # optional TRB: denoising passes only, once a history chunk is cached
++            n_hist = 0
++            if COMMIT_RULE["trb"] and not COMMIT_RULE["commit"] and COMMIT_RULE["step"] >= 0:
++                trb_bias, n_hist = _trb_bias(abs_list, sink, cur_abs, cur_frames, COMMIT_RULE["step"])
++            if n_hist > 0:
++                x = _trb_attention(roped_query, roped_key, kv_cache["v"][:, :num_occ * fs], trb_bias, fs)
++                COMMIT_RULE["trb_calls"] += 1
++            elif COMMIT_RULE["commit"] and COMMIT_RULE["window"] is not None:
++                # Commit Forcing: the commit pass reads only the newest `window` frames
++                lo = cur_abs + cur_frames - COMMIT_RULE["window"]
++                first = next(j for j, a in enumerate(abs_list) if a >= lo)
++                x = attention(
++                    roped_query,
++                    roped_key[:, first * fs:],
++                    kv_cache["v"][:, first * fs:num_occ * fs]
++                )
++                COMMIT_RULE["rule_reads"] += 1
++            else:
++                x = attention(
++                    roped_query,
++                    roped_key,
++                    kv_cache["v"][:, :num_occ * fs]
++                )
+             # Keep the legacy counters roughly in sync (unused by this path).
+             kv_cache["global_end_index"].fill_(current_start + q.shape[1])
+             kv_cache["local_end_index"].fill_(num_occ * fs)

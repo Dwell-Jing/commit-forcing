@@ -1,0 +1,579 @@
+{
+ "summary": {
+  "LL_N": {
+   "quality": 84.70032578090715,
+   "semantic": 76.43091504195371,
+   "total": 83.04644363311645,
+   "components": {
+    "subject_consistency": 0.9795728921879275,
+    "background_consistency": 0.9710977130428833,
+    "temporal_flickering": 0.9928883485675297,
+    "motion_smoothness": 0.9869374552172202,
+    "dynamic_degree": 0.5212962962962963,
+    "aesthetic_quality": 0.6630201621188058,
+    "imaging_quality": 0.700333803558862,
+    "object_class": 0.8917721518987342,
+    "multiple_objects": 0.7839684959349593,
+    "human_action": 0.9483333333333334,
+    "color": 0.9217220926534045,
+    "spatial_relationship": 0.7580299305909034,
+    "scene": 0.4476744186046512,
+    "appearance_style": 0.20686382329374062,
+    "temporal_style": 0.22487613799671333,
+    "overall_consistency": 0.250790672156439
+   }
+  },
+  "LL_W": {
+   "quality": 84.91180803903575,
+   "semantic": 76.58439622087225,
+   "total": 83.24632567540303,
+   "components": {
+    "subject_consistency": 0.9792120586018899,
+    "background_consistency": 0.9704406059735347,
+    "temporal_flickering": 0.9922439880508224,
+    "motion_smoothness": 0.985129084150937,
+    "dynamic_degree": 0.5504629629629629,
+    "aesthetic_quality": 0.6656423231393206,
+    "imaging_quality": 0.7061289635685182,
+    "object_class": 0.8864187763713081,
+    "multiple_objects": 0.7933689024390244,
+    "human_action": 0.94,
+    "color": 0.9255307950973523,
+    "spatial_relationship": 0.7504324393948538,
+    "scene": 0.46048934108527134,
+    "appearance_style": 0.20650466610547458,
+    "temporal_style": 0.22634182230879862,
+    "overall_consistency": 0.25207836803142314
+   }
+  },
+  "W946_W6S": {
+   "quality": 84.99039011842952,
+   "semantic": 76.8387269808407,
+   "total": 83.36005749091176,
+   "components": {
+    "subject_consistency": 0.980044196112345,
+    "background_consistency": 0.9723386250125072,
+    "temporal_flickering": 0.9927875854307501,
+    "motion_smoothness": 0.9855341625333486,
+    "dynamic_degree": 0.5481481481481482,
+    "aesthetic_quality": 0.6670696375404207,
+    "imaging_quality": 0.7045661212664137,
+    "object_class": 0.8852320675105485,
+    "multiple_objects": 0.7990853658536585,
+    "human_action": 0.955,
+    "color": 0.9204160252315992,
+    "spatial_relationship": 0.763017666221209,
+    "scene": 0.4571220930232558,
+    "appearance_style": 0.20725423416436894,
+    "temporal_style": 0.22650671588877838,
+    "overall_consistency": 0.25094931467192577
+   }
+  }
+ },
+ "comparisons": {
+  "W6S_vs_N": {
+   "native": "LL_N",
+   "rule": "W946_W6S",
+   "aggregate_delta": {
+    "quality": {
+     "delta": 0.2900643375223666,
+     "ci95": [
+      0.04952201743240501,
+      0.5179311937591219
+     ],
+     "valid_draws": 4000
+    },
+    "semantic": {
+     "delta": 0.40781193888699363,
+     "ci95": [
+      -0.08859766487079952,
+      0.906654892783702
+     ],
+     "valid_draws": 4000
+    },
+    "total": {
+     "delta": 0.3136138577953034,
+     "ci95": [
+      0.09926604715758387,
+      0.5212535072396091
+     ],
+     "valid_draws": 4000
+    }
+   },
+   "component_delta_percent": {
+    "subject_consistency": {
+     "delta": 0.047130392441741,
+     "ci95": [
+      -0.060668004801337716,
+      0.1531712822682895
+     ],
+     "valid_draws": 4000
+    },
+    "background_consistency": {
+     "delta": 0.12409119696239479,
+     "ci95": [
+      0.06090183945654033,
+      0.18775187845263092
+     ],
+     "valid_draws": 4000
+    },
+    "temporal_flickering": {
+     "delta": -0.010076313677964688,
+     "ci95": [
+      -0.0409251618519459,
+      0.019728902487425874
+     ],
+     "valid_draws": 4000
+    },
+    "motion_smoothness": {
+     "delta": -0.14032926838716264,
+     "ci95": [
+      -0.2002308942890476,
+      -0.0833832175561163
+     ],
+     "valid_draws": 4000
+    },
+    "dynamic_degree": {
+     "delta": 2.6851851851851904,
+     "ci95": [
+      -0.37501467136149547,
+      5.648391812865502
+     ],
+     "valid_draws": 4000
+    },
+    "aesthetic_quality": {
+     "delta": 0.4049475421614934,
+     "ci95": [
+      0.11833161537883435,
+      0.7005757849810008
+     ],
+     "valid_draws": 4000
+    },
+    "imaging_quality": {
+     "delta": 0.4232317707551725,
+     "ci95": [
+      0.10772351509550689,
+      0.7221367720393048
+     ],
+     "valid_draws": 4000
+    },
+    "object_class": {
+     "delta": -0.6540084388185652,
+     "ci95": [
+      -2.0246783088235354,
+      0.5844245885983042
+     ],
+     "valid_draws": 4000
+    },
+    "multiple_objects": {
+     "delta": 1.5116869918699205,
+     "ci95": [
+      0.10288783482142176,
+      3.1661572275946015
+     ],
+     "valid_draws": 4000
+    },
+    "human_action": {
+     "delta": 0.6666666666666599,
+     "ci95": [
+      -0.6410256410256352,
+      2.1407863263390556
+     ],
+     "valid_draws": 4000
+    },
+    "color": {
+     "delta": -0.13060674218053903,
+     "ci95": [
+      -1.4890971360007363,
+      1.352483749763283
+     ],
+     "valid_draws": 4000
+    },
+    "spatial_relationship": {
+     "delta": 0.4987735630305634,
+     "ci95": [
+      -1.696926437554918,
+      2.695405144328299
+     ],
+     "valid_draws": 4000
+    },
+    "scene": {
+     "delta": 0.9447674418604612,
+     "ci95": [
+      -1.2005510035569127,
+      3.166666666666657
+     ],
+     "valid_draws": 4000
+    },
+    "appearance_style": {
+     "delta": 0.03904108706283271,
+     "ci95": [
+      -0.05926502044101233,
+      0.13613296853022439
+     ],
+     "valid_draws": 4000
+    },
+    "temporal_style": {
+     "delta": 0.1630577892065055,
+     "ci95": [
+      0.03502354397067213,
+      0.30092899221252173
+     ],
+     "valid_draws": 4000
+    },
+    "overall_consistency": {
+     "delta": 0.0158642515486751,
+     "ci95": [
+      -0.10219366402728847,
+      0.1276251160497702
+     ],
+     "valid_draws": 4000
+    }
+   },
+   "bootstrap": {
+    "unit": "paired canonical semantic prompt cluster",
+    "clusters": 944,
+    "metadata_rows": 946,
+    "repetitions": 4000,
+    "seed": 20261011,
+    "aggregation": "Each arm retains official surviving-record numerator/denominator; no survivor intersection or per-video substitution"
+   }
+  },
+  "W6S_vs_W12": {
+   "native": "LL_W",
+   "rule": "W946_W6S",
+   "aggregate_delta": {
+    "quality": {
+     "delta": 0.07858207939376882,
+     "ci95": [
+      -0.06241857328663976,
+      0.2120982018971386
+     ],
+     "valid_draws": 4000
+    },
+    "semantic": {
+     "delta": 0.2543307599684539,
+     "ci95": [
+      -0.13739138285107125,
+      0.6711953007667603
+     ],
+     "valid_draws": 4000
+    },
+    "total": {
+     "delta": 0.11373181550872857,
+     "ci95": [
+      -0.020171012434908413,
+      0.24755750981698205
+     ],
+     "valid_draws": 4000
+    }
+   },
+   "component_delta_percent": {
+    "subject_consistency": {
+     "delta": 0.08321375104550777,
+     "ci95": [
+      -0.0009369380414934611,
+      0.15583140455680394
+     ],
+     "valid_draws": 4000
+    },
+    "background_consistency": {
+     "delta": 0.1898019038972576,
+     "ci95": [
+      0.13746119839598983,
+      0.24216747987324538
+     ],
+     "valid_draws": 4000
+    },
+    "temporal_flickering": {
+     "delta": 0.05435973799277072,
+     "ci95": [
+      0.024431652512677007,
+      0.08747079474053053
+     ],
+     "valid_draws": 4000
+    },
+    "motion_smoothness": {
+     "delta": 0.040507838241155,
+     "ci95": [
+      0.01265712938809962,
+      0.06601729157104794
+     ],
+     "valid_draws": 4000
+    },
+    "dynamic_degree": {
+     "delta": -0.23148148148147696,
+     "ci95": [
+      -1.9819819819819813,
+      1.4368702994181968
+     ],
+     "valid_draws": 4000
+    },
+    "aesthetic_quality": {
+     "delta": 0.14273144011001104,
+     "ci95": [
+      -0.028309662358331874,
+      0.3108913192155988
+     ],
+     "valid_draws": 4000
+    },
+    "imaging_quality": {
+     "delta": -0.15628423021044613,
+     "ci95": [
+      -0.3600686625825684,
+      0.0389885119213357
+     ],
+     "valid_draws": 4000
+    },
+    "object_class": {
+     "delta": -0.11867088607595555,
+     "ci95": [
+      -1.3260250955069015,
+      1.3099472695656744
+     ],
+     "valid_draws": 4000
+    },
+    "multiple_objects": {
+     "delta": 0.5716463414634165,
+     "ci95": [
+      -0.21634615384614655,
+      1.4212344622019093
+     ],
+     "valid_draws": 4000
+    },
+    "human_action": {
+     "delta": 1.5000000000000013,
+     "ci95": [
+      0.0,
+      3.630749793729378
+     ],
+     "valid_draws": 4000
+    },
+    "color": {
+     "delta": -0.5114769865753099,
+     "ci95": [
+      -1.610896708640875,
+      0.6126087984255822
+     ],
+     "valid_draws": 4000
+    },
+    "spatial_relationship": {
+     "delta": 1.2585226826355211,
+     "ci95": [
+      -0.1889821968740555,
+      2.716968193627267
+     ],
+     "valid_draws": 4000
+    },
+    "scene": {
+     "delta": -0.33672480620155487,
+     "ci95": [
+      -1.8795302297340375,
+      1.242149555221209
+     ],
+     "valid_draws": 4000
+    },
+    "appearance_style": {
+     "delta": 0.07495680588943676,
+     "ci95": [
+      0.018537349387021167,
+      0.1305694714941077
+     ],
+     "valid_draws": 4000
+    },
+    "temporal_style": {
+     "delta": 0.016489357997975795,
+     "ci95": [
+      -0.051082346314695035,
+      0.08416277834091163
+     ],
+     "valid_draws": 4000
+    },
+    "overall_consistency": {
+     "delta": -0.11290533594973673,
+     "ci95": [
+      -0.1962790642129731,
+      -0.03508213452986872
+     ],
+     "valid_draws": 4000
+    }
+   },
+   "bootstrap": {
+    "unit": "paired canonical semantic prompt cluster",
+    "clusters": 944,
+    "metadata_rows": 946,
+    "repetitions": 4000,
+    "seed": 20261011,
+    "aggregation": "Each arm retains official surviving-record numerator/denominator; no survivor intersection or per-video substitution"
+   }
+  },
+  "W12_vs_N": {
+   "native": "LL_N",
+   "rule": "LL_W",
+   "aggregate_delta": {
+    "quality": {
+     "delta": 0.21148225812859778,
+     "ci95": [
+      -0.007616036154822579,
+      0.43894157706790654
+     ],
+     "valid_draws": 4000
+    },
+    "semantic": {
+     "delta": 0.15348117891853974,
+     "ci95": [
+      -0.25368622475279246,
+      0.5571746691743279
+     ],
+     "valid_draws": 4000
+    },
+    "total": {
+     "delta": 0.1998820422865748,
+     "ci95": [
+      0.005476352745237285,
+      0.4067319800579998
+     ],
+     "valid_draws": 4000
+    }
+   },
+   "component_delta_percent": {
+    "subject_consistency": {
+     "delta": -0.03608335860376677,
+     "ci95": [
+      -0.10575605996221497,
+      0.04286765310170858
+     ],
+     "valid_draws": 4000
+    },
+    "background_consistency": {
+     "delta": -0.0657107069348628,
+     "ci95": [
+      -0.11856197023517226,
+      -0.012197266797135215
+     ],
+     "valid_draws": 4000
+    },
+    "temporal_flickering": {
+     "delta": -0.0644360516707354,
+     "ci95": [
+      -0.09668306889736655,
+      -0.0338965614237459
+     ],
+     "valid_draws": 4000
+    },
+    "motion_smoothness": {
+     "delta": -0.18083710662831765,
+     "ci95": [
+      -0.2391116935859273,
+      -0.12501451410254738
+     ],
+     "valid_draws": 4000
+    },
+    "dynamic_degree": {
+     "delta": 2.9166666666666674,
+     "ci95": [
+      0.1568474264705879,
+      5.806528417818739
+     ],
+     "valid_draws": 4000
+    },
+    "aesthetic_quality": {
+     "delta": 0.2622161020514824,
+     "ci95": [
+      0.002399586313577019,
+      0.5391987789945372
+     ],
+     "valid_draws": 4000
+    },
+    "imaging_quality": {
+     "delta": 0.5795160009656186,
+     "ci95": [
+      0.2652440193508678,
+      0.8937007193869484
+     ],
+     "valid_draws": 4000
+    },
+    "object_class": {
+     "delta": -0.5353375527426096,
+     "ci95": [
+      -2.150093896713607,
+      0.7943125667735002
+     ],
+     "valid_draws": 4000
+    },
+    "multiple_objects": {
+     "delta": 0.940040650406504,
+     "ci95": [
+      -0.2766678051001797,
+      2.408435639880949
+     ],
+     "valid_draws": 4000
+    },
+    "human_action": {
+     "delta": -0.8333333333333415,
+     "ci95": [
+      -2.222508591065298,
+      0.19613678804855916
+     ],
+     "valid_draws": 4000
+    },
+    "color": {
+     "delta": 0.3808702443947709,
+     "ci95": [
+      -0.3035467737553908,
+      1.0937360580576962
+     ],
+     "valid_draws": 4000
+    },
+    "spatial_relationship": {
+     "delta": -0.7597491196049577,
+     "ci95": [
+      -2.6209363371685788,
+      0.8977501879409798
+     ],
+     "valid_draws": 4000
+    },
+    "scene": {
+     "delta": 1.2814922480620161,
+     "ci95": [
+      -0.3589535774677657,
+      3.06308709624259
+     ],
+     "valid_draws": 4000
+    },
+    "appearance_style": {
+     "delta": -0.03591571882660405,
+     "ci95": [
+      -0.13545369640606628,
+      0.05861472453192454
+     ],
+     "valid_draws": 4000
+    },
+    "temporal_style": {
+     "delta": 0.1465684312085297,
+     "ci95": [
+      0.02339342276652392,
+      0.2829850150174661
+     ],
+     "valid_draws": 4000
+    },
+    "overall_consistency": {
+     "delta": 0.12876958749841183,
+     "ci95": [
+      0.0059981704777412066,
+      0.25074050132367565
+     ],
+     "valid_draws": 4000
+    }
+   },
+   "bootstrap": {
+    "unit": "paired canonical semantic prompt cluster",
+    "clusters": 944,
+    "metadata_rows": 946,
+    "repetitions": 4000,
+    "seed": 20261011,
+    "aggregation": "Each arm retains official surviving-record numerator/denominator; no survivor intersection or per-video substitution"
+   }
+  }
+ }
+}

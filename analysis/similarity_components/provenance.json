@@ -1,0 +1,42 @@
+{
+  "updated": "2026-10-14",
+  "artifact": "DINOv2 full-frame similarity components",
+  "evidence": "Saved opening and tail vectors from the completed diagnostic studies",
+  "script": "reproduce.py",
+  "bootstrap": {
+    "draws": 4000,
+    "seed": 0,
+    "unit": "prompt, retaining every generation seed",
+    "percentiles": [
+      2.5,
+      97.5
+    ]
+  },
+  "summary_changes_for_publication": "Replace the private root with a study identifier; numerical fields are unchanged",
+  "files": [
+    {
+      "study": "ll",
+      "original_summary_sha256": "c31a2b4d3fab38aebf7b3e7b48cbd3b36485bb1b0bd8351a034a0edc56a262a0",
+      "features": "data/dino_ll.npz",
+      "features_sha256": "5cfc961260082dcaacaa5ff0aaf5c1da9223c33e2528ce47dc8001d7cbdc0f23",
+      "summary": "data/dino_ll.json",
+      "summary_sha256": "1fce6be456b1aa6b2c4af9ef0b56df1a814787b5965e8a9150f054195eba5f1a"
+    },
+    {
+      "study": "rs",
+      "original_summary_sha256": "1fbec879cf147f74b2afa9542df1c5aadffad083137d2c594d6ff88ecd961718",
+      "features": "data/dino_rs.npz",
+      "features_sha256": "080ee30a75e32d10baef20f33c85308f64a9da0f70605834fae0dab876e3f533",
+      "summary": "data/dino_rs.json",
+      "summary_sha256": "fa96934dcf7ee124c543d0ac8ba8a26d6a64fbf4f119fbc202904ca41965415b"
+    },
+    {
+      "study": "sf",
+      "original_summary_sha256": "56d24a4a240a53fd7ece1b94257079ac6c94f68824163ac1c89fcf9659dc8231",
+      "features": "data/dino_sf.npz",
+      "features_sha256": "aed4d1b1be0dfac8c8bf6abf423d4750c57709adcb22433dcc5cb7c42dc4b4f6",
+      "summary": "data/dino_sf.json",
+      "summary_sha256": "959d63de47154d671566397b7f1af28e6d251fde9c28ba0d489aca5cebf35265"
+    }
+  ]
+}

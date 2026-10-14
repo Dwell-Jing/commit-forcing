@@ -1,0 +1,454 @@
+{
+  "schema": 1,
+  "csv": "results/vbench_long_60s.csv",
+  "num_prompts": 200,
+  "bootstrap_draws": 4000,
+  "bootstrap_seed": 0,
+  "metric_order": [
+    [
+      "quality",
+      "Quality"
+    ],
+    [
+      "dynamic_degree",
+      "Dynamic"
+    ],
+    [
+      "subject_consistency",
+      "Subject"
+    ],
+    [
+      "background_consistency",
+      "Background"
+    ],
+    [
+      "subject_inclip",
+      "Subj_in"
+    ],
+    [
+      "subject_clip2clip",
+      "Subj_c2c"
+    ],
+    [
+      "background_clip2clip",
+      "Bg_c2c"
+    ],
+    [
+      "imaging_quality",
+      "Imaging"
+    ],
+    [
+      "aesthetic_quality",
+      "Aesthetic"
+    ],
+    [
+      "motion_smoothness",
+      "MotionSm"
+    ],
+    [
+      "temporal_flickering",
+      "Flicker"
+    ]
+  ],
+  "rows": [
+    {
+      "label": "SGF",
+      "seeds": [
+        {
+          "generation_seed": 0,
+          "spec": "results/specs/vbl60_seed0.json",
+          "a": "sgf+rule",
+          "b": "sgf",
+          "reported": {
+            "Quality": {
+              "diff": 1.0370085087632577,
+              "ci": [
+                0.6654827532112819,
+                1.4092504190979545
+              ],
+              "n": 200,
+              "sig": true
+            },
+            "Subj_c2c": {
+              "diff": 4.395756625217096,
+              "ci": [
+                3.5139555414126997,
+                5.268236777725919
+              ],
+              "n": 200,
+              "sig": true
+            }
+          }
+        },
+        {
+          "generation_seed": 1,
+          "spec": "results/specs/vbl60_seed1_a.json",
+          "a": "sgf+rule",
+          "b": "sgf",
+          "reported": {
+            "Quality": {
+              "diff": 0.8588587750398378,
+              "ci": [
+                0.5167507716907191,
+                1.2094985911325493
+              ],
+              "n": 200,
+              "sig": true
+            },
+            "Subj_c2c": {
+              "diff": 4.8038927091221355,
+              "ci": [
+                3.8895575595393383,
+                5.794667708339041
+              ],
+              "n": 200,
+              "sig": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "RF reproduction",
+      "seeds": [
+        {
+          "generation_seed": 0,
+          "spec": "results/specs/vbl60_seed0.json",
+          "a": "rf+rule",
+          "b": "rf",
+          "reported": {
+            "Quality": {
+              "diff": 0.4578799992551357,
+              "ci": [
+                0.27027812801611734,
+                0.6470313154303957
+              ],
+              "n": 200,
+              "sig": true
+            },
+            "Subj_c2c": {
+              "diff": 3.8585127896051223,
+              "ci": [
+                3.224418786006322,
+                4.511803087979509
+              ],
+              "n": 200,
+              "sig": true
+            }
+          }
+        },
+        {
+          "generation_seed": 1,
+          "spec": "results/specs/vbl60_seed1_b.json",
+          "a": "rf+rule",
+          "b": "rf",
+          "reported": {
+            "Quality": {
+              "diff": 0.5584275610177665,
+              "ci": [
+                0.38358553346476143,
+                0.7310570333805622
+              ],
+              "n": 200,
+              "sig": true
+            },
+            "Subj_c2c": {
+              "diff": 4.297076310593122,
+              "ci": [
+                3.639601364676392,
+                4.987510867825116
+              ],
+              "n": 200,
+              "sig": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "LongLive",
+      "seeds": [
+        {
+          "generation_seed": 0,
+          "spec": "results/specs/vbl60_longlive_commit_window.json",
+          "a": "longlive+commit6",
+          "b": "longlive",
+          "reported": {
+            "Quality": {
+              "diff": 0.49499334731395706,
+              "ci": [
+                0.3347763070546892,
+                0.6611889393148973
+              ],
+              "n": 200,
+              "sig": true
+            },
+            "Subj_c2c": {
+              "diff": 1.2040957699305024,
+              "ci": [
+                0.8363309375909637,
+                1.5786932763635526
+              ],
+              "n": 200,
+              "sig": true
+            }
+          }
+        },
+        {
+          "generation_seed": 1,
+          "spec": "results/specs/vbl60_seed1_a.json",
+          "a": "longlive+commit6",
+          "b": "longlive",
+          "reported": {
+            "Quality": {
+              "diff": 0.4646314318197585,
+              "ci": [
+                0.29827905879894273,
+                0.637081591048311
+              ],
+              "n": 200,
+              "sig": true
+            },
+            "Subj_c2c": {
+              "diff": 1.0646716504265432,
+              "ci": [
+                0.7196842916382094,
+                1.42753253349375
+              ],
+              "n": 200,
+              "sig": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "CF, sink excluded",
+      "seeds": [
+        {
+          "generation_seed": 0,
+          "spec": "results/specs/vbl60_seed0.json",
+          "a": "context_forcing+sink_only",
+          "b": "context_forcing",
+          "reported": {
+            "Quality": {
+              "diff": 0.3239795598722502,
+              "ci": [
+                0.11490345425785,
+                0.5426521799436476
+              ],
+              "n": 200,
+              "sig": true
+            },
+            "Subj_c2c": {
+              "diff": 1.7992773073693291,
+              "ci": [
+                1.1981600886359334,
+                2.4246588236407445
+              ],
+              "n": 200,
+              "sig": true
+            }
+          }
+        },
+        {
+          "generation_seed": 1,
+          "spec": "results/specs/vbl60_seed1_b.json",
+          "a": "context_forcing+sink_only",
+          "b": "context_forcing",
+          "reported": {
+            "Quality": {
+              "diff": 0.4986371678548915,
+              "ci": [
+                0.3066024625722233,
+                0.6945557798786468
+              ],
+              "n": 200,
+              "sig": true
+            },
+            "Subj_c2c": {
+              "diff": 1.6097074871850683,
+              "ci": [
+                1.0174889588945324,
+                2.2165337418029405
+              ],
+              "n": 200,
+              "sig": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "CF, full rule",
+      "seeds": [
+        {
+          "generation_seed": 0,
+          "spec": "results/specs/vbl60_seed0.json",
+          "a": "context_forcing+rule",
+          "b": "context_forcing",
+          "reported": {
+            "Quality": {
+              "diff": 0.1275326180105881,
+              "ci": [
+                -0.09605462958240531,
+                0.35039791012542254
+              ],
+              "n": 200,
+              "sig": false
+            },
+            "Subj_c2c": {
+              "diff": 3.2310845909383272,
+              "ci": [
+                2.5556655215332285,
+                3.9383270277778197
+              ],
+              "n": 200,
+              "sig": true
+            }
+          }
+        },
+        {
+          "generation_seed": 1,
+          "spec": "results/specs/vbl60_seed1_b.json",
+          "a": "context_forcing+rule",
+          "b": "context_forcing",
+          "reported": {
+            "Quality": {
+              "diff": 0.42580159966140146,
+              "ci": [
+                0.21859676491824498,
+                0.6352972328605949
+              ],
+              "n": 200,
+              "sig": true
+            },
+            "Subj_c2c": {
+              "diff": 3.525695725031004,
+              "ci": [
+                2.8254929489349734,
+                4.256230596918211
+              ],
+              "n": 200,
+              "sig": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "Rolling Sink",
+      "seeds": [
+        {
+          "generation_seed": 0,
+          "spec": "results/specs/vbl60_seed0.json",
+          "a": "rolling_sink+rule",
+          "b": "rolling_sink",
+          "reported": {
+            "Quality": {
+              "diff": 0.10951082801049938,
+              "ci": [
+                -0.01620065270232535,
+                0.24273369197610578
+              ],
+              "n": 200,
+              "sig": false
+            },
+            "Subj_c2c": {
+              "diff": 0.6717747773750335,
+              "ci": [
+                0.1813771636265433,
+                1.2045292215205028
+              ],
+              "n": 200,
+              "sig": true
+            }
+          }
+        },
+        {
+          "generation_seed": 1,
+          "spec": "results/specs/vbl60_seed1_b.json",
+          "a": "rolling_sink+rule",
+          "b": "rolling_sink",
+          "reported": {
+            "Quality": {
+              "diff": 0.1557222705860152,
+              "ci": [
+                0.016701534461995658,
+                0.30288905228717805
+              ],
+              "n": 200,
+              "sig": true
+            },
+            "Subj_c2c": {
+              "diff": 0.9803241907683165,
+              "ci": [
+                0.5800115989392679,
+                1.4067157689650567
+              ],
+              "n": 200,
+              "sig": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "SF with sink",
+      "seeds": [
+        {
+          "generation_seed": 0,
+          "spec": "results/specs/vbl60_seed0.json",
+          "a": "sf_sink+rule",
+          "b": "sf_sink",
+          "reported": {
+            "Quality": {
+              "diff": 0.3059957976080677,
+              "ci": [
+                -0.3002124662891103,
+                0.8349607013074718
+              ],
+              "n": 200,
+              "sig": false
+            },
+            "Subj_c2c": {
+              "diff": 3.3792924979894328,
+              "ci": [
+                2.7282494406645386,
+                4.056251065867777
+              ],
+              "n": 200,
+              "sig": true
+            }
+          }
+        },
+        {
+          "generation_seed": 1,
+          "spec": "results/specs/vbl60_seed1_b.json",
+          "a": "sf_sink+rule",
+          "b": "sf_sink",
+          "reported": {
+            "Quality": {
+              "diff": 0.19629116991362036,
+              "ci": [
+                -0.28160222289411513,
+                0.5866979647655369
+              ],
+              "n": 200,
+              "sig": false
+            },
+            "Subj_c2c": {
+              "diff": 3.4025383816052486,
+              "ci": [
+                2.760379357924003,
+                4.0708372225204155
+              ],
+              "n": 200,
+              "sig": true
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

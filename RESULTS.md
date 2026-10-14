@@ -1,0 +1,1320 @@
+# Results
+
+Scores ×100. **Base** is the original model; **+ Commit Forcing** applies Commit Forcing to the same model, with the
+same initial noise. **Δ** is the paired difference over prompts, with its 95% bootstrap interval in brackets (4,000
+resamples); `*` marks an interval that excludes 0. **Consistency** is VBench-Long's clip-to-clip subject consistency,
+our measure of long-range consistency. † RF-TF applies the public Recency Forcing Temporal Response Bias to released
+Self-Forcing weights, without an RF-trained checkpoint.
+
+[Full VBench](#full-vbench) · [MovieGen 60 s](#60-s-videos) · [Longer videos](#longer-videos) ·
+[Committing controls](#committing-controls) · [Quality and cost](analysis/quality_cost/README.md) ·
+[per-video data and commands](results/README.md) · [← Home](README.md)
+
+## Full VBench
+
+**Common main protocol:** 946 VBench entries, one nominal 60 s video per entry, all 16 dimensions.
+The 7 methods form 8 paired configurations because ID-Forcing is evaluated on two backbones.
+Each pair uses the same released weights, prompt and per-prompt seed. Native denoising and sampler settings remain
+model-specific; SGF+ uses its official 12-frame configuration. LongLive uses 6-frame committing and 12 physical
+cache frames in both arms. IDF-SF changes handover and tail recaching, as documented in the integration READMEs.
+Generation uses Wan-expanded prompts; scoring uses their original VBench metadata and dimension-specific subsets.
+
+<table>
+<thead>
+<tr><th rowspan="2" align="left">Model</th><th colspan="3">Quality</th><th colspan="3">Total</th></tr>
+<tr><th>Base</th><th>+ CF</th><th>Δ</th><th>Base</th><th>+ CF</th><th>Δ</th></tr>
+</thead>
+<tbody>
+<tr><td>SGF</td><td align="right">86.06</td><td align="right">87.22</td><td align="right"><b>+1.16</b></td><td align="right">83.85</td><td align="right">84.94</td><td align="right"><b>+1.09</b></td></tr>
+<tr><td>Recency Forcing, training-free †</td><td align="right">84.77</td><td align="right">85.24</td><td align="right"><b>+0.47</b></td><td align="right">82.24</td><td align="right">83.08</td><td align="right"><b>+0.85</b></td></tr>
+<tr><td>Context Forcing</td><td align="right">84.79</td><td align="right">85.25</td><td align="right"><b>+0.46</b></td><td align="right">82.24</td><td align="right">82.68</td><td align="right"><b>+0.44</b></td></tr>
+<tr><td>SGF+</td><td align="right">86.32</td><td align="right">86.61</td><td align="right">+0.29</td><td align="right">84.30</td><td align="right">84.60</td><td align="right">+0.30</td></tr>
+<tr><td>LongLive</td><td align="right">84.70</td><td align="right">84.99</td><td align="right"><b>+0.29</b></td><td align="right">83.05</td><td align="right">83.36</td><td align="right"><b>+0.31</b></td></tr>
+<tr><td>Rolling Sink</td><td align="right">84.84</td><td align="right">85.15</td><td align="right"><b>+0.32</b></td><td align="right">82.90</td><td align="right">83.18</td><td align="right"><b>+0.28</b></td></tr>
+<tr><td>ID-Forcing on Self-Forcing</td><td align="right">85.26</td><td align="right">85.21</td><td align="right">−0.05</td><td align="right">82.96</td><td align="right">83.15</td><td align="right">+0.19</td></tr>
+<tr><td>ID-Forcing on LongLive</td><td align="right">84.91</td><td align="right">84.64</td><td align="right">−0.27</td><td align="right">82.92</td><td align="right">82.91</td><td align="right">−0.01</td></tr>
+</tbody>
+</table>
+
+Intervals use 4,000 paired bootstrap draws of 944 distinct original-prompt clusters (seed 20261011).
+Aggregation retains each arm's official output-record weights, including its own Flickering filter and omitted Color records.
+This updates the earlier three-model summary with consistent denominators; earlier CSVs and specs remain under
+[`results/vbench_full`](results/vbench_full/README.md).
+Quality and Total improve significantly in 5 of the 8 configurations.
+Unrounded scores, all component intervals, coverage, configuration records and the CPU reproduction command:
+[`common946`](results/vbench_full/common946/README.md).
+
+<details>
+<summary>All 16 dimensions and aggregate scores, each backbone paired with itself</summary>
+
+**SGF**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 86.06 | 87.22 | +1.16* [+0.57, +1.81] |
+| Semantic | 74.99 | 75.79 | +0.80 [−0.61, +2.24] |
+| Total | 83.85 | 84.94 | +1.09* [+0.56, +1.66] |
+| Subject consistency | 98.26 | 98.43 | +0.17* [+0.04, +0.29] |
+| Background consistency | 96.69 | 97.08 | +0.40* [+0.27, +0.53] |
+| Temporal flickering | 98.95 | 98.78 | −0.16* [−0.28, −0.05] |
+| Motion smoothness | 98.63 | 98.37 | −0.26* [−0.36, −0.16] |
+| Dynamic degree | 67.45 | 81.81 | +14.35* [+6.93, +22.37] |
+| Aesthetic quality | 67.06 | 67.52 | +0.46 [−0.24, +1.16] |
+| Imaging quality | 71.82 | 72.32 | +0.50 [−0.29, +1.28] |
+| Object class | 86.00 | 85.51 | −0.49 [−4.12, +2.87] |
+| Multiple objects | 71.24 | 77.01 | +5.76 [−0.74, +12.10] |
+| Human action | 92.33 | 91.83 | −0.50 [−5.12, +4.03] |
+| Color | 89.60 | 88.91 | −0.69 [−6.06, +4.14] |
+| Spatial relationship | 76.29 | 75.76 | −0.53 [−6.03, +5.00] |
+| Scene | 48.09 | 51.04 | +2.95 [−1.68, +7.80] |
+| Appearance style | 20.61 | 20.77 | +0.16 [−0.07, +0.38] |
+| Temporal style | 22.05 | 22.33 | +0.28 [−0.08, +0.67] |
+| Overall consistency | 24.84 | 24.37 | −0.47* [−0.95, −0.02] |
+
+**Recency Forcing, training-free †**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 84.77 | 85.24 | +0.47* [+0.16, +0.79] |
+| Semantic | 72.10 | 74.44 | +2.35* [+1.57, +3.09] |
+| Total | 82.24 | 83.08 | +0.85* [+0.54, +1.16] |
+| Subject consistency | 96.73 | 96.98 | +0.26* [+0.09, +0.42] |
+| Background consistency | 95.92 | 96.23 | +0.30* [+0.23, +0.37] |
+| Temporal flickering | 98.88 | 99.02 | +0.14* [+0.09, +0.21] |
+| Motion smoothness | 98.37 | 98.23 | −0.14* [−0.24, −0.05] |
+| Dynamic degree | 70.28 | 70.56 | +0.28 [−3.33, +4.02] |
+| Aesthetic quality | 62.65 | 64.06 | +1.41* [+0.91, +1.96] |
+| Imaging quality | 70.34 | 71.24 | +0.90* [+0.26, +1.57] |
+| Object class | 88.05 | 89.04 | +1.00 [−1.62, +3.45] |
+| Multiple objects | 63.58 | 69.33 | +5.75* [+2.52, +8.88] |
+| Human action | 92.83 | 94.17 | +1.33 [+0.00, +2.66] |
+| Color | 87.96 | 89.27 | +1.31 [−0.74, +3.36] |
+| Spatial relationship | 73.15 | 74.82 | +1.67 [−1.32, +4.77] |
+| Scene | 35.47 | 41.53 | +6.06* [+3.10, +9.32] |
+| Appearance style | 20.66 | 20.56 | −0.10 [−0.23, +0.05] |
+| Temporal style | 21.96 | 22.62 | +0.66* [+0.29, +1.06] |
+| Overall consistency | 24.59 | 25.03 | +0.44* [+0.17, +0.70] |
+
+**Context Forcing**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 84.79 | 85.25 | +0.46* [+0.09, +0.85] |
+| Semantic | 72.03 | 72.41 | +0.38 [−0.49, +1.25] |
+| Total | 82.24 | 82.68 | +0.44* [+0.10, +0.81] |
+| Subject consistency | 97.75 | 97.96 | +0.21* [+0.07, +0.37] |
+| Background consistency | 96.63 | 96.92 | +0.29* [+0.19, +0.40] |
+| Temporal flickering | 99.30 | 99.21 | −0.09* [−0.14, −0.04] |
+| Motion smoothness | 98.55 | 98.43 | −0.12* [−0.21, −0.02] |
+| Dynamic degree | 58.89 | 62.31 | +3.43 [−1.32, +8.20] |
+| Aesthetic quality | 65.41 | 65.82 | +0.41 [−0.02, +0.85] |
+| Imaging quality | 69.47 | 70.32 | +0.84* [+0.30, +1.41] |
+| Object class | 88.63 | 87.23 | −1.40 [−4.42, +1.23] |
+| Multiple objects | 70.79 | 73.34 | +2.55 [−0.97, +6.33] |
+| Human action | 91.33 | 93.67 | +2.33* [+0.46, +4.56] |
+| Color | 84.31 | 85.09 | +0.77 [−2.27, +3.74] |
+| Spatial relationship | 69.19 | 67.40 | −1.79 [−5.12, +1.25] |
+| Scene | 40.20 | 39.47 | −0.73 [−4.02, +2.55] |
+| Appearance style | 20.88 | 20.97 | +0.09 [−0.07, +0.24] |
+| Temporal style | 20.83 | 21.10 | +0.26 [−0.01, +0.52] |
+| Overall consistency | 23.60 | 23.89 | +0.29 [−0.02, +0.61] |
+
+**SGF+**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 86.32 | 86.61 | +0.29 [−0.19, +0.78] |
+| Semantic | 76.22 | 76.56 | +0.34 [−0.27, +0.96] |
+| Total | 84.30 | 84.60 | +0.30 [−0.10, +0.71] |
+| Subject consistency | 98.51 | 98.75 | +0.25* [+0.17, +0.33] |
+| Background consistency | 96.93 | 97.49 | +0.56* [+0.47, +0.66] |
+| Temporal flickering | 99.23 | 99.31 | +0.08* [+0.02, +0.14] |
+| Motion smoothness | 98.75 | 98.66 | −0.09* [−0.18, −0.01] |
+| Dynamic degree | 64.86 | 66.57 | +1.71 [−4.56, +8.22] |
+| Aesthetic quality | 67.86 | 68.06 | +0.20 [−0.11, +0.51] |
+| Imaging quality | 72.17 | 72.07 | −0.10 [−0.53, +0.31] |
+| Object class | 87.61 | 88.04 | +0.43 [−0.35, +1.35] |
+| Multiple objects | 77.62 | 79.04 | +1.43 [−0.72, +3.89] |
+| Human action | 91.83 | 93.33 | +1.50 [−0.14, +3.61] |
+| Color | 89.74 | 89.17 | −0.58 [−2.90, +1.27] |
+| Spatial relationship | 79.78 | 77.81 | −1.97 [−4.76, +0.67] |
+| Scene | 47.11 | 48.51 | +1.41 [−0.98, +4.01] |
+| Appearance style | 20.65 | 20.72 | +0.07 [−0.04, +0.18] |
+| Temporal style | 22.44 | 22.54 | +0.10 [−0.08, +0.28] |
+| Overall consistency | 24.82 | 24.83 | +0.01 [−0.16, +0.17] |
+
+**LongLive (6-frame committing)**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 84.70 | 84.99 | +0.29* [+0.05, +0.52] |
+| Semantic | 76.43 | 76.84 | +0.41 [−0.09, +0.91] |
+| Total | 83.05 | 83.36 | +0.31* [+0.10, +0.52] |
+| Subject consistency | 97.96 | 98.00 | +0.05 [−0.06, +0.15] |
+| Background consistency | 97.11 | 97.23 | +0.12* [+0.06, +0.19] |
+| Temporal flickering | 99.29 | 99.28 | −0.01 [−0.04, +0.02] |
+| Motion smoothness | 98.69 | 98.55 | −0.14* [−0.20, −0.08] |
+| Dynamic degree | 52.13 | 54.81 | +2.69 [−0.38, +5.65] |
+| Aesthetic quality | 66.30 | 66.71 | +0.40* [+0.12, +0.70] |
+| Imaging quality | 70.03 | 70.46 | +0.42* [+0.11, +0.72] |
+| Object class | 89.18 | 88.52 | −0.65 [−2.02, +0.58] |
+| Multiple objects | 78.40 | 79.91 | +1.51* [+0.10, +3.17] |
+| Human action | 94.83 | 95.50 | +0.67 [−0.64, +2.14] |
+| Color | 92.17 | 92.04 | −0.13 [−1.49, +1.35] |
+| Spatial relationship | 75.80 | 76.30 | +0.50 [−1.70, +2.70] |
+| Scene | 44.77 | 45.71 | +0.94 [−1.20, +3.17] |
+| Appearance style | 20.69 | 20.73 | +0.04 [−0.06, +0.14] |
+| Temporal style | 22.49 | 22.65 | +0.16* [+0.04, +0.30] |
+| Overall consistency | 25.08 | 25.09 | +0.02 [−0.10, +0.13] |
+
+[The original 12-frame results](results/vbench_full/common946/ablation12/README.md) are retained as a control.
+
+**Rolling Sink**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 84.84 | 85.15 | +0.32* [+0.11, +0.53] |
+| Semantic | 75.13 | 75.27 | +0.14 [−0.34, +0.62] |
+| Total | 82.90 | 83.18 | +0.28* [+0.09, +0.49] |
+| Subject consistency | 98.09 | 97.95 | −0.14* [−0.29, −0.00] |
+| Background consistency | 97.07 | 97.02 | −0.05 [−0.11, +0.00] |
+| Temporal flickering | 99.11 | 99.08 | −0.04 [−0.08, +0.02] |
+| Motion smoothness | 98.77 | 98.65 | −0.12* [−0.18, −0.08] |
+| Dynamic degree | 53.94 | 58.10 | +4.17* [+1.86, +6.76] |
+| Aesthetic quality | 65.53 | 65.96 | +0.43* [+0.14, +0.72] |
+| Imaging quality | 70.88 | 71.20 | +0.33 [−0.18, +0.97] |
+| Object class | 89.97 | 89.74 | −0.23 [−0.56, +0.08] |
+| Multiple objects | 74.51 | 74.52 | +0.01 [−2.08, +1.84] |
+| Human action | 91.17 | 90.67 | −0.50 [−2.72, +1.74] |
+| Color | 91.58 | 91.07 | −0.51 [−1.99, +0.98] |
+| Spatial relationship | 72.81 | 73.58 | +0.77 [−0.50, +2.17] |
+| Scene | 42.81 | 43.61 | +0.80 [−1.08, +2.82] |
+| Appearance style | 20.77 | 20.77 | +0.00 [−0.10, +0.12] |
+| Temporal style | 22.85 | 22.94 | +0.09 [−0.02, +0.20] |
+| Overall consistency | 24.98 | 25.15 | +0.17* [+0.02, +0.34] |
+
+**ID-Forcing on Self-Forcing**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 85.26 | 85.21 | −0.05 [−0.30, +0.19] |
+| Semantic | 73.76 | 74.90 | +1.14* [+0.39, +1.91] |
+| Total | 82.96 | 83.15 | +0.19 [−0.07, +0.43] |
+| Subject consistency | 97.32 | 97.65 | +0.34* [+0.18, +0.51] |
+| Background consistency | 96.63 | 96.77 | +0.14* [+0.06, +0.21] |
+| Temporal flickering | 98.91 | 99.00 | +0.08* [+0.02, +0.15] |
+| Motion smoothness | 98.32 | 98.37 | +0.04 [−0.01, +0.10] |
+| Dynamic degree | 68.01 | 64.21 | −3.80* [−6.92, −1.02] |
+| Aesthetic quality | 64.23 | 64.70 | +0.48* [+0.05, +0.91] |
+| Imaging quality | 71.48 | 71.65 | +0.17 [−0.26, +0.63] |
+| Object class | 87.73 | 88.66 | +0.93 [−1.64, +3.54] |
+| Multiple objects | 67.96 | 73.12 | +5.16* [+1.72, +8.68] |
+| Human action | 92.83 | 92.33 | −0.50 [−2.43, +1.43] |
+| Color | 87.30 | 89.66 | +2.36 [−0.18, +5.10] |
+| Spatial relationship | 74.71 | 76.41 | +1.70 [−0.98, +4.43] |
+| Scene | 42.26 | 42.78 | +0.53 [−1.81, +3.03] |
+| Appearance style | 20.55 | 20.40 | −0.14* [−0.27, −0.02] |
+| Temporal style | 22.26 | 22.41 | +0.15 [−0.12, +0.45] |
+| Overall consistency | 25.06 | 25.10 | +0.04 [−0.13, +0.21] |
+
+**ID-Forcing on LongLive**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 84.91 | 84.64 | −0.27 [−0.61, +0.05] |
+| Semantic | 74.93 | 75.98 | +1.05* [+0.35, +1.75] |
+| Total | 82.92 | 82.91 | −0.01 [−0.32, +0.29] |
+| Subject consistency | 97.80 | 97.90 | +0.09 [−0.04, +0.23] |
+| Background consistency | 96.89 | 97.05 | +0.16* [+0.07, +0.25] |
+| Temporal flickering | 99.21 | 99.29 | +0.09* [+0.03, +0.14] |
+| Motion smoothness | 98.51 | 98.64 | +0.12* [+0.06, +0.19] |
+| Dynamic degree | 56.85 | 50.69 | −6.16* [−10.59, −2.05] |
+| Aesthetic quality | 66.08 | 66.26 | +0.18 [−0.17, +0.54] |
+| Imaging quality | 70.58 | 70.72 | +0.14 [−0.22, +0.52] |
+| Object class | 86.00 | 87.30 | +1.30 [−1.23, +3.81] |
+| Multiple objects | 75.55 | 76.99 | +1.44 [−0.93, +4.10] |
+| Human action | 94.17 | 94.50 | +0.33 [−1.02, +2.06] |
+| Color | 91.45 | 92.37 | +0.92 [−1.37, +3.37] |
+| Spatial relationship | 71.69 | 74.47 | +2.77 [−0.16, +5.89] |
+| Scene | 43.05 | 45.54 | +2.49 [−0.13, +5.17] |
+| Appearance style | 20.81 | 20.67 | −0.14 [−0.33, +0.05] |
+| Temporal style | 22.44 | 22.43 | −0.01 [−0.24, +0.23] |
+| Overall consistency | 25.00 | 25.05 | +0.05 [−0.10, +0.20] |
+
+</details>
+
+<details>
+<summary>LongLive standard suite: original 12-frame control</summary>
+
+This control commits 12 frames and stores 15 physical cache frames; its base stores 12.
+It is separate from the 6-frame main comparison above.
+
+**LongLive (12-frame control)**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 84.70 | 84.91 | +0.21 [−0.01, +0.44] |
+| Semantic | 76.43 | 76.58 | +0.15 [−0.25, +0.56] |
+| Total | 83.05 | 83.25 | +0.20* [+0.01, +0.41] |
+| Subject consistency | 97.96 | 97.92 | −0.04 [−0.11, +0.04] |
+| Background consistency | 97.11 | 97.04 | −0.07* [−0.12, −0.01] |
+| Temporal flickering | 99.29 | 99.22 | −0.06* [−0.10, −0.03] |
+| Motion smoothness | 98.69 | 98.51 | −0.18* [−0.24, −0.13] |
+| Dynamic degree | 52.13 | 55.05 | +2.92* [+0.16, +5.81] |
+| Aesthetic quality | 66.30 | 66.56 | +0.26* [+0.00, +0.54] |
+| Imaging quality | 70.03 | 70.61 | +0.58* [+0.27, +0.89] |
+| Object class | 89.18 | 88.64 | −0.54 [−2.15, +0.79] |
+| Multiple objects | 78.40 | 79.34 | +0.94 [−0.28, +2.41] |
+| Human action | 94.83 | 94.00 | −0.83 [−2.22, +0.20] |
+| Color | 92.17 | 92.55 | +0.38 [−0.30, +1.09] |
+| Spatial relationship | 75.80 | 75.04 | −0.76 [−2.62, +0.90] |
+| Scene | 44.77 | 46.05 | +1.28 [−0.36, +3.06] |
+| Appearance style | 20.69 | 20.65 | −0.04 [−0.14, +0.06] |
+| Temporal style | 22.49 | 22.63 | +0.15* [+0.02, +0.28] |
+| Overall consistency | 25.08 | 25.21 | +0.13* [+0.01, +0.25] |
+
+
+Six-frame minus 12-frame committing: Quality +0.08 [−0.06, +0.21], Total +0.11 [−0.02, +0.25].
+Neither interval excludes zero. [Original package](results/vbench_full/common946/ablation12/README.md).
+
+</details>
+
+## Committing controls
+
+### SGF: equal read count and self-only
+
+These comparisons use 200 rollf200 prompts, 60-second videos and generation seeds 0 and 1. They are separate from
+the standard 946-entry suite. A is original SGF (sink 3 + recent 6 + current 3); B is Commit Forcing (recent 6 +
+current 3); C is self-only (current 3); D retains the sink at the same read count as B (sink 3 + recent 3 + current 3).
+Every group retains the 12-frame physical cache, base denoising and the original selected-slot RoPE positions.
+
+| Pooled contrast | Δ Quality | Δ Subject c2c | Δ Dynamic | Δ Smoothness | Δ Flickering |
+|---|---:|---:|---:|---:|---:|
+| B − A | +0.95\* | +4.60\* | +13.35\* | −0.20\* | −0.43\* |
+| B − D, both 9 reads | +1.25\* | +4.54\* | +18.12\* | −0.26\* | −0.58\* |
+| B − C, recent versus self-only | −0.10 | −0.07 | −2.85\* | +0.11\* | +0.16\* |
+
+The equal-count control shows that excluding sink access helps beyond reducing the number of read frames.
+Recent context has no significant Quality or clip-to-clip Subject advantage over self-only on SGF; it improves
+smoothness and flicker while reducing motion. This nonsignificant difference does not establish equivalence.
+A/B reuse the earlier outputs; C/D use the same initial-noise and sampler protocol. Intermediate device re-noise
+RNG is unfixed in every group, so pairing is by prompt rather than identical complete stochastic trajectories.
+
+[Full contrasts, scores, preregistration and CPU replay](analysis/sgf_committing_controls/README.md).
+
+### Diagnostic similarity components
+
+The DINOv2 consistency diagnostic subtracts similarity to other seeds' openings from similarity to the video's own
+opening. On LongLive, excluding the sink during committing increases both terms, with no significant change in
+their difference. On Rolling Sink, recent context gives a small consistency increase whose unrounded interval
+excludes zero. [All components, saved feature arrays and CPU replay](analysis/similarity_components/README.md).
+
+### Quality decomposition and inference cost
+
+Dynamic Degree contributes +1.10 of SGF's +1.16 standard-suite Quality points. RF-TF's largest contributions come
+from Aesthetic and Imaging Quality. The [complete decomposition and cost tables](analysis/quality_cost/README.md)
+retain all eight configurations and the original component changes.
+
+LongLive cost uses four technical repeats of the same 60-second prompt after warm-up: mean wall time is
+231.1 s for Base and 223.8 s for 6-frame committing, an observed 3.2% reduction. Peak device memory is 35.9 GiB
+in both arms. The other configurations each use one warmed-up video per arm. Rolling Sink peak device memory
+is 41.9 GiB for Base and 48.1 GiB with Commit Forcing; IDF-SF reduces clean forward calls from 155 to 80.
+The original 12-frame LongLive measurement remains a control in the [cost records](analysis/quality_cost/README.md).
+
+The [LongLive quick-window confirmation](analysis/commit_window/README.md#quick-window-confirmation) uses a separate
+59-prompt set, 48-second videos and three seeds. Fixed 6-frame committing improves Quality and clip-to-clip Subject
+over 12 frames; motion-based adaptive selection adds no benefit over the fixed 6-frame window. The 6-frame
+choice is then evaluated on the separate 946-entry suite above. Its standard-suite physical cache remains 12 frames.
+
+## 60 s videos
+
+VBench-Long on 200 fixed [rollf200](eval/prompts/README.md) MovieGen prompts, using the official seven-dimensional
+Quality formula. All seven dimensions are scored on each prompt, with fused Subject / Background consistency
+and unfiltered Flickering ([pipeline](eval/vbench_long/README.md)).
+
+### Committing comparisons
+
+| Model | Base | + Commit Forcing | Δ Quality | Δ Consistency |
+|:---|---:|---:|:---|:---|
+| SGF | 83.58 | 84.62 | +1.04*&nbsp;[+0.67,&nbsp;+1.41] | +4.40*&nbsp;[+3.51,&nbsp;+5.27] |
+| RF-TF † | 82.01 | 82.47 | +0.46*&nbsp;[+0.27,&nbsp;+0.65] | +3.86*&nbsp;[+3.22,&nbsp;+4.51] |
+| LongLive, 6 frames | 82.23 | 82.73 | +0.49*&nbsp;[+0.33,&nbsp;+0.66] | +1.20*&nbsp;[+0.84,&nbsp;+1.58] |
+| Context Forcing, sink exclusion | 82.78 | 83.11 | +0.32*&nbsp;[+0.11,&nbsp;+0.54] | +1.80*&nbsp;[+1.20,&nbsp;+2.42] |
+| Context Forcing, full rule | 82.78 | 82.91 | +0.13&nbsp;[−0.10,&nbsp;+0.35] | +3.23*&nbsp;[+2.56,&nbsp;+3.94] |
+| Rolling Sink | 82.61 | 82.72 | +0.11&nbsp;[−0.02,&nbsp;+0.24] | +0.67*&nbsp;[+0.18,&nbsp;+1.20] |
+| Self-Forcing with sink | 81.33 | 81.63 | +0.31&nbsp;[−0.30,&nbsp;+0.83] | +3.38*&nbsp;[+2.73,&nbsp;+4.06] |
+
+LongLive uses 6-frame committing. Its historical rollf200 Base and Commit Forcing arms both store 15 physical
+cache frames. Full 12-frame and self-only controls retain their original scores below.
+
+<a id="committing-replication"></a>
+
+### Generation-seed replication
+
+The same seven committing configurations, 200 rollf200 prompts per generation seed, fixed released weights.
+All clip-to-clip Subject gains reproduce with seed 1. `*` denotes an interval excluding zero.
+
+| Configuration | Δ Quality, seed 0 | Δ Quality, seed 1 | Δ Consistency, seed 0 | Δ Consistency, seed 1 |
+|:---|---:|---:|---:|---:|
+| SGF | +1.04* | +0.86* | +4.40* | +4.80* |
+| RF-TF † | +0.46* | +0.56* | +3.86* | +4.30* |
+| LongLive, 6 frames | +0.49* | +0.46* | +1.20* | +1.06* |
+| Context Forcing, sink exclusion | +0.32* | +0.50* | +1.80* | +1.61* |
+| Context Forcing, full rule | +0.13 | +0.43* | +3.23* | +3.53* |
+| Rolling Sink | +0.11 | +0.16* | +0.67* | +0.98* |
+| Self-Forcing with sink | +0.31 | +0.20 | +3.38* | +3.40* |
+
+<p align="center"><img src="assets/commit_effects.png" width="100%" alt="Paired Quality and long-range Subject changes for seven committing configurations, each with two generation seeds; LongLive uses six-frame committing."></p>
+
+Sources: [seed 0](results/tables/vbl60_seed0.txt), [LongLive 6-frame seed 0](results/tables/vbl60_longlive_commit_window.txt),
+[seed 1 SGF/LongLive](results/tables/vbl60_seed1_a.txt), [seed 1 remaining configurations](results/tables/vbl60_seed1_b.txt).
+[Figure inputs and CPU replay](assets/README.md). The corresponding specs and all metrics remain below.
+
+### Additional backbone comparisons
+
+| Model | Seed | Base | + Commit Forcing | Δ Quality | Δ Consistency |
+|:---|--:|---:|---:|:---|:---|
+| SGF+ | 0 | 84.23 | 84.34 | +0.12&nbsp;[−0.26,&nbsp;+0.48] | +2.84*&nbsp;[+2.06,&nbsp;+3.59] |
+| ID-Forcing on Self-Forcing | 0 | 82.20 | 82.44 | +0.23*&nbsp;[+0.07,&nbsp;+0.40] | +2.53*&nbsp;[+1.99,&nbsp;+3.09] |
+| ID-Forcing on Self-Forcing | 1 | 82.47 | 82.67 | +0.20*&nbsp;[+0.04,&nbsp;+0.37] | +2.27*&nbsp;[+1.70,&nbsp;+2.81] |
+| ID-Forcing on LongLive | 0 | 82.54 | 82.45 | −0.09&nbsp;[−0.25,&nbsp;+0.06] | +2.05*&nbsp;[+1.46,&nbsp;+2.67] |
+
+<a id="sgf-rf-compatibility"></a>
+
+## SGF + RF compatibility
+
+Supplementary fixed-weight comparisons at 60 s, seed 0. Each marginal committing comparison retains its denoising
+policy. RF versus base SGF also changes the cache budget from 12 to 21 latent frames.
+
+| Contrast | Δ Quality | Δ Consistency |
+|:---|:---|:---|
+| Add Commit Forcing to RF denoising | +0.30*&nbsp;[+0.0005,&nbsp;+0.61] | +3.35* |
+| Add RF denoising to Commit Forcing | +0.10&nbsp;[−0.19,&nbsp;+0.39] | +0.12 |
+| RF reading versus base SGF, including cache changes | +0.84*&nbsp;[+0.56,&nbsp;+1.14] | +1.17* |
+| SGF + Commit Forcing versus SGF + RF reading | +0.20&nbsp;[−0.13,&nbsp;+0.55] | +3.23* |
+
+[Exact table](results/tables/vbl60_sgf_rf.txt) · [spec](results/specs/vbl60_sgf_rf.json).
+The independent SF distant-denoising results are preserved [separately](analysis/read_locus/formal_60s.md).
+
+**Published reference scores from [Recency Forcing Tab. 3](https://arxiv.org/abs/2609.19729).**
+The published scores use the authors' evaluation; the local scores use rollf200. The exact author prompt list
+and scoring settings have not been matched, so these columns do not establish a shared-protocol ranking.
+
+| Method | Published Tab. 3 | Our rollf200 evaluation |
+|:---|--:|--:|
+| Recency Forcing, trained | 84.02 | – |
+| Recency Forcing, training-free | 82.63 | 82.01 † |
+| Infinity-RoPE | 82.30 | – |
+| Deep Forcing | 82.14 | – |
+| LongLive | 81.98 | 82.23 |
+| Rolling Forcing | 81.56 | – |
+| Self-Forcing | 80.11 | 80.22 |
+| Causal Forcing | 78.98 | – |
+
+**Committing variants.** Each row compares a committing context with the base model, unless another reference is named.
+
+| Model | Variant | Seed | Δ Quality | Δ Consistency |
+|:---|:---|--:|:---|:---|
+| Context Forcing | no sink in the commit pass | 0 | +0.32*&nbsp;[+0.11,&nbsp;+0.54] | +1.80* |
+| Context Forcing | no sink in the commit pass | 1 | +0.50*&nbsp;[+0.31,&nbsp;+0.69] | +1.61* |
+| LongLive | commit pass reads only its own block | 0 | +0.49*&nbsp;[+0.29,&nbsp;+0.70] | +0.20 |
+| LongLive | commit pass reads only its own block | 1 | +0.64*&nbsp;[+0.43,&nbsp;+0.85] | −0.11 |
+| LongLive | commit pass reads the newest 6 frames | 0 | +0.49*&nbsp;[+0.33,&nbsp;+0.66] | +1.20* |
+| LongLive | commit pass reads the newest 6 frames | 1 | +0.46*&nbsp;[+0.30,&nbsp;+0.64] | +1.06* |
+| LongLive | commit pass reads the newest 9 frames | 0 | +0.48*&nbsp;[+0.33,&nbsp;+0.64] | +1.22* |
+| Self-Forcing + sink | + Commit Forcing | 0 | +0.31&nbsp;[−0.30,&nbsp;+0.83] | +3.38* |
+| Self-Forcing + sink | + Commit Forcing | 1 | +0.20&nbsp;[−0.28,&nbsp;+0.59] | +3.40* |
+| Self-Forcing + sink | commit pass reads only its own block | 0 | −0.05&nbsp;[−0.71,&nbsp;+0.49] | −0.49 |
+| Recency Forcing †, 2nd implementation | + Commit Forcing | 0 | +0.49*&nbsp;[+0.26,&nbsp;+0.72] | +4.71* |
+
+<details>
+<summary>All metrics, 60 s</summary>
+
+The original `longlive+rule` label denotes 12-frame committing. The 6-frame main comparison uses
+`longlive+commit6` in the window and seed-1 tables. Historical table specs and scores are preserved.
+
+<details>
+<summary>Seed 0: Self-Forcing, Recency Forcing, LongLive, SGF, Context Forcing, Rolling Sink, ID-Forcing</summary>
+
+Source: [`results/tables/vbl60_seed0.txt`](results/tables/vbl60_seed0.txt) · spec [`results/specs/vbl60_seed0.json`](results/specs/vbl60_seed0.json)
+
+
+**Self-Forcing + sink + Commit Forcing** vs **Self-Forcing + sink**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 81.33 | 81.63 | +0.31&nbsp;[−0.30,&nbsp;+0.83] |
+| Dynamic degree | 57.52 | 59.58 | +2.07&nbsp;[−0.38,&nbsp;+4.43] |
+| Motion smoothness | 98.00 | 97.75 | −0.25&nbsp;[−0.77,&nbsp;+0.16] |
+| Temporal flickering | 96.44 | 96.33 | −0.12&nbsp;[−0.51,&nbsp;+0.27] |
+| Imaging quality | 67.08 | 68.03 | +0.95*&nbsp;[+0.29,&nbsp;+1.61] |
+| Aesthetic quality | 57.61 | 58.41 | +0.80*&nbsp;[+0.32,&nbsp;+1.27] |
+| Subject consistency | 96.72 | 96.87 | +0.15*&nbsp;[+0.01,&nbsp;+0.30] |
+| Background consistency | 96.03 | 96.17 | +0.14*&nbsp;[+0.08,&nbsp;+0.20] |
+| Subject, within clips | 96.27 | 96.19 | −0.08&nbsp;[−0.33,&nbsp;+0.16] |
+| Subject, clip to clip (Consistency) | 75.18 | 78.56 | +3.38*&nbsp;[+2.73,&nbsp;+4.06] |
+| Background, clip to clip | 80.64 | 83.31 | +2.66*&nbsp;[+2.24,&nbsp;+3.11] |
+
+**Recency Forcing + Commit Forcing** vs **Recency Forcing**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.01 | 82.47 | +0.46*&nbsp;[+0.27,&nbsp;+0.65] |
+| Dynamic degree | 63.20 | 63.93 | +0.73&nbsp;[−1.28,&nbsp;+2.83] |
+| Motion smoothness | 98.19 | 98.12 | −0.07*&nbsp;[−0.13,&nbsp;−0.02] |
+| Temporal flickering | 96.42 | 96.38 | −0.03&nbsp;[−0.12,&nbsp;+0.05] |
+| Imaging quality | 68.11 | 68.91 | +0.80*&nbsp;[+0.38,&nbsp;+1.24] |
+| Aesthetic quality | 57.99 | 59.58 | +1.59*&nbsp;[+1.20,&nbsp;+1.97] |
+| Subject consistency | 96.59 | 96.83 | +0.24*&nbsp;[+0.15,&nbsp;+0.34] |
+| Background consistency | 95.83 | 96.03 | +0.20*&nbsp;[+0.14,&nbsp;+0.25] |
+| Subject, within clips | 96.01 | 96.05 | +0.04&nbsp;[−0.09,&nbsp;+0.17] |
+| Subject, clip to clip (Consistency) | 75.02 | 78.88 | +3.86*&nbsp;[+3.22,&nbsp;+4.51] |
+| Background, clip to clip | 80.79 | 83.51 | +2.72*&nbsp;[+2.31,&nbsp;+3.13] |
+
+**ID-Forcing on Self-Forcing + Commit Forcing** vs **ID-Forcing on Self-Forcing**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.20 | 82.44 | +0.23*&nbsp;[+0.07,&nbsp;+0.40] |
+| Dynamic degree | 61.95 | 60.78 | −1.17&nbsp;[−3.27,&nbsp;+0.98] |
+| Motion smoothness | 97.90 | 98.01 | +0.11*&nbsp;[+0.07,&nbsp;+0.16] |
+| Temporal flickering | 96.17 | 96.39 | +0.22*&nbsp;[+0.15,&nbsp;+0.29] |
+| Imaging quality | 69.30 | 69.55 | +0.26&nbsp;[−0.06,&nbsp;+0.60] |
+| Aesthetic quality | 59.32 | 59.86 | +0.54*&nbsp;[+0.27,&nbsp;+0.82] |
+| Subject consistency | 97.03 | 97.22 | +0.19*&nbsp;[+0.11,&nbsp;+0.27] |
+| Background consistency | 96.24 | 96.31 | +0.07*&nbsp;[+0.03,&nbsp;+0.12] |
+| Subject, within clips | 96.39 | 96.50 | +0.11&nbsp;[−0.00,&nbsp;+0.24] |
+| Subject, clip to clip (Consistency) | 79.07 | 81.60 | +2.53*&nbsp;[+1.99,&nbsp;+3.09] |
+| Background, clip to clip | 84.42 | 86.21 | +1.79*&nbsp;[+1.44,&nbsp;+2.14] |
+
+**Self-Forcing + sink, commit pass reads only its block** vs **Self-Forcing + sink**
+
+| Metric | Self-Forcing + sink | Self-Forcing + sink, commit pass reads only its block | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 81.33 | 81.28 | −0.05&nbsp;[−0.71,&nbsp;+0.49] |
+| Dynamic degree | 57.52 | 67.80 | +10.28*&nbsp;[+6.53,&nbsp;+13.88] |
+| Motion smoothness | 98.00 | 97.30 | −0.70*&nbsp;[−1.19,&nbsp;−0.33] |
+| Temporal flickering | 96.44 | 95.47 | −0.97*&nbsp;[−1.40,&nbsp;−0.61] |
+| Imaging quality | 67.08 | 67.14 | +0.05&nbsp;[−0.85,&nbsp;+0.91] |
+| Aesthetic quality | 57.61 | 57.45 | −0.16&nbsp;[−0.81,&nbsp;+0.45] |
+| Subject consistency | 96.72 | 96.56 | −0.16&nbsp;[−0.36,&nbsp;+0.04] |
+| Background consistency | 96.03 | 95.93 | −0.10*&nbsp;[−0.19,&nbsp;−0.01] |
+| Subject, within clips | 96.27 | 96.01 | −0.26&nbsp;[−0.59,&nbsp;+0.07] |
+| Subject, clip to clip (Consistency) | 75.18 | 74.69 | −0.49&nbsp;[−1.51,&nbsp;+0.55] |
+| Background, clip to clip | 80.64 | 81.33 | +0.69*&nbsp;[+0.02,&nbsp;+1.41] |
+
+**Self-Forcing + sink + Commit Forcing** vs **Self-Forcing + sink, commit pass reads only its block**
+
+| Metric | Self-Forcing + sink, commit pass reads only its block | Self-Forcing + sink + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 81.28 | 81.63 | +0.36&nbsp;[−0.16,&nbsp;+0.81] |
+| Dynamic degree | 67.80 | 59.58 | −8.22*&nbsp;[−11.67,&nbsp;−4.90] |
+| Motion smoothness | 97.30 | 97.75 | +0.46*&nbsp;[+0.13,&nbsp;+0.75] |
+| Temporal flickering | 95.47 | 96.33 | +0.85*&nbsp;[+0.50,&nbsp;+1.20] |
+| Imaging quality | 67.14 | 68.03 | +0.90*&nbsp;[+0.23,&nbsp;+1.58] |
+| Aesthetic quality | 57.45 | 58.41 | +0.96*&nbsp;[+0.41,&nbsp;+1.54] |
+| Subject consistency | 96.56 | 96.87 | +0.32*&nbsp;[+0.11,&nbsp;+0.51] |
+| Background consistency | 95.93 | 96.17 | +0.24*&nbsp;[+0.15,&nbsp;+0.33] |
+| Subject, within clips | 96.01 | 96.19 | +0.18&nbsp;[−0.16,&nbsp;+0.51] |
+| Subject, clip to clip (Consistency) | 74.69 | 78.56 | +3.87*&nbsp;[+2.82,&nbsp;+4.86] |
+| Background, clip to clip | 81.33 | 83.31 | +1.97*&nbsp;[+1.32,&nbsp;+2.62] |
+
+**LongLive, 12-frame control** vs **LongLive**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.23 | 82.65 | +0.42*&nbsp;[+0.27,&nbsp;+0.57] |
+| Dynamic degree | 42.98 | 49.38 | +6.40*&nbsp;[+4.43,&nbsp;+8.57] |
+| Motion smoothness | 98.74 | 98.59 | −0.15*&nbsp;[−0.19,&nbsp;−0.12] |
+| Temporal flickering | 97.61 | 97.37 | −0.24*&nbsp;[−0.30,&nbsp;−0.18] |
+| Imaging quality | 68.69 | 69.39 | +0.69*&nbsp;[+0.45,&nbsp;+0.96] |
+| Aesthetic quality | 61.53 | 61.68 | +0.15&nbsp;[−0.05,&nbsp;+0.34] |
+| Subject consistency | 97.76 | 97.70 | −0.06*&nbsp;[−0.11,&nbsp;−0.02] |
+| Background consistency | 96.54 | 96.49 | −0.05*&nbsp;[−0.09,&nbsp;−0.02] |
+| Subject, within clips | 97.13 | 96.92 | −0.22*&nbsp;[−0.29,&nbsp;−0.15] |
+| Subject, clip to clip (Consistency) | 86.01 | 86.93 | +0.92*&nbsp;[+0.59,&nbsp;+1.26] |
+| Background, clip to clip | 88.40 | 89.17 | +0.77*&nbsp;[+0.56,&nbsp;+0.96] |
+
+**ID-Forcing on LongLive, 12-frame control** vs **ID-Forcing on LongLive**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.54 | 82.45 | −0.09&nbsp;[−0.25,&nbsp;+0.06] |
+| Dynamic degree | 52.52 | 47.05 | −5.47*&nbsp;[−7.73,&nbsp;−3.33] |
+| Motion smoothness | 98.50 | 98.65 | +0.15*&nbsp;[+0.10,&nbsp;+0.21] |
+| Temporal flickering | 97.00 | 97.37 | +0.38*&nbsp;[+0.27,&nbsp;+0.50] |
+| Imaging quality | 69.23 | 69.26 | +0.03&nbsp;[−0.32,&nbsp;+0.36] |
+| Aesthetic quality | 60.93 | 61.10 | +0.17&nbsp;[−0.12,&nbsp;+0.46] |
+| Subject consistency | 97.69 | 97.84 | +0.15*&nbsp;[+0.09,&nbsp;+0.23] |
+| Background consistency | 96.46 | 96.61 | +0.15*&nbsp;[+0.10,&nbsp;+0.21] |
+| Subject, within clips | 97.28 | 97.41 | +0.13*&nbsp;[+0.03,&nbsp;+0.23] |
+| Subject, clip to clip (Consistency) | 82.83 | 84.88 | +2.05*&nbsp;[+1.46,&nbsp;+2.67] |
+| Background, clip to clip | 86.21 | 87.83 | +1.62*&nbsp;[+1.24,&nbsp;+2.00] |
+
+**LongLive, commit pass reads only its block** vs **LongLive**
+
+| Metric | LongLive | LongLive, commit pass reads only its block | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.23 | 82.73 | +0.49*&nbsp;[+0.29,&nbsp;+0.70] |
+| Dynamic degree | 42.98 | 53.03 | +10.05*&nbsp;[+7.28,&nbsp;+12.80] |
+| Motion smoothness | 98.74 | 98.46 | −0.28*&nbsp;[−0.34,&nbsp;−0.22] |
+| Temporal flickering | 97.61 | 97.11 | −0.50*&nbsp;[−0.60,&nbsp;−0.40] |
+| Imaging quality | 68.69 | 69.18 | +0.49*&nbsp;[+0.15,&nbsp;+0.83] |
+| Aesthetic quality | 61.53 | 61.66 | +0.13&nbsp;[−0.15,&nbsp;+0.40] |
+| Subject consistency | 97.76 | 97.69 | −0.06&nbsp;[−0.13,&nbsp;+0.01] |
+| Background consistency | 96.54 | 96.52 | −0.02&nbsp;[−0.07,&nbsp;+0.02] |
+| Subject, within clips | 97.13 | 96.98 | −0.15*&nbsp;[−0.25,&nbsp;−0.05] |
+| Subject, clip to clip (Consistency) | 86.01 | 86.21 | +0.20&nbsp;[−0.26,&nbsp;+0.69] |
+| Background, clip to clip | 88.40 | 88.79 | +0.39*&nbsp;[+0.10,&nbsp;+0.70] |
+
+**LongLive, 12-frame control** vs **LongLive, commit pass reads only its block**
+
+| Metric | LongLive, commit pass reads only its block | LongLive, 12-frame control | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.73 | 82.65 | −0.08&nbsp;[−0.21,&nbsp;+0.06] |
+| Dynamic degree | 53.03 | 49.38 | −3.65*&nbsp;[−5.50,&nbsp;−1.83] |
+| Motion smoothness | 98.46 | 98.59 | +0.13*&nbsp;[+0.09,&nbsp;+0.17] |
+| Temporal flickering | 97.11 | 97.37 | +0.26*&nbsp;[+0.19,&nbsp;+0.33] |
+| Imaging quality | 69.18 | 69.39 | +0.20&nbsp;[−0.01,&nbsp;+0.42] |
+| Aesthetic quality | 61.66 | 61.68 | +0.02&nbsp;[−0.17,&nbsp;+0.21] |
+| Subject consistency | 97.69 | 97.70 | +0.00&nbsp;[−0.05,&nbsp;+0.06] |
+| Background consistency | 96.52 | 96.49 | −0.03&nbsp;[−0.07,&nbsp;+0.01] |
+| Subject, within clips | 96.98 | 96.92 | −0.07&nbsp;[−0.15,&nbsp;+0.01] |
+| Subject, clip to clip (Consistency) | 86.21 | 86.93 | +0.72*&nbsp;[+0.32,&nbsp;+1.13] |
+| Background, clip to clip | 88.79 | 89.17 | +0.38*&nbsp;[+0.15,&nbsp;+0.60] |
+
+**SGF + Commit Forcing** vs **SGF**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 83.58 | 84.62 | +1.04*&nbsp;[+0.67,&nbsp;+1.41] |
+| Dynamic degree | 54.92 | 68.30 | +13.38*&nbsp;[+8.73,&nbsp;+17.93] |
+| Motion smoothness | 98.64 | 98.43 | −0.21*&nbsp;[−0.29,&nbsp;−0.13] |
+| Temporal flickering | 97.32 | 96.88 | −0.44*&nbsp;[−0.59,&nbsp;−0.29] |
+| Imaging quality | 70.83 | 71.19 | +0.36&nbsp;[−0.23,&nbsp;+0.91] |
+| Aesthetic quality | 62.83 | 63.94 | +1.10*&nbsp;[+0.53,&nbsp;+1.67] |
+| Subject consistency | 98.03 | 98.29 | +0.26*&nbsp;[+0.18,&nbsp;+0.33] |
+| Background consistency | 96.71 | 96.84 | +0.13*&nbsp;[+0.05,&nbsp;+0.22] |
+| Subject, within clips | 97.57 | 97.69 | +0.11&nbsp;[−0.00,&nbsp;+0.23] |
+| Subject, clip to clip (Consistency) | 86.54 | 90.93 | +4.40*&nbsp;[+3.51,&nbsp;+5.27] |
+| Background, clip to clip | 89.78 | 92.46 | +2.68*&nbsp;[+2.20,&nbsp;+3.17] |
+
+**Recency Forcing, 2nd implementation + Commit Forcing** vs **Recency Forcing, 2nd implementation**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 81.89 | 82.38 | +0.49*&nbsp;[+0.26,&nbsp;+0.72] |
+| Dynamic degree | 62.13 | 62.65 | +0.52&nbsp;[−1.78,&nbsp;+2.77] |
+| Motion smoothness | 98.21 | 98.11 | −0.10*&nbsp;[−0.18,&nbsp;−0.03] |
+| Temporal flickering | 96.42 | 96.38 | −0.04&nbsp;[−0.16,&nbsp;+0.08] |
+| Imaging quality | 68.04 | 69.03 | +0.99*&nbsp;[+0.45,&nbsp;+1.53] |
+| Aesthetic quality | 57.78 | 59.40 | +1.61*&nbsp;[+1.10,&nbsp;+2.11] |
+| Subject consistency | 96.57 | 96.91 | +0.33*&nbsp;[+0.22,&nbsp;+0.45] |
+| Background consistency | 95.80 | 96.07 | +0.27*&nbsp;[+0.20,&nbsp;+0.34] |
+| Subject, within clips | 96.02 | 96.13 | +0.11&nbsp;[−0.04,&nbsp;+0.26] |
+| Subject, clip to clip (Consistency) | 74.75 | 79.46 | +4.71*&nbsp;[+3.78,&nbsp;+5.64] |
+| Background, clip to clip | 80.58 | 84.03 | +3.45*&nbsp;[+2.89,&nbsp;+4.04] |
+
+**Context Forcing + Commit Forcing** vs **Context Forcing**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.78 | 82.91 | +0.13&nbsp;[−0.10,&nbsp;+0.35] |
+| Dynamic degree | 60.62 | 59.57 | −1.05&nbsp;[−4.05,&nbsp;+1.92] |
+| Motion smoothness | 98.40 | 98.28 | −0.12*&nbsp;[−0.20,&nbsp;−0.03] |
+| Temporal flickering | 97.01 | 96.94 | −0.06&nbsp;[−0.20,&nbsp;+0.08] |
+| Imaging quality | 67.81 | 68.50 | +0.69*&nbsp;[+0.27,&nbsp;+1.10] |
+| Aesthetic quality | 60.60 | 61.21 | +0.61*&nbsp;[+0.21,&nbsp;+0.99] |
+| Subject consistency | 97.36 | 97.65 | +0.30*&nbsp;[+0.21,&nbsp;+0.38] |
+| Background consistency | 96.44 | 96.65 | +0.20*&nbsp;[+0.14,&nbsp;+0.27] |
+| Subject, within clips | 97.15 | 97.33 | +0.19*&nbsp;[+0.04,&nbsp;+0.33] |
+| Subject, clip to clip (Consistency) | 78.72 | 81.95 | +3.23*&nbsp;[+2.56,&nbsp;+3.94] |
+| Background, clip to clip | 82.29 | 85.08 | +2.79*&nbsp;[+2.28,&nbsp;+3.29] |
+
+**Context Forcing, sink out of the commit pass only** vs **Context Forcing**
+
+| Metric | Context Forcing | Context Forcing, sink out of the commit pass only | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.78 | 83.11 | +0.32*&nbsp;[+0.11,&nbsp;+0.54] |
+| Dynamic degree | 60.62 | 67.32 | +6.70*&nbsp;[+4.08,&nbsp;+9.20] |
+| Motion smoothness | 98.40 | 98.18 | −0.22*&nbsp;[−0.29,&nbsp;−0.16] |
+| Temporal flickering | 97.01 | 96.64 | −0.37*&nbsp;[−0.48,&nbsp;−0.25] |
+| Imaging quality | 67.81 | 68.13 | +0.32&nbsp;[−0.03,&nbsp;+0.69] |
+| Aesthetic quality | 60.60 | 60.80 | +0.20&nbsp;[−0.14,&nbsp;+0.57] |
+| Subject consistency | 97.36 | 97.36 | +0.00&nbsp;[−0.08,&nbsp;+0.08] |
+| Background consistency | 96.44 | 96.43 | −0.02&nbsp;[−0.07,&nbsp;+0.04] |
+| Subject, within clips | 97.15 | 96.92 | −0.22*&nbsp;[−0.35,&nbsp;−0.11] |
+| Subject, clip to clip (Consistency) | 78.72 | 80.52 | +1.80*&nbsp;[+1.20,&nbsp;+2.42] |
+| Background, clip to clip | 82.29 | 84.09 | +1.80*&nbsp;[+1.36,&nbsp;+2.24] |
+
+**Rolling Sink + Commit Forcing** vs **Rolling Sink**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.61 | 82.72 | +0.11&nbsp;[−0.02,&nbsp;+0.24] |
+| Dynamic degree | 45.85 | 49.53 | +3.68*&nbsp;[+1.75,&nbsp;+5.58] |
+| Motion smoothness | 98.69 | 98.57 | −0.12*&nbsp;[−0.15,&nbsp;−0.09] |
+| Temporal flickering | 97.76 | 97.53 | −0.23*&nbsp;[−0.28,&nbsp;−0.18] |
+| Imaging quality | 70.01 | 70.01 | −0.01&nbsp;[−0.28,&nbsp;+0.30] |
+| Aesthetic quality | 60.58 | 60.78 | +0.20&nbsp;[−0.05,&nbsp;+0.50] |
+| Subject consistency | 97.93 | 97.79 | −0.15*&nbsp;[−0.21,&nbsp;−0.09] |
+| Background consistency | 96.74 | 96.64 | −0.10*&nbsp;[−0.14,&nbsp;−0.06] |
+| Subject, within clips | 97.49 | 97.15 | −0.34*&nbsp;[−0.43,&nbsp;−0.25] |
+| Subject, clip to clip (Consistency) | 86.00 | 86.67 | +0.67*&nbsp;[+0.18,&nbsp;+1.20] |
+| Background, clip to clip | 88.82 | 89.39 | +0.57*&nbsp;[+0.25,&nbsp;+0.90] |
+
+</details>
+
+<details>
+<summary>Seed 0: SGF and SGF + RF reading</summary>
+
+Source: [`results/tables/vbl60_sgf_rf.txt`](results/tables/vbl60_sgf_rf.txt) · spec [`results/specs/vbl60_sgf_rf.json`](results/specs/vbl60_sgf_rf.json)
+
+**SGF + Commit Forcing** vs **SGF**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 83.58 | 84.62 | +1.04*&nbsp;[+0.67,&nbsp;+1.40] |
+| Dynamic degree | 54.92 | 68.30 | +13.38*&nbsp;[+8.70,&nbsp;+18.05] |
+| Motion smoothness | 98.64 | 98.43 | −0.21*&nbsp;[−0.29,&nbsp;−0.13] |
+| Temporal flickering | 97.32 | 96.88 | −0.44*&nbsp;[−0.59,&nbsp;−0.29] |
+| Imaging quality | 70.83 | 71.19 | +0.36&nbsp;[−0.21,&nbsp;+0.93] |
+| Aesthetic quality | 62.83 | 63.94 | +1.10*&nbsp;[+0.54,&nbsp;+1.70] |
+| Subject consistency | 98.03 | 98.29 | +0.26*&nbsp;[+0.18,&nbsp;+0.34] |
+| Background consistency | 96.71 | 96.84 | +0.13*&nbsp;[+0.05,&nbsp;+0.21] |
+| Subject, within clips | 97.57 | 97.69 | +0.11*&nbsp;[+0.00,&nbsp;+0.22] |
+| Subject, clip to clip (Consistency) | 86.54 | 90.93 | +4.40*&nbsp;[+3.54,&nbsp;+5.25] |
+| Background, clip to clip | 89.78 | 92.46 | +2.68*&nbsp;[+2.19,&nbsp;+3.18] |
+
+**SGF + RF reading** vs **SGF**
+
+| Metric | SGF | SGF + RF reading | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 83.58 | 84.42 | +0.84*&nbsp;[+0.56,&nbsp;+1.14] |
+| Dynamic degree | 54.92 | 66.67 | +11.75*&nbsp;[+8.25,&nbsp;+15.43] |
+| Motion smoothness | 98.64 | 98.56 | −0.07*&nbsp;[−0.12,&nbsp;−0.03] |
+| Temporal flickering | 97.32 | 97.07 | −0.25*&nbsp;[−0.34,&nbsp;−0.16] |
+| Imaging quality | 70.83 | 71.03 | +0.21&nbsp;[−0.29,&nbsp;+0.71] |
+| Aesthetic quality | 62.83 | 63.31 | +0.47&nbsp;[−0.07,&nbsp;+1.00] |
+| Subject consistency | 98.03 | 97.97 | −0.06&nbsp;[−0.14,&nbsp;+0.02] |
+| Background consistency | 96.71 | 96.62 | −0.09*&nbsp;[−0.16,&nbsp;−0.02] |
+| Subject, within clips | 97.57 | 97.34 | −0.23*&nbsp;[−0.34,&nbsp;−0.12] |
+| Subject, clip to clip (Consistency) | 86.54 | 87.71 | +1.17*&nbsp;[+0.33,&nbsp;+2.02] |
+| Background, clip to clip | 89.78 | 90.39 | +0.61*&nbsp;[+0.18,&nbsp;+1.05] |
+
+**SGF + RF reading + Commit Forcing** vs **SGF + RF reading**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 84.42 | 84.72 | +0.30*&nbsp;[+0.00,&nbsp;+0.61] |
+| Dynamic degree | 66.67 | 69.52 | +2.85&nbsp;[−0.97,&nbsp;+6.53] |
+| Motion smoothness | 98.56 | 98.49 | −0.08*&nbsp;[−0.13,&nbsp;−0.03] |
+| Temporal flickering | 97.07 | 96.94 | −0.13*&nbsp;[−0.23,&nbsp;−0.03] |
+| Imaging quality | 71.03 | 71.02 | −0.02&nbsp;[−0.57,&nbsp;+0.54] |
+| Aesthetic quality | 63.31 | 63.84 | +0.53*&nbsp;[+0.02,&nbsp;+1.04] |
+| Subject consistency | 97.97 | 98.23 | +0.26*&nbsp;[+0.18,&nbsp;+0.34] |
+| Background consistency | 96.62 | 96.85 | +0.23*&nbsp;[+0.16,&nbsp;+0.31] |
+| Subject, within clips | 97.34 | 97.57 | +0.23*&nbsp;[+0.12,&nbsp;+0.34] |
+| Subject, clip to clip (Consistency) | 87.71 | 91.06 | +3.35*&nbsp;[+2.55,&nbsp;+4.19] |
+| Background, clip to clip | 90.39 | 92.53 | +2.14*&nbsp;[+1.59,&nbsp;+2.70] |
+
+**SGF + RF reading + Commit Forcing** vs **SGF + Commit Forcing**
+
+| Metric | SGF + Commit Forcing | SGF + RF reading + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 84.62 | 84.72 | +0.10&nbsp;[−0.19,&nbsp;+0.39] |
+| Dynamic degree | 68.30 | 69.52 | +1.22&nbsp;[−2.48,&nbsp;+5.02] |
+| Motion smoothness | 98.43 | 98.49 | +0.06*&nbsp;[+0.00,&nbsp;+0.11] |
+| Temporal flickering | 96.88 | 96.94 | +0.06&nbsp;[−0.04,&nbsp;+0.17] |
+| Imaging quality | 71.19 | 71.02 | −0.17&nbsp;[−0.66,&nbsp;+0.31] |
+| Aesthetic quality | 63.94 | 63.84 | −0.10&nbsp;[−0.57,&nbsp;+0.39] |
+| Subject consistency | 98.29 | 98.23 | −0.05&nbsp;[−0.13,&nbsp;+0.03] |
+| Background consistency | 96.84 | 96.85 | +0.01&nbsp;[−0.06,&nbsp;+0.09] |
+| Subject, within clips | 97.69 | 97.57 | −0.12*&nbsp;[−0.23,&nbsp;−0.01] |
+| Subject, clip to clip (Consistency) | 90.93 | 91.06 | +0.12&nbsp;[−0.53,&nbsp;+0.78] |
+| Background, clip to clip | 92.46 | 92.53 | +0.07&nbsp;[−0.33,&nbsp;+0.46] |
+
+**SGF + Commit Forcing** vs **SGF + RF reading**
+
+| Metric | SGF + RF reading | SGF + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 84.42 | 84.62 | +0.20&nbsp;[−0.13,&nbsp;+0.55] |
+| Dynamic degree | 66.67 | 68.30 | +1.63&nbsp;[−2.83,&nbsp;+5.90] |
+| Motion smoothness | 98.56 | 98.43 | −0.13*&nbsp;[−0.21,&nbsp;−0.07] |
+| Temporal flickering | 97.07 | 96.88 | −0.19*&nbsp;[−0.32,&nbsp;−0.07] |
+| Imaging quality | 71.03 | 71.19 | +0.15&nbsp;[−0.31,&nbsp;+0.62] |
+| Aesthetic quality | 63.31 | 63.94 | +0.63*&nbsp;[+0.11,&nbsp;+1.14] |
+| Subject consistency | 97.97 | 98.29 | +0.31*&nbsp;[+0.23,&nbsp;+0.39] |
+| Background consistency | 96.62 | 96.84 | +0.22*&nbsp;[+0.14,&nbsp;+0.30] |
+| Subject, within clips | 97.34 | 97.69 | +0.34*&nbsp;[+0.23,&nbsp;+0.45] |
+| Subject, clip to clip (Consistency) | 87.71 | 90.93 | +3.23*&nbsp;[+2.38,&nbsp;+4.09] |
+| Background, clip to clip | 90.39 | 92.46 | +2.07*&nbsp;[+1.55,&nbsp;+2.59] |
+
+</details>
+
+<details>
+<summary>Seed 0: SGF+</summary>
+
+Source: [`results/tables/vbl60_sgf_plus.txt`](results/tables/vbl60_sgf_plus.txt) · spec [`results/specs/vbl60_sgf_plus.json`](results/specs/vbl60_sgf_plus.json)
+
+**SGF+ + Commit Forcing** vs **SGF+**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 84.23 | 84.34 | +0.12&nbsp;[−0.26,&nbsp;+0.48] |
+| Dynamic degree | 55.32 | 59.58 | +4.27&nbsp;[−0.85,&nbsp;+9.10] |
+| Motion smoothness | 98.77 | 98.57 | −0.20*&nbsp;[−0.29,&nbsp;−0.12] |
+| Temporal flickering | 97.80 | 97.49 | −0.30*&nbsp;[−0.45,&nbsp;−0.16] |
+| Imaging quality | 71.47 | 71.15 | −0.32&nbsp;[−0.94,&nbsp;+0.32] |
+| Aesthetic quality | 63.82 | 63.87 | +0.04&nbsp;[−0.51,&nbsp;+0.62] |
+| Subject consistency | 98.28 | 98.44 | +0.16*&nbsp;[+0.07,&nbsp;+0.24] |
+| Background consistency | 96.93 | 97.09 | +0.16*&nbsp;[+0.08,&nbsp;+0.24] |
+| Subject, within clips | 97.78 | 97.87 | +0.09&nbsp;[−0.05,&nbsp;+0.22] |
+| Subject, clip to clip (Consistency) | 89.83 | 92.66 | +2.84*&nbsp;[+2.06,&nbsp;+3.59] |
+| Background, clip to clip | 91.85 | 94.02 | +2.17*&nbsp;[+1.69,&nbsp;+2.67] |
+
+</details>
+
+<details>
+<summary>Seed 0: LongLive, commit window</summary>
+
+Source: [`results/tables/vbl60_longlive_commit_window.txt`](results/tables/vbl60_longlive_commit_window.txt) · spec [`results/specs/vbl60_longlive_commit_window.json`](results/specs/vbl60_longlive_commit_window.json)
+
+**LongLive, commit pass reads the newest 6 frames** vs **LongLive**
+
+| Metric | LongLive | LongLive, commit pass reads the newest 6 frames | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.23 | 82.73 | +0.49*&nbsp;[+0.33,&nbsp;+0.66] |
+| Dynamic degree | 42.98 | 49.40 | +6.42*&nbsp;[+4.27,&nbsp;+8.58] |
+| Motion smoothness | 98.74 | 98.61 | −0.14*&nbsp;[−0.18,&nbsp;−0.10] |
+| Temporal flickering | 97.61 | 97.42 | −0.19*&nbsp;[−0.26,&nbsp;−0.12] |
+| Imaging quality | 68.69 | 69.29 | +0.60*&nbsp;[+0.33,&nbsp;+0.88] |
+| Aesthetic quality | 61.53 | 61.75 | +0.22&nbsp;[−0.01,&nbsp;+0.43] |
+| Subject consistency | 97.76 | 97.82 | +0.06*&nbsp;[+0.01,&nbsp;+0.11] |
+| Background consistency | 96.54 | 96.63 | +0.08*&nbsp;[+0.04,&nbsp;+0.12] |
+| Subject, within clips | 97.13 | 97.14 | +0.01&nbsp;[−0.07,&nbsp;+0.09] |
+| Subject, clip to clip (Consistency) | 86.01 | 87.21 | +1.20*&nbsp;[+0.84,&nbsp;+1.58] |
+| Background, clip to clip | 88.40 | 89.53 | +1.13*&nbsp;[+0.90,&nbsp;+1.37] |
+
+**LongLive, commit pass reads the newest 9 frames** vs **LongLive**
+
+| Metric | LongLive | LongLive, commit pass reads the newest 9 frames | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.23 | 82.72 | +0.48*&nbsp;[+0.33,&nbsp;+0.64] |
+| Dynamic degree | 42.98 | 49.47 | +6.48*&nbsp;[+4.42,&nbsp;+8.52] |
+| Motion smoothness | 98.74 | 98.62 | −0.13*&nbsp;[−0.17,&nbsp;−0.09] |
+| Temporal flickering | 97.61 | 97.44 | −0.17*&nbsp;[−0.24,&nbsp;−0.11] |
+| Imaging quality | 68.69 | 69.32 | +0.63*&nbsp;[+0.37,&nbsp;+0.89] |
+| Aesthetic quality | 61.53 | 61.66 | +0.13&nbsp;[−0.07,&nbsp;+0.33] |
+| Subject consistency | 97.76 | 97.77 | +0.01&nbsp;[−0.04,&nbsp;+0.06] |
+| Background consistency | 96.54 | 96.57 | +0.03&nbsp;[−0.01,&nbsp;+0.07] |
+| Subject, within clips | 97.13 | 97.04 | −0.10*&nbsp;[−0.17,&nbsp;−0.03] |
+| Subject, clip to clip (Consistency) | 86.01 | 87.23 | +1.22*&nbsp;[+0.88,&nbsp;+1.56] |
+| Background, clip to clip | 88.40 | 89.55 | +1.15*&nbsp;[+0.94,&nbsp;+1.37] |
+
+**LongLive, commit pass reads the newest 6 frames** vs **LongLive, commit pass reads only its block**
+
+| Metric | LongLive, commit pass reads only its block | LongLive, commit pass reads the newest 6 frames | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.73 | 82.73 | +0.00&nbsp;[−0.12,&nbsp;+0.12] |
+| Dynamic degree | 53.03 | 49.40 | −3.63*&nbsp;[−5.23,&nbsp;−2.03] |
+| Motion smoothness | 98.46 | 98.61 | +0.15*&nbsp;[+0.11,&nbsp;+0.18] |
+| Temporal flickering | 97.11 | 97.42 | +0.31*&nbsp;[+0.24,&nbsp;+0.37] |
+| Imaging quality | 69.18 | 69.29 | +0.11&nbsp;[−0.09,&nbsp;+0.31] |
+| Aesthetic quality | 61.66 | 61.75 | +0.09&nbsp;[−0.06,&nbsp;+0.25] |
+| Subject consistency | 97.69 | 97.82 | +0.13*&nbsp;[+0.08,&nbsp;+0.17] |
+| Background consistency | 96.52 | 96.63 | +0.11*&nbsp;[+0.07,&nbsp;+0.14] |
+| Subject, within clips | 96.98 | 97.14 | +0.16*&nbsp;[+0.10,&nbsp;+0.22] |
+| Subject, clip to clip (Consistency) | 86.21 | 87.21 | +1.00*&nbsp;[+0.68,&nbsp;+1.34] |
+| Background, clip to clip | 88.79 | 89.53 | +0.74*&nbsp;[+0.56,&nbsp;+0.93] |
+
+**LongLive, commit pass reads the newest 9 frames** vs **LongLive, commit pass reads the newest 6 frames**
+
+| Metric | LongLive, commit pass reads the newest 6 frames | LongLive, commit pass reads the newest 9 frames | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.73 | 82.72 | −0.01&nbsp;[−0.09,&nbsp;+0.07] |
+| Dynamic degree | 49.40 | 49.47 | +0.07&nbsp;[−1.03,&nbsp;+1.20] |
+| Motion smoothness | 98.61 | 98.62 | +0.01&nbsp;[−0.01,&nbsp;+0.03] |
+| Temporal flickering | 97.42 | 97.44 | +0.02&nbsp;[−0.01,&nbsp;+0.05] |
+| Imaging quality | 69.29 | 69.32 | +0.03&nbsp;[−0.08,&nbsp;+0.15] |
+| Aesthetic quality | 61.75 | 61.66 | −0.09&nbsp;[−0.21,&nbsp;+0.04] |
+| Subject consistency | 97.82 | 97.77 | −0.05*&nbsp;[−0.09,&nbsp;−0.01] |
+| Background consistency | 96.63 | 96.57 | −0.05*&nbsp;[−0.08,&nbsp;−0.03] |
+| Subject, within clips | 97.14 | 97.04 | −0.10*&nbsp;[−0.16,&nbsp;−0.05] |
+| Subject, clip to clip (Consistency) | 87.21 | 87.23 | +0.02&nbsp;[−0.23,&nbsp;+0.27] |
+| Background, clip to clip | 89.53 | 89.55 | +0.02&nbsp;[−0.13,&nbsp;+0.16] |
+
+**LongLive, 12-frame control** vs **LongLive, commit pass reads the newest 9 frames**
+
+| Metric | LongLive, commit pass reads the newest 9 frames | LongLive, 12-frame control | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.72 | 82.65 | −0.07&nbsp;[−0.15,&nbsp;+0.02] |
+| Dynamic degree | 49.47 | 49.38 | −0.08&nbsp;[−1.25,&nbsp;+1.03] |
+| Motion smoothness | 98.62 | 98.59 | −0.03*&nbsp;[−0.04,&nbsp;−0.01] |
+| Temporal flickering | 97.44 | 97.37 | −0.07*&nbsp;[−0.09,&nbsp;−0.04] |
+| Imaging quality | 69.32 | 69.39 | +0.07&nbsp;[−0.05,&nbsp;+0.18] |
+| Aesthetic quality | 61.66 | 61.68 | +0.01&nbsp;[−0.11,&nbsp;+0.13] |
+| Subject consistency | 97.77 | 97.70 | −0.07*&nbsp;[−0.11,&nbsp;−0.04] |
+| Background consistency | 96.57 | 96.49 | −0.08*&nbsp;[−0.11,&nbsp;−0.06] |
+| Subject, within clips | 97.04 | 96.92 | −0.12*&nbsp;[−0.17,&nbsp;−0.07] |
+| Subject, clip to clip (Consistency) | 87.23 | 86.93 | −0.30*&nbsp;[−0.53,&nbsp;−0.08] |
+| Background, clip to clip | 89.55 | 89.17 | −0.38*&nbsp;[−0.52,&nbsp;−0.24] |
+
+</details>
+
+<details>
+<summary>Seed 0: LongLive, commit pass reads 6 vs 12 frames</summary>
+
+Source: [`results/tables/vbl60_longlive_commit6_vs_12.txt`](results/tables/vbl60_longlive_commit6_vs_12.txt) · spec [`results/specs/vbl60_longlive_commit6_vs_12.json`](results/specs/vbl60_longlive_commit6_vs_12.json)
+
+**LongLive, commit pass reads the newest 6 frames** vs **LongLive, 12-frame control**
+
+| Metric | LongLive, 12-frame control | LongLive, commit pass reads the newest 6 frames | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.65 | 82.73 | +0.08&nbsp;[−0.01,&nbsp;+0.17] |
+| Dynamic degree | 49.38 | 49.40 | +0.02&nbsp;[−1.25,&nbsp;+1.30] |
+| Motion smoothness | 98.59 | 98.61 | +0.02*&nbsp;[+0.00,&nbsp;+0.03] |
+| Temporal flickering | 97.37 | 97.42 | +0.05*&nbsp;[+0.01,&nbsp;+0.08] |
+| Imaging quality | 69.39 | 69.29 | −0.10&nbsp;[−0.23,&nbsp;+0.04] |
+| Aesthetic quality | 61.68 | 61.75 | +0.07&nbsp;[−0.05,&nbsp;+0.19] |
+| Subject consistency | 97.70 | 97.82 | +0.12*&nbsp;[+0.09,&nbsp;+0.16] |
+| Background consistency | 96.49 | 96.63 | +0.14*&nbsp;[+0.11,&nbsp;+0.16] |
+| Subject, within clips | 96.92 | 97.14 | +0.22*&nbsp;[+0.17,&nbsp;+0.28] |
+| Subject, clip to clip (Consistency) | 86.93 | 87.21 | +0.28*&nbsp;[+0.02,&nbsp;+0.55] |
+| Background, clip to clip | 89.17 | 89.53 | +0.36*&nbsp;[+0.20,&nbsp;+0.53] |
+
+</details>
+
+<details>
+<summary>Seed 1: SGF, LongLive, ID-Forcing</summary>
+
+Source: [`results/tables/vbl60_seed1_a.txt`](results/tables/vbl60_seed1_a.txt) · spec [`results/specs/vbl60_seed1_a.json`](results/specs/vbl60_seed1_a.json)
+
+**SGF + Commit Forcing** vs **SGF**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 83.85 | 84.71 | +0.86*&nbsp;[+0.52,&nbsp;+1.21] |
+| Dynamic degree | 57.27 | 70.58 | +13.32*&nbsp;[+9.05,&nbsp;+17.62] |
+| Motion smoothness | 98.64 | 98.46 | −0.19*&nbsp;[−0.27,&nbsp;−0.11] |
+| Temporal flickering | 97.33 | 96.90 | −0.43*&nbsp;[−0.57,&nbsp;−0.29] |
+| Imaging quality | 71.24 | 70.88 | −0.37&nbsp;[−0.97,&nbsp;+0.24] |
+| Aesthetic quality | 62.97 | 63.52 | +0.55&nbsp;[−0.11,&nbsp;+1.23] |
+| Subject consistency | 98.03 | 98.28 | +0.26*&nbsp;[+0.17,&nbsp;+0.34] |
+| Background consistency | 96.65 | 96.83 | +0.18*&nbsp;[+0.09,&nbsp;+0.26] |
+| Subject, within clips | 97.55 | 97.63 | +0.07&nbsp;[−0.05,&nbsp;+0.19] |
+| Subject, clip to clip (Consistency) | 86.60 | 91.41 | +4.80*&nbsp;[+3.89,&nbsp;+5.79] |
+| Background, clip to clip | 89.36 | 92.78 | +3.42*&nbsp;[+2.78,&nbsp;+4.06] |
+
+**LongLive, 12-frame control** vs **LongLive**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.19 | 82.67 | +0.48*&nbsp;[+0.33,&nbsp;+0.64] |
+| Dynamic degree | 42.03 | 50.20 | +8.17*&nbsp;[+6.23,&nbsp;+10.18] |
+| Motion smoothness | 98.74 | 98.56 | −0.17*&nbsp;[−0.20,&nbsp;−0.14] |
+| Temporal flickering | 97.59 | 97.31 | −0.28*&nbsp;[−0.33,&nbsp;−0.23] |
+| Imaging quality | 68.83 | 69.51 | +0.68*&nbsp;[+0.47,&nbsp;+0.90] |
+| Aesthetic quality | 61.67 | 61.61 | −0.06&nbsp;[−0.25,&nbsp;+0.12] |
+| Subject consistency | 97.77 | 97.68 | −0.09*&nbsp;[−0.13,&nbsp;−0.05] |
+| Background consistency | 96.54 | 96.47 | −0.08*&nbsp;[−0.12,&nbsp;−0.04] |
+| Subject, within clips | 97.13 | 96.89 | −0.25*&nbsp;[−0.31,&nbsp;−0.18] |
+| Subject, clip to clip (Consistency) | 86.02 | 86.70 | +0.68*&nbsp;[+0.35,&nbsp;+1.01] |
+| Background, clip to clip | 88.20 | 88.84 | +0.64*&nbsp;[+0.43,&nbsp;+0.86] |
+
+**ID-Forcing on Self-Forcing + Commit Forcing** vs **ID-Forcing on Self-Forcing**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.47 | 82.67 | +0.20*&nbsp;[+0.04,&nbsp;+0.37] |
+| Dynamic degree | 65.23 | 62.98 | −2.25*&nbsp;[−4.45,&nbsp;−0.15] |
+| Motion smoothness | 97.90 | 98.06 | +0.16*&nbsp;[+0.10,&nbsp;+0.21] |
+| Temporal flickering | 96.11 | 96.41 | +0.29*&nbsp;[+0.21,&nbsp;+0.38] |
+| Imaging quality | 69.38 | 69.52 | +0.15&nbsp;[−0.18,&nbsp;+0.50] |
+| Aesthetic quality | 59.47 | 60.13 | +0.66*&nbsp;[+0.36,&nbsp;+0.96] |
+| Subject consistency | 97.03 | 97.22 | +0.18*&nbsp;[+0.11,&nbsp;+0.25] |
+| Background consistency | 96.20 | 96.27 | +0.07*&nbsp;[+0.03,&nbsp;+0.11] |
+| Subject, within clips | 96.37 | 96.50 | +0.13*&nbsp;[+0.03,&nbsp;+0.24] |
+| Subject, clip to clip (Consistency) | 79.29 | 81.56 | +2.27*&nbsp;[+1.70,&nbsp;+2.81] |
+| Background, clip to clip | 84.30 | 85.81 | +1.51*&nbsp;[+1.20,&nbsp;+1.82] |
+
+**LongLive, commit pass reads the newest 6 frames** vs **LongLive, 12-frame control**
+
+| Metric | LongLive, 12-frame control | LongLive, commit pass reads the newest 6 frames | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.67 | 82.66 | −0.02&nbsp;[−0.12,&nbsp;+0.08] |
+| Dynamic degree | 50.20 | 48.65 | −1.55*&nbsp;[−2.88,&nbsp;−0.18] |
+| Motion smoothness | 98.56 | 98.59 | +0.02&nbsp;[−0.00,&nbsp;+0.04] |
+| Temporal flickering | 97.31 | 97.38 | +0.07*&nbsp;[+0.02,&nbsp;+0.11] |
+| Imaging quality | 69.51 | 69.43 | −0.08&nbsp;[−0.23,&nbsp;+0.07] |
+| Aesthetic quality | 61.61 | 61.70 | +0.09&nbsp;[−0.05,&nbsp;+0.23] |
+| Subject consistency | 97.68 | 97.81 | +0.14*&nbsp;[+0.10,&nbsp;+0.17] |
+| Background consistency | 96.47 | 96.62 | +0.16*&nbsp;[+0.13,&nbsp;+0.18] |
+| Subject, within clips | 96.89 | 97.13 | +0.25*&nbsp;[+0.19,&nbsp;+0.30] |
+| Subject, clip to clip (Consistency) | 86.70 | 87.09 | +0.38*&nbsp;[+0.11,&nbsp;+0.66] |
+| Background, clip to clip | 88.84 | 89.36 | +0.52*&nbsp;[+0.36,&nbsp;+0.67] |
+
+**LongLive, commit pass reads the newest 6 frames** vs **LongLive, commit pass reads only its block**
+
+| Metric | LongLive, commit pass reads only its block | LongLive, commit pass reads the newest 6 frames | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.83 | 82.66 | −0.17*&nbsp;[−0.30,&nbsp;−0.04] |
+| Dynamic degree | 54.18 | 48.65 | −5.53*&nbsp;[−7.37,&nbsp;−3.80] |
+| Motion smoothness | 98.45 | 98.59 | +0.13*&nbsp;[+0.10,&nbsp;+0.17] |
+| Temporal flickering | 97.08 | 97.38 | +0.29*&nbsp;[+0.23,&nbsp;+0.36] |
+| Imaging quality | 69.37 | 69.43 | +0.06&nbsp;[−0.12,&nbsp;+0.24] |
+| Aesthetic quality | 61.69 | 61.70 | +0.01&nbsp;[−0.16,&nbsp;+0.19] |
+| Subject consistency | 97.68 | 97.81 | +0.13*&nbsp;[+0.09,&nbsp;+0.17] |
+| Background consistency | 96.50 | 96.62 | +0.13*&nbsp;[+0.09,&nbsp;+0.16] |
+| Subject, within clips | 96.96 | 97.13 | +0.17*&nbsp;[+0.10,&nbsp;+0.24] |
+| Subject, clip to clip (Consistency) | 85.91 | 87.09 | +1.18*&nbsp;[+0.86,&nbsp;+1.50] |
+| Background, clip to clip | 88.49 | 89.36 | +0.87*&nbsp;[+0.67,&nbsp;+1.07] |
+
+**LongLive, commit pass reads the newest 6 frames** vs **LongLive**
+
+| Metric | LongLive | LongLive, commit pass reads the newest 6 frames | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.19 | 82.66 | +0.46*&nbsp;[+0.30,&nbsp;+0.64] |
+| Dynamic degree | 42.03 | 48.65 | +6.62*&nbsp;[+4.53,&nbsp;+8.73] |
+| Motion smoothness | 98.74 | 98.59 | −0.15*&nbsp;[−0.19,&nbsp;−0.12] |
+| Temporal flickering | 97.59 | 97.38 | −0.21*&nbsp;[−0.27,&nbsp;−0.15] |
+| Imaging quality | 68.83 | 69.43 | +0.60*&nbsp;[+0.35,&nbsp;+0.87] |
+| Aesthetic quality | 61.67 | 61.70 | +0.03&nbsp;[−0.19,&nbsp;+0.25] |
+| Subject consistency | 97.77 | 97.81 | +0.05&nbsp;[−0.01,&nbsp;+0.10] |
+| Background consistency | 96.54 | 96.62 | +0.08*&nbsp;[+0.04,&nbsp;+0.12] |
+| Subject, within clips | 97.13 | 97.13 | +0.00&nbsp;[−0.07,&nbsp;+0.07] |
+| Subject, clip to clip (Consistency) | 86.02 | 87.09 | +1.06*&nbsp;[+0.72,&nbsp;+1.43] |
+| Background, clip to clip | 88.20 | 89.36 | +1.16*&nbsp;[+0.91,&nbsp;+1.41] |
+
+**LongLive, commit pass reads only its block** vs **LongLive**
+
+| Metric | LongLive | LongLive, commit pass reads only its block | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.19 | 82.83 | +0.64*&nbsp;[+0.43,&nbsp;+0.85] |
+| Dynamic degree | 42.03 | 54.18 | +12.15*&nbsp;[+9.42,&nbsp;+14.90] |
+| Motion smoothness | 98.74 | 98.45 | −0.28*&nbsp;[−0.33,&nbsp;−0.24] |
+| Temporal flickering | 97.59 | 97.08 | −0.51*&nbsp;[−0.60,&nbsp;−0.42] |
+| Imaging quality | 68.83 | 69.37 | +0.54*&nbsp;[+0.23,&nbsp;+0.85] |
+| Aesthetic quality | 61.67 | 61.69 | +0.02&nbsp;[−0.25,&nbsp;+0.28] |
+| Subject consistency | 97.77 | 97.68 | −0.08*&nbsp;[−0.15,&nbsp;−0.02] |
+| Background consistency | 96.54 | 96.50 | −0.05&nbsp;[−0.09,&nbsp;+0.00] |
+| Subject, within clips | 97.13 | 96.96 | −0.17*&nbsp;[−0.26,&nbsp;−0.07] |
+| Subject, clip to clip (Consistency) | 86.02 | 85.91 | −0.11&nbsp;[−0.58,&nbsp;+0.36] |
+| Background, clip to clip | 88.20 | 88.49 | +0.28&nbsp;[−0.04,&nbsp;+0.61] |
+
+</details>
+
+<details>
+<summary>Seed 1: Self-Forcing, Recency Forcing, Context Forcing, Rolling Sink</summary>
+
+Source: [`results/tables/vbl60_seed1_b.txt`](results/tables/vbl60_seed1_b.txt) · spec [`results/specs/vbl60_seed1_b.json`](results/specs/vbl60_seed1_b.json)
+
+**Recency Forcing + Commit Forcing** vs **Recency Forcing**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.00 | 82.56 | +0.56*&nbsp;[+0.38,&nbsp;+0.73] |
+| Dynamic degree | 63.25 | 65.37 | +2.12*&nbsp;[+0.43,&nbsp;+3.82] |
+| Motion smoothness | 98.23 | 98.17 | −0.07*&nbsp;[−0.12,&nbsp;−0.02] |
+| Temporal flickering | 96.46 | 96.43 | −0.04&nbsp;[−0.12,&nbsp;+0.05] |
+| Imaging quality | 67.93 | 68.78 | +0.85*&nbsp;[+0.44,&nbsp;+1.29] |
+| Aesthetic quality | 58.01 | 59.48 | +1.48*&nbsp;[+1.10,&nbsp;+1.88] |
+| Subject consistency | 96.52 | 96.78 | +0.27*&nbsp;[+0.18,&nbsp;+0.35] |
+| Background consistency | 95.77 | 95.97 | +0.20*&nbsp;[+0.15,&nbsp;+0.25] |
+| Subject, within clips | 95.93 | 95.93 | −0.00&nbsp;[−0.13,&nbsp;+0.12] |
+| Subject, clip to clip (Consistency) | 74.42 | 78.72 | +4.30*&nbsp;[+3.64,&nbsp;+4.99] |
+| Background, clip to clip | 80.22 | 83.35 | +3.13*&nbsp;[+2.75,&nbsp;+3.54] |
+
+**Context Forcing, sink out of the commit pass only** vs **Context Forcing**
+
+| Metric | Context Forcing | Context Forcing, sink out of the commit pass only | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.70 | 83.19 | +0.50*&nbsp;[+0.31,&nbsp;+0.69] |
+| Dynamic degree | 60.27 | 67.45 | +7.18*&nbsp;[+4.87,&nbsp;+9.52] |
+| Motion smoothness | 98.43 | 98.25 | −0.18*&nbsp;[−0.25,&nbsp;−0.11] |
+| Temporal flickering | 97.09 | 96.78 | −0.31*&nbsp;[−0.41,&nbsp;−0.20] |
+| Imaging quality | 67.44 | 68.35 | +0.92*&nbsp;[+0.44,&nbsp;+1.38] |
+| Aesthetic quality | 60.30 | 60.49 | +0.18&nbsp;[−0.13,&nbsp;+0.49] |
+| Subject consistency | 97.35 | 97.34 | −0.01&nbsp;[−0.09,&nbsp;+0.07] |
+| Background consistency | 96.41 | 96.42 | +0.01&nbsp;[−0.05,&nbsp;+0.07] |
+| Subject, within clips | 97.14 | 96.92 | −0.22*&nbsp;[−0.35,&nbsp;−0.10] |
+| Subject, clip to clip (Consistency) | 78.63 | 80.24 | +1.61*&nbsp;[+1.02,&nbsp;+2.22] |
+| Background, clip to clip | 81.93 | 84.04 | +2.10*&nbsp;[+1.64,&nbsp;+2.56] |
+
+**Context Forcing + Commit Forcing** vs **Context Forcing**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.70 | 83.12 | +0.43*&nbsp;[+0.22,&nbsp;+0.64] |
+| Dynamic degree | 60.27 | 61.60 | +1.33&nbsp;[−1.45,&nbsp;+4.13] |
+| Motion smoothness | 98.43 | 98.32 | −0.11*&nbsp;[−0.18,&nbsp;−0.04] |
+| Temporal flickering | 97.09 | 96.98 | −0.11&nbsp;[−0.24,&nbsp;+0.02] |
+| Imaging quality | 67.44 | 68.90 | +1.46*&nbsp;[+0.87,&nbsp;+2.06] |
+| Aesthetic quality | 60.30 | 60.92 | +0.62*&nbsp;[+0.27,&nbsp;+0.96] |
+| Subject consistency | 97.35 | 97.69 | +0.34*&nbsp;[+0.25,&nbsp;+0.43] |
+| Background consistency | 96.41 | 96.63 | +0.21*&nbsp;[+0.15,&nbsp;+0.28] |
+| Subject, within clips | 97.14 | 97.39 | +0.25*&nbsp;[+0.12,&nbsp;+0.37] |
+| Subject, clip to clip (Consistency) | 78.63 | 82.16 | +3.53*&nbsp;[+2.83,&nbsp;+4.26] |
+| Background, clip to clip | 81.93 | 85.26 | +3.32*&nbsp;[+2.80,&nbsp;+3.87] |
+
+
+**Rolling Sink + Commit Forcing** vs **Rolling Sink**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 82.40 | 82.55 | +0.16*&nbsp;[+0.02,&nbsp;+0.30] |
+| Dynamic degree | 43.42 | 47.58 | +4.17*&nbsp;[+2.57,&nbsp;+5.88] |
+| Motion smoothness | 98.62 | 98.52 | −0.09*&nbsp;[−0.12,&nbsp;−0.06] |
+| Temporal flickering | 97.65 | 97.47 | −0.18*&nbsp;[−0.23,&nbsp;−0.13] |
+| Imaging quality | 69.95 | 69.71 | −0.23&nbsp;[−0.55,&nbsp;+0.07] |
+| Aesthetic quality | 60.96 | 61.13 | +0.17&nbsp;[−0.05,&nbsp;+0.40] |
+| Subject consistency | 97.90 | 97.80 | −0.10*&nbsp;[−0.16,&nbsp;−0.05] |
+| Background consistency | 96.79 | 96.73 | −0.06*&nbsp;[−0.10,&nbsp;−0.02] |
+| Subject, within clips | 97.44 | 97.13 | −0.31*&nbsp;[−0.41,&nbsp;−0.21] |
+| Subject, clip to clip (Consistency) | 86.34 | 87.32 | +0.98*&nbsp;[+0.58,&nbsp;+1.41] |
+| Background, clip to clip | 88.79 | 89.45 | +0.66*&nbsp;[+0.39,&nbsp;+0.96] |
+
+**Self-Forcing + sink + Commit Forcing** vs **Self-Forcing + sink**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 81.35 | 81.54 | +0.20&nbsp;[−0.28,&nbsp;+0.59] |
+| Dynamic degree | 58.22 | 58.87 | +0.65&nbsp;[−2.00,&nbsp;+3.40] |
+| Motion smoothness | 97.93 | 97.73 | −0.20&nbsp;[−0.60,&nbsp;+0.09] |
+| Temporal flickering | 96.35 | 96.27 | −0.09&nbsp;[−0.43,&nbsp;+0.21] |
+| Imaging quality | 67.14 | 67.95 | +0.81*&nbsp;[+0.26,&nbsp;+1.38] |
+| Aesthetic quality | 58.01 | 58.68 | +0.68*&nbsp;[+0.23,&nbsp;+1.14] |
+| Subject consistency | 96.62 | 96.74 | +0.12&nbsp;[−0.00,&nbsp;+0.24] |
+| Background consistency | 95.96 | 96.14 | +0.18*&nbsp;[+0.12,&nbsp;+0.24] |
+| Subject, within clips | 96.13 | 95.96 | −0.17&nbsp;[−0.40,&nbsp;+0.04] |
+| Subject, clip to clip (Consistency) | 74.71 | 78.11 | +3.40*&nbsp;[+2.76,&nbsp;+4.07] |
+| Background, clip to clip | 80.31 | 83.19 | +2.88*&nbsp;[+2.44,&nbsp;+3.32] |
+
+</details>
+
+</details>
+
+## Longer videos
+
+**240 s, 32 MovieGen prompts** (the first 32 extended MovieGen prompts of Self-Forcing). Drift: imaging quality of the first 2 s clip minus that of the last one (lower is better).
+
+| Model | Base | + Commit Forcing | Δ Quality | Δ Consistency | Δ Drift |
+|:---|---:|---:|:---|:---|:---|
+| SGF | 83.97 | 84.69 | +0.72*&nbsp;[+0.07,&nbsp;+1.37] | +5.07* | +0.28 |
+| Context Forcing | 83.60 | 84.04 | +0.44&nbsp;[−0.08,&nbsp;+0.97] | +2.23* | −0.75 |
+
+**Variants**, 240 s:
+
+| Model | Variant | Δ Quality | Δ Consistency | Δ Drift |
+|:---|:---|:---|:---|:---|
+| Context Forcing | no sink in the commit pass | +0.50*&nbsp;[+0.06,&nbsp;+0.96] | +0.77 | −0.34 |
+| Context Forcing | no slow memory or older frames in the commit pass | −0.19&nbsp;[−0.59,&nbsp;+0.21] | +0.08 | −1.88 |
+
+**120 s and 240 s, ID-Forcing's 128 MovieGen prompts.**
+
+| Model | Length | Base | + Commit Forcing | Δ Quality | Δ Consistency |
+|:---|---:|---:|---:|:---|:---|
+| LongLive, 6 frames | 120 s | 81.72 | 82.05 | +0.33*&nbsp;[+0.16,&nbsp;+0.50] | +1.87*&nbsp;[+1.39,&nbsp;+2.36] |
+| LongLive, 12-frame control | 120 s | 81.72 | 81.93 | +0.21*&nbsp;[+0.05,&nbsp;+0.37] | +1.09*&nbsp;[+0.62,&nbsp;+1.57] |
+| LongLive, 12-frame control | 240 s | 81.56 | 81.84 | +0.28*&nbsp;[+0.10,&nbsp;+0.46] | +1.96*&nbsp;[+1.49,&nbsp;+2.44] |
+| ID-Forcing on Self-Forcing | 120 s | 81.62 | 81.68 | +0.06&nbsp;[−0.15,&nbsp;+0.26] | +3.05*&nbsp;[+2.33,&nbsp;+3.78] |
+| ID-Forcing on Self-Forcing | 240 s | 81.32 | 81.65 | +0.34*&nbsp;[+0.05,&nbsp;+0.70] | +3.58*&nbsp;[+2.86,&nbsp;+4.30] |
+
+<details>
+<summary>All metrics, longer videos</summary>
+
+LongLive tables in this historical foldout use the 12-frame control. The new
+[6-frame 120-second results](results/long_horizon/longlive6_120/README.md) provide all components and paired contrasts.
+Both LongLive arms in these custom-prompt runs store 15 physical cache frames.
+The 6-frame 240-second evaluation is pending; no 6-frame score is inferred from the 12-frame control.
+
+<details>
+<summary>240 s, MovieGen 32: SGF</summary>
+
+Source: [`results/long_horizon/tables/moviegen32_240s_sgf.txt`](results/long_horizon/tables/moviegen32_240s_sgf.txt) · spec [`results/long_horizon/specs/moviegen32_240s_sgf.json`](results/long_horizon/specs/moviegen32_240s_sgf.json)
+
+**SGF + Commit Forcing** vs **SGF**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 83.97 | 84.69 | +0.72*&nbsp;[+0.07,&nbsp;+1.37] |
+| Dynamic degree | 49.11 | 59.69 | +10.57*&nbsp;[+2.24,&nbsp;+18.99] |
+| Motion smoothness | 98.68 | 98.50 | −0.18*&nbsp;[−0.35,&nbsp;−0.04] |
+| Temporal flickering | 97.38 | 96.96 | −0.42*&nbsp;[−0.79,&nbsp;−0.09] |
+| Imaging quality | 73.45 | 73.05 | −0.40&nbsp;[−1.56,&nbsp;+0.67] |
+| Aesthetic quality | 64.96 | 65.82 | +0.86&nbsp;[−0.88,&nbsp;+2.69] |
+| Subject consistency | 98.26 | 98.53 | +0.28*&nbsp;[+0.10,&nbsp;+0.46] |
+| Background consistency | 96.75 | 97.02 | +0.26*&nbsp;[+0.06,&nbsp;+0.47] |
+| Subject, within clips | 97.92 | 98.05 | +0.13&nbsp;[−0.09,&nbsp;+0.34] |
+| Subject, clip to clip (Consistency) | 87.34 | 92.41 | +5.07*&nbsp;[+2.98,&nbsp;+7.30] |
+| Background, within clips | 96.29 | 96.38 | +0.09&nbsp;[−0.21,&nbsp;+0.41] |
+| Background, clip to clip | 89.81 | 94.27 | +4.46*&nbsp;[+2.88,&nbsp;+6.15] |
+| Drift, first vs last clip | -0.27 | 0.01 | +0.28&nbsp;[−0.94,&nbsp;+1.41] |
+| Drift, first 5 vs last 5 clips | 0.42 | 0.10 | −0.31&nbsp;[−1.74,&nbsp;+0.81] |
+
+</details>
+
+<details>
+<summary>240 s, MovieGen 32: Context Forcing</summary>
+
+Source: [`results/long_horizon/tables/moviegen32_240s_context_forcing.txt`](results/long_horizon/tables/moviegen32_240s_context_forcing.txt) · spec [`results/long_horizon/specs/moviegen32_240s_context_forcing.json`](results/long_horizon/specs/moviegen32_240s_context_forcing.json)
+
+**Context Forcing, memory out of the commit pass only** vs **Context Forcing**
+
+| Metric | Context Forcing | Context Forcing, memory out of the commit pass only | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 83.60 | 83.41 | −0.19&nbsp;[−0.59,&nbsp;+0.21] |
+| Dynamic degree | 58.46 | 48.83 | −9.64*&nbsp;[−14.06,&nbsp;−5.62] |
+| Motion smoothness | 98.54 | 98.74 | +0.20*&nbsp;[+0.09,&nbsp;+0.33] |
+| Temporal flickering | 97.32 | 97.79 | +0.47*&nbsp;[+0.26,&nbsp;+0.71] |
+| Imaging quality | 69.93 | 70.92 | +0.99*&nbsp;[+0.18,&nbsp;+1.90] |
+| Aesthetic quality | 62.26 | 62.40 | +0.14&nbsp;[−0.94,&nbsp;+1.06] |
+| Subject consistency | 98.03 | 98.23 | +0.19*&nbsp;[+0.08,&nbsp;+0.31] |
+| Background consistency | 96.78 | 97.00 | +0.23*&nbsp;[+0.14,&nbsp;+0.32] |
+| Subject, within clips | 98.10 | 98.47 | +0.37*&nbsp;[+0.26,&nbsp;+0.50] |
+| Subject, clip to clip (Consistency) | 81.83 | 81.91 | +0.08&nbsp;[−1.17,&nbsp;+1.34] |
+| Background, within clips | 96.81 | 97.27 | +0.46*&nbsp;[+0.33,&nbsp;+0.59] |
+| Background, clip to clip | 84.31 | 83.59 | −0.72&nbsp;[−1.74,&nbsp;+0.23] |
+| Drift, first vs last clip | 0.70 | -1.18 | −1.88&nbsp;[−4.20,&nbsp;+0.20] |
+| Drift, first 5 vs last 5 clips | 0.73 | -1.38 | −2.10*&nbsp;[−4.05,&nbsp;−0.49] |
+
+**Context Forcing + Commit Forcing** vs **Context Forcing**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 83.60 | 84.04 | +0.44&nbsp;[−0.08,&nbsp;+0.97] |
+| Dynamic degree | 58.46 | 59.64 | +1.17&nbsp;[−5.03,&nbsp;+7.40] |
+| Motion smoothness | 98.54 | 98.57 | +0.03&nbsp;[−0.15,&nbsp;+0.24] |
+| Temporal flickering | 97.32 | 97.43 | +0.11&nbsp;[−0.21,&nbsp;+0.47] |
+| Imaging quality | 69.93 | 70.72 | +0.78&nbsp;[−0.46,&nbsp;+2.06] |
+| Aesthetic quality | 62.26 | 63.05 | +0.79&nbsp;[−0.21,&nbsp;+1.79] |
+| Subject consistency | 98.03 | 98.21 | +0.18*&nbsp;[+0.06,&nbsp;+0.31] |
+| Background consistency | 96.78 | 96.87 | +0.10&nbsp;[−0.01,&nbsp;+0.20] |
+| Subject, within clips | 98.10 | 98.17 | +0.08&nbsp;[−0.12,&nbsp;+0.26] |
+| Subject, clip to clip (Consistency) | 81.83 | 84.06 | +2.23*&nbsp;[+0.51,&nbsp;+3.89] |
+| Background, within clips | 96.81 | 96.87 | +0.05&nbsp;[−0.16,&nbsp;+0.25] |
+| Background, clip to clip | 84.31 | 85.92 | +1.61*&nbsp;[+0.25,&nbsp;+3.00] |
+| Drift, first vs last clip | 0.70 | -0.04 | −0.75&nbsp;[−3.59,&nbsp;+1.81] |
+| Drift, first 5 vs last 5 clips | 0.73 | -0.31 | −1.04&nbsp;[−3.43,&nbsp;+1.12] |
+
+**Context Forcing, sink out of the commit pass only** vs **Context Forcing**
+
+| Metric | Context Forcing | Context Forcing, sink out of the commit pass only | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 83.60 | 84.10 | +0.50*&nbsp;[+0.06,&nbsp;+0.96] |
+| Dynamic degree | 58.46 | 65.52 | +7.06*&nbsp;[+3.18,&nbsp;+11.61] |
+| Motion smoothness | 98.54 | 98.48 | −0.05&nbsp;[−0.21,&nbsp;+0.15] |
+| Temporal flickering | 97.32 | 97.17 | −0.15&nbsp;[−0.44,&nbsp;+0.18] |
+| Imaging quality | 69.93 | 70.13 | +0.20&nbsp;[−0.97,&nbsp;+1.34] |
+| Aesthetic quality | 62.26 | 62.55 | +0.30&nbsp;[−0.71,&nbsp;+1.18] |
+| Subject consistency | 98.03 | 97.97 | −0.07&nbsp;[−0.21,&nbsp;+0.07] |
+| Background consistency | 96.78 | 96.70 | −0.07&nbsp;[−0.19,&nbsp;+0.03] |
+| Subject, within clips | 98.10 | 97.86 | −0.24*&nbsp;[−0.44,&nbsp;−0.07] |
+| Subject, clip to clip (Consistency) | 81.83 | 82.60 | +0.77&nbsp;[−0.52,&nbsp;+2.03] |
+| Background, within clips | 96.81 | 96.52 | −0.30*&nbsp;[−0.48,&nbsp;−0.12] |
+| Background, clip to clip | 84.31 | 85.69 | +1.38*&nbsp;[+0.39,&nbsp;+2.37] |
+| Drift, first vs last clip | 0.70 | 0.37 | −0.34&nbsp;[−2.61,&nbsp;+1.53] |
+| Drift, first 5 vs last 5 clips | 0.73 | 0.73 | +0.00&nbsp;[−1.41,&nbsp;+1.53] |
+
+**Context Forcing, memory out of the commit pass only** vs **Context Forcing, sink out of the commit pass only**
+
+| Metric | Context Forcing, sink out of the commit pass only | Context Forcing, memory out of the commit pass only | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 84.10 | 83.41 | −0.69*&nbsp;[−1.20,&nbsp;−0.20] |
+| Dynamic degree | 65.52 | 48.83 | −16.69*&nbsp;[−24.06,&nbsp;−9.84] |
+| Motion smoothness | 98.48 | 98.74 | +0.25*&nbsp;[+0.13,&nbsp;+0.40] |
+| Temporal flickering | 97.17 | 97.79 | +0.62*&nbsp;[+0.37,&nbsp;+0.90] |
+| Imaging quality | 70.13 | 70.92 | +0.79&nbsp;[−0.17,&nbsp;+2.07] |
+| Aesthetic quality | 62.55 | 62.40 | −0.16&nbsp;[−1.05,&nbsp;+0.66] |
+| Subject consistency | 97.97 | 98.23 | +0.26*&nbsp;[+0.16,&nbsp;+0.37] |
+| Background consistency | 96.70 | 97.00 | +0.30*&nbsp;[+0.18,&nbsp;+0.42] |
+| Subject, within clips | 97.86 | 98.47 | +0.61*&nbsp;[+0.46,&nbsp;+0.78] |
+| Subject, clip to clip (Consistency) | 82.60 | 81.91 | −0.69&nbsp;[−1.79,&nbsp;+0.43] |
+| Background, within clips | 96.52 | 97.27 | +0.75*&nbsp;[+0.54,&nbsp;+0.97] |
+| Background, clip to clip | 85.69 | 83.59 | −2.10*&nbsp;[−3.31,&nbsp;−0.98] |
+| Drift, first vs last clip | 0.37 | -1.18 | −1.54&nbsp;[−3.50,&nbsp;+0.24] |
+| Drift, first 5 vs last 5 clips | 0.73 | -1.38 | −2.11*&nbsp;[−3.92,&nbsp;−0.46] |
+
+</details>
+
+<details>
+<summary>120 s, ID-Forcing's 128 prompts: LongLive and ID-Forcing on Self-Forcing</summary>
+
+Source: [`results/long_horizon/tables/idf128_120s.txt`](results/long_horizon/tables/idf128_120s.txt) · spec [`results/long_horizon/specs/idf128_120s.json`](results/long_horizon/specs/idf128_120s.json)
+
+**ID-Forcing on Self-Forcing + Commit Forcing** vs **ID-Forcing on Self-Forcing**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 81.62 | 81.68 | +0.06&nbsp;[−0.15,&nbsp;+0.26] |
+| Dynamic degree | 64.27 | 60.49 | −3.78*&nbsp;[−6.39,&nbsp;−1.34] |
+| Motion smoothness | 97.77 | 97.88 | +0.11&nbsp;[−0.00,&nbsp;+0.21] |
+| Temporal flickering | 96.17 | 96.36 | +0.18*&nbsp;[+0.02,&nbsp;+0.33] |
+| Imaging quality | 68.12 | 68.55 | +0.44*&nbsp;[+0.08,&nbsp;+0.79] |
+| Aesthetic quality | 56.37 | 56.95 | +0.57*&nbsp;[+0.17,&nbsp;+0.97] |
+| Subject consistency | 96.88 | 97.07 | +0.19*&nbsp;[+0.10,&nbsp;+0.28] |
+| Background consistency | 96.06 | 96.19 | +0.12*&nbsp;[+0.07,&nbsp;+0.18] |
+| Subject, within clips | 96.48 | 96.50 | +0.02&nbsp;[−0.13,&nbsp;+0.18] |
+| Subject, clip to clip (Consistency) | 76.47 | 79.51 | +3.05*&nbsp;[+2.33,&nbsp;+3.78] |
+| Background, clip to clip | 82.05 | 84.11 | +2.05*&nbsp;[+1.62,&nbsp;+2.50] |
+
+**LongLive, 12-frame control** vs **LongLive**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 81.72 | 81.93 | +0.21*&nbsp;[+0.05,&nbsp;+0.37] |
+| Dynamic degree | 42.96 | 46.42 | +3.46*&nbsp;[+1.48,&nbsp;+5.56] |
+| Motion smoothness | 98.74 | 98.59 | −0.15*&nbsp;[−0.19,&nbsp;−0.11] |
+| Temporal flickering | 97.61 | 97.37 | −0.24*&nbsp;[−0.32,&nbsp;−0.17] |
+| Imaging quality | 68.19 | 68.98 | +0.79*&nbsp;[+0.47,&nbsp;+1.11] |
+| Aesthetic quality | 58.92 | 58.99 | +0.06&nbsp;[−0.20,&nbsp;+0.33] |
+| Subject consistency | 97.69 | 97.62 | −0.06*&nbsp;[−0.13,&nbsp;−0.00] |
+| Background consistency | 96.46 | 96.46 | −0.00&nbsp;[−0.05,&nbsp;+0.04] |
+| Subject, within clips | 97.21 | 97.00 | −0.21*&nbsp;[−0.30,&nbsp;−0.12] |
+| Subject, clip to clip (Consistency) | 84.16 | 85.25 | +1.09*&nbsp;[+0.62,&nbsp;+1.57] |
+| Background, clip to clip | 87.17 | 88.36 | +1.19*&nbsp;[+0.92,&nbsp;+1.47] |
+
+</details>
+
+<details>
+<summary>240 s, ID-Forcing's 128 prompts: LongLive and ID-Forcing on Self-Forcing</summary>
+
+Source: [`results/long_horizon/tables/idf128_240s.txt`](results/long_horizon/tables/idf128_240s.txt) · spec [`results/long_horizon/specs/idf128_240s.json`](results/long_horizon/specs/idf128_240s.json)
+
+**ID-Forcing on Self-Forcing + Commit Forcing** vs **ID-Forcing on Self-Forcing**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 81.32 | 81.65 | +0.34*&nbsp;[+0.05,&nbsp;+0.70] |
+| Dynamic degree | 63.67 | 61.05 | −2.62*&nbsp;[−5.01,&nbsp;−0.34] |
+| Motion smoothness | 97.68 | 97.86 | +0.18*&nbsp;[+0.02,&nbsp;+0.37] |
+| Temporal flickering | 96.08 | 96.35 | +0.27*&nbsp;[+0.07,&nbsp;+0.51] |
+| Imaging quality | 67.82 | 68.58 | +0.76*&nbsp;[+0.31,&nbsp;+1.27] |
+| Aesthetic quality | 55.82 | 56.64 | +0.82*&nbsp;[+0.40,&nbsp;+1.25] |
+| Subject consistency | 96.73 | 97.04 | +0.32*&nbsp;[+0.16,&nbsp;+0.53] |
+| Background consistency | 96.02 | 96.17 | +0.15*&nbsp;[+0.09,&nbsp;+0.21] |
+| Subject, within clips | 96.33 | 96.55 | +0.22&nbsp;[−0.03,&nbsp;+0.60] |
+| Subject, clip to clip (Consistency) | 75.07 | 78.65 | +3.58*&nbsp;[+2.86,&nbsp;+4.30] |
+| Background, clip to clip | 80.86 | 83.54 | +2.68*&nbsp;[+2.16,&nbsp;+3.22] |
+
+**LongLive, 12-frame control** vs **LongLive**
+
+| Metric | Base | + Commit Forcing | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 81.56 | 81.84 | +0.28*&nbsp;[+0.10,&nbsp;+0.46] |
+| Dynamic degree | 41.56 | 45.98 | +4.41*&nbsp;[+2.16,&nbsp;+6.85] |
+| Motion smoothness | 98.70 | 98.52 | −0.18*&nbsp;[−0.23,&nbsp;−0.13] |
+| Temporal flickering | 97.56 | 97.27 | −0.29*&nbsp;[−0.39,&nbsp;−0.21] |
+| Imaging quality | 68.03 | 69.09 | +1.06*&nbsp;[+0.66,&nbsp;+1.43] |
+| Aesthetic quality | 59.07 | 58.92 | −0.16&nbsp;[−0.45,&nbsp;+0.13] |
+| Subject consistency | 97.67 | 97.68 | +0.01&nbsp;[−0.05,&nbsp;+0.06] |
+| Background consistency | 96.43 | 96.51 | +0.08*&nbsp;[+0.03,&nbsp;+0.13] |
+| Subject, within clips | 97.26 | 97.09 | −0.17*&nbsp;[−0.26,&nbsp;−0.09] |
+| Subject, clip to clip (Consistency) | 83.41 | 85.36 | +1.96*&nbsp;[+1.49,&nbsp;+2.44] |
+| Background, clip to clip | 86.53 | 88.50 | +1.97*&nbsp;[+1.63,&nbsp;+2.30] |
+
+</details>
+
+</details>
+
+[Per-video data, metric definitions and reproduction commands](results/README.md).

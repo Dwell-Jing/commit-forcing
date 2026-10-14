@@ -1,0 +1,44 @@
+VBench-Long, rollf200 x 60 s, generation seed 1 (SGF, LongLive, ID-Forcing)
+x100; Quality = Recency Forcing Tab. 3; labels with all 200 prompts scored
+
+label                          Quality   Dynamic   Subject Background   Subj_in  Subj_c2c    Bg_c2c   Imaging Aesthetic  MotionSm   Flicker   description
+sgf                              83.85     57.27     98.03     96.65     97.55     86.60     89.36     71.24     62.97     98.64     97.33   Self Gradient Forcing, base
+sgf+rule                         84.71     70.58     98.28     96.83     97.63     91.41     92.78     70.88     63.52     98.46     96.90   sgf + Commit Forcing (commit reads the newest 9 real frames)
+longlive                         82.19     42.03     97.77     96.54     97.13     86.02     88.20     68.83     61.67     98.74     97.59   LongLive, base (sink 3 + local window 9 in every pass)
+longlive+rule                    82.67     50.20     97.68     96.47     96.89     86.70     88.84     69.51     61.61     98.56     97.31   longlive + Commit Forcing (commit reads the newest 12 real frames)
+idf_longlive                     82.44     52.72     97.62     96.41     97.21     82.25     85.94     69.05     60.78     98.47     96.93   ID-Forcing on LongLive (authors' code)
+idf_sf                           82.47     65.23     97.03     96.20     96.37     79.29     84.30     69.38     59.47     97.90     96.11   ID-Forcing on Self-Forcing (authors' code)
+idf_sf+rule                      82.67     62.98     97.22     96.27     96.50     81.56     85.81     69.52     60.13     98.06     96.41   ID-Forcing + Commit Forcing (commit reads the previous 2 chunks, not the sink)
+longlive+commit_self             82.83     54.18     97.68     96.50     96.96     85.91     88.49     69.37     61.69     98.45     97.08   longlive, commit reads only its own chunk
+longlive+commit6                 82.66     48.65     97.81     96.62     97.13     87.09     89.36     69.43     61.70     98.59     97.38   longlive, commit reads the newest 6 real frames
+
+paired contrasts (a - b), by prompt, bootstrap 4000, 95% CI ('*' = excludes 0)
+
+[SGF] Commit Forcing - base (sgf+rule - sgf)
+    Quality +0.86 [+0.52, +1.21]  n = 200 prompts
+    Dynamic +13.32*  Subject +0.26*  Background +0.18*  Subj_in +0.07  Subj_c2c +4.80*  Bg_c2c +3.42*  Imaging -0.37  Aesthetic +0.55  MotionSm -0.19*  Flicker -0.43*
+
+[LongLive] Commit Forcing - base (longlive+rule - longlive)
+    Quality +0.48 [+0.33, +0.64]  n = 200 prompts
+    Dynamic +8.17*  Subject -0.09*  Background -0.08*  Subj_in -0.25*  Subj_c2c +0.68*  Bg_c2c +0.64*  Imaging +0.68*  Aesthetic -0.06  MotionSm -0.17*  Flicker -0.28*
+
+[Self-Forcing] ID-Forcing + Commit Forcing - ID-Forcing (idf_sf+rule - idf_sf)
+    Quality +0.20 [+0.04, +0.37]  n = 200 prompts
+    Dynamic -2.25*  Subject +0.18*  Background +0.07*  Subj_in +0.13*  Subj_c2c +2.27*  Bg_c2c +1.51*  Imaging +0.15  Aesthetic +0.66*  MotionSm +0.16*  Flicker +0.29*
+
+[LongLive, commit window] commit 6 - Commit Forcing (commit 12) (longlive+commit6 - longlive+rule)
+    Quality -0.02 [-0.12, +0.08]  n = 200 prompts
+    Dynamic -1.55*  Subject +0.14*  Background +0.16*  Subj_in +0.25*  Subj_c2c +0.38*  Bg_c2c +0.52*  Imaging -0.08  Aesthetic +0.09  MotionSm +0.02  Flicker +0.07*
+
+[LongLive, commit window] commit 6 - commit self-only (longlive+commit6 - longlive+commit_self)
+    Quality -0.17 [-0.30, -0.04]  n = 200 prompts
+    Dynamic -5.53*  Subject +0.13*  Background +0.13*  Subj_in +0.17*  Subj_c2c +1.18*  Bg_c2c +0.87*  Imaging +0.06  Aesthetic +0.01  MotionSm +0.13*  Flicker +0.29*
+
+[LongLive, commit window] commit 6 - base (longlive+commit6 - longlive)
+    Quality +0.46 [+0.30, +0.64]  n = 200 prompts
+    Dynamic +6.62*  Subject +0.05  Background +0.08*  Subj_in +0.00  Subj_c2c +1.06*  Bg_c2c +1.16*  Imaging +0.60*  Aesthetic +0.03  MotionSm -0.15*  Flicker -0.21*
+
+[LongLive, commit window] commit self-only - base (longlive+commit_self - longlive)
+    Quality +0.64 [+0.43, +0.85]  n = 200 prompts
+    Dynamic +12.15*  Subject -0.08*  Background -0.05  Subj_in -0.17*  Subj_c2c -0.11  Bg_c2c +0.28  Imaging +0.54*  Aesthetic +0.02  MotionSm -0.28*  Flicker -0.51*
+

@@ -1,0 +1,107 @@
+{
+  "experiment": "LongLive quick59 adaptive/fixed committing-window check",
+  "generation": {
+    "prompts_after_calibration_overlap_exclusion": 59,
+    "initial_quick_list_entries": 60,
+    "seconds": 48,
+    "generation_seeds": [
+      0,
+      1,
+      2
+    ],
+    "reference_context_latent_frames": 12,
+    "all_frame_counts_include_current_block": true
+  },
+  "sources": {
+    "original_protocol_and_fixed6_addendum": {
+      "filename": "PREREG_QUICK.md",
+      "sha256": "2fa674edd26c857bfe054011c19d806d20020518a89ff56eaa98aacaca2c1f81"
+    },
+    "original_completed_readout": {
+      "filename": "QUICK_WIN.md",
+      "sha256": "7dd0aa81c8f4e71954862af6c27d070ae470c4d2e2f24135005c8ae914a2fbbe"
+    },
+    "original_statistical_script": {
+      "filename": "win_quick.py",
+      "sha256": "fa0f7384b3f7f0e0f4f99c1b3a4a1d4baf078d8ee406bf3e4f9825811e450740"
+    },
+    "quick59_per_video_scores.csv": {
+      "filename": "quick59_per_video_scores.csv",
+      "sha256": "60bca1f2962540c1d8535e32a453b988ded80140af53b9cd79e302533316725b"
+    },
+    "quick59_prompts.csv": {
+      "filename": "quick59_prompts.csv",
+      "sha256": "618a8ddee7a09a8001edfd5fdc735faafdc260171058024a64846067fb09d349"
+    },
+    "quick59_metadata.json": {
+      "filename": "quick59_metadata.json",
+      "sha256": "79ed8f03e2c7459e5c2e1d50cf085e689a64defba1e66bdc8f5fd44c472ea58f"
+    }
+  },
+  "public_files": {
+    "quick59_prereg.md": "protocol transcription; private coordination notes and infrastructure paths removed",
+    "quick59_readout.md": "reported full readout; no interval re-estimated",
+    "quick59_contrasts.csv": "reported arm levels, paired contrasts, and subgroup estimates",
+    "quick59_per_video_scores.csv": "actual scored inputs and sidecar-derived value-3 marker fractions, 885 rows after prompt 43 exclusion",
+    "quick59_prompts.csv": "actual 59 generation prompt texts and original quick60 prompt identifiers",
+    "quick59_metadata.json": "excluded identifier and source hashes for the initial quick60 and calibration lists",
+    "../source/quick59_readout.py": "portable CSV adaptation retaining original contrast/metric/subgroup order and sequential RNG draws"
+  },
+  "statistics": {
+    "prompt_bootstrap_draws": 4000,
+    "regression_bootstrap_draws": 2000,
+    "rng": "numpy.random.default_rng(0)",
+    "pooled_unit": "mean across three seeds within each prompt; resample prompts",
+    "subgroup_unit": "prompt-seed observations, resampling prompt clusters",
+    "subgroup_statistic": "fraction of recorded commit_windows entries equal to 3; historical marker statistic, not a uniform actual frame-count measure across adaptive contexts"
+  },
+  "registered_sequence": [
+    "Adaptive comparisons specified before their videos were generated.",
+    "Fixed-6 contrast specified after initial adaptive verdicts and before generating fixed-6 videos."
+  ],
+  "limits": [
+    "This 59-prompt 48-second screen is separate from the 946-entry and rollf200 main protocols.",
+    "The LongLive 946-entry main configuration remains the 12-frame committing context with 15-frame physical storage.",
+    "Motion adjustment is a descriptive regression, not a matched-motion generation intervention.",
+    "Subgroups retain the historical value-3 marker statistic; it does not assert that adaptive-6 and adaptive-head contexts actually read 3 frames at every flagged call."
+  ],
+  "public_artifacts": {
+    "README.md": {
+      "sha256": "a9045ab6e553c72be81fee85c3db2f710b6fcd97e1657a95f394ff3122b66008",
+      "bytes": 12486
+    },
+    "source/quick59_readout.py": {
+      "sha256": "2868376b411f76c064ce0ae369d5e4558d9865524c0f4b66acf0a2b090063230",
+      "bytes": 13284
+    },
+    "data/quick59_contrasts.csv": {
+      "sha256": "7fe7c494383fda907b5169365bcda5cef4e02e6808a0f48e1f7ef1028a557403",
+      "bytes": 12356
+    },
+    "data/quick59_metadata.json": {
+      "sha256": "79ed8f03e2c7459e5c2e1d50cf085e689a64defba1e66bdc8f5fd44c472ea58f",
+      "bytes": 362
+    },
+    "data/quick59_per_video_scores.csv": {
+      "sha256": "8820ee923f60bd8cfb3d8101c75ec18c90c7b2e3b045f72887b526c10554a896",
+      "bytes": 90336
+    },
+    "data/quick59_prereg.md": {
+      "sha256": "9b2ebef0808b11787b65483c7267d0acd89534716b8ce98553f6c828eae03b7e",
+      "bytes": 4620
+    },
+    "data/quick59_prompts.csv": {
+      "sha256": "9b8dcdf8e4d0c7ce8c27fc872d9fcf8f1d3b60904a41f5b379ac5e1a918f78cf",
+      "bytes": 40056
+    },
+    "data/quick59_readout.md": {
+      "sha256": "94f2e4cde7e9275fd3b5e58867f1c5c6d84da9048f6fc5f8c242e85f653956db",
+      "bytes": 6994
+    }
+  },
+  "verification": {
+    "method": "CPU replay from the actual scored inputs, retaining original bootstrap/RNG order",
+    "reported_metric_cells_verified": 221,
+    "all_rounded_estimates_intervals_and_significance_markers_match": true
+  }
+}

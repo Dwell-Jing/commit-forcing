@@ -1,0 +1,427 @@
+{
+  "artifact": "Quality contribution decomposition, single-video costs and LongLive four-repeat costs",
+  "updated": "2026-10-14",
+  "source_files": [
+    {
+      "kind": "included_report",
+      "name": "data/QUALITY_DECOMP_report.md",
+      "original_artifact": "QUALITY_DECOMP.md",
+      "sha256": "7f85c29fb33ae366e793622c878f736ac0ce9e8b27a4b32c2fbba043630e7fd8",
+      "bytes": 2634
+    },
+    {
+      "kind": "included_report",
+      "name": "data/COST_report.md",
+      "original_artifact": "COST.md",
+      "sha256": "096ae429fa39722c74cf87ba170ccb628ab4732d97dcd57d3204ddd451990f81",
+      "bytes": 1256
+    },
+    {
+      "kind": "public_suite",
+      "name": "full_scores.csv",
+      "repository_directory": "results/vbench_full/common946",
+      "sha256": "4b9a99f02978cf7a2143931157617ff763eded29202f512dc647e8ea1c04667a",
+      "bytes": 5911
+    },
+    {
+      "kind": "public_suite",
+      "name": "aggregate_paired_ci.csv",
+      "repository_directory": "results/vbench_full/common946",
+      "sha256": "48dc11f2b16c7bcd2926baefb242064471e655a159d4a78b3cdc4ca176eca466",
+      "bytes": 1851
+    },
+    {
+      "kind": "public_suite",
+      "name": "component_paired_ci.csv",
+      "repository_directory": "results/vbench_full/common946",
+      "sha256": "6bfa6331816c4f9e874106e2b95f9631b71bcab879ea5a895eda625de2fe96cf",
+      "bytes": 10793
+    },
+    {
+      "kind": "public_suite",
+      "name": "protocol.json",
+      "repository_directory": "results/vbench_full/common946",
+      "sha256": "720af356b1da2d5c862783041e1b6dcf8b5ba3ad8c19b73284b636353d9309ec",
+      "bytes": 7485
+    },
+    {
+      "kind": "public_suite",
+      "name": "longlive6_source_results.json",
+      "sha256": "f12804d586c3e8cdbef89fb70d72235daf4f7e77420c09e996b675c601a6548d",
+      "bytes": 13284
+    },
+    {
+      "kind": "public_suite",
+      "name": "ablation12/original_package.zip",
+      "sha256": "36babb4a41c4ed2555aa0d9fd504bae88b84373df9e8301c488528e3040c0270",
+      "bytes": 252084
+    },
+    {
+      "kind": "public_suite",
+      "name": "ablation12/archive_manifest.json",
+      "sha256": "596bc3c2c3b3fcc745f87775bf49444915337d3141e6b6a95cb4313efe27d4ab",
+      "bytes": 1118
+    },
+    {
+      "kind": "included_numeric_snapshot",
+      "name": "data/longlive6_cost/snapshots/first-completed-run/LL_native_r0.json",
+      "original_artifact": "LL_native_r0.json",
+      "original_source_sha256": "5901d55b1f3a98008f81f0a6840f914fdc755c398c87a92673b6c4d3519705a6",
+      "sha256": "0dfa2dd7436e8636e5e4d7104a68a37fcf2821657bcc9322bbe56af4d0969138",
+      "bytes": 786,
+      "snapshot": "first-completed-run"
+    },
+    {
+      "kind": "included_numeric_snapshot",
+      "name": "data/longlive6_cost/snapshots/first-completed-run/LL_native_r1.json",
+      "original_artifact": "LL_native_r1.json",
+      "original_source_sha256": "7c9430ee2e327dda6a89369f440c10f3b062655b5d49ce1d70f6c664b17088b3",
+      "sha256": "9729699de6ed0e0f55eb76dc155e7b7fd1f915d1c37d354276b7d5e61514e134",
+      "bytes": 786,
+      "snapshot": "first-completed-run"
+    },
+    {
+      "kind": "included_numeric_snapshot",
+      "name": "data/longlive6_cost/snapshots/first-completed-run/LL_native_r2.json",
+      "original_artifact": "LL_native_r2.json",
+      "original_source_sha256": "c73b6841440bc99077e36675a29dfa39e47353fbd89fa185ced684a98662f527",
+      "sha256": "c067e5d6d02136bcb7b3bb05a8c357be425ab84dd5a0ec69d6f490d52f9c8ad9",
+      "bytes": 786,
+      "snapshot": "first-completed-run"
+    },
+    {
+      "kind": "included_numeric_snapshot",
+      "name": "data/longlive6_cost/snapshots/first-completed-run/LL_native_r3.json",
+      "original_artifact": "LL_native_r3.json",
+      "original_source_sha256": "f69ee03f48638613042705923451531010d51d35b17921bf954d218195987143",
+      "sha256": "6de8ee18f8599b8eb3b05d7aec5f228d50cce683dea4df0a574272725b9cae71",
+      "bytes": 785,
+      "snapshot": "first-completed-run"
+    },
+    {
+      "kind": "included_numeric_snapshot",
+      "name": "data/longlive6_cost/snapshots/first-completed-run/LL_w6_r0.json",
+      "original_artifact": "LL_w6_r0.json",
+      "original_source_sha256": "f05036dc85b5ce7df70a497d1077740f0b4eb6832d9db62f44440b766d550e52",
+      "sha256": "cc4ade3a7024e0c656fe14f200d409496e0a447cc2efb26fbde599db2c270556",
+      "bytes": 791,
+      "snapshot": "first-completed-run"
+    },
+    {
+      "kind": "included_numeric_snapshot",
+      "name": "data/longlive6_cost/snapshots/first-completed-run/LL_w6_r1.json",
+      "original_artifact": "LL_w6_r1.json",
+      "original_source_sha256": "31d7ef4966811116f8f6510a94952aaa7c71c33c28ed25c9e16110d5af895b0a",
+      "sha256": "8e924cff94326f40e522c80a00b6769f8962c8377fbb3a6821af3c51e3bf3406",
+      "bytes": 791,
+      "snapshot": "first-completed-run"
+    },
+    {
+      "kind": "included_numeric_snapshot",
+      "name": "data/longlive6_cost/snapshots/first-completed-run/LL_w6_r2.json",
+      "original_artifact": "LL_w6_r2.json",
+      "original_source_sha256": "f4b6ed0a5545a4c7d579e93574937fa52018019aaf70f14ad8a76a7e773e5a85",
+      "sha256": "b9d8b2c36107ee94a80d0b2999deda9b8e918a2b423a7603caea813a4c329576",
+      "bytes": 792,
+      "snapshot": "first-completed-run"
+    },
+    {
+      "kind": "included_numeric_snapshot",
+      "name": "data/longlive6_cost/snapshots/first-completed-run/LL_w6_r3.json",
+      "original_artifact": "LL_w6_r3.json",
+      "original_source_sha256": "68174b04a7cc0c58ad91d54c28d856f01dece9618628d7539bbbb1d4689bcc53",
+      "sha256": "47a1f311108a5d2d10797950dd6acb1f9089dcb67547b83cc807c02fe64b4716",
+      "bytes": 792,
+      "snapshot": "first-completed-run"
+    },
+    {
+      "kind": "included_numeric_snapshot",
+      "name": "data/longlive6_cost/LL_native_r0.json",
+      "original_artifact": "LL_native_r0.json",
+      "original_source_sha256": "f933512b586db5e9ceec310102b5b79f6af8b9f9d9f611a79ea6e169822ed0bd",
+      "snapshot": "second-completed-run",
+      "sha256": "31b1f1468836a3100e9f84f08d73f1c905df32a075ef0f9b5dd3f64b1d5a0e47",
+      "bytes": 902
+    },
+    {
+      "kind": "included_memory_log",
+      "name": "data/longlive6_cost/LL_native_r0.mem",
+      "original_artifact": "LL_native_r0.mem",
+      "original_source_sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "snapshot": "second-completed-run",
+      "units": "MiB",
+      "sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "bytes": 6
+    },
+    {
+      "kind": "included_numeric_snapshot",
+      "name": "data/longlive6_cost/LL_native_r1.json",
+      "original_artifact": "LL_native_r1.json",
+      "original_source_sha256": "44372a9214b70508566a0dacef65dfd9a12d09cd6c534f3a835d18c808ee487a",
+      "snapshot": "second-completed-run",
+      "sha256": "ffcfd1d1609240c0d693cc9d547d24d3dd5f7e2f0747c7d493a56c85b4d6bc0c",
+      "bytes": 903
+    },
+    {
+      "kind": "included_memory_log",
+      "name": "data/longlive6_cost/LL_native_r1.mem",
+      "original_artifact": "LL_native_r1.mem",
+      "original_source_sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "snapshot": "second-completed-run",
+      "units": "MiB",
+      "sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "bytes": 6
+    },
+    {
+      "kind": "included_numeric_snapshot",
+      "name": "data/longlive6_cost/LL_native_r2.json",
+      "original_artifact": "LL_native_r2.json",
+      "original_source_sha256": "981e7ee6c39efe054994fd91c0b46d39dedf113afec45531afa6f512f9684852",
+      "snapshot": "second-completed-run",
+      "sha256": "d73a570fb829e99756081200a646cfa969aa9315829dc2b5313674981fd26981",
+      "bytes": 903
+    },
+    {
+      "kind": "included_memory_log",
+      "name": "data/longlive6_cost/LL_native_r2.mem",
+      "original_artifact": "LL_native_r2.mem",
+      "original_source_sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "snapshot": "second-completed-run",
+      "units": "MiB",
+      "sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "bytes": 6
+    },
+    {
+      "kind": "included_numeric_snapshot",
+      "name": "data/longlive6_cost/LL_native_r3.json",
+      "original_artifact": "LL_native_r3.json",
+      "original_source_sha256": "741d32db5243ffe06661253439c9d4bd3fb7add47bb1d85968e4c913bf1fce62",
+      "snapshot": "second-completed-run",
+      "sha256": "0963c4fd88b57d069d7dfe9b50d84b4c9ced03f09f2b64824c633ec71563ae85",
+      "bytes": 903
+    },
+    {
+      "kind": "included_memory_log",
+      "name": "data/longlive6_cost/LL_native_r3.mem",
+      "original_artifact": "LL_native_r3.mem",
+      "original_source_sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "snapshot": "second-completed-run",
+      "units": "MiB",
+      "sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "bytes": 6
+    },
+    {
+      "kind": "included_numeric_snapshot",
+      "name": "data/longlive6_cost/LL_w6_r0.json",
+      "original_artifact": "LL_w6_r0.json",
+      "original_source_sha256": "c0664eb18d101ca60eec6be2557f2328aebb07554f6d198ef661139878a1b083",
+      "snapshot": "second-completed-run",
+      "sha256": "703a293dec4443f53df4f87fd7aa4e71c857425c59f29477027220a2bdd605e7",
+      "bytes": 908
+    },
+    {
+      "kind": "included_memory_log",
+      "name": "data/longlive6_cost/LL_w6_r0.mem",
+      "original_artifact": "LL_w6_r0.mem",
+      "original_source_sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "snapshot": "second-completed-run",
+      "units": "MiB",
+      "sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "bytes": 6
+    },
+    {
+      "kind": "included_numeric_snapshot",
+      "name": "data/longlive6_cost/LL_w6_r1.json",
+      "original_artifact": "LL_w6_r1.json",
+      "original_source_sha256": "5ad0f690134a101be808af589f7056c7669953b276bf7d403401e54af2ea2ef0",
+      "snapshot": "second-completed-run",
+      "sha256": "2f132ff2a03d7ee1e3d8df04e7835c9e9eb9ed63d707fd6da418df7a9cea253b",
+      "bytes": 909
+    },
+    {
+      "kind": "included_memory_log",
+      "name": "data/longlive6_cost/LL_w6_r1.mem",
+      "original_artifact": "LL_w6_r1.mem",
+      "original_source_sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "snapshot": "second-completed-run",
+      "units": "MiB",
+      "sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "bytes": 6
+    },
+    {
+      "kind": "included_numeric_snapshot",
+      "name": "data/longlive6_cost/LL_w6_r2.json",
+      "original_artifact": "LL_w6_r2.json",
+      "original_source_sha256": "09560e0191330f4c5efdce28de006928b73e9548bbff35ae8e6d795ff0cbfe62",
+      "snapshot": "second-completed-run",
+      "sha256": "e9c7bf33f3c93f1d2c2f410f8c2a81be373bb9994900104834fd56b079f9d767",
+      "bytes": 908
+    },
+    {
+      "kind": "included_memory_log",
+      "name": "data/longlive6_cost/LL_w6_r2.mem",
+      "original_artifact": "LL_w6_r2.mem",
+      "original_source_sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "snapshot": "second-completed-run",
+      "units": "MiB",
+      "sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "bytes": 6
+    },
+    {
+      "kind": "included_numeric_snapshot",
+      "name": "data/longlive6_cost/LL_w6_r3.json",
+      "original_artifact": "LL_w6_r3.json",
+      "original_source_sha256": "1338aa982ba4fcfafc56c42900c13f8deded62d582f06003490029a096461ce3",
+      "snapshot": "second-completed-run",
+      "sha256": "78964c7a64e73b49793c593a9ba19d629c027bc84a32b35729e8c49193d90123",
+      "bytes": 908
+    },
+    {
+      "kind": "included_memory_log",
+      "name": "data/longlive6_cost/LL_w6_r3.mem",
+      "original_artifact": "LL_w6_r3.mem",
+      "original_source_sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "snapshot": "second-completed-run",
+      "units": "MiB",
+      "sha256": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+      "bytes": 6
+    },
+    {
+      "kind": "included_retrieval_metadata",
+      "name": "data/longlive6_cost/retrieval.json",
+      "original_artifact": "retrieval.json",
+      "original_source_sha256": "a294a464796de608e693f31f89f1755f9d6d6404bb78808df8c6f6c95adb4b09",
+      "snapshot": "second-completed-run",
+      "sha256": "a6b93aa34e0376cbc8d5c04535989cfc7edb412a33885664a03049a53e0af411",
+      "bytes": 4909
+    },
+    {
+      "kind": "included_cost_summary",
+      "name": "data/longlive6_cost/summary.json",
+      "original_artifact": "summary.json",
+      "original_source_sha256": "c59aadbe465185e0d4d49162051fb1c036b13d05963f325eeb932cab13bc552e",
+      "snapshot": "second-completed-run",
+      "sha256": "27f6997c5fab107cc54bf59610c88d62ee8e5423bd222b52b1d4cff1493e98b5",
+      "bytes": 2596
+    },
+    {
+      "kind": "included_archive_metadata",
+      "name": "data/longlive6_cost/snapshots/first-completed-run/snapshot.json",
+      "sha256": "04bd0f27af743646edde1d1c52f725cde087dcab04b773d042c3768fc7db0edd",
+      "bytes": 1847
+    }
+  ],
+  "quality": {
+    "scores": "results/vbench_full/common946/full_scores.csv",
+    "dimension_intervals": "results/vbench_full/common946/component_paired_ci.csv",
+    "aggregate_intervals": "results/vbench_full/common946/aggregate_paired_ci.csv",
+    "protocol_id": "vbench-long-wan-full946-60s-seed0-20261011",
+    "score_units": "points x100",
+    "normalization_source": "VBench scripts/constant.py at 45e79ec14e69a2187202c675d2dbce1a71843d53",
+    "quality_weight_sum": 6.5,
+    "dynamic_degree_weight": 0.5,
+    "other_quality_dimension_weights": 1.0,
+    "intervals_reestimated_for_this_release": false,
+    "decomposition_replay": "reproduce.py",
+    "current_LongLive_main": {
+      "public_arm": "LL_W",
+      "source_arm": "W946_W6S",
+      "committing_frames": 6,
+      "physical_cache_frames": 12,
+      "override_source": "results/vbench_full/common946/longlive6_source_results.json",
+      "source_results_sha256": "f12804d586c3e8cdbef89fb70d72235daf4f7e77420c09e996b675c601a6548d",
+      "original_report_LongLive_frames": 12,
+      "original_derived_csv_archive": "data/ablation12",
+      "intervals_reestimated_for_this_release": false
+    }
+  },
+  "cost": {
+    "measurement_date": "2026-10-13",
+    "gpu": "NVIDIA H20 96 GB",
+    "video_seconds": 60,
+    "latent_frames": 240,
+    "suite_prompt_index": 1,
+    "warmup_video_count": 1,
+    "measured_video_count_per_arm": 1,
+    "pair_execution": "concurrent on neighbouring dedicated GPUs of one node",
+    "wall_seconds": "generator timing of the second video",
+    "device_memory": "max recorded nvidia-smi memory.used, MiB / 1024; LongLive main reports the arithmetic mean of four per-run logged peaks",
+    "torch_peak_alloc": "engine measurement; only reported for five engine configurations",
+    "forwards": "engine audit; clean committing and denoising DiT calls per measured video",
+    "ratio_precision": "reported ratio used unrounded original wall timers; retain it independently of displayed one-decimal wall times",
+    "original_summary_script_artifact": "p2_cost_summary.py",
+    "original_summary_script_sha256": "bc25484135c31040825b9172e1807163515fdcbaa989b28dc0ad023fc1ff02dc",
+    "summary_csv_replay": "reproduce.py",
+    "availability": {
+      "rounded_source_report_included": true,
+      "per_arm_raw_timer_json_included": false,
+      "nvidia_smi_memory_logs_included": false,
+      "forward_audit_logs_included": false,
+      "can_replay_reported_table": true,
+      "can_recompute_device_peaks_from_logs": false,
+      "same_prompt_four_repeat_wall_and_torch_allocation_summary_available": true,
+      "cross_prompt_speedup_estimate_available": false,
+      "path_neutral_numeric_timer_snapshots_included": true,
+      "numeric_timer_snapshot_scope": "LongLive committing-6 and its native comparator: second completed run includes eight timers, eight memory logs and stable retrieval metadata; the first timer-only observation set remains archived",
+      "LongLive_forward_and_cache_counter_snapshots_included": true,
+      "can_recompute_LongLive_device_peaks_from_logs": true,
+      "path_neutral_LongLive_memory_logs_included": true,
+      "same_prompt_four_repeat_wall_allocation_device_summary_available": true,
+      "single_video_other_seven_raw_logs_included": false,
+      "same_prompt_observed_wall_reduction_available": true,
+      "wall_reduction_scope": "four technical repeats of one LongLive prompt; observed wall-time difference, no cross-prompt estimate"
+    },
+    "current_LongLive_main": {
+      "committing_frames": 6,
+      "physical_cache_frames": 12,
+      "measurement_date": "2026-10-14",
+      "repeats_per_arm": 4,
+      "measured_prompt_index": 1,
+      "warmup_prompt_index": 0,
+      "pair_execution": "eight jobs concurrently on eight dedicated H20 GPUs of one node, alternating base and committing-6",
+      "source_snapshots": "data/longlive6_cost",
+      "accepted_values": "measured-video wall_s, peak_alloc_gib, peak_reserved_gib and forward/cache counters from videos[1]; per-run max nvidia-smi memory.used from included .mem logs",
+      "wall_summary": "arithmetic mean across four repeats of the same prompt; ratio of those two means",
+      "device_peak_status": "Accepted from stable same-run memory logs retrieved with timers after completion; source-summary memory values are not used",
+      "original_summary_device_peak_accepted": false,
+      "original_cost_report_scope": "historical committing-12 control remains in data/COST_report.md and data/ablation12/cost_measurements.csv",
+      "frozen_observation_set": {
+        "id": "longlive-committing6-four-repeat-second-completed-run-20261014",
+        "original_file_sha256": {
+          "LL_native_r0.json": "f933512b586db5e9ceec310102b5b79f6af8b9f9d9f611a79ea6e169822ed0bd",
+          "LL_native_r0.mem": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+          "LL_native_r1.json": "44372a9214b70508566a0dacef65dfd9a12d09cd6c534f3a835d18c808ee487a",
+          "LL_native_r1.mem": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+          "LL_native_r2.json": "981e7ee6c39efe054994fd91c0b46d39dedf113afec45531afa6f512f9684852",
+          "LL_native_r2.mem": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+          "LL_native_r3.json": "741d32db5243ffe06661253439c9d4bd3fb7add47bb1d85968e4c913bf1fce62",
+          "LL_native_r3.mem": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+          "LL_w6_r0.json": "c0664eb18d101ca60eec6be2557f2328aebb07554f6d198ef661139878a1b083",
+          "LL_w6_r0.mem": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+          "LL_w6_r1.json": "5ad0f690134a101be808af589f7056c7669953b276bf7d403401e54af2ea2ef0",
+          "LL_w6_r1.mem": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+          "LL_w6_r2.json": "09560e0191330f4c5efdce28de006928b73e9548bbff35ae8e6d795ff0cbfe62",
+          "LL_w6_r2.mem": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad",
+          "LL_w6_r3.json": "1338aa982ba4fcfafc56c42900c13f8deded62d582f06003490029a096461ce3",
+          "LL_w6_r3.mem": "e408731ee89629dcc0ef2e835f18e20d10136528dd570f0c9c349b04c337f8ad"
+        },
+        "original_file_hash_map_sha256": "a6548bb5e72f61427f1ecbe0e6f5feb01326c11d45a060f939dc462151fe917a",
+        "retrieval_metadata": "data/longlive6_cost/retrieval.json",
+        "paper_frozen_original_hashes_match": true,
+        "repetition_type": "technical repeats of the same measured prompt, not independent prompts",
+        "archived_previous_observation_set": "data/longlive6_cost/snapshots/first-completed-run",
+        "interpretation": "Immutable second-completed-run observation set matching the paper cost files, not the latest files at a mutable source location"
+      },
+      "observed_summary": {
+        "mean_wall_base_s": 231.13770633935928,
+        "mean_wall_cf_s": 223.76765555143356,
+        "wall_ratio": 0.9681140264621951,
+        "mean_device_peak_base_gib": 35.8857421875,
+        "mean_device_peak_cf_gib": 35.8857421875,
+        "mean_torch_peak_allocated_base_gib": 30.669543266296387,
+        "mean_torch_peak_allocated_cf_gib": 30.669543266296387
+      }
+    },
+    "original_single_video_summary_scope": "other seven configurations and the archived LongLive 12-frame control"
+  }
+}

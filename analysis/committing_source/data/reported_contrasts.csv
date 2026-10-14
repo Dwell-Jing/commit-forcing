@@ -1,0 +1,7 @@
+contrast,metric,estimate,ci_low,ci_high,reported_significance,source
+RS_real - RS_off,appearance_consistency,0.010572642832994462,1.7281547188758977e-05,0.023399339150637386,interval excludes zero,DINOv2 feature-backed numerical summary
+RS_real - RS_off,log_late_early_motion,+0.168,+0.132,+0.208,reported interval excludes zero,recovered readout_rs.out
+RS_real - RS_off,brightness_late_early_ratio,+0.0265,+0.0142,+0.0413,reported interval excludes zero,supplied original experiment handoff (experiment 2 results)
+RS_real - RS_off,saturation_late_early_ratio,-0.013,-0.031,+0.002,reported interval spans zero,supplied original experiment handoff (experiment 2 results)
+RS_real - RS_off,own_similarity,0.02356104552745819,0.008528225012123586,0.04091749962419272,interval excludes zero,DINOv2 feature-backed numerical summary
+RS_real - RS_off,sibling_similarity,0.01298840269446373,-0.0003429286181926727,0.031348539926111696,interval spans zero,DINOv2 feature-backed numerical summary

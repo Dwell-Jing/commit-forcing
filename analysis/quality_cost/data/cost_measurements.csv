@@ -1,0 +1,9 @@
+model,label,wall_base_s,wall_cf_s,reported_wall_ratio,device_peak_base_gib,device_peak_cf_gib,torch_peak_alloc_base_gib,torch_peak_alloc_cf_gib,clean_calls_base,clean_calls_cf,denoise_calls_base,denoise_calls_cf
+SGF,SGF,218.7,216.2,0.988,34.2,34.2,,,,,,
+RF,RF-TF,288.3,287.1,0.996,37.3,37.3,,,,,,
+CF,Context Forcing,158.2,146.6,0.926,26.2,26.2,,,,,,
+LL,LongLive,231.1,223.8,0.968,35.9,35.9,30.7,30.7,80,80,320,320
+SGFP,SGF+,221.3,217.7,0.984,37.1,36.8,32.8,32.8,80,80,320,320
+RS,Rolling Sink,271.6,271.7,1.000,41.9,48.1,38.1,43.7,80,80,320,320
+IDFSF,IDF-SF,227.0,216.6,0.954,29.1,29.9,24.9,25.8,155,80,320,320
+IDFLL,IDF-LL,222.7,230.6,1.035,31.8,31.8,25.2,25.2,80,80,320,320

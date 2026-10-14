@@ -1,0 +1,640 @@
+{
+  "protocol": {
+    "prompt_list": "eval/prompts/idf_moviegen128.txt",
+    "num_prompts": 128,
+    "duration_seconds": 120,
+    "generation_seed": 0,
+    "longlive_baseline": "12-frame reads with a 15-frame physical cache",
+    "longlive_commit6": "3 recent + 3 current reads with a 15-frame physical cache",
+    "longlive_commit12": "12 recent/current reads with a 15-frame physical cache",
+    "bootstrap": "4000 paired prompt draws, NumPy default_rng(0), original full contrast and metric order"
+  },
+  "collection": {
+    "kind": "Per-video scoring outputs collected with the original loader; no videos or metrics regenerated",
+    "loader": {
+      "source": "v2_formal_agg.py",
+      "sha256": "d3ea38a556222d76cc429565fb965086f263b050b3100d405e27170f0075014d"
+    },
+    "source_files": [
+      {
+        "path": "LLS_cw6__k0_bg/results_2026-10-14-06:35:57_eval_results.json",
+        "sha256": "942f1e350f601d2fba8b2830fc4356aa9b8b1861e936b073c682f11265d7796e",
+        "bytes": 365280,
+        "source_label": "LLS_cw6",
+        "public_label": "longlive+commit6"
+      },
+      {
+        "path": "LLS_cw6__k0_q6/results_2026-10-14-05:18:54_eval_results.json",
+        "sha256": "c5eb6ce6c007850a80e1d1d22f17fcf28f9d18e6c91c45dd5a12d7831b4926fc",
+        "bytes": 2313202,
+        "source_label": "LLS_cw6",
+        "public_label": "longlive+commit6"
+      },
+      {
+        "path": "LLS_cw6__k1_bg/results_2026-10-14-06:36:01_eval_results.json",
+        "sha256": "6f6257c02baaca9787be6653e4da5bca4eff1d7dd7fbb514889f78e9b96f76f4",
+        "bytes": 365186,
+        "source_label": "LLS_cw6",
+        "public_label": "longlive+commit6"
+      },
+      {
+        "path": "LLS_cw6__k1_q6/results_2026-10-14-05:19:11_eval_results.json",
+        "sha256": "9018ec0d1129e349fbde285b9c9cdd1fa561f8f26622616f288fcfa1e9b825b2",
+        "bytes": 2313579,
+        "source_label": "LLS_cw6",
+        "public_label": "longlive+commit6"
+      },
+      {
+        "path": "LLS_cw6__k2_bg/results_2026-10-14-06:36:54_eval_results.json",
+        "sha256": "1bb61a8d7f3cb8d0155d2d182c6e93b4390916b8b34b11685299dbb82b1c43c6",
+        "bytes": 365307,
+        "source_label": "LLS_cw6",
+        "public_label": "longlive+commit6"
+      },
+      {
+        "path": "LLS_cw6__k2_q6/results_2026-10-14-05:19:27_eval_results.json",
+        "sha256": "6dc02f759034020ecb96ddb1b594454f52a73588ddf7ddc0c01f0893619ed69b",
+        "bytes": 2313667,
+        "source_label": "LLS_cw6",
+        "public_label": "longlive+commit6"
+      },
+      {
+        "path": "LLS_cw6__k3_bg/results_2026-10-14-06:37:25_eval_results.json",
+        "sha256": "02bbf5eebdd3b76af5d2fdfe9e8f80aec0a9e1a373221c2df97cbf08772e93ae",
+        "bytes": 365144,
+        "source_label": "LLS_cw6",
+        "public_label": "longlive+commit6"
+      },
+      {
+        "path": "LLS_cw6__k3_q6/results_2026-10-14-05:19:39_eval_results.json",
+        "sha256": "94d8d0d0930cbf539c94fd924fba2a8a2eff1f00621ea184ad242a75c5c9d831",
+        "bytes": 2313537,
+        "source_label": "LLS_cw6",
+        "public_label": "longlive+commit6"
+      },
+      {
+        "path": "LLS_cw6__k4_bg/results_2026-10-14-06:43:03_eval_results.json",
+        "sha256": "cc80ed0dc7e80d2a78e7eb1ac5bffb87ab4162eeeb57b12704c7557618babb1a",
+        "bytes": 365311,
+        "source_label": "LLS_cw6",
+        "public_label": "longlive+commit6"
+      },
+      {
+        "path": "LLS_cw6__k4_q6/results_2026-10-14-05:19:54_eval_results.json",
+        "sha256": "32994ad3281c06cfd788124529a6b846380425f9821fbbf4b375250235526098",
+        "bytes": 2313544,
+        "source_label": "LLS_cw6",
+        "public_label": "longlive+commit6"
+      },
+      {
+        "path": "LLS_cw6__k5_bg/results_2026-10-14-06:43:03_eval_results.json",
+        "sha256": "68af015e7af11971485e0173d1ecef3e75ef11fd918825f3ecd22b244011c089",
+        "bytes": 365309,
+        "source_label": "LLS_cw6",
+        "public_label": "longlive+commit6"
+      },
+      {
+        "path": "LLS_cw6__k5_q6/results_2026-10-14-05:20:11_eval_results.json",
+        "sha256": "da554aff49ef9594246d008eb7dd390e8374f5a2be2e6d0014d3619f962a4496",
+        "bytes": 2313526,
+        "source_label": "LLS_cw6",
+        "public_label": "longlive+commit6"
+      },
+      {
+        "path": "LLS_cw6__k6_bg/results_2026-10-14-06:43:37_eval_results.json",
+        "sha256": "3fe536f4375a159454b14a24ff48e78669b2d2416452390ed130db9550eed129",
+        "bytes": 365109,
+        "source_label": "LLS_cw6",
+        "public_label": "longlive+commit6"
+      },
+      {
+        "path": "LLS_cw6__k6_q6/results_2026-10-14-06:35:37_eval_results.json",
+        "sha256": "9b3671b1e6d193014bf277c9823834e91b2777c52c4e4648675ce722bda64067",
+        "bytes": 2313604,
+        "source_label": "LLS_cw6",
+        "public_label": "longlive+commit6"
+      },
+      {
+        "path": "LLS_cw6__k7_bg/results_2026-10-14-06:44:07_eval_results.json",
+        "sha256": "f09a1beb7902c50ff6b2fb72ea74f9c2f2507862d8efb9ac8129dc702fae6cbc",
+        "bytes": 365072,
+        "source_label": "LLS_cw6",
+        "public_label": "longlive+commit6"
+      },
+      {
+        "path": "LLS_cw6__k7_q6/results_2026-10-14-06:35:50_eval_results.json",
+        "sha256": "f82b6bba4bedc67df14a1aeceaa4805f34e3a13a5c52cd0b5472e30c33d034eb",
+        "bytes": 2313658,
+        "source_label": "LLS_cw6",
+        "public_label": "longlive+commit6"
+      },
+      {
+        "path": "IDF_LL__k0_bg/results_2026-10-07-03:07:09_eval_results.json",
+        "sha256": "563b041cae71bf6d28db9a2fc529733211c4d70b84d64b54bd506e0881571642",
+        "bytes": 364513,
+        "source_label": "IDF_LL",
+        "public_label": "idf_longlive"
+      },
+      {
+        "path": "IDF_LL__k0_q6/results_2026-10-07-03:06:55_eval_results.json",
+        "sha256": "ec358e36087ad54082fb9532e0d219552cc66ef3b90639c5a6fdc46955cf128b",
+        "bytes": 2302561,
+        "source_label": "IDF_LL",
+        "public_label": "idf_longlive"
+      },
+      {
+        "path": "IDF_LL__k1_bg/results_2026-10-07-03:07:06_eval_results.json",
+        "sha256": "6f4e57c898a86d440d5ff52ff2f46a3caebb84212f208878740fae9a2d55bdb7",
+        "bytes": 364243,
+        "source_label": "IDF_LL",
+        "public_label": "idf_longlive"
+      },
+      {
+        "path": "IDF_LL__k1_q6/results_2026-10-07-03:07:04_eval_results.json",
+        "sha256": "5a972e8ee077fd78b2ac66520507fa153874c0deba4c0a0f5e6539f74f01aef3",
+        "bytes": 2302989,
+        "source_label": "IDF_LL",
+        "public_label": "idf_longlive"
+      },
+      {
+        "path": "IDF_LL__k2_bg/results_2026-10-07-03:07:09_eval_results.json",
+        "sha256": "fa7639e1f09179858ae818d7fd0ca22c96af9c8e779d3afcc2cf0b2f311bb657",
+        "bytes": 364162,
+        "source_label": "IDF_LL",
+        "public_label": "idf_longlive"
+      },
+      {
+        "path": "IDF_LL__k2_q6/results_2026-10-07-03:07:05_eval_results.json",
+        "sha256": "c01735f939384125ab60af485006b0e0cab6a37a14a646266cc9e229db6a0780",
+        "bytes": 2302733,
+        "source_label": "IDF_LL",
+        "public_label": "idf_longlive"
+      },
+      {
+        "path": "IDF_LL__k3_bg/results_2026-10-07-03:07:11_eval_results.json",
+        "sha256": "673202887260226c2d624e62385fa8c31daf058b62f3ed8196e122cd14689c9a",
+        "bytes": 364050,
+        "source_label": "IDF_LL",
+        "public_label": "idf_longlive"
+      },
+      {
+        "path": "IDF_LL__k3_q6/results_2026-10-07-03:07:09_eval_results.json",
+        "sha256": "45d4b891299a2fbd2032bc96a9a54c633184135626426206732fc9e02aa191d0",
+        "bytes": 2302494,
+        "source_label": "IDF_LL",
+        "public_label": "idf_longlive"
+      },
+      {
+        "path": "IDF_LL__k4_bg/results_2026-10-07-03:07:15_eval_results.json",
+        "sha256": "6f395c9ae061ddb61cee4c4bddc223fbb995cefd29f8f147fe043ec51ab12218",
+        "bytes": 364277,
+        "source_label": "IDF_LL",
+        "public_label": "idf_longlive"
+      },
+      {
+        "path": "IDF_LL__k4_q6/results_2026-10-07-03:07:09_eval_results.json",
+        "sha256": "1e97d9c64bda58b259a8a03027ab644bb271005af9d6735270cea5ba45fe1e23",
+        "bytes": 2302872,
+        "source_label": "IDF_LL",
+        "public_label": "idf_longlive"
+      },
+      {
+        "path": "IDF_LL__k5_bg/results_2026-10-07-03:07:30_eval_results.json",
+        "sha256": "9ba8ce05b3f77501af016c349c56ffcb17a542e2ea6cef9a43409e7e6ec4e866",
+        "bytes": 364513,
+        "source_label": "IDF_LL",
+        "public_label": "idf_longlive"
+      },
+      {
+        "path": "IDF_LL__k5_q6/results_2026-10-07-03:07:09_eval_results.json",
+        "sha256": "679701a16af958b4603fb19601c66ebfe563c8e9f97d3e0c058077d7cdbacf10",
+        "bytes": 2302764,
+        "source_label": "IDF_LL",
+        "public_label": "idf_longlive"
+      },
+      {
+        "path": "IDF_LL__k6_bg/results_2026-10-07-03:07:52_eval_results.json",
+        "sha256": "40edd49d9110699dbc2e301c70b5ef16711b24f406fc8a34091443efcb8e9fa4",
+        "bytes": 364427,
+        "source_label": "IDF_LL",
+        "public_label": "idf_longlive"
+      },
+      {
+        "path": "IDF_LL__k6_q6/results_2026-10-07-03:07:09_eval_results.json",
+        "sha256": "4484ef105f5bcb35ca1cac204f11ea83b66dfce86f78702579e02a92fe65a577",
+        "bytes": 2303015,
+        "source_label": "IDF_LL",
+        "public_label": "idf_longlive"
+      },
+      {
+        "path": "IDF_LL__k7_bg/results_2026-10-07-03:09:25_eval_results.json",
+        "sha256": "4771dd6fb6620c78bc6c8a2f7cbf0307a3885512d0aeabaaf326989ecf99ac09",
+        "bytes": 364375,
+        "source_label": "IDF_LL",
+        "public_label": "idf_longlive"
+      },
+      {
+        "path": "IDF_LL__k7_q6/results_2026-10-07-03:07:09_eval_results.json",
+        "sha256": "0fb06222ade31b923b58fc5a4c24cafb4d26ba21a9cdbc0d255a2f8d7271e387",
+        "bytes": 2303176,
+        "source_label": "IDF_LL",
+        "public_label": "idf_longlive"
+      },
+      {
+        "path": "LLS_33__k0_bg/results_2026-10-07-02:37:35_eval_results.json",
+        "sha256": "33a2d53ecdfc9c6ab9360128125a860e8b66246c730f3793bf8c9ea17f8425e7",
+        "bytes": 364251,
+        "source_label": "LLS_33",
+        "public_label": "longlive"
+      },
+      {
+        "path": "LLS_33__k0_q6/results_2026-10-07-02:37:23_eval_results.json",
+        "sha256": "70ca961f7d1c3e79b535cb6960e1ccb110714ca34d33478bd9659c59d75222af",
+        "bytes": 2302716,
+        "source_label": "LLS_33",
+        "public_label": "longlive"
+      },
+      {
+        "path": "LLS_33__k1_bg/results_2026-10-07-02:37:37_eval_results.json",
+        "sha256": "f709a37616d2321a8d01b7d7fafb68b5d7cb2b2e878e8886fc64217f578efbd5",
+        "bytes": 364061,
+        "source_label": "LLS_33",
+        "public_label": "longlive"
+      },
+      {
+        "path": "LLS_33__k1_q6/results_2026-10-07-02:37:31_eval_results.json",
+        "sha256": "e84a82d2f3ddf8979a04bd95580ce8293b2e25ae1335cc8b5c4b700c548d3a99",
+        "bytes": 2302905,
+        "source_label": "LLS_33",
+        "public_label": "longlive"
+      },
+      {
+        "path": "LLS_33__k2_bg/results_2026-10-07-02:37:50_eval_results.json",
+        "sha256": "cd02ff3821b4caaf4086ae7122af3753edd5effe2698a19834fa2a639ca82d54",
+        "bytes": 364095,
+        "source_label": "LLS_33",
+        "public_label": "longlive"
+      },
+      {
+        "path": "LLS_33__k2_q6/results_2026-10-07-02:37:31_eval_results.json",
+        "sha256": "25fc74feb7d010677f1d0a7f2eec8a401dc267a0c61260223c1420b5aefb2f23",
+        "bytes": 2303127,
+        "source_label": "LLS_33",
+        "public_label": "longlive"
+      },
+      {
+        "path": "LLS_33__k3_bg/results_2026-10-07-02:38:05_eval_results.json",
+        "sha256": "2c0765ae92561b42ece400880cc1c42388672b4cc2125435e8c7f1ed8f0b50af",
+        "bytes": 364313,
+        "source_label": "LLS_33",
+        "public_label": "longlive"
+      },
+      {
+        "path": "LLS_33__k3_q6/results_2026-10-07-02:37:32_eval_results.json",
+        "sha256": "80f6c048c067b99d64b12fb9b951ca095cd12225fc0ed6d90982d922a09bd6f2",
+        "bytes": 2303067,
+        "source_label": "LLS_33",
+        "public_label": "longlive"
+      },
+      {
+        "path": "LLS_33__k4_bg/results_2026-10-07-02:38:20_eval_results.json",
+        "sha256": "e20aee8208e606ec4a414a226448ec227dcf8108a43c848df94d8d250ab72c39",
+        "bytes": 364240,
+        "source_label": "LLS_33",
+        "public_label": "longlive"
+      },
+      {
+        "path": "LLS_33__k4_q6/results_2026-10-07-02:37:33_eval_results.json",
+        "sha256": "b503a05ee41036dd9a7eb08e14ce0c33c96903868c2f7dadd2de91fb6d3b51d9",
+        "bytes": 2302964,
+        "source_label": "LLS_33",
+        "public_label": "longlive"
+      },
+      {
+        "path": "LLS_33__k5_bg/results_2026-10-07-02:38:37_eval_results.json",
+        "sha256": "2b0ae307c90369cadd171494c6cd70c5d34a52d66affb2e5cb63e3ec95176314",
+        "bytes": 364569,
+        "source_label": "LLS_33",
+        "public_label": "longlive"
+      },
+      {
+        "path": "LLS_33__k5_q6/results_2026-10-07-02:37:34_eval_results.json",
+        "sha256": "3b5fe2d2d5d0a50368aa28a611979eba6f9b93e0dbf661d6d7c2a253199cd38b",
+        "bytes": 2303167,
+        "source_label": "LLS_33",
+        "public_label": "longlive"
+      },
+      {
+        "path": "LLS_33__k6_bg/results_2026-10-07-02:38:50_eval_results.json",
+        "sha256": "3e946914456324320aea346b7f63795ddc0608d07923a0023310b78ee5d44877",
+        "bytes": 364062,
+        "source_label": "LLS_33",
+        "public_label": "longlive"
+      },
+      {
+        "path": "LLS_33__k6_q6/results_2026-10-07-02:37:35_eval_results.json",
+        "sha256": "b6531bc149b275b0d948c56e284b3e44535dc803fdf0d26455071c75c7e01efd",
+        "bytes": 2302904,
+        "source_label": "LLS_33",
+        "public_label": "longlive"
+      },
+      {
+        "path": "LLS_33__k7_bg/results_2026-10-07-02:39:05_eval_results.json",
+        "sha256": "f77cd4b93a00829a77598ebcc99e10aadca7c16203b8803dfd74686bbb860b20",
+        "bytes": 364492,
+        "source_label": "LLS_33",
+        "public_label": "longlive"
+      },
+      {
+        "path": "LLS_33__k7_q6/results_2026-10-07-02:37:36_eval_results.json",
+        "sha256": "0021ab227a5df80648f056ba10b8579b3991c64676d9fa31d10382add2f754dd",
+        "bytes": 2303098,
+        "source_label": "LLS_33",
+        "public_label": "longlive"
+      },
+      {
+        "path": "LLS_c0__k0_bg/results_2026-10-07-02:15:19_eval_results.json",
+        "sha256": "c836f0cb0658b0ac200669600fa166335ea0fb20acae7fb59be5bff0799d2215",
+        "bytes": 364455,
+        "source_label": "LLS_c0",
+        "public_label": "longlive+rule"
+      },
+      {
+        "path": "LLS_c0__k0_q6/results_2026-10-07-02:15:14_eval_results.json",
+        "sha256": "66abe66ed894db1d13fafdf35a8ce4f4ad44ea4adbb8388f8d14e67a2e2767ae",
+        "bytes": 2302757,
+        "source_label": "LLS_c0",
+        "public_label": "longlive+rule"
+      },
+      {
+        "path": "LLS_c0__k1_bg/results_2026-10-07-02:15:20_eval_results.json",
+        "sha256": "c587e11bb9de58613a2ad50febca5e84b5d5db8682fbe2bf4619298c38b93a7e",
+        "bytes": 364353,
+        "source_label": "LLS_c0",
+        "public_label": "longlive+rule"
+      },
+      {
+        "path": "LLS_c0__k1_q6/results_2026-10-07-02:15:14_eval_results.json",
+        "sha256": "1ad494694f71d15fa42e2f839a9021a1b1b70a97782af914c172458480741900",
+        "bytes": 2303068,
+        "source_label": "LLS_c0",
+        "public_label": "longlive+rule"
+      },
+      {
+        "path": "LLS_c0__k2_bg/results_2026-10-07-02:15:21_eval_results.json",
+        "sha256": "67977e1e5ad32ebe77a377aa95ca78d2104e05fcb38dfc1680cbff6d7448e4f6",
+        "bytes": 364369,
+        "source_label": "LLS_c0",
+        "public_label": "longlive+rule"
+      },
+      {
+        "path": "LLS_c0__k2_q6/results_2026-10-07-02:15:14_eval_results.json",
+        "sha256": "61c11a7f8a5e3f9324af88872df6097b3c5bd6ba13287758a231bca8d3798b76",
+        "bytes": 2303068,
+        "source_label": "LLS_c0",
+        "public_label": "longlive+rule"
+      },
+      {
+        "path": "LLS_c0__k3_bg/results_2026-10-07-02:15:23_eval_results.json",
+        "sha256": "99edd85a4afa5e444e3012bac953d48534696b54f738aeb4b6bae40fb2f96237",
+        "bytes": 364188,
+        "source_label": "LLS_c0",
+        "public_label": "longlive+rule"
+      },
+      {
+        "path": "LLS_c0__k3_q6/results_2026-10-07-02:15:14_eval_results.json",
+        "sha256": "7d99e3cd044e972c7d2e7d0a575081eae216306aebaabab8284cb834d8374f06",
+        "bytes": 2303104,
+        "source_label": "LLS_c0",
+        "public_label": "longlive+rule"
+      },
+      {
+        "path": "LLS_c0__k4_bg/results_2026-10-07-02:15:23_eval_results.json",
+        "sha256": "ed46308b493b2bd863fa63c99a3e5822018edd6e7146ea203c4b84b61d239f5d",
+        "bytes": 363938,
+        "source_label": "LLS_c0",
+        "public_label": "longlive+rule"
+      },
+      {
+        "path": "LLS_c0__k4_q6/results_2026-10-07-02:15:14_eval_results.json",
+        "sha256": "8ed6f628969f4304fe6d2478296c629959dc271ce28c602fe0c41df86cc5d4a0",
+        "bytes": 2302839,
+        "source_label": "LLS_c0",
+        "public_label": "longlive+rule"
+      },
+      {
+        "path": "LLS_c0__k5_bg/results_2026-10-07-02:15:24_eval_results.json",
+        "sha256": "fc34f06ed6df8cb4f2d90ddd635b512ec5fba2a31e1c8b74b6ea22f3853293d5",
+        "bytes": 364378,
+        "source_label": "LLS_c0",
+        "public_label": "longlive+rule"
+      },
+      {
+        "path": "LLS_c0__k5_q6/results_2026-10-07-02:15:15_eval_results.json",
+        "sha256": "bea6489b3fdc3b9fb2f8191e9f571cfd993ff7f5efab0193060320543ae1f56e",
+        "bytes": 2302890,
+        "source_label": "LLS_c0",
+        "public_label": "longlive+rule"
+      },
+      {
+        "path": "LLS_c0__k6_bg/results_2026-10-07-02:15:25_eval_results.json",
+        "sha256": "d6616ccf587cf8aef3b9d9a93f42ae0fa11b860320b9c58f7ae6b5dfda3ddbbf",
+        "bytes": 364332,
+        "source_label": "LLS_c0",
+        "public_label": "longlive+rule"
+      },
+      {
+        "path": "LLS_c0__k6_q6/results_2026-10-07-02:15:15_eval_results.json",
+        "sha256": "00ba9a373ff2c5f504c7b55445018045d6b14bc77f947aafdeaba814e80f735f",
+        "bytes": 2302913,
+        "source_label": "LLS_c0",
+        "public_label": "longlive+rule"
+      },
+      {
+        "path": "LLS_c0__k7_bg/results_2026-10-07-02:15:26_eval_results.json",
+        "sha256": "9bb9922ca710231286addb2af12d089fd9bf0e6cfbf78666b04ecab8fba454f0",
+        "bytes": 364424,
+        "source_label": "LLS_c0",
+        "public_label": "longlive+rule"
+      },
+      {
+        "path": "LLS_c0__k7_q6/results_2026-10-07-02:15:16_eval_results.json",
+        "sha256": "a544bb44b166bbfd734e8a2a2972dfd889b0a7c383b1b547ecff86121211f6e1",
+        "bytes": 2303120,
+        "source_label": "LLS_c0",
+        "public_label": "longlive+rule"
+      },
+      {
+        "path": "IDF_LL_W__k0_bg/results_2026-10-07-03:31:06_eval_results.json",
+        "sha256": "3fb0f97ab565e29e1099b0f1f51be4107663acd2d7e57e832810d37f7f16c2c6",
+        "bytes": 366326,
+        "source_label": "IDF_LL_W",
+        "public_label": "idf_longlive+rule"
+      },
+      {
+        "path": "IDF_LL_W__k0_q6/results_2026-10-07-03:30:31_eval_results.json",
+        "sha256": "907f30ec38964e89094e9c824f6b1e788303da5f16b7fe2d2db95e326087df29",
+        "bytes": 2323831,
+        "source_label": "IDF_LL_W",
+        "public_label": "idf_longlive+rule"
+      },
+      {
+        "path": "IDF_LL_W__k1_bg/results_2026-10-07-03:31:17_eval_results.json",
+        "sha256": "399ccd1e14d91cc3ac6ad68a0820183a2ba276f553b78a8e855fdb9f54f39ca3",
+        "bytes": 366329,
+        "source_label": "IDF_LL_W",
+        "public_label": "idf_longlive+rule"
+      },
+      {
+        "path": "IDF_LL_W__k1_q6/results_2026-10-07-03:30:31_eval_results.json",
+        "sha256": "38f7b7393daa6b111deb92ed3d2b812c424cbf7d70f67ed9dc97e621eea4eed8",
+        "bytes": 2324326,
+        "source_label": "IDF_LL_W",
+        "public_label": "idf_longlive+rule"
+      },
+      {
+        "path": "IDF_LL_W__k2_bg/results_2026-10-07-03:31:19_eval_results.json",
+        "sha256": "803a8e8ae06afa87b2515a8f295917247168b9d45bc66d9aee6f7dda72859672",
+        "bytes": 366467,
+        "source_label": "IDF_LL_W",
+        "public_label": "idf_longlive+rule"
+      },
+      {
+        "path": "IDF_LL_W__k2_q6/results_2026-10-07-03:30:31_eval_results.json",
+        "sha256": "3d0cd871ec7654c1745363e11f323f8812b1c06b86bff32b714fcb10a13f2a7f",
+        "bytes": 2324042,
+        "source_label": "IDF_LL_W",
+        "public_label": "idf_longlive+rule"
+      },
+      {
+        "path": "IDF_LL_W__k3_bg/results_2026-10-07-03:31:28_eval_results.json",
+        "sha256": "f49e861bc1b985230d77ae2750c410642b8ee2f31ee85a58181d2f02fa0fd833",
+        "bytes": 366363,
+        "source_label": "IDF_LL_W",
+        "public_label": "idf_longlive+rule"
+      },
+      {
+        "path": "IDF_LL_W__k3_q6/results_2026-10-07-03:30:31_eval_results.json",
+        "sha256": "75521e50a6699e448634a2b55f4abcf465e6e85df61b907594dfe8cb179c3c96",
+        "bytes": 2324355,
+        "source_label": "IDF_LL_W",
+        "public_label": "idf_longlive+rule"
+      },
+      {
+        "path": "IDF_LL_W__k4_bg/results_2026-10-07-03:31:29_eval_results.json",
+        "sha256": "98fd06f4e41f6655f32f7d3316aa50deb121e886738ea5db64a3cd648abecb35",
+        "bytes": 366093,
+        "source_label": "IDF_LL_W",
+        "public_label": "idf_longlive+rule"
+      },
+      {
+        "path": "IDF_LL_W__k4_q6/results_2026-10-07-03:30:43_eval_results.json",
+        "sha256": "3e9a49d41198e1e31466c90f753c17853e3eb8728ec210da0048cedd4a2bb157",
+        "bytes": 2324177,
+        "source_label": "IDF_LL_W",
+        "public_label": "idf_longlive+rule"
+      },
+      {
+        "path": "IDF_LL_W__k5_bg/results_2026-10-07-03:31:36_eval_results.json",
+        "sha256": "ed4e3b3837ea90202d7795f34571d331180c645b87f299f7812f5b80f15e4aab",
+        "bytes": 366186,
+        "source_label": "IDF_LL_W",
+        "public_label": "idf_longlive+rule"
+      },
+      {
+        "path": "IDF_LL_W__k5_q6/results_2026-10-07-03:30:43_eval_results.json",
+        "sha256": "38b184e82f14c44b6b3b95e788ea736a4328013ab318fb53509a0f3dd805b315",
+        "bytes": 2324231,
+        "source_label": "IDF_LL_W",
+        "public_label": "idf_longlive+rule"
+      },
+      {
+        "path": "IDF_LL_W__k6_bg/results_2026-10-07-03:31:46_eval_results.json",
+        "sha256": "e5098d566efa7be8e56eafe70f2ddcdda3728183a1d0e192a46184ca94e6804c",
+        "bytes": 366462,
+        "source_label": "IDF_LL_W",
+        "public_label": "idf_longlive+rule"
+      },
+      {
+        "path": "IDF_LL_W__k6_q6/results_2026-10-07-03:30:53_eval_results.json",
+        "sha256": "4a582570e493dd537c7360e8449a124ea6b017b50edb6602c0c0d70534330860",
+        "bytes": 2324160,
+        "source_label": "IDF_LL_W",
+        "public_label": "idf_longlive+rule"
+      },
+      {
+        "path": "IDF_LL_W__k7_bg/results_2026-10-07-03:31:46_eval_results.json",
+        "sha256": "c357b35cd341933100d54a6b6cc50a8cdbd24ed6a396bced2c1ab8b509fa4c52",
+        "bytes": 366268,
+        "source_label": "IDF_LL_W",
+        "public_label": "idf_longlive+rule"
+      },
+      {
+        "path": "IDF_LL_W__k7_q6/results_2026-10-07-03:30:59_eval_results.json",
+        "sha256": "33bb7f74e247969310459df0980c3f5a9ac14d7c3dedf2a9eb1df0f0da825499",
+        "bytes": 2324228,
+        "source_label": "IDF_LL_W",
+        "public_label": "idf_longlive+rule"
+      }
+    ],
+    "baseline_alignment_max_abs_error": 2.220446049250313e-16,
+    "baseline_csv": "results/long_horizon/vbench_long_120s_idf128.csv",
+    "baseline_csv_sha256": "88b04b9a4a454df115773ecbc5749a77b62befaa5ee17abfd475618d4d552f61"
+  },
+  "source_artifacts": [
+    {
+      "file": "TABLE.json",
+      "sha256": "8caec0300498756e31f962eed1931052bd7faf4df5fd09122167e3006ea56a31"
+    },
+    {
+      "file": "TABLE.txt",
+      "sha256": "09c4e2f7a349d1a3b1320f8d8bdc8dae4789ce6fa8da8f00f81234f9db6d85c0"
+    },
+    {
+      "file": "spec.json",
+      "sha256": "3ecfb8f220a9327234b4194b533806e0fca35f6ba49dd9c52972e583f6303224"
+    },
+    {
+      "file": "DRIFT_TABLE_w6.txt",
+      "sha256": "9a68e84a0cfbe07bb7f3fce945c7eafe09b0fd6d04d7765f2475099644c23ad6"
+    }
+  ],
+  "public_artifacts": {
+    "README.md": {
+      "sha256": "5a42585b2fa8f53ab868a261f61a7bf50b778f116366a8f6351db72968e26a5b",
+      "bytes": 4674
+    },
+    "scores.csv": {
+      "sha256": "115e3aecc5e2bb493ea57c97fd9bb7071891945f2de52da2ba9c33b7fa452199",
+      "bytes": 92402
+    },
+    "spec.json": {
+      "sha256": "fd5a4ede362db9c80feb4dc55565754c33af00203b45737959515138c635ff2e",
+      "bytes": 2929
+    },
+    "source_summary.json": {
+      "sha256": "8caec0300498756e31f962eed1931052bd7faf4df5fd09122167e3006ea56a31",
+      "bytes": 16829
+    },
+    "source_readout.txt": {
+      "sha256": "09c4e2f7a349d1a3b1320f8d8bdc8dae4789ce6fa8da8f00f81234f9db6d85c0",
+      "bytes": 4673
+    },
+    "drift_scores.txt": {
+      "sha256": "db9f5864b9ca6bf57924147cfb8124d27b5c3be3eb3d5c4cccd263277181fa25",
+      "bytes": 839
+    },
+    "replay.py": {
+      "sha256": "238163a5c415c11865eb164b9bd55fca937394c8c0c6f388df6ab7d2d51a2793",
+      "bytes": 4373
+    }
+  },
+  "replay": {
+    "contrasts": 10,
+    "metrics_per_contrast": 11,
+    "six_frame_contrasts": 3,
+    "maximum_absolute_estimate_or_endpoint_error": 2.581268532253489e-15,
+    "tolerance": 1e-10,
+    "original_bootstrap_order_preserved": true
+  }
+}
