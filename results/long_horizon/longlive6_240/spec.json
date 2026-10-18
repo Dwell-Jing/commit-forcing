@@ -1,0 +1,70 @@
+{
+  "title": "LongLive six-frame committing, 128 ID-Forcing MovieGen prompts, 240 seconds, generation seed 0",
+  "scores": "scores.csv",
+  "reported": "source_summary.json",
+  "num_prompts": 128,
+  "generation_seed": 0,
+  "bootstrap_seed": 0,
+  "bootstrap_draws": 4000,
+  "metric_order": [
+    [
+      "quality",
+      "Quality"
+    ],
+    [
+      "dynamic_degree",
+      "Dynamic"
+    ],
+    [
+      "subject_consistency",
+      "Subject"
+    ],
+    [
+      "background_consistency",
+      "Background"
+    ],
+    [
+      "subj_in",
+      "Subj_in"
+    ],
+    [
+      "subj_c2c",
+      "Subj_c2c"
+    ],
+    [
+      "bg_c2c",
+      "Bg_c2c"
+    ],
+    [
+      "imaging_quality",
+      "Imaging"
+    ],
+    [
+      "aesthetic_quality",
+      "Aesthetic"
+    ],
+    [
+      "motion_smoothness",
+      "MotionSm"
+    ],
+    [
+      "temporal_flickering",
+      "Flicker"
+    ]
+  ],
+  "earlier_complete_contrasts": [
+    "[SF weights @240s] ID-Forcing machinery + rule - ID-Forcing [commit context]",
+    "[SF weights @240s] RF + rule - ID-Forcing",
+    "[LongLive @240s] rule - native",
+    "[LongLive @240s] ID-Forcing - native",
+    "[LongLive @240s] rule - ID-Forcing",
+    "[LongLive @240s] ID-Forcing machinery + rule - ID-Forcing [commit context]"
+  ],
+  "prior_bootstrap_draw_calls": 66,
+  "labels": {
+    "LLS_33": "Base LongLive",
+    "LLS_c0": "12-frame committing control",
+    "LLS_cw6": "6-frame committing",
+    "IDF_LL": "ID-Forcing on LongLive"
+  }
+}

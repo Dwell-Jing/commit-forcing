@@ -7,7 +7,7 @@ our measure of long-range consistency. † RF-TF applies the public Recency Forc
 Self-Forcing weights, without an RF-trained checkpoint.
 
 [Full VBench](#full-vbench) · [MovieGen 60 s](#60-s-videos) · [Longer videos](#longer-videos) ·
-[Committing controls](#committing-controls) · [Quality and cost](analysis/quality_cost/README.md) ·
+[Committing controls](#committing-controls) · [Human evaluation](results/human_evaluation/README.md) · [Quality and cost](analysis/quality_cost/README.md) ·
 [per-video data and commands](results/README.md) · [← Home](README.md)
 
 ## Full VBench
@@ -25,14 +25,14 @@ Generation uses Wan-expanded prompts; scoring uses their original VBench metadat
 <tr><th>Base</th><th>+ CF</th><th>Δ</th><th>Base</th><th>+ CF</th><th>Δ</th></tr>
 </thead>
 <tbody>
-<tr><td>SGF</td><td align="right">86.06</td><td align="right">87.22</td><td align="right"><b>+1.16</b></td><td align="right">83.85</td><td align="right">84.94</td><td align="right"><b>+1.09</b></td></tr>
-<tr><td>Recency Forcing, training-free †</td><td align="right">84.77</td><td align="right">85.24</td><td align="right"><b>+0.47</b></td><td align="right">82.24</td><td align="right">83.08</td><td align="right"><b>+0.85</b></td></tr>
 <tr><td>Context Forcing</td><td align="right">84.79</td><td align="right">85.25</td><td align="right"><b>+0.46</b></td><td align="right">82.24</td><td align="right">82.68</td><td align="right"><b>+0.44</b></td></tr>
-<tr><td>SGF+</td><td align="right">86.32</td><td align="right">86.61</td><td align="right">+0.29</td><td align="right">84.30</td><td align="right">84.60</td><td align="right">+0.30</td></tr>
-<tr><td>LongLive</td><td align="right">84.70</td><td align="right">84.99</td><td align="right"><b>+0.29</b></td><td align="right">83.05</td><td align="right">83.36</td><td align="right"><b>+0.31</b></td></tr>
-<tr><td>Rolling Sink</td><td align="right">84.84</td><td align="right">85.15</td><td align="right"><b>+0.32</b></td><td align="right">82.90</td><td align="right">83.18</td><td align="right"><b>+0.28</b></td></tr>
-<tr><td>ID-Forcing on Self-Forcing</td><td align="right">85.26</td><td align="right">85.21</td><td align="right">−0.05</td><td align="right">82.96</td><td align="right">83.15</td><td align="right">+0.19</td></tr>
 <tr><td>ID-Forcing on LongLive</td><td align="right">84.91</td><td align="right">84.64</td><td align="right">−0.27</td><td align="right">82.92</td><td align="right">82.91</td><td align="right">−0.01</td></tr>
+<tr><td>Recency Forcing, training-free †</td><td align="right">84.77</td><td align="right">85.24</td><td align="right"><b>+0.47</b></td><td align="right">82.24</td><td align="right">83.08</td><td align="right"><b>+0.85</b></td></tr>
+<tr><td>ID-Forcing on Self-Forcing</td><td align="right">85.26</td><td align="right">85.21</td><td align="right">−0.05</td><td align="right">82.96</td><td align="right">83.15</td><td align="right">+0.19</td></tr>
+<tr><td>Rolling Sink</td><td align="right">84.84</td><td align="right">85.15</td><td align="right"><b>+0.32</b></td><td align="right">82.90</td><td align="right">83.18</td><td align="right"><b>+0.28</b></td></tr>
+<tr><td>LongLive</td><td align="right">84.70</td><td align="right">84.99</td><td align="right"><b>+0.29</b></td><td align="right">83.05</td><td align="right">83.36</td><td align="right"><b>+0.31</b></td></tr>
+<tr><td>SGF+</td><td align="right">86.32</td><td align="right">86.61</td><td align="right">+0.29</td><td align="right">84.30</td><td align="right">84.60</td><td align="right">+0.30</td></tr>
+<tr><td>SGF</td><td align="right">86.06</td><td align="right">87.22</td><td align="right"><b>+1.16</b></td><td align="right">83.85</td><td align="right">84.94</td><td align="right"><b>+1.09</b></td></tr>
 </tbody>
 </table>
 
@@ -40,7 +40,7 @@ Intervals use 4,000 paired bootstrap draws of 944 distinct original-prompt clust
 Aggregation retains each arm's official output-record weights, including its own Flickering filter and omitted Color records.
 This updates the earlier three-model summary with consistent denominators; earlier CSVs and specs remain under
 [`results/vbench_full`](results/vbench_full/README.md).
-Quality and Total improve significantly in 5 of the 8 configurations.
+Rows follow Total with Commit Forcing, in ascending order. Quality and Total improve significantly in 5 of the 8 configurations.
 Unrounded scores, all component intervals, coverage, configuration records and the CPU reproduction command:
 [`common946`](results/vbench_full/common946/README.md).
 
@@ -302,6 +302,25 @@ RNG is unfixed in every group, so pairing is by prompt rather than identical com
 
 [Full contrasts, scores, preregistration and CPU replay](analysis/sgf_committing_controls/README.md).
 
+### Self-only and cross-model window controls
+
+On standard VBench, self-only minus six-frame LongLive changes Quality by +0.18 [−0.07, +0.45] and Total by
++0.07 [−0.14, +0.31]. It increases Dynamic Degree by 5.32* points while reducing Subject, Background, smoothness,
+flickering and aesthetics. Both conditions retain a 12-frame physical cache.
+
+| Duration | 6 frames − self-only | Δ Quality | Δ Subject c2c | Δ Dynamic |
+|---|---|---|---|---|
+| 120 s | 128 MovieGen prompts | −0.17* [−0.31, −0.03] | +1.30* [+0.89, +1.75] | −6.32* [−8.40, −4.32] |
+| 240 s | 128 MovieGen prompts | −0.21* [−0.34, −0.08] | +1.31* [+0.99, +1.67] | −6.07* [−8.09, −4.21] |
+
+These longer-video LongLive comparisons retain a 15-frame physical cache. Six-frame committing improves
+continuity over self-only while reducing motion amount and Quality.
+
+A window sweep on rollf200 prompts 0–99 covers SGF, SGF+, RF-TF, Rolling Sink and Context Forcing. All nine
+Quality intervals include zero. Six frames versus 21 improves long-range Subject by 2.27* points on RF-TF and
+1.85* on Rolling Sink, with Dynamic point changes −2.70* and −2.57.
+[Complete scores and intervals](analysis/commit_window/data/window_controls/README.md).
+
 ### Diagnostic similarity components
 
 The DINOv2 consistency diagnostic subtracts similarity to other seeds' openings from similarity to the video's own
@@ -383,18 +402,27 @@ Sources: [seed 0](results/tables/vbl60_seed0.txt), [LongLive 6-frame seed 0](res
 
 ## SGF + RF compatibility
 
-Supplementary fixed-weight comparisons at 60 s, seed 0. Each marginal committing comparison retains its denoising
-policy. RF versus base SGF also changes the cache budget from 12 to 21 latent frames.
+Supplementary fixed-weight comparisons at 60 s, 200 rollf200 prompts and generation seed 0. Each within-group
+committing contrast retains denoising and physical storage. RF denoising on SGF uses 21 physical frames, unlike
+the 24-frame SF-based RF-TF in the main table. Clean committing disables TRB in both RF implementations.
 
-| Contrast | Δ Quality | Δ Consistency |
+| Within-group committing contrast | Physical frames | Δ Quality | Δ Consistency |
+|:---|---:|:---|:---|
+| SGF + Commit Forcing − SGF | 12 | +1.04*&nbsp;[+0.67,&nbsp;+1.40] | +4.40* |
+| SGF with RF denoising + Commit Forcing − SGF with RF denoising | 21 | +0.30*&nbsp;[+0.0005,&nbsp;+0.61] | +3.35*&nbsp;[+2.55,&nbsp;+4.19] |
+
+| Cross-group contrast, including denoising and budget changes | Δ Quality | Δ Consistency |
 |:---|:---|:---|
-| Add Commit Forcing to RF denoising | +0.30*&nbsp;[+0.0005,&nbsp;+0.61] | +3.35* |
-| Add RF denoising to Commit Forcing | +0.10&nbsp;[−0.19,&nbsp;+0.39] | +0.12 |
-| RF reading versus base SGF, including cache changes | +0.84*&nbsp;[+0.56,&nbsp;+1.14] | +1.17* |
-| SGF + Commit Forcing versus SGF + RF reading | +0.20&nbsp;[−0.13,&nbsp;+0.55] | +3.23* |
+| Add RF denoising to Commit Forcing, 12 → 21 frames | +0.10&nbsp;[−0.19,&nbsp;+0.39] | +0.12 |
+| RF reading versus base SGF, 12 → 21 frames | +0.84*&nbsp;[+0.56,&nbsp;+1.14] | +1.17* |
+| SGF + Commit Forcing versus SGF + RF reading, 12 versus 21 frames | +0.20&nbsp;[−0.13,&nbsp;+0.55] | +3.23* |
 
 [Exact table](results/tables/vbl60_sgf_rf.txt) · [spec](results/specs/vbl60_sgf_rf.json).
 The independent SF distant-denoising results are preserved [separately](analysis/read_locus/formal_60s.md).
+
+The 120/240-second RF + Commit Forcing runs use the main 24-frame SF implementation. Those long-horizon
+experiments have no matched RF-only arm; their whole-configuration scores do not isolate the committing gain.
+[RF configurations](integrations/recency_forcing/README.md#rf-implementations).
 
 **Published reference scores from [Recency Forcing Tab. 3](https://arxiv.org/abs/2609.19729).**
 The published scores use the authors' evaluation; the local scores use rollf200. The exact author prompt list
@@ -1116,6 +1144,7 @@ Source: [`results/tables/vbl60_seed1_b.txt`](results/tables/vbl60_seed1_b.txt) �
 |:---|---:|---:|---:|:---|:---|
 | LongLive, 6 frames | 120 s | 81.72 | 82.05 | +0.33*&nbsp;[+0.16,&nbsp;+0.50] | +1.87*&nbsp;[+1.39,&nbsp;+2.36] |
 | LongLive, 12-frame control | 120 s | 81.72 | 81.93 | +0.21*&nbsp;[+0.05,&nbsp;+0.37] | +1.09*&nbsp;[+0.62,&nbsp;+1.57] |
+| LongLive, 6 frames | 240 s | 81.56 | 81.84 | +0.28*&nbsp;[+0.08,&nbsp;+0.49] | +2.55*&nbsp;[+1.98,&nbsp;+3.15] |
 | LongLive, 12-frame control | 240 s | 81.56 | 81.84 | +0.28*&nbsp;[+0.10,&nbsp;+0.46] | +1.96*&nbsp;[+1.49,&nbsp;+2.44] |
 | ID-Forcing on Self-Forcing | 120 s | 81.62 | 81.68 | +0.06&nbsp;[−0.15,&nbsp;+0.26] | +3.05*&nbsp;[+2.33,&nbsp;+3.78] |
 | ID-Forcing on Self-Forcing | 240 s | 81.32 | 81.65 | +0.34*&nbsp;[+0.05,&nbsp;+0.70] | +3.58*&nbsp;[+2.86,&nbsp;+4.30] |
@@ -1123,10 +1152,10 @@ Source: [`results/tables/vbl60_seed1_b.txt`](results/tables/vbl60_seed1_b.txt) �
 <details>
 <summary>All metrics, longer videos</summary>
 
-LongLive tables in this historical foldout use the 12-frame control. The new
-[6-frame 120-second results](results/long_horizon/longlive6_120/README.md) provide all components and paired contrasts.
-Both LongLive arms in these custom-prompt runs store 15 physical cache frames.
-The 6-frame 240-second evaluation is pending; no 6-frame score is inferred from the 12-frame control.
+LongLive tables in this historical foldout retain the 12-frame control. Complete six-frame results at
+[120 seconds](results/long_horizon/longlive6_120/README.md) and
+[240 seconds](results/long_horizon/longlive6_240/README.md) provide all components and paired contrasts.
+Base and both recent-context LongLive arms in these custom-prompt runs store 15 physical cache frames.
 
 <details>
 <summary>240 s, MovieGen 32: SGF</summary>

@@ -1,4 +1,4 @@
-# LongLive sink access across denoising and committing
+# Sink access across denoising and committing
 
 We vary access to LongLive's 3-frame sink separately in the 4 denoising passes and the clean committing pass, on
 paired 48-second videos. Excluded sink reads are replaced with recent trajectory frames to retain a 12-frame read
@@ -28,6 +28,39 @@ difference is not significant. Saved opening/tail embeddings and a CPU script re
 LongLive's training uses sink access during committing and rollouts of up to 60 seconds. These 48-second results
 therefore show that matching the training-time access configuration alone does not explain the sink's committing
 effect in the tested configuration.
+
+
+## SGF stage intervention
+
+The same stage crossing on chunkwise SGF gives the same direction of Drift effects. Each condition uses 20 prompts,
+seeds 0 and 1, and 48-second videos. `S` reads 3 sink + 3 prior recent + 3 current frames; `R` reads 6 prior recent +
+3 current frames. Every stage therefore reads 9 frames, while all conditions retain a 12-frame physical cache,
+including the sink. These are latent-frame counts; warm-up can read fewer available frames.
+
+| Denoising | Committing | Consistency ↑ | Drift ↓ |
+|---|---|---:|---:|
+| S | S | 0.1399 | 0.034 |
+| S | R | 0.1592 | 0.010 |
+| R | S | 0.0026 | 0.253 |
+| R | R | 0.0072 | 0.160 |
+
+Removing sink access during committing changes Consistency by +0.0194 and Drift by −0.0241. Removing it during
+denoising changes Consistency by −0.1373 and Drift by +0.2190. The complete original paired intervals and motion,
+brightness, saturation and detail readouts are in [sgf_stage_readout.txt](data/sgf_stage_readout.txt); the
+[additional contrasts](data/sgf_stage_contrasts.txt) compare the two stages. The [calibration readout](data/diagnostic_calibration_readout.md) also reports how these appearance diagnostics
+respond to edited tails and alternate embeddings. The small Consistency gain from
+committing changes to +0.0132 with an interval spanning zero after descriptive adjustment for measured drift and
+motion. Consistency uses full-frame DINOv2 features rather than an identity classifier.
+
+The intervention preserves the positions of selected KV entries, with top-aligned positions within the 21-frame
+training range. Per-video RNG resets pair initial noise and intermediate re-noising across all four conditions.
+The 9-frame `S/S` reference is not the native 12-frame-read SGF benchmark. This stage study is also distinct from the
+[formal SGF committing-context comparison](../sgf_committing_controls/README.md), whose original four-arm runs
+were paired by prompt and generation seed without locking the intermediate step RNG across arms.
+
+`data/sgf_stage.json` transcribes the reported arm means and paired differences; its arm means retain the original
+rounding. The complete original metric inputs were not recovered, so these files preserve the reported statistics
+rather than claiming a new bootstrap replay. The existing LongLive CSV and `tables.py` below remain replayable.
 
 ## Arm levels and additional diagnostics
 
@@ -86,3 +119,7 @@ including the base-policy arm. The default integration `--rule on` now reads six
 
 The other core comparisons examine [committing sources on Rolling Sink](../committing_source/README.md) and
 [recent-context versus self-only committing](../commit_window/README.md).
+
+Related probes separate [historical source and assigned position](../committing_source/README.md),
+[fixed-content KV propagation](../committing_propagation/README.md), and
+[historical recency at fixed positions](../committing_content_age/README.md).

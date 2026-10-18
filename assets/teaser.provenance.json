@@ -1,0 +1,94 @@
+{
+  "status": "Canonical generic source/window concept with unchanged SGF qualitative example",
+  "source": "assets/source/make_teaser.py",
+  "canvas": [
+    2145,
+    825
+  ],
+  "physical_size_mm": [
+    178,
+    68.46153846153847
+  ],
+  "typography": {
+    "minimum_svg_units": 39,
+    "minimum_pt_at_162_96mm": 8.398797423049393
+  },
+  "generic_scheme": {
+    "sources": [
+      "Sink",
+      "Nonrecent memory / replay",
+      "Recent trajectory"
+    ],
+    "availability": "Schematic source categories. Not every generator contains every source. This is not a new retrieval module.",
+    "denoising": "Base denoising policy unchanged. Historical-source arrows show availability under that policy, not mandatory access to all classes at every denoising step.",
+    "selection": "Direct committing context is current clean block plus genuine recent original-trajectory KV. Sink and other nonrecent sources are excluded from direct committing access.",
+    "window": "w includes current c latent frames. Blue bracket selects w-c historical frames. Six glyphs and the selected suffix are schematic, not universal budgets or physical cache capacity.",
+    "construction": "Current K/V is computed by the committing forward. New KV is not a copy of the selected history.",
+    "indirect_history": "Current latent and recent KV can retain older historical influence.",
+    "illustrations": "Editable source-role illustrations are not measured KV tensors or experimental frames."
+  },
+  "layout": {
+    "qualitative_frames": [
+      [
+        1575,
+        157,
+        500,
+        288.46153846153845
+      ],
+      [
+        1575,
+        512,
+        500,
+        288.46153846153845
+      ]
+    ],
+    "qualitative_borders": [
+      [
+        1570,
+        152,
+        510,
+        298.46153846153845
+      ],
+      [
+        1570,
+        507,
+        510,
+        298.46153846153845
+      ]
+    ],
+    "preserved_case_geometry": true
+  },
+  "illustrations": [
+    {
+      "asset": "scene_tokyo_sink.svg",
+      "sha256": "2f911853a21215938e2bbb2ce0ab2a7ad65fbda5bf4875598adb069b18bfd304",
+      "role": "Original editable source-role illustration"
+    },
+    {
+      "asset": "scene_tokyo_recent.svg",
+      "sha256": "6f656c51ab3e10ffc3b14bf956ce84215524ea69b0cde27878c529d53ae1afbf",
+      "role": "Original editable source-role illustration"
+    }
+  ],
+  "qualitative_outputs": [
+    {
+      "asset": "sgf_p000_s0_native_238s.png",
+      "arm": "SGF_N",
+      "time_seconds": 238,
+      "sha256": "db8c1f57dea9834b7dc09b122b953b905c97ab10d6913c711c3cc9f14cf9f262"
+    },
+    {
+      "asset": "sgf_p000_s0_commit_238s.png",
+      "arm": "SGF_W",
+      "time_seconds": 238,
+      "sha256": "9e39361944106808815f4d433155eab33c8ad5d833d79ac56997724ff96bf7db"
+    }
+  ],
+  "prompt_index": 0,
+  "generation_seed": 0,
+  "sgf_instance": "Base SGF committing uses 3 sink + 6 recent + 3 current frames. Commit Forcing uses 6 recent + 3 current, total w=9. Sink remains stored and the denoising policy is unchanged. SGF is not attributed slow memory or replay modules.",
+  "display": "Two original full-frame PNGs remain unchanged and are embedded byte-for-byte at the prior geometry. Normal vector-PDF export may resample image objects. No crop, retouching, or new case.",
+  "rng": "Shared prompt and initial-noise seed; no claim of identical intermediate stochastic streams.",
+  "canonical_pdf_sha256": "b5853b762422b35078b67300c82424ad6fee4162db2b6e3e9e02cd9d258e091a",
+  "canonical_svg_sha256": "70200767e9870eecfc1a27faab4bce29e6d28a2ff52fcef8e88db77eba8d4d62"
+}

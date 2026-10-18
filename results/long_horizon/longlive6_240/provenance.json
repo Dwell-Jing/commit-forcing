@@ -1,0 +1,41 @@
+{
+  "source_date": "2026-10-14",
+  "generation_seed": 0,
+  "num_prompts": 128,
+  "source_labels": {
+    "LLS_33": "Base LongLive",
+    "LLS_c0": "12-frame committing control",
+    "LLS_cw6": "6-frame committing",
+    "IDF_LL": "ID-Forcing on LongLive"
+  },
+  "source_sha256": {
+    "per_prompt_scores.csv": "2095597dbcb629c11ac9eafcf50027f1e8f397fb40781ff86c0715e0b3a745e5",
+    "means_x100.json": "1939daaa41a8c6689fd9d3a6414b0053b11ca87b7f662d30e3482fa109a7f1ed",
+    "longlive6_240_paired_effects.csv": "ead5b6db290769a3af2a4c39af97e391a287c7bf6cd2bc4fce0760a31d1d5767",
+    "remote/runs/lh240/TABLE.json": "a1bfe8a71a709cd93cab2d4ccb145ae534b8fd7f8b8e6ef2b00dfd1297be364b",
+    "remote/runs/lh240/spec.json": "8ee62f7a44d46f22f1dadfc94a79565635c9b641fc38de68542ff1ef2551c872",
+    "remote/tools/pair_agg.py": "f3c8c326278742f411cede0b68dc69a80c328962ddf4d5ae4dea08f86d8a1fd7",
+    "remote/tools/v2_formal_agg.py": "d3ea38a556222d76cc429565fb965086f263b050b3100d405e27170f0075014d",
+    "sidecar_audit.json": "1ea7740dc0223527fa9d778227a17e1b0a9e553364bfc57f3020a238eacebafe"
+  },
+  "public_files_sha256": {
+    "README.md": "c159eca1b018ad993889e2d3f52a3a933c5334d2d43830e8dfef0bef30e71f35",
+    "coverage.json": "15bbf94a61a9f1ee1323e7020089a4341ed68aab18ea2d3a171c06126f526c4e",
+    "drift/color_IDF_LL.csv": "147e37d7fa7437296335a5c8b9ad08b0287b1fab853f615e83420179a7c950c5",
+    "drift/color_LLS_33.csv": "b92fd6e58936321f31f461a57e4cb9c7031e9fa37d6a344e77bdb05136a3d840",
+    "drift/color_LLS_c0.csv": "e974da053192eb9bcf07b6b824ca347f5050d61bfabf210bf2679ddd17cbea2c",
+    "drift/color_LLS_cw6.csv": "7fc083631755a675d4056e70ee2805fb26ed40793b4fa8bdac11ac693f5e24a6",
+    "drift/motion_IDF_LL.csv": "ee80be45e1b281240c085aeb0824a324402ff2114413f4ccfcd7505bfbace89b",
+    "drift/motion_LLS_33.csv": "97e50eb3c1fe059a629a78396c601627758c600ed667e2ab69b3abc23adddc6b",
+    "drift/motion_LLS_c0.csv": "1348fc4bcacfc25e4efbc41ab3290b291ee3de03620bbdd4b6594c7735dc8d7d",
+    "drift/motion_LLS_cw6.csv": "894904f3f8b57fb72608757dde3ddd9d0394b544b434a0678d3c376033d71f42",
+    "drift_scores.txt": "e902b50b0e9bc6045bb97327d7c336609627566b72b884a60380120ee600bca2",
+    "means_x100.json": "1939daaa41a8c6689fd9d3a6414b0053b11ca87b7f662d30e3482fa109a7f1ed",
+    "paired_effects.csv": "ead5b6db290769a3af2a4c39af97e391a287c7bf6cd2bc4fce0760a31d1d5767",
+    "replay.py": "1a8ae15e8619278fabdcd392bbb526d340ee5278e92bcf6dc4f7849118290023",
+    "scores.csv": "2095597dbcb629c11ac9eafcf50027f1e8f397fb40781ff86c0715e0b3a745e5",
+    "source_summary.json": "078a38f19e95eb9c1f364c8478b4c4fa9bfb7ef2064e69a8910e5e07ac554bb2",
+    "spec.json": "4d3fe2b187b3162d66bbae52e9f07d83ab6cac674e45570ccd5513a503f3525e"
+  },
+  "bootstrap_order": "The original report has six complete contrasts before the three six-frame contrasts. Each earlier contrast consumes 11 arrays of 4000 x 128 bootstrap indices. The replay advances those 66 calls before validating all 33 reported six-frame effects."
+}

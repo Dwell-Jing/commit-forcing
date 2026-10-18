@@ -1,0 +1,30 @@
+{
+  "source_date": "2026-10-16",
+  "source_sha256": {
+    "runs/lh120/TABLE.json": "1ee346eb1d8d236bd53df3508ac410821cd3c7fcb2c2b0b8208756b9c3c31f73",
+    "runs/lh240/TABLE.json": "23ac7810d4863792535f30e454f23ae7fbed972c29a72534d284644b38dba4ae",
+    "runs/win946/RESULTS_W946_CS.json": "2ec6841db32e44b9928e397475d34111ff7c2867ef0e967869dfed653dbabef3",
+    "runs/winsweep/TABLE.json": "f9fb4d9ca8b0ec431f3306b756bb44018596a07a2f7ac952d11cdb10a7b85959",
+    "runs/win946/RESULTS_W946_CS.md": "bbede59a7bd2a0ae5d0600979b45a3dd2de02390a08d78318cca65b3d77b7e82"
+  },
+  "additional_source_sha256": {
+    "runs/lh120/TABLE.txt": "562ebfbb9cf8eb5eb82150e04964f15dc7346b17c1054bcb6b81066cb0a965cd",
+    "runs/lh240/TABLE.txt": "16e87cda2047dd709002ee655b82186e72d2d678949f190ad793530908f4cd38",
+    "runs/winsweep/TABLE.txt": "1a2749dc4a3b04a9b68d65fbc7c23e6fbf71d5b4ff20d8df8b2aaeb6798e51ea",
+    "runs/winsweep/spec.json": "61fc33a41d8c66992af76513595f59172a2e34bc47159bb823331aa9f23ac7b0",
+    "runs/lhcs/PREREG.md": "62e3f457f1e90f4129bcffa3a759b8c7bca3e533231e70b16d8c42a2f1e8b320",
+    "runs/win946/PREREG_CS.md": "b55c0f699b0d3858c73308b1648a493741b254104b9c8e5499060d4d8083bc76",
+    "runs/winsweep/PREREG.md": "b24730930098b8db08a83ad3d4f2fd4bf427168b10b328cae2a01d19b1ff0e1f"
+  },
+  "public_files_sha256": {
+    "cross_model_readout.txt": "7fd39da7e7691008851ac932d31444b1f12d2f44b452a9958152f9557b656d26",
+    "cross_model_summary.json": "f9fb4d9ca8b0ec431f3306b756bb44018596a07a2f7ac952d11cdb10a7b85959",
+    "longlive120_readout.txt": "c2f9c9d69a2e6766de09055f64e26c484a81692821e1370c4de3af7c79354efd",
+    "longlive120_summary.json": "1ee346eb1d8d236bd53df3508ac410821cd3c7fcb2c2b0b8208756b9c3c31f73",
+    "longlive240_readout.txt": "1e0c2c3cf240588ec00d07d77c42a58bd651e0ae49fb0d0c14b287afc2f05f48",
+    "longlive240_summary.json": "23ac7810d4863792535f30e454f23ae7fbed972c29a72534d284644b38dba4ae",
+    "longlive946_readout.md": "bbede59a7bd2a0ae5d0600979b45a3dd2de02390a08d78318cca65b3d77b7e82",
+    "longlive946_summary.json": "2ec6841db32e44b9928e397475d34111ff7c2867ef0e967869dfed653dbabef3",
+    "protocol.json": "599ed4b6bdecf1e952cb687eb7f4343aba8abf43d215ee4a7ab70dff781cd4c1"
+  }
+}

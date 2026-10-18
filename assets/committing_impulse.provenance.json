@@ -1,0 +1,138 @@
+{
+  "artifact": "committing_impulse",
+  "source": "assets/source/make_committing_impulse.py",
+  "data": {
+    "path": "assets/source/kv_propagation.csv",
+    "sha256": "3e080baf47180cac76045ea928a2ba1813971f6a5c11455d2994e9e39ada5774"
+  },
+  "values": {
+    "lag": [
+      1.0,
+      2.0,
+      3.0,
+      4.0,
+      5.0,
+      6.0,
+      7.0,
+      8.0,
+      9.0,
+      10.0,
+      11.0
+    ],
+    "recent_k": [
+      0.1138,
+      0.1111,
+      0.0967,
+      0.0736,
+      0.0425,
+      0.0287,
+      0.0188,
+      0.0134,
+      0.0102,
+      0.0088,
+      0.0079
+    ],
+    "recent_k_low": [
+      0.1091,
+      0.106,
+      0.0923,
+      0.0698,
+      0.0401,
+      0.0272,
+      0.0178,
+      0.0129,
+      0.01,
+      0.0086,
+      0.0078
+    ],
+    "recent_k_high": [
+      0.1185,
+      0.116,
+      0.101,
+      0.0775,
+      0.0449,
+      0.0303,
+      0.0197,
+      0.0139,
+      0.0105,
+      0.0089,
+      0.008
+    ],
+    "recent_v": [
+      0.1932,
+      0.1857,
+      0.1626,
+      0.1234,
+      0.0746,
+      0.051,
+      0.0347,
+      0.0255,
+      0.0198,
+      0.0172,
+      0.0155
+    ],
+    "recent_v_low": [
+      0.1851,
+      0.1767,
+      0.1547,
+      0.1167,
+      0.0701,
+      0.0481,
+      0.0328,
+      0.0244,
+      0.0193,
+      0.0169,
+      0.0153
+    ],
+    "recent_v_high": [
+      0.2011,
+      0.1943,
+      0.1704,
+      0.1303,
+      0.0788,
+      0.0538,
+      0.0365,
+      0.0265,
+      0.0204,
+      0.0175,
+      0.0157
+    ],
+    "self_only_k": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "self_only_v": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "preserved": [
+    "All original K/V means and 95% intervals",
+    "Self-only zero negative control",
+    "Axis limits/ticks/labels",
+    "Three-series legend",
+    "Marker and line styles"
+  ],
+  "scope": "Relative L2 differences in later-block KV under paired fixed clean inputs; not a video-quality or visible-drift score",
+  "interpretation": "Recent-context reconstruction transmits differences that decay. Self-only reads no earlier blocks and transmits no later-KV difference under this controlled protocol. The plot does not rank generation quality.",
+  "canonical_pdf_sha256": "d42685f1488b454371b19e4be007db487d0010a4a7b29541a3c99ae1e0dbf7f1",
+  "canonical_svg_sha256": "427e9121e137d9706b754e64861b35bc9fd8a9918b019856cd6b816a1d73b5c0"
+}

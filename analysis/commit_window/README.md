@@ -3,7 +3,8 @@
 We compare committing with the current clean block alone (self-only) and with recent trajectory context, retaining
 denoising, sink KV storage and cache-position rules within each framework. Recent context improves clip-to-clip
 Subject Consistency over self-only committing on both SF with a sink and LongLive, while reducing Dynamic Degree.
-Neither seed-0 Quality difference is significant. The comparison exposes a continuity–motion tradeoff.
+In these historical 60-second controls, neither seed-0 Quality difference is significant. The comparison exposes a
+continuity–motion tradeoff.
 
 The tables below retain the historical window and self-only studies. The current LongLive main configuration
 reads six frames during committing and stores 12 physical frames, matching Base storage; its separate standard-suite
@@ -81,6 +82,25 @@ Consistency +3.38\* / +3.40\*, Dynamic +2.07 / +0.65. The SF self-only arm has o
 recent arms for both seeds, but the existing published specs contain the recent-minus-self-only contrast only for
 seed 0; no missing paired interval is inferred here. Reading only the block itself removes recent frames together
 with the sink; Commit Forcing retains recent trajectory context while excluding direct sink access.
+
+## Self-only confirmation beyond 60-second rollf200
+
+On the standard 946-entry suite, self-only minus six-frame LongLive changes Quality by +0.18 [−0.07, +0.45] and
+Total by +0.07 [−0.14, +0.31]. It increases Dynamic Degree by 5.32 points while reducing Subject, Background,
+Motion Smoothness, Temporal Flickering and Aesthetic Quality. Both conditions store 12 physical frames.
+
+On 128 MovieGen prompts at 120 and 240 seconds, six frames minus self-only improves clip-to-clip Subject by
+1.30 and 1.31 points, but lowers Quality by 0.17 and 0.21 and Dynamic Degree by 6.32 and 6.07 points. All six of
+these differences have intervals excluding zero. Those LongLive conditions retain 15-frame physical storage.
+The [full self-only controls](data/window_controls/README.md) retain every paired interval and absolute score.
+
+## Window changes across generators
+
+A separate 60-second sweep uses rollf200 prompts 0–99, generation seed 0, on SGF, SGF+, RF-TF, Rolling Sink and
+Context Forcing. All nine Quality changes from each model's fixed main context have intervals including zero.
+Six frames versus 21 improves long-range Subject by 2.27 points on RF-TF and 1.85 on Rolling Sink; motion amount
+has negative point changes. The effect of retaining recent context is not monotonic across models.
+[All window contrasts](data/window_controls/README.md#cross-model-committing-window-sweep).
 
 ## Commands and score provenance
 

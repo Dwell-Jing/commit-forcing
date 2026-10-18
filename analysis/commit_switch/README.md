@@ -12,6 +12,20 @@ frames), `S123C` (it also reads far history), `SWCR` / `SWRC` (it reads far hist
 / from block 32 on), `R12` (nothing reads far history), `R160` (every pass reads it), `S0`-`S23` (one or two denoising
 passes read it), `C` (only the commit pass reads it). 20 prompts x seeds 0-2 = 60 videos per route, 48 s.
 
+The four committing schedules (`S123R`, `S123C`, `SWCR`, `SWRC`) share this configuration:
+
+- Released SF DMD EMA weights, no sink, 160 physical latent frames, all layers 0–29.
+- Denoising step 0 reads the newest 12 trajectory frames; steps 1–3 read the newest 160. Raw timesteps
+  `[1000, 750, 500, 250]` use shift 5, yielding approximately `[1000, 937.5, 833.33, 625]`.
+- History is read densely (stride 1), without extra attention bias or sampling-mass compensation. RoPE retains
+  original global latent-frame positions; cache rollover neither renumbers nor re-rotates stored KV.
+- Committing runs at timestep 0 and reads either 12 or 160 frames, including the clean current block. Warm-up uses
+  the available frames. The switch applies during committing of block 32, after that block's denoising; the new KV
+  first affects generation of block 33. The nominal 24-second boundary is `32 * 3 / 4`.
+
+The stride-4 anchors, ln 4 compensation and layer-restricted routes of the separate read-locus study are not used
+in this switching comparison.
+
 **Table 1.** Identity at 38-47.5 s (DINOv2), its retention from 4-8 s, median late / early motion, share of videos with reduced
 motion (motion ratio < 0.85) and DiT time.
 

@@ -69,5 +69,5 @@ Every arm covers prompt indices 0–127 exactly once with all seven components a
 [Provenance](provenance.json) records the original scorer and shard hashes, the frozen source reports, and the
 public artifact hashes. [ID-Forcing drift score readout](drift_scores.txt).
 
-The six-frame 240-second generation has a separate evaluation record and remains pending in this release.
-The existing 240-second `longlive+rule` scores are the 12-frame committing control.
+The [six-frame 240-second evaluation](../longlive6_240/README.md) is complete. The existing 240-second
+`longlive+rule` scores remain the 12-frame committing control.

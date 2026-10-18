@@ -2,6 +2,16 @@
 
 [← Repository home](../../README.md#qualitative-comparisons)
 
+## Current paper cases
+
+![Paired 240-second SGF and Context Forcing cases](../qualitative_grid.png)
+
+These are the current paper's SGF prompt 19 and Context Forcing prompt 10, generation seed 0, from the 32-prompt MovieGen extension at 240 seconds. Each model uses the same prompt and initial-noise seed across its two rows. The displayed initial frames can differ. Frames are sampled at 0, 120, and 238 seconds.
+
+The cases were selected for visible differences. The Context Forcing example has a negative per-video Quality change, despite the displayed visual contrast; it is retained as such. The complete selection record, source hashes, and per-case scores are in [`source.json`](../source/qualitative_grid_inputs/source.json).
+
+## Additional examples
+
 Each row shows one model without (Base) and with Commit Forcing, from the same prompt and initial noise. The two videos
 share the start frame (1 s); the Base and
 + Commit Forcing frames are 2 s before the end. Each video plays the first and the last 4 seconds side by side. We

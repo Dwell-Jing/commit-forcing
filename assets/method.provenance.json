@@ -1,0 +1,102 @@
+{
+  "artifact": "method_overview",
+  "physical_size_mm": [
+    178,
+    88.19090909090909
+  ],
+  "computation": {
+    "flow": "Base denoising -> current clean block -> committing t0 -> new KV -> base cache update -> next block",
+    "current_and_recent_inputs_separate": true,
+    "old_cache_and_new_kv_inputs_separate": true,
+    "current_kv_recomputed": true,
+    "cache_update_unchanged": true,
+    "no_new_router_or_forward": true,
+    "denoising_policy_unchanged": true,
+    "glyph_geometry_preserved_from_adopted_upper": true,
+    "vertical_translation": -32
+  },
+  "window_order": [
+    12,
+    9,
+    6,
+    3
+  ],
+  "windows": [
+    {
+      "window_w": 12,
+      "historical_frames_directly_accessed": 9,
+      "historical_blocks_directly_accessed": [
+        -3,
+        -2,
+        -1
+      ],
+      "current_frames_directly_accessed": 3,
+      "sink_and_nonrecent_directly_accessed": false,
+      "known_self_only": false,
+      "bracket_x": [
+        810,
+        2110
+      ]
+    },
+    {
+      "window_w": 9,
+      "historical_frames_directly_accessed": 6,
+      "historical_blocks_directly_accessed": [
+        -2,
+        -1
+      ],
+      "current_frames_directly_accessed": 3,
+      "sink_and_nonrecent_directly_accessed": false,
+      "known_self_only": false,
+      "bracket_x": [
+        1120,
+        2110
+      ]
+    },
+    {
+      "window_w": 6,
+      "historical_frames_directly_accessed": 3,
+      "historical_blocks_directly_accessed": [
+        -1
+      ],
+      "current_frames_directly_accessed": 3,
+      "sink_and_nonrecent_directly_accessed": false,
+      "known_self_only": false,
+      "bracket_x": [
+        1430,
+        2110
+      ]
+    },
+    {
+      "window_w": 3,
+      "historical_frames_directly_accessed": 0,
+      "historical_blocks_directly_accessed": [],
+      "current_frames_directly_accessed": 3,
+      "sink_and_nonrecent_directly_accessed": false,
+      "known_self_only": true,
+      "bracket_x": [
+        1840,
+        2110
+      ]
+    }
+  ],
+  "lower_access_axis": {
+    "is_common_physical_cache": false,
+    "per_temporal_block_latent_frames": 3,
+    "nonrecent_column_is_categorical": true,
+    "trajectory_age": "Original generated trajectory, not current cache-slot placement",
+    "hatching": "No direct committing access; historical KV remains stored",
+    "current": "Clean current input; current KV is recomputed by the forward",
+    "self_only": "Known zero-history endpoint, not a full ID-Forcing framework label"
+  },
+  "indirect_history": "Masking direct input does not erase historical influence through current clean latents or recent KV",
+  "rule_is_not_semantic_classifier": true,
+  "extra_inference_storage": false,
+  "source": "assets/source/make_method.py",
+  "upper_vector_asset": {
+    "path": "assets/source/method_upper.svg",
+    "sha256": "1c7587e65cd70b538f6c0f2af47efed1b7d489f37df7abb081b5a63116eebc8f"
+  },
+  "canonical_pdf_sha256": "ccf553d3a14c515726c43f401d239bb2e51f95d3dbc00f18e3946180cb6ba7b3",
+  "canonical_svg_sha256": "59355b021c51573591770e1f86c07abdef06361d1af97e23742a743970c1d2d1"
+}

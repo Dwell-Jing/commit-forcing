@@ -39,6 +39,12 @@ denoising passes at layers 12-29; `analysis/sf_router --route G3_L12_29`), `sf_s
 pass reads the newest 6 / 9 real frames; [commit window](../analysis/commit_window/README.md)), and `rf_v2` (Recency
 Forcing's reading implemented a second time in the SGF code base).
 
+RF arm names refer to distinct implementations. Main `rf` / `rf+rule` store 24 physical latent frames and read
+3 sink + 18 trajectory frames during denoising; CF committing reads 21 trajectory frames. `sgf_rf` and `rf_v2`
+store 21 physical frames and read 18 trajectory frames during CF committing. Clean committing disables TRB in
+all three. The alternative `rf_v2` Quality comparison, 81.89 → 82.38, uses 60-second rollf200 videos with seed 0.
+[Exact configurations](../integrations/recency_forcing/README.md#rf-implementations).
+
 LongLive labels in `vbench_long_60s.csv` describe the historical window study: Base-policy and window arms retain
 15-frame physical storage. In particular, `longlive+rule` remains the 12-frame control and `longlive+commit6` the
 six-frame arm. The current common946 main pair uses six-frame committing with 12-frame physical storage in both
@@ -50,5 +56,6 @@ See the [window controls](../analysis/commit_window/README.md) and
 ## Further evidence
 
 - [Full VBench: 946 entries and 16 dimensions](vbench_full/README.md).
-- [240-second videos](long_horizon/README.md).
+- [120- and 240-second videos](long_horizon/README.md), including [six-frame LongLive at 240 seconds](long_horizon/longlive6_240/README.md).
+- [Human evaluation](human_evaluation/README.md).
 - [Mechanism analyses](../README.md#mechanism-analyses).

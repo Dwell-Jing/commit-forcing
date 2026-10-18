@@ -1,0 +1,12 @@
+[
+  {
+    "file": "data/anchoring_readout.md",
+    "source_sha256": "ea6511d7cb91cc97b427fd93a14cc31b470d1888ead7222bda12b8b807e20a31",
+    "kind": "Original archived summary; per-prompt metric inputs not included"
+  },
+  {
+    "file": "data/boundary_flow_readout.md",
+    "source_sha256": "fde986d7ca7c8a6fa858fbe1dd1422d09a3569db782c6caf3d55afdc8c1a2232",
+    "kind": "Original archived summary; per-prompt metric inputs not included"
+  }
+]

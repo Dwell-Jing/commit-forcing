@@ -1,0 +1,48 @@
+{
+  "source_date": "2026-10-16",
+  "longlive_long_horizon": {
+    "durations_seconds": [
+      120,
+      240
+    ],
+    "num_prompts": 128,
+    "prompt_set": "ID-Forcing MovieGen 128",
+    "generation_seed": 0,
+    "physical_cache_frames": 15,
+    "denoising_context": "sink 3 + newest 9 trajectory frames",
+    "self_only_context": "current clean 3-frame block",
+    "six_frame_context": "previous 3 + current clean 3 trajectory frames",
+    "bootstrap_repetitions": 4000,
+    "bootstrap_unit": "paired prompt",
+    "comparison_direction": "6 frames minus self-only; self-only minus base; self-only minus complete ID-Forcing"
+  },
+  "longlive_standard_suite": {
+    "num_entries": 946,
+    "canonical_prompt_clusters": 944,
+    "seconds": 60,
+    "generation_seed": 0,
+    "physical_cache_frames": 12,
+    "bootstrap_repetitions": 4000,
+    "bootstrap_seed": 20261011,
+    "comparison_direction": "self-only minus 6 frames",
+    "aggregation": "Official surviving-record weights retained separately for each arm"
+  },
+  "cross_model_sweep": {
+    "prompt_set": "rollf200 indices 0-99",
+    "num_prompts": 100,
+    "seconds": 60,
+    "generation_seed": 0,
+    "bootstrap_repetitions": 4000,
+    "bootstrap_unit": "paired prompt",
+    "comparison_direction": "new committing context minus fixed main committing context",
+    "sink_access_in_committing": false,
+    "main_commit_context_frames": {
+      "SGF": 9,
+      "SGF+": 9,
+      "RF-TF": 21,
+      "Rolling Sink": 21,
+      "Context Forcing": 6
+    }
+  },
+  "artifact_scope": "Frozen existing scorer summaries. These files are not regenerated per-video statistics; the newer arms video-level score inputs are not present in this source snapshot."
+}

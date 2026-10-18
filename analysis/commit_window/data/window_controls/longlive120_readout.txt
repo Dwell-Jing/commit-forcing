@@ -1,0 +1,72 @@
+LongLive and ID-Forcing, 120 seconds: VBench-Long, ID-Forcing moviegenbench_128 x 120 s x seed 0; x100 (RF Tab. 3 Quality); x100 (RF Tab. 3 Quality); labels with all 128 prompts scored
+
+label              Quality   Dynamic   Subject Background   Subj_in  Subj_c2c    Bg_c2c   Imaging Aesthetic  MotionSm   Flicker   description
+G3_R21               77.63     29.57     96.15     96.12     96.66     64.02     69.22     62.00     49.99     98.06     97.55   SF native (21-frame window)
+K_RFw                81.78     66.07     96.40     95.79     95.59     76.27     81.47     68.35     57.11     97.83     96.13   Recency Forcing (training-free, SF weights) + write rule
+IDF_SF               81.62     64.27     96.88     96.06     96.48     76.47     82.05     68.12     56.37     97.77     96.17   ID-Forcing on SF (authors' code)
+IDF_SF_W             81.68     60.49     97.07     96.19     96.50     79.51     84.11     68.55     56.95     97.88     96.36   ID-Forcing machinery + write rule on SF
+LLS_33               81.72     42.96     97.69     96.46     97.21     84.16     87.17     68.19     58.92     98.74     97.61   LongLive, release
+LLS_c0               81.93     46.42     97.62     96.46     97.00     85.25     88.36     68.98     58.99     98.59     97.37   LongLive + write rule
+IDF_LL               82.27     57.37     97.46     96.25     97.34     78.72     83.57     68.78     58.52     98.42     96.81   ID-Forcing on LongLive (authors' code)
+IDF_LL_W             82.03     49.13     97.61     96.38     97.41     80.99     84.80     68.95     58.44     98.66     97.29   ID-Forcing machinery + write rule on LongLive
+LLS_cw6              82.05     46.37     97.82     96.61     97.31     86.03     89.06     68.89     59.23     98.61     97.43   LongLive + write rule, 6-frame commit window
+LLS_cs               82.22     52.68     97.67     96.48     97.13     84.73     88.05     68.64     59.18     98.45     97.11   LongLive, commit reads only the current block (self-only, 3 frames)
+
+paired contrasts (a - b), by prompt, bootstrap 4000, 95% CI ('*' = excludes 0)
+
+[SF weights @120s] ID-Forcing - native (IDF_SF - G3_R21)
+    Quality +3.98 [+3.28, +4.73]  n = 128 prompts
+    Dynamic +34.70*  Subject +0.73*  Background -0.06  Subj_in -0.19  Subj_c2c +12.45*  Bg_c2c +12.84*  Imaging +6.12*  Aesthetic +6.38*  MotionSm -0.29  Flicker -1.38*
+
+[SF weights @120s] ID-Forcing machinery + rule - ID-Forcing [commit context] (IDF_SF_W - IDF_SF)
+    Quality +0.06 [-0.15, +0.26]  n = 128 prompts
+    Dynamic -3.78*  Subject +0.19*  Background +0.12*  Subj_in +0.02  Subj_c2c +3.05*  Bg_c2c +2.05*  Imaging +0.44*  Aesthetic +0.57*  MotionSm +0.11  Flicker +0.18*
+
+[SF weights @120s] RF + rule - ID-Forcing (K_RFw - IDF_SF)
+    Quality +0.16 [-0.53, +0.73]  n = 128 prompts
+    Dynamic +1.80  Subject -0.48*  Background -0.28*  Subj_in -0.89*  Subj_c2c -0.20  Bg_c2c -0.58  Imaging +0.23  Aesthetic +0.74*  MotionSm +0.07  Flicker -0.04
+
+[LongLive @120s] rule - native (LLS_c0 - LLS_33)
+    Quality +0.21 [+0.04, +0.37]  n = 128 prompts
+    Dynamic +3.46*  Subject -0.06*  Background -0.00  Subj_in -0.21*  Subj_c2c +1.09*  Bg_c2c +1.19*  Imaging +0.79*  Aesthetic +0.06  MotionSm -0.15*  Flicker -0.24*
+
+[LongLive @120s] ID-Forcing - native (IDF_LL - LLS_33)
+    Quality +0.55 [+0.17, +0.93]  n = 128 prompts
+    Dynamic +14.41*  Subject -0.22*  Background -0.21*  Subj_in +0.13  Subj_c2c -5.45*  Bg_c2c -3.60*  Imaging +0.59  Aesthetic -0.40  MotionSm -0.32*  Flicker -0.81*
+
+[LongLive @120s] rule - ID-Forcing (LLS_c0 - IDF_LL)
+    Quality -0.34 [-0.68, -0.02]  n = 128 prompts
+    Dynamic -10.95*  Subject +0.16  Background +0.21*  Subj_in -0.34*  Subj_c2c +6.53*  Bg_c2c +4.79*  Imaging +0.20  Aesthetic +0.47  MotionSm +0.17*  Flicker +0.57*
+
+[LongLive @120s] ID-Forcing machinery + rule - ID-Forcing [commit context] (IDF_LL_W - IDF_LL)
+    Quality -0.24 [-0.46, -0.04]  n = 128 prompts
+    Dynamic -8.24*  Subject +0.15*  Background +0.13*  Subj_in +0.07  Subj_c2c +2.27*  Bg_c2c +1.23*  Imaging +0.16  Aesthetic -0.08  MotionSm +0.24*  Flicker +0.48*
+
+[LongLive @120s] rule6 - native (LLS_cw6 - LLS_33)
+    Quality +0.33 [+0.16, +0.50]  n = 128 prompts
+    Dynamic +3.41*  Subject +0.13*  Background +0.15*  Subj_in +0.09  Subj_c2c +1.87*  Bg_c2c +1.89*  Imaging +0.70*  Aesthetic +0.31*  MotionSm -0.13*  Flicker -0.18*
+
+[LongLive @120s] rule6 - rule12 (LLS_cw6 - LLS_c0)
+    Quality +0.12 [+0.03, +0.21]  n = 128 prompts
+    Dynamic -0.05  Subject +0.20*  Background +0.15*  Subj_in +0.30*  Subj_c2c +0.78*  Bg_c2c +0.70*  Imaging -0.09  Aesthetic +0.24*  MotionSm +0.02*  Flicker +0.06*
+
+[LongLive @120s] rule6 - ID-Forcing (LLS_cw6 - IDF_LL)
+    Quality -0.22 [-0.57, +0.12]  n = 128 prompts
+    Dynamic -11.00*  Subject +0.36*  Background +0.35*  Subj_in -0.03  Subj_c2c +7.31*  Bg_c2c +5.49*  Imaging +0.11  Aesthetic +0.71  MotionSm +0.19*  Flicker +0.63*
+
+[LongLive @120s] rule6 - self only (LLS_cw6 - LLS_cs)
+    Quality -0.17 [-0.31, -0.03]  n = 128 prompts
+    Dynamic -6.32*  Subject +0.15*  Background +0.13*  Subj_in +0.18*  Subj_c2c +1.30*  Bg_c2c +1.01*  Imaging +0.25*  Aesthetic +0.05  MotionSm +0.15*  Flicker +0.33*
+
+[LongLive @120s] rule12 - self only (LLS_c0 - LLS_cs)
+    Quality -0.29 [-0.45, -0.14]  n = 128 prompts
+    Dynamic -6.26*  Subject -0.05  Background -0.02  Subj_in -0.12*  Subj_c2c +0.52*  Bg_c2c +0.31  Imaging +0.34*  Aesthetic -0.19  MotionSm +0.13*  Flicker +0.27*
+
+[LongLive @120s] self only - native (LLS_cs - LLS_33)
+    Quality +0.50 [+0.27, +0.72]  n = 128 prompts
+    Dynamic +9.73*  Subject -0.01  Background +0.02  Subj_in -0.09  Subj_c2c +0.56  Bg_c2c +0.88*  Imaging +0.45*  Aesthetic +0.26  MotionSm -0.28*  Flicker -0.51*
+
+[LongLive @120s] self only - ID-Forcing (LLS_cs - IDF_LL)
+    Quality -0.05 [-0.37, +0.27]  n = 128 prompts
+    Dynamic -4.69*  Subject +0.21*  Background +0.23*  Subj_in -0.21  Subj_c2c +6.01*  Bg_c2c +4.48*  Imaging -0.14  Aesthetic +0.66  MotionSm +0.04  Flicker +0.30*
+

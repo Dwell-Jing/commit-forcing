@@ -1,0 +1,61 @@
+Cross-model window controls: commit-window sweep, rollf200 prompts 0-99 x 60 s x seed 0; x100 (RF Tab. 3 Quality); labels with all 100 prompts scored
+
+label              Quality   Dynamic   Subject Background   Subj_in  Subj_c2c    Bg_c2c   Imaging Aesthetic  MotionSm   Flicker   description
+SGF_W                84.49     70.60     98.21     96.75     97.60     90.25     92.19     71.09     62.22     98.44     96.87   SGF, commit newest 9 (default)
+SGF_W3               84.46     72.47     98.10     96.72     97.41     89.96     92.01     70.57     62.57     98.33     96.73   SGF, commit self-only (3)
+SGF_W6               84.35     68.40     98.25     96.79     97.64     90.45     92.27     71.28     62.30     98.42     96.84   SGF, commit newest 6
+SGFP_W               84.34     63.30     98.28     97.02     97.67     91.27     93.49     71.24     62.29     98.56     97.47   SGF+, commit newest 9 (default)
+SGFP_W6              84.24     62.60     98.31     97.05     97.72     91.67     93.62     71.13     61.97     98.55     97.50   SGF+, commit newest 6
+SGFP_W3              84.32     65.83     98.31     96.98     97.64     92.09     93.51     71.04     62.24     98.40     97.25   SGF+, commit self-only (3)
+K_RFw                82.27     65.90     96.73     95.95     95.84     78.92     83.46     68.77     58.28     98.02     96.29   RF-TF, commit newest 21 (default)
+K_RFw6               82.43     63.20     97.13     96.28     96.40     81.19     85.63     69.32     59.11     98.02     96.34   RF-TF, commit newest 6
+K_RFw3               82.20     67.40     96.86     96.07     96.12     78.68     84.01     68.56     58.25     97.87     96.00   RF-TF, commit self-only (3)
+RS_real              82.51     51.03     97.60     96.51     96.92     85.00     88.41     70.23     58.86     98.54     97.55   Rolling Sink, commit real history 21 (default)
+RS_real6             82.39     48.47     97.92     96.75     97.36     86.86     90.08     70.17     59.04     98.46     97.53   Rolling Sink, commit newest 6 real
+RS_real3             82.54     54.47     97.83     96.75     97.27     86.27     90.05     69.74     59.23     98.23     97.20   Rolling Sink, commit self-only (3)
+RS_off               82.40     45.93     97.82     96.66     97.34     85.07     88.27     70.49     58.82     98.68     97.80   Rolling Sink as released
+CF_W                 82.75     64.90     97.46     96.51     97.08     80.63     84.48     68.57     59.27     98.09     96.66   CF, commit fast FIFO 6 (default)
+CF_W3                82.79     65.93     97.50     96.52     97.16     80.58     84.61     68.29     59.37     98.05     96.65   CF, commit self-only (3)
+
+paired contrasts (a - b), by prompt, bootstrap 4000, 95% CI ('*' = excludes 0)
+
+[SGF] 6 - default 9 (SGF_W6 - SGF_W)
+    Quality -0.13 [-0.46, +0.19]  n = 100 prompts
+    Dynamic -2.20  Subject +0.04  Background +0.04  Subj_in +0.04  Subj_c2c +0.20  Bg_c2c +0.08  Imaging +0.19  Aesthetic +0.08  MotionSm -0.02  Flicker -0.03
+
+[SGF] self-only - default 9 (SGF_W3 - SGF_W)
+    Quality -0.03 [-0.40, +0.34]  n = 100 prompts
+    Dynamic +1.87  Subject -0.11  Background -0.03  Subj_in -0.19*  Subj_c2c -0.29  Bg_c2c -0.18  Imaging -0.53  Aesthetic +0.34  MotionSm -0.11*  Flicker -0.14
+
+[SGF+] 6 - default 9 (SGFP_W6 - SGFP_W)
+    Quality -0.10 [-0.55, +0.34]  n = 100 prompts
+    Dynamic -0.70  Subject +0.04  Background +0.03  Subj_in +0.05  Subj_c2c +0.40  Bg_c2c +0.13  Imaging -0.11  Aesthetic -0.32  MotionSm -0.00  Flicker +0.03
+
+[SGF+] self-only - default 9 (SGFP_W3 - SGFP_W)
+    Quality -0.02 [-0.42, +0.36]  n = 100 prompts
+    Dynamic +2.53  Subject +0.03  Background -0.04  Subj_in -0.03  Subj_c2c +0.82  Bg_c2c +0.02  Imaging -0.20  Aesthetic -0.04  MotionSm -0.16*  Flicker -0.22*
+
+[RF-TF] 6 - default 21 (K_RFw6 - K_RFw)
+    Quality +0.16 [-0.02, +0.34]  n = 100 prompts
+    Dynamic -2.70*  Subject +0.40*  Background +0.33*  Subj_in +0.56*  Subj_c2c +2.27*  Bg_c2c +2.17*  Imaging +0.55*  Aesthetic +0.83*  MotionSm -0.00  Flicker +0.05
+
+[RF-TF] self-only - default 21 (K_RFw3 - K_RFw)
+    Quality -0.08 [-0.35, +0.18]  n = 100 prompts
+    Dynamic +1.50  Subject +0.13  Background +0.12*  Subj_in +0.29*  Subj_c2c -0.24  Bg_c2c +0.55  Imaging -0.21  Aesthetic -0.03  MotionSm -0.15*  Flicker -0.29*
+
+[Rolling Sink] 6 - default 21 (RS_real6 - RS_real)
+    Quality -0.12 [-0.40, +0.14]  n = 100 prompts
+    Dynamic -2.57  Subject +0.32*  Background +0.23*  Subj_in +0.45*  Subj_c2c +1.85*  Bg_c2c +1.67*  Imaging -0.06  Aesthetic +0.18  MotionSm -0.08  Flicker -0.02
+
+[Rolling Sink] self-only - default 21 (RS_real3 - RS_real)
+    Quality +0.03 [-0.34, +0.39]  n = 100 prompts
+    Dynamic +3.43  Subject +0.24*  Background +0.24*  Subj_in +0.35*  Subj_c2c +1.26*  Bg_c2c +1.64*  Imaging -0.49  Aesthetic +0.37*  MotionSm -0.31*  Flicker -0.36*
+
+[Rolling Sink] default 21 - released (RS_real - RS_off)
+    Quality +0.11 [-0.05, +0.29]  n = 100 prompts
+    Dynamic +5.10*  Subject -0.22*  Background -0.14*  Subj_in -0.42*  Subj_c2c -0.06  Bg_c2c +0.14  Imaging -0.26  Aesthetic +0.04  MotionSm -0.14*  Flicker -0.25*
+
+[CF] self-only - default 6 (CF_W3 - CF_W)
+    Quality +0.03 [-0.17, +0.22]  n = 100 prompts
+    Dynamic +1.03  Subject +0.04  Background +0.01  Subj_in +0.09  Subj_c2c -0.06  Bg_c2c +0.13  Imaging -0.28  Aesthetic +0.11  MotionSm -0.04  Flicker -0.02
+

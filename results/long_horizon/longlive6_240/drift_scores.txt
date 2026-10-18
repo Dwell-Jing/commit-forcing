@@ -1,0 +1,10 @@
+ID-Forcing drift metrics, 240 seconds, generation seed 0
+arm           color drift      n  motion drift  symmetric static->mv      n
+IDF_LL              70.13    128         98.44      74.22      24.2%    128
+IDF_LL_W            70.55    128         93.75      81.25      12.5%    128
+IDF_SF              67.96    128         88.28      79.69       8.6%    128
+IDF_SF_W            73.36    128         88.28      83.59       4.7%    128
+K_RFw               65.89    128         89.06      81.25       7.8%    128
+LLS_33              55.92    128         85.94      78.12       7.8%    128
+LLS_c0              68.66    128         92.19      85.16       7.0%    128
+LLS_cw6             68.95    128         90.62      85.16       5.5%    128

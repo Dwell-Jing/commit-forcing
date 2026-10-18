@@ -1,0 +1,92 @@
+{
+  "arms": {
+    "SGFX_SS": {
+      "Consistency": 0.1399,
+      "Drift": 0.034
+    },
+    "SGFX_SR": {
+      "Consistency": 0.1592,
+      "Drift": 0.01
+    },
+    "SGFX_RS": {
+      "Consistency": 0.0026,
+      "Drift": 0.253
+    },
+    "SGFX_RR": {
+      "Consistency": 0.0072,
+      "Drift": 0.16
+    }
+  },
+  "reference": "SGFX_SS",
+  "contrasts": {
+    "SGFX_SR": {
+      "Consistency": {
+        "diff": 0.0194,
+        "ci": [
+          0.0075,
+          0.0304
+        ]
+      },
+      "Drift": {
+        "diff": -0.0241,
+        "ci": [
+          -0.0428,
+          -0.0109
+        ]
+      },
+      "LogMotion": {
+        "diff": 0.0621,
+        "ci": [
+          -0.0074,
+          0.1398
+        ]
+      }
+    },
+    "SGFX_RS": {
+      "Consistency": {
+        "diff": -0.1373,
+        "ci": [
+          -0.168,
+          -0.1082
+        ]
+      },
+      "Drift": {
+        "diff": 0.219,
+        "ci": [
+          0.1537,
+          0.2799
+        ]
+      },
+      "LogMotion": {
+        "diff": 0.4315,
+        "ci": [
+          0.2832,
+          0.5754
+        ]
+      }
+    },
+    "SGFX_RR": {
+      "Consistency": {
+        "diff": -0.1327,
+        "ci": [
+          -0.1609,
+          -0.106
+        ]
+      },
+      "Drift": {
+        "diff": 0.1264,
+        "ci": [
+          0.0719,
+          0.1918
+        ]
+      },
+      "LogMotion": {
+        "diff": 0.0005,
+        "ci": [
+          -0.1036,
+          0.1093
+        ]
+      }
+    }
+  }
+}

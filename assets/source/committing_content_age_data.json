@@ -1,0 +1,56 @@
+{
+  "SGF": {
+    "prefix": "AGE",
+    "finite_age_blocks": [
+      1,
+      2,
+      4,
+      8,
+      16
+    ],
+    "finite_age_subject_c2c_x100": [
+      90.60984775449697,
+      90.53363034360366,
+      90.3029030435558,
+      90.02271247834994,
+      89.91676707257484
+    ],
+    "sink_category_subject_c2c_x100": 78.61541653283196,
+    "n_prompts": 100,
+    "arms": [
+      "AGE_d1",
+      "AGE_d2",
+      "AGE_d4",
+      "AGE_d8",
+      "AGE_d16",
+      "AGE_sink"
+    ]
+  },
+  "LongLive": {
+    "prefix": "LLA",
+    "finite_age_blocks": [
+      1,
+      2,
+      4,
+      8,
+      16
+    ],
+    "finite_age_subject_c2c_x100": [
+      85.49679749741637,
+      85.16376118066496,
+      84.3526484135153,
+      83.6781607654331,
+      83.03220835662093
+    ],
+    "sink_category_subject_c2c_x100": 78.27923047728837,
+    "n_prompts": 100,
+    "arms": [
+      "LLA_d1",
+      "LLA_d2",
+      "LLA_d4",
+      "LLA_d8",
+      "LLA_d16",
+      "LLA_sink"
+    ]
+  }
+}

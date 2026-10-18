@@ -36,6 +36,13 @@ Every route keeps a KV cache of 160 latent frames (40 s) and no sink.
 | `MM_S23`, `MM_ALL` | Self-Forcing | anchors in s2 and s3 / in s0-s3, all layers | newest 12 | independent denoising: read locus |
 | `M4_A_*`, `M4_B_*` | Self-Forcing | anchors in s3 (A) or s2 and s3 (B), layers 20-29, with content `NORMAL` / `RECENT` / `RAND` / `MEAN` | newest 12 | independent denoising: read locus |
 
+For the paper's four switching schedules (`S123R`, `S123C`, `SWCR`, `SWRC`), denoising step 0 uses 12 frames and
+steps 1–3 use 160 in all layers 0–29. These routes use dense stride-1 reads, no added bias or mass compensation,
+and original global-frame RoPE. Committing runs at timestep 0; block 32 is the first changed committing pass, so
+its newly constructed KV first affects block 33. Full switching details are in
+[commit-switch observations](../commit_switch/README.md). The anchor mode below belongs to the independent
+read-locus routes.
+
 Anchor content: `RECENT` fills the anchor slots with the near-window frames (no old content), `RAND` with Gaussian keys
 and values that match the anchors' per-channel mean and standard deviation (no content), `MEAN` with the mean anchor
 (old content without temporal detail). `python analysis/sf_router/generate.py --list-routes` prints every route with

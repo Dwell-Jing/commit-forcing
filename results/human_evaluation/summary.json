@@ -1,0 +1,97 @@
+{
+  "source": "HUMAN_EVAL_FOR_PAPER.md and RESULTS.json retrieved 2026-10-18",
+  "participants_documented": 5,
+  "response_units": 3,
+  "joint_response_units": 1,
+  "joint_participants_documented": 3,
+  "results": {
+    "S1/consistency": {
+      "cf": 39,
+      "other": 13,
+      "tie": 2,
+      "share": 0.75,
+      "ci": [
+        0.5660377358490566,
+        0.9056603773584906
+      ],
+      "prompts": 18,
+      "response_units": 3,
+      "significant_vs_50_percent": true
+    },
+    "S1/overall": {
+      "cf": 35,
+      "other": 12,
+      "tie": 7,
+      "share": 0.7446808510638298,
+      "ci": [
+        0.56,
+        0.8980102040816328
+      ],
+      "prompts": 18,
+      "response_units": 3,
+      "significant_vs_50_percent": true
+    },
+    "L1/consistency": {
+      "cf": 19,
+      "other": 25,
+      "tie": 10,
+      "share": 0.4318181818181818,
+      "ci": [
+        0.22216666666666668,
+        0.6511880687563196
+      ],
+      "prompts": 18,
+      "response_units": 3,
+      "significant_vs_50_percent": false
+    },
+    "L1/overall": {
+      "cf": 20,
+      "other": 24,
+      "tie": 10,
+      "share": 0.45454545454545453,
+      "ci": [
+        0.25,
+        0.6756756756756757
+      ],
+      "prompts": 18,
+      "response_units": 3,
+      "significant_vs_50_percent": false
+    },
+    "L3/consistency": {
+      "cf": 47,
+      "other": 5,
+      "tie": 2,
+      "share": 0.9038461538461539,
+      "ci": [
+        0.75,
+        1.0
+      ],
+      "prompts": 18,
+      "response_units": 3,
+      "significant_vs_50_percent": true
+    },
+    "L3/overall": {
+      "cf": 45,
+      "other": 6,
+      "tie": 3,
+      "share": 0.8823529411764706,
+      "ci": [
+        0.7058823529411765,
+        1.0
+      ],
+      "prompts": 18,
+      "response_units": 3,
+      "significant_vs_50_percent": true
+    }
+  },
+  "protocol_key_identical_to_20261016": true,
+  "selection_identical_to_20261016": true,
+  "prereg_sections_identical_to_20261016": {
+    "## Groups": true,
+    "## Prompts": true,
+    "## Presentation": true,
+    "## Analysis": true
+  },
+  "raw_responses_retrieved": false,
+  "statistics_recomputed": false
+}

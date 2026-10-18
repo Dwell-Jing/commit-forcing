@@ -1,4 +1,6 @@
-# Committing with different historical sources on Rolling Sink
+# Historical source and assigned position during committing
+
+## Rolling Sink: replayed history versus trajectory history
 
 We compare Rolling Sink's base committing context, which contains replayed old content, with recent trajectory
 context. Both have a 21-latent-frame total committing capacity, including the current clean block. The denoising
@@ -75,3 +77,35 @@ python integrations/rolling_sink/generate.py --rule off --code /path/to/Rolling-
 The [recent-context versus self-only comparison](../commit_window/README.md) uses a separate 60-second
 VBench-Long protocol and exposes the continuity–motion tradeoff of retaining recent dependencies.
 The [SGF equal-count control](../sgf_committing_controls/README.md) separately compares two 9-frame committing read sets.
+
+## LongLive: source × assigned temporal position
+
+We cross the provenance of three historical KV frames with their assigned temporal positions. The common committing
+context contains the newest 9 trajectory frames, including the current 3-frame block. We add either the 3 sink
+frames (`S`) or the oldest 3 of the newest 12 trajectory frames (`R`), assigned to initial (`S`) or recent (`R`)
+positions. The first letter of `CP_*` denotes source and the second denotes position.
+
+| Source | Assigned position | Consistency ↑ | Drift ↓ | Δ Drift from recent@recent |
+|---|---|---:|---:|---:|
+| Recent | Recent (`CP_RR`) | 0.0887 | 0.033 | — |
+| Sink | Initial (`CP_SS`) | 0.0971 | 0.051 | +0.0188 |
+| Recent | Initial (`CP_RS`) | 0.0928 | 0.040 | +0.0072 |
+| Sink | Recent (`CP_SR`) | 0.0723 | 0.102 | +0.0692 |
+
+Sink KV still increases Drift when moved to recent positions. Position also matters: moving sink KV from initial to
+recent positions increases Drift by 0.0504, with its paired interval excluding zero. Moving recent KV to initial
+positions gives a smaller increase whose interval spans zero. Source and position therefore both affect the
+committing outcome. Provenance here includes content, trajectory age and encoding history.
+
+The experiment uses 20 prompts × seeds 0/1 at 48 seconds, with all four arms generated fresh. Every condition stores
+15 frames, denoises with sink 3 + newest 9, and commits with 12 frames. The first four blocks use the base context.
+Position changes re-rotate only the temporal RoPE component of K on the read copy; stored entries and V stay unchanged.
+Per-video seeds and the sampler call sequence are retained. This is the 12-frame diagnostic committing context,
+separate from the six-frame Commit Forcing default on LongLive.
+
+The [original readout](data/longlive_content_position_readout.txt) and
+[full contrasts](data/longlive_content_position_contrasts.txt) retain all paired intervals and motion/color readouts.
+[data/longlive_content_position.json](data/longlive_content_position.json) provides the compact reported statistics.
+Arm means use the original rounding. These are archived summary statistics; the full metric inputs are not included.
+The [recency experiment](../committing_content_age/README.md) separately varies source-block lag at a fixed
+six-frame committing size and fixed assigned positions.

@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
-"""Commit Forcing opening example: a paired SGF rollout with fixed denoising policy.
+"""Commit Forcing: generic historical-source/window selection and an SGF example.
 
-Only the committing queries' direct sink access changes. Sink KV stays stored.
-The authentic result frames are unchanged. The previous multi-panel teaser is retained in assets/archive.
+The conceptual scheme preserves each generator's base denoising policy and
+limits direct committing context to the current block and genuine recent KV.
+Source categories and glyph counts are schematic, not shared physical caches.
+The two authentic SGF output PNGs and their display geometry are unchanged.
 """
 from pathlib import Path
 from html import escape
 import base64
+import argparse
+import hashlib
+import json
 import subprocess
 import xml.etree.ElementTree as ET
 
@@ -95,9 +100,14 @@ class Drawing:
         self.path("M-18 -35 H18", "#FFE4A0", 3.5)
         self.items.append("</g>")
 
-    def icon(self, filename, x, y, scale):
+    def icon(self, filename, x, y, scale, mirror_x=False):
         root = ET.parse(ASSET / filename).getroot()
-        self.items.append(f'<g transform="translate({x},{y}) scale({scale})">')
+        if mirror_x:
+            icon_width = float(root.attrib['viewBox'].split()[2])
+            transform = f'translate({x+icon_width*scale},{y}) scale({-scale},{scale})'
+        else:
+            transform = f'translate({x},{y}) scale({scale})'
+        self.items.append(f'<g data-icon="{filename}" data-mirror-x="{str(mirror_x).lower()}" transform="{transform}">')
         self.items.extend(ET.tostring(c, encoding="unicode") for c in root)
         self.items.append("</g>")
 
@@ -124,19 +134,23 @@ class Drawing:
         if okay is not None:
             self.status(x + w - 29, y + h - 29, okay, 47)
 
-    def export(self, stem):
-        final_svg = FIG / f"{stem}.svg"
-        final_pdf = FIG / f"{stem}.pdf"
-        final_png = PRE / f"{stem}.png"
-        temporary_svg = FIG / f".{stem}.render.svg"
-        temporary_pdf = FIG / f".{stem}.render.pdf"
-        temporary_png = PRE / f".{stem}.render.png"
+    def export(self, stem, figure_dir=None, preview_dir=None):
+        fig_dir = figure_dir or FIG
+        pre_dir = preview_dir or PRE
+        fig_dir.mkdir(parents=True, exist_ok=True)
+        pre_dir.mkdir(parents=True, exist_ok=True)
+        final_svg = fig_dir / f"{stem}.svg"
+        final_pdf = fig_dir / f"{stem}.pdf"
+        final_png = pre_dir / f"{stem}.png"
+        temporary_svg = fig_dir / f".{stem}.render.svg"
+        temporary_pdf = fig_dir / f".{stem}.render.pdf"
+        temporary_png = pre_dir / f".{stem}.render.png"
         temporary_svg.write_text("\n".join(self.items + ["</g></svg>"]))
         try:
             subprocess.run(["rsvg-convert", "-f", "pdf", "-o",
                             str(temporary_pdf), str(temporary_svg)], check=True)
-            subprocess.run(["rsvg-convert", "-w", str(self.width), "-o",
-                            str(temporary_png), str(temporary_svg)], check=True)
+            subprocess.run(["pdftoppm", "-singlefile", "-png", "-scale-to", str(self.width),
+                            str(temporary_pdf), str(temporary_png.with_suffix(''))], check=True)
             temporary_svg.replace(final_svg)
             temporary_pdf.replace(final_pdf)
             temporary_png.replace(final_png)
@@ -145,6 +159,22 @@ class Drawing:
                 if f.exists():
                     f.unlink()
 
+    def export_focus(self, stem, top):
+        """Keep the current B/C preview synchronized with the native SVG."""
+        svg=ET.parse(FIG/f"{stem}.svg")
+        svg.getroot().set("viewBox",f"0 {top} {self.width} {self.height-top}")
+        svg.getroot().set("width",str(self.width))
+        svg.getroot().set("height",str(self.height-top))
+        temporary_svg=PRE/f".{stem}_bc.render.svg"
+        temporary_png=PRE/f".{stem}_bc.render.png"
+        try:
+            svg.write(temporary_svg,encoding="utf-8",xml_declaration=True)
+            subprocess.run(["rsvg-convert","-w",str(self.width),"-o",
+                            str(temporary_png),str(temporary_svg)],check=True)
+            temporary_png.replace(PRE/f"{stem}_bc.png")
+        finally:
+            temporary_svg.unlink(missing_ok=True)
+            temporary_png.unlink(missing_ok=True)
 
 
 def _arrow(d, x1, y1, x2, y2, color=MUTED, width=4):
@@ -163,69 +193,125 @@ def _arrow(d, x1, y1, x2, y2, color=MUTED, width=4):
         )
 
 
-def layout():
-    d=Drawing(2200,825,"Same denoising access, different committing context")
-    d.text(30,65,"Same denoising access, different commits",44,bold=True)
+def _kv(d, x, y, w=76, h=96, color=BLUE, fill="#D7E6F0"):
+    """Editable paired K/V glyph, not an experimental tensor visualization."""
+    half = (w - 6) / 2
+    for xx in (x, x + half + 6):
+        d.rect(xx, y, half, h, color, 2.1, fill, 1)
+        d.path(f"M{xx+half/2} {y} V{y+h}", color, 1)
+        for frac in (1/3, 2/3):
+            d.path(f"M{xx} {y+h*frac} H{xx+half}", color, 1)
 
-    # This shared box represents the fixed access policy across two rollouts.
-    # It does not claim equal recurrent KV or equal denoised blocks later on.
-    d.text(380,135,"Denoising",42,INK,"middle",True)
-    d.rect(30,157,700,563,RULE,2,"none",6)
-    history_w=290
-    history_h=history_w*240/416
-    for source,x,cx,color,label in (
-        ("initial",40,185,SAGE,"Sink"),
-        ("nearby",410,555,BLUE,"Recent"),
-    ):
-        d.text(cx,220,label,38,color,"middle",True)
-        d.memory(source,x,255,history_w,history_h,None)
-    d.path("M185 439 V478 H365",SAGE,4)
-    d.path("M555 439 V478 H365",BLUE,4)
-    _arrow(d,365,478,365,550,INK,4)
-    d.icon("eye_read.svg",250,540,1.28)
-    _arrow(d,480,627,742,627,INK,4)
-    d.path("M742 301 V656",INK,4)
-    _arrow(d,742,301,793,301,INK,4)
-    _arrow(d,742,656,793,656,INK,4)
 
-    # Each committing context now leads directly to its own real SGF result.
-    d.text(1880,135,"Long rollout",42,INK,"middle",True)
-    case_w,case_h=500,500*240/416
-    context_w,context_h=250,250*240/416
-    for key,label,y,okay in (
-        ("native","Base committing",157,False),
-        ("commit","Commit Forcing",512,True),
+def layout(draft=False, drawing_only=False):
+    d = Drawing(2145, 825, "Historical-source and window selection during committing")
+    purple = "#866E91"
+    d.text(30, 65, "History for denoising and committing", 44, bold=True)
+    d.text(1825, 65, "SGF example", 44, INK, "middle", True)
+    d.path("M1515 105 V805", RULE, 2)
+
+    # A generic source taxonomy. Availability and denoising access continue
+    # to follow the base generator, rather than a new retrieval module.
+    d.text(140, 172, "Sink", 42, SAGE, "middle", True)
+    d.text(440, 151, "Nonrecent memory", 40, purple, "middle", True)
+    d.text(440, 197, "/ replay", 39, purple, "middle")
+    d.text(945, 172, "Recent trajectory", 42, BLUE, "middle", True)
+    d.memory("initial", 50, 239, 180, 180*240/416, None)
+    for off in (14, 7, 0):
+        d.rect(340+off, 235-off, 200, 200*240/416,
+               purple, 2.5, "white", 3)
+    d.scene("initial", 345, 240, 190, 190*240/416)
+    recent_x = [655 + 95*i for i in range(6)]
+    for x in recent_x:
+        _kv(d, x, 239)
+
+    # All available historical classes can supply denoising under the base
+    # policy. The lower blue bracket selects only a suffix for committing.
+    d.path("M650 345 V362 H1230 V345", MUTED, 2.8)
+    d.path("M140 352 V416 H650 V362", MUTED, 3.0)
+    d.path("M440 363 V416", MUTED, 3.0)
+    _arrow(d, 185, 416, 185, 545, MUTED, 3.2)
+    d.path("M934 376 V398 H1230 V376", BLUE, 3.5)
+    d.text(1082, 461, "w − c frames", 42, BLUE, "middle")
+    d.path("M1230 398 H1280 V500 H1030 V545", BLUE, 3.5)
+    _arrow(d, 1030, 520, 1030, 545, BLUE, 3.5)
+
+    # The current clean block is distinct from historical KV and is always
+    # an input to the committing forward. w counts it together with history.
+    d.rect(50, 545, 270, 130, INK, 2.5, "#F5F7F8", 4)
+    d.text(185, 601, "Denoising", 42, INK, "middle", True)
+    d.text(185, 649, "Base policy", 39, MUTED, "middle")
+    _arrow(d, 336, 610, 420, 610, INK, 3.5)
+    d.rect(440, 527, 290, 290*240/416, INK, 3.0, "white", 4)
+    d.scene("nearby", 445, 532, 280, 280*240/416)
+    d.text(585, 748, "Current clean block", 40, INK, "middle", True)
+    d.text(585, 793, "c frames", 39, MUTED, "middle")
+    _arrow(d, 747, 610, 878, 610, INK, 3.5)
+    d.rect(895, 545, 270, 130, ACCENT, 3.0, "#FCF5F0", 4)
+    d.text(1030, 601, "Committing", 42, ACCENT, "middle", True)
+    d.text(1030, 649, "w frames total", 39, ACCENT, "middle")
+    _arrow(d, 1182, 610, 1277, 610, ACCENT, 3.5)
+    _kv(d, 1295, 562, 90, 96, ACCENT, "#F0D4C7")
+    d.text(1340, 716, "New KV", 40, ACCENT, "middle", True)
+
+    # Preserve the existing two SGF frames, original PNG bytes, positions,
+    # displayed dimensions, and result-status markers exactly.
+    case_w, case_h = 500, 500*240/416
+    for key, label, y, okay in (
+        ("native", "Base SGF", 157, False),
+        ("commit", "+ Commit Forcing", 512, True),
     ):
-        frame_color=GREEN if okay else MUTED
-        d.text(1185,y-22,label,42,GREEN if okay else INK,"middle",True)
-        d.rect(805,y,760,case_h,frame_color,2.5,
-               "#F7FAF8" if okay else "#F9FAFA",6)
-        source_y=y+54
-        d.memory("initial",835,source_y,context_w,context_h,None)
-        d.memory("nearby",1140,source_y,context_w,context_h,None)
-        if okay:
-            # The pale sink is excluded from this call, not erased from KV.
-            # Keep its pin and border visible to preserve the storage cue.
-            d.items.append(f'<rect x="835" y="{source_y}" '
-                           f'width="{context_w}" height="{context_h}" '
-                           'fill="white" fill-opacity="0.80"/>')
-        # Every source card uses the same corner and size for access status.
-        # Base reads both sources; Commit Forcing excludes only direct sink.
-        for source_x,visible in ((835,not okay),(1140,True)):
-            d.status(source_x+context_w-32,source_y+32,visible,30)
-        d.text(960,y+239,"Sink",38,SAGE,"middle")
-        d.text(1265,y+239,"Recent",38,BLUE,"middle")
-        d.icon("pen_write.svg",1435,y+67,.7)
-        _arrow(d,1577,y+case_h/2,1618,y+case_h/2,frame_color,4)
-        d.rect(1625,y-5,case_w+10,case_h+10,
-               GREEN if okay else RED,4,"white",4)
-        d.photo(key,1630,y,case_w,case_h)
-        d.status(1666,y+36,okay,34)
-    d.export("teaser")
+        d.text(1825, y-22, label, 42, INK, "middle", True)
+        d.rect(1570, y-5, case_w+10, case_h+10,
+               GREEN if okay else RED, 4, "white", 4)
+        d.photo(key, 1575, y, case_w, case_h)
+        d.status(1611, y+36, okay, 34)
+    if drawing_only:
+        return d
+    stem = 'teaser_draft' if draft else 'teaser'
+    output_dir = FIG/'drafts' if draft else FIG
+    d.export(stem, output_dir, PRE/'redraw' if draft else PRE)
+    manifest = {
+        'status': 'Canonical generic source/window concept with unchanged SGF qualitative example' if not draft else 'Independent draft',
+        'source': 'assets/source/make_teaser.py',
+        'canvas': [d.width, d.height],
+        'physical_size_mm': [178, 178*d.height/d.width],
+        'typography': {'minimum_svg_units': 39,
+                       'minimum_pt_at_162_96mm': 39*162.96/2145*72/25.4},
+        'generic_scheme': {
+            'sources': ['Sink', 'Nonrecent memory / replay', 'Recent trajectory'],
+            'availability': 'Schematic source categories. Not every generator contains every source. This is not a new retrieval module.',
+            'denoising': 'Base denoising policy unchanged. Historical-source arrows show availability under that policy, not mandatory access to all classes at every denoising step.',
+            'selection': 'Direct committing context is current clean block plus genuine recent original-trajectory KV. Sink and other nonrecent sources are excluded from direct committing access.',
+            'window': 'w includes current c latent frames. Blue bracket selects w-c historical frames. Six glyphs and the selected suffix are schematic, not universal budgets or physical cache capacity.',
+            'construction': 'Current K/V is computed by the committing forward. New KV is not a copy of the selected history.',
+            'indirect_history': 'Current latent and recent KV can retain older historical influence.',
+            'illustrations': 'Editable source-role illustrations are not measured KV tensors or experimental frames.'
+        },
+        'layout': {'qualitative_frames': [[1575,157,case_w,case_h], [1575,512,case_w,case_h]],
+                   'qualitative_borders': [[1570,152,case_w+10,case_h+10], [1570,507,case_w+10,case_h+10]],
+                   'preserved_case_geometry': True},
+        'illustrations': [{'asset': name, 'sha256': hashlib.sha256((ASSET/name).read_bytes()).hexdigest(),
+                           'role': 'Original editable source-role illustration'}
+                          for name in ['scene_tokyo_sink.svg', 'scene_tokyo_recent.svg']],
+        'qualitative_outputs': [{'asset': FRAME[key].name, 'arm': arm, 'time_seconds': 238,
+                                 'sha256': hashlib.sha256(FRAME[key].read_bytes()).hexdigest()}
+                                for key,arm in [('native','SGF_N'), ('commit','SGF_W')]],
+        'prompt_index': 0, 'generation_seed': 0,
+        'sgf_instance': 'Base SGF committing uses 3 sink + 6 recent + 3 current frames. Commit Forcing uses 6 recent + 3 current, total w=9. Sink remains stored and the denoising policy is unchanged. SGF is not attributed slow memory or replay modules.',
+        'display': 'Two original full-frame PNGs remain unchanged and are embedded byte-for-byte at the prior geometry. Normal vector-PDF export may resample image objects. No crop, retouching, or new case.',
+        'rng': 'Shared prompt and initial-noise seed; no claim of identical intermediate stochastic streams.',
+        'caption_handoff': 'Left: generic historical-source selection and a configurable recent window for committing, keeping base denoising. w includes current c, so selected history is w-c. Right: unchanged paired SGF example, p0 seed0 at238s. Generic source taxonomy does not imply all classes exist in SGF.'
+    }
+    suffix = '.json' if draft else '.provenance.json'
+    (output_dir / f'{stem}{suffix}').write_text(json.dumps(manifest, indent=2)+'\n')
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Render the current opening example.')
+    parser.add_argument('--draft',action='store_true',help='Export independent review files only.')
+    args = parser.parse_args()
     FIG.mkdir(parents=True, exist_ok=True)
     PRE.mkdir(parents=True, exist_ok=True)
-    layout()
-    print("Created committing-only Figure 1 SVG, PDF and preview.")
+    layout(draft=args.draft)
+    print("Created source/window Figure 1 SVG, PDF, provenance and preview.")

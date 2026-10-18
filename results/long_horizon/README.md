@@ -18,8 +18,8 @@ The MovieGen prompts of ID-Forcing (`prompts/moviegenbench_128.txt` of its repos
 
 The original 120/240-second files retain LongLive's base-policy and 12-frame committing control, both with 15-frame
 physical storage. Their `longlive+rule` label remains the 12-frame control.
-The [120-second six-frame result](longlive6_120/README.md) is reported separately; the 240-second six-frame evaluation
-is pending. The current common946 main configuration
+The six-frame results at [120 seconds](longlive6_120/README.md) and [240 seconds](longlive6_240/README.md) are complete
+and reported separately. The current common946 main configuration
 uses six-frame committing and 12-frame storage in both arms, so these historical longer-video rows have a distinct
 cache configuration.
 
@@ -29,6 +29,7 @@ cache configuration.
 |---|---|
 | `vbench_long_240s_moviegen32.csv`, `quality_drift_240s_moviegen32.csv` | per video: VBench-Long (columns of `eval/vbench_long/collect.py`) and dDrift1 / dDrift5 (first / last 1 or 5 clips), 6 arms × 32 prompts |
 | `vbench_long_{120,240}s_idf128.csv` | per video: VBench-Long, 6 / 5 arms × 128 prompts |
+| `longlive6_240/` | complete four-arm scores, 33 six-frame paired effects, drift scores and CPU replay |
 | `specs/*.json`, `tables/*.txt` | the arms and contrasts of each table and their output; every table reproduces exactly |
 
 ```bash
@@ -36,6 +37,7 @@ python results/long_horizon/quality_drift.py table --spec results/long_horizon/s
 python results/long_horizon/quality_drift.py table --spec results/long_horizon/specs/moviegen32_240s_context_forcing.json
 python eval/vbench_long/compare.py --spec results/long_horizon/specs/idf128_120s.json
 python eval/vbench_long/compare.py --spec results/long_horizon/specs/idf128_240s.json
+python results/long_horizon/longlive6_240/replay.py
 ```
 
 To regenerate an arm, run its integration with `--seconds 120` or `240` and score it with
@@ -62,3 +64,6 @@ python integrations/longlive/generate.py --code third_party/longlive --rule on -
 | `idf_sf`, `idf_sf+rule` | `integrations/id_forcing --generator self_forcing --rule off/on` |
 | `rf+rule` | `integrations/recency_forcing --reading rf --rule on` |
 | `sf` | Self-Forcing (no sink): `analysis/sf_router --route G3_R21` |
+
+The RF + Commit Forcing long-horizon arm stores 24 physical frames and disables TRB during clean committing.
+It has no matched RF-only arm at either duration. See [RF implementations](../../integrations/recency_forcing/README.md#rf-implementations).
