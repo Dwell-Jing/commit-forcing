@@ -2,6 +2,16 @@
   "figure": "committing_content_age",
   "experiment": "rollf200 prompts 0--99, 60 s, generation seed 0",
   "metric": "mean per-video Subject_c2c × 100",
+  "axis_labels": {
+    "x": "History lag (blocks)",
+    "y": "Subject c2c",
+    "caption_definition": "Official clip-to-clip Subject Consistency on a 0–100 scale; target lag along the original trajectory"
+  },
+  "palette": {
+    "SGF": "#202B33",
+    "LongLive": "#A64F35",
+    "source": "figures/src/paper_palette.py"
+  },
   "data": {
     "SGF": {
       "prefix": "AGE",
@@ -60,45 +70,57 @@
   },
   "x_encoding": {
     "finite_age": "log2, target lags 1/2/4/8/16 blocks; actual source lag increases during startup until the target is available",
-    "sink": "separate source category with no fixed numerical lag; horizontally dodged by model"
+    "sink": "not plotted; separate source category retained in manuscript text and Appendix A.8, without a numerical lag"
   },
   "y_encoding": {
     "shared_limits": [
-      77.4,
+      82.0,
       92.0
     ],
-    "axis_break": false
+    "axis_break": false,
+    "scope": "Same linear scale for both generators; contains all ten plotted finite-lag means"
+  },
+  "display": {
+    "panels": 1,
+    "plotted_means": 10,
+    "sink_controls": "Both original sink means remain audited in data and unchanged in appendix tables; removed from this recency-only plot"
   },
   "statistics": "points only; original means, no new inference or confidence intervals",
   "sources": [
     {
-      "path": "assets/source/committing_content_age_scores.csv",
-      "sha256": "921f215c19488f6ede85dcc59e2f9a4ba5eae49595390d738e7549bf802817e9"
-    },
-    {
       "path": "assets/source/committing_content_age_data.json",
       "sha256": "a35cec9720304d40652ddfd7eeaa71c98575b480eddddf6fa91728541a85d9b3"
+    },
+    {
+      "path": "assets/source/committing_content_age_scores.csv",
+      "sha256": "921f215c19488f6ede85dcc59e2f9a4ba5eae49595390d738e7549bf802817e9"
     }
   ],
-  "script_sha256": "13a6051733fde408ca9a144decb159ef5538f6236912613b5060fec355388a03",
+  "script_sha256": "033dc8045bd9037d29e8da71a7b20f13feac4cc29fc54f0197b9d3a56157135b",
   "exports": {
-    "pdf": "812f6e230d35953360fc9d948509cac1f04a7db4a4d8570bfba0f05e58990efa",
-    "svg": "d455f50b046b9329212a92d99a8e6f6ffac00618b911f918c5543ae1960e2ae4"
+    "pdf": "b655267ddd6511fcb39f98d20d8e7137fd198e348f54d420fc0a0db09dbd7039",
+    "svg": "052b1e0c112afba55f00ed24c03a600d6c83d861c1f358c1ef134dd252bba1bc"
   },
-  "aggregation_sources": [
-    {
-      "name": "TABLE.json",
-      "sha256": "49acc586d4598bf9bc10633e0a77e061706e5b67d8fc009b38e67a302fbd603c"
-    },
-    {
-      "name": "spec.json",
-      "sha256": "bb28b513d6d9a2f98cbdfec03c31164c9cf2510771bcf33532593207f41fe78a"
-    },
-    {
-      "name": "v2_formal_agg.py",
-      "sha256": "d3ea38a556222d76cc429565fb965086f263b050b3100d405e27170f0075014d"
-    }
-  ],
-  "canonical_pdf_sha256": "812f6e230d35953360fc9d948509cac1f04a7db4a4d8570bfba0f05e58990efa",
-  "canonical_svg_sha256": "d455f50b046b9329212a92d99a8e6f6ffac00618b911f918c5543ae1960e2ae4"
+  "source": "assets/source/make_committing_content_age.py",
+  "source_sha256": "033dc8045bd9037d29e8da71a7b20f13feac4cc29fc54f0197b9d3a56157135b",
+  "publication_exports": {
+    "pdf": "b655267ddd6511fcb39f98d20d8e7137fd198e348f54d420fc0a0db09dbd7039",
+    "svg": "052b1e0c112afba55f00ed24c03a600d6c83d861c1f358c1ef134dd252bba1bc",
+    "png": "9e82e57a8e0e3ae1cdb0f729a2f243acdd17d0f7833996e5e858f9f9ebf4601b"
+  },
+  "canonical_export_identity": {
+    "canonical_figure": "figures/committing_content_age",
+    "pdf_and_svg": "Copied byte-for-byte from the current accepted manuscript figure exports",
+    "png": "Rendered from the released PDF at 2200 pixels wide"
+  },
+  "regeneration_validation": {
+    "rendered_size": [
+      2200,
+      1143
+    ],
+    "pdf_rgb_pixel_equal": true,
+    "mean_channel_difference": 0.0,
+    "pixels_differ": 0,
+    "svg_byte_equal": false
+  }
 }

@@ -1,4 +1,4 @@
-"""LongLive (NVlabs/LongLive @ e52d9ef) with or without Commit Forcing.
+"""LongLive (NVlabs/LongLive @ e52d9ef) with or without Recent-Context Committing.
 
     python integrations/longlive/generate.py --rule on --code /path/to/LongLive \
         --prompts eval/prompts/rollf200.txt --ids 0-199 --seconds 60 --seed 0 --out outputs/longlive
@@ -20,14 +20,14 @@ LATENT = (16, 60, 104)  # latent of one 480x832 frame
 FRAME_TOKENS = 1560  # tokens per latent frame
 
 
-def parse_args():
-    parser = argparse.ArgumentParser(description="LongLive with or without Commit Forcing")
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description="LongLive with or without Recent-Context Committing")
     add_common_args(parser)
     parser.add_argument("--code", required=True, help="LongLive checkout with commit_rule.patch applied")
     parser.add_argument("--lora", help="LoRA checkpoint (default: lora_ckpt of the config)")
     parser.add_argument("--commit-profile", choices=["recent6", "legacy12"], default="recent6",
                         help="on: recent6 reads 6 frames with base 12-frame storage; legacy12 reads 12 with 15-frame storage")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     for name in ("code", "prompts", "out", "ckpt", "lora"):  # before chdir
         if getattr(args, name):
             setattr(args, name, os.path.abspath(getattr(args, name)))

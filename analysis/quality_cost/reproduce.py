@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Replay Quality contributions, reported costs and LongLive's four-repeat observations."""
+"""Replay historical Quality contributions, costs and LongLive's four-repeat observations."""
 import argparse
 import csv
 import io

@@ -1,12 +1,12 @@
 # LongLive
 
-We apply Commit Forcing to [LongLive](https://github.com/NVlabs/LongLive) (LongLive-1.3B, upstream commit `e52d9ef`).
+We apply Recent-Context Committing to [LongLive](https://github.com/NVlabs/LongLive) (LongLive-1.3B, upstream commit `e52d9ef`).
 Each 3-frame latent block receives four denoising passes and one clean committing pass.
 
 | Configuration | Denoising reads | Committing reads | Physical KV storage |
 |:---|:---|:---|---:|
 | Base, `--rule off` | sink 3 + newest 9 | sink 3 + newest 9 | 12 latent frames |
-| Commit Forcing, `--rule on` | sink 3 + newest 9 | newest 6: current block + previous block | 12 latent frames |
+| Recent-Context Committing, `--rule on` | sink 3 + newest 9 | newest 6: current block + previous block | 12 latent frames |
 | Legacy, `--rule on --commit-profile legacy12` | sink 3 + newest 9 | newest 12 | 15 latent frames |
 
 The six-frame rule is the default. It preserves base storage and denoising access, excludes the separate sink read

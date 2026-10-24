@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "profile": "current6",
+  "sha256": {
+    "aggregate_paired_ci.csv": "3ab5ef14c5f7e0a0637498249b9b76ef261eeb5cd5a8c6c74081f685e819e898",
+    "component_paired_ci.csv": "ed4b673599e760bf7ef2934859b8f3f85105c595a4b1f3d5c2bd6c7836e38669",
+    "full_scores.csv": "83f52aa8f83603b2ff1efd3076bc661c5a8bf2684e900bec9350296455f7d8a5",
+    "protocol.json": "91c373ffe3a5d8065dc316731e34db4ba0d2767c9c92d6ec0a12f7bee676f89e",
+    "quality_decomposition.csv": "1756ddce1ccf72598eafb98bc156891f11e2ee02067c71317909dd65fa0e4bb0",
+    "source_results.json": "8f461f6bf4eeae75b18aa85f96c00b7fad9008dafb69f334afca1859d114447c",
+    "window_comparisons.csv": "4b26cbcd89d2916c95e29b2be24bf48669bbce4743c5a3127d2aa60147af6115"
+  },
+  "row_counts": {
+    "full_scores.csv": 12,
+    "aggregate_paired_ci.csv": 18,
+    "component_paired_ci.csv": 96,
+    "quality_decomposition.csv": 6,
+    "window_comparisons.csv": 12
+  },
+  "reference_package_sha256": {
+    "full_scores.csv": "4b9a99f02978cf7a2143931157617ff763eded29202f512dc647e8ea1c04667a",
+    "aggregate_paired_ci.csv": "48dc11f2b16c7bcd2926baefb242064471e655a159d4a78b3cdc4ca176eca466",
+    "component_paired_ci.csv": "6bfa6331816c4f9e874106e2b95f9631b71bcab879ea5a895eda625de2fe96cf",
+    "protocol.json": "720af356b1da2d5c862783041e1b6dcf8b5ba3ad8c19b73284b636353d9309ec"
+  },
+  "per_prompt_data_included": false
+}

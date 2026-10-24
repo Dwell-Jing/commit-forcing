@@ -1,4 +1,4 @@
-"""Self-Forcing with a 3-frame sink, with or without Recency Forcing reading and Commit Forcing.
+"""RF-TF: Self-Forcing with a sink/TRB, with or without Recent-Context Committing.
 
     python integrations/recency_forcing/generate.py --code /path/to/Self-Forcing --trb on --rule on \
         --prompts eval/prompts/rollf200.txt --ids 0-199 --seconds 60 --seed 0 --out outputs/recency_forcing
@@ -16,11 +16,12 @@ from einops import rearrange
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 from common.runner import (Timer, add_common_args, done, latent_frames, load_prompts, parse_ids,  # noqa: E402
                            save, seed_everything)
+from integrations.commit_contract import check_read_counts  # noqa: E402
 
 CACHE_FRAMES = 24  # KV cache length in latent frames
 SINK_FRAMES = 3
 RECENT_FRAMES = 18  # read after the sink: 12 history + 3 recent + 3 current
-COMMIT_FRAMES = 21  # read by the commit pass with --rule on
+COMMIT_FRAMES = 6  # current clean block + immediately preceding block
 
 
 def build_pipeline(code, ckpt):
@@ -51,6 +52,10 @@ def generate(pipe, prompt, frames):
 
 def check(counts, args, frames):
     """Once the cache is full the sink must shift; commit rule and TRB fire only when selected."""
+    reads = {int(event.removeprefix("commit_read_")): per_pass.get("commit", 0)
+             for event, per_pass in counts.items() if event.startswith("commit_read_")}
+    window = commit_window(args)
+    check_read_counts(reads, frames // 3, 30, window)
     if frames < CACHE_FRAMES:
         return
     fired = {event: sum(per_pass.values()) for event, per_pass in counts.items()}
@@ -68,10 +73,16 @@ def parse_args(argv=None):
     reading.add_argument("--reading", choices=["native", "rf"],
                          help="alias for --trb: native = off; rf = on")
     parser.add_argument("--code", required=True, help="Self-Forcing checkout with commit_rule.patch applied")
+    parser.add_argument("--commit-profile", choices=["recent6", "legacy21"], default="recent6",
+                        help="on: recent6 reads 6 latent frames; legacy21 retains the previous 21-frame control")
     args = parser.parse_args(argv)
     if args.trb is not None:
         args.reading = "rf" if args.trb == "on" else "native"
     return args
+
+
+def commit_window(args):
+    return (COMMIT_FRAMES if args.commit_profile == "recent6" else 21) if args.rule == "on" else None
 
 
 def main():
@@ -88,7 +99,7 @@ def main():
     pipe = build_pipeline(args.code, args.ckpt)
     counts = pipe.generator.model.set_cache_reading(
         recent_frames=RECENT_FRAMES, recency_bias=args.reading == "rf",
-        commit_frames=COMMIT_FRAMES if args.rule == "on" else None)
+        commit_frames=commit_window(args))
     for idx in ids:
         counts.clear()
         noise_seed = seed_everything(args.seed, idx)
@@ -96,7 +107,9 @@ def main():
             video = generate(pipe, prompts[idx], frames)
         check(counts, args, frames)
         save(args, idx, video, dict(
-            base="recency_forcing", reading=args.reading, rule=args.rule, idx=idx, seed=args.seed,
+            base="recency_forcing", method="RF-TF", reading=args.reading, rule=args.rule,
+            commit_profile=args.commit_profile, commit_frames=commit_window(args),
+            cache_frames=CACHE_FRAMES, idx=idx, seed=args.seed,
             noise_seed=noise_seed, prompt=prompts[idx], seconds=args.seconds, latent_frames=frames,
             video_frames=video.shape[0], counters=counts, wall_s=round(timer.seconds, 1)))
         pipe.vae.model.clear_cache()

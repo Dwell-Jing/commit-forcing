@@ -39,11 +39,11 @@
       "alias": "sgf",
       "pair": "SGF",
       "prompt_index": 19,
-      "heading": "(a) SGF: church on the Amalfi Coast",
+      "heading": "SGF",
       "base_arm": "SGF_N",
       "commit_arm": "SGF_W",
       "configuration": "Native SGF denoising; committing reads the newest 9 trajectory frames, excluding the sink.",
-      "visible_observation": "Base changes the church/coast composition across these samples; Commit Forcing retains a more similar church/coast layout.",
+      "visible_observation": "Base changes the church/coast composition across these samples; Recent-Context Committing retains a more similar church/coast layout.",
       "interpretation_limit": "The prompt requests a circling drone view. Composition stability alone does not establish motion quality or prompt adherence; initial rendered frames are visibly different.",
       "seed": 0,
       "prompt": "A stunning aerial photograph captured from a drone, circling around a majestic historic church perched atop a rocky outcropping along the Amalfi Coast. The camera captures the intricate architectural details and tiered pathways and patios that adorn the church, with waves crashing against the rocks below. The view extends to the horizon, showcasing the coastal waters and the rolling hills of the Amalfi Coast in Italy. Distant figures can be seen leisurely walking and enjoying the dramatic ocean views from the patios. The warm glow of the afternoon sun bathes the scene in a magical and romantic light, creating a breathtaking and serene atmosphere. The photo has a high-resolution, detailed quality that highlights every texture and color of the landscape. A wide-angle shot from a dynamic aerial perspective.",
@@ -73,11 +73,11 @@
       "alias": "cf",
       "pair": "Context Forcing",
       "prompt_index": 10,
-      "heading": "(b) CF (full rule): Zen garden in a glass sphere",
+      "heading": "Context Forcing",
       "base_arm": "CF",
       "commit_arm": "CF_W",
-      "configuration": "Native CF denoising; full committing rule excludes sink, slow memory, and stale frames, retaining fast FIFO/current context.",
-      "visible_observation": "An external large hand is visible in Base at 120 s and multiple rake-like tools at 238 s; the Commit Forcing samples retain the small figure inside the sphere without that external hand.",
+      "configuration": "Native CF denoising; committing reads the current 3 and immediately preceding 3 latent frames, excluding direct sink and earlier-memory access.",
+      "visible_observation": "An external large hand is visible in Base at 120 s and multiple rake-like tools at 238 s; the Recent-Context Committing samples retain the small figure inside the sphere without that external hand.",
       "interpretation_limit": "The prompt requests the small figure raking sand inside the sphere; no external hand is requested. This readable visual contrast coincides with a negative per-video Quality change, not an overall metric improvement.",
       "seed": 0,
       "prompt": "A close-up view of a glass sphere containing a tranquil Zen garden. Inside, a small Eastern dwarf with weathered skin and a serene expression is raking the sand, meticulously creating intricate patterns with a bamboo rake. His movements are deliberate and meditative, enhancing the peaceful atmosphere of the scene. The background is blurred, revealing only hints of greenery and rocks, adding to the serene setting. The sphere itself is polished, reflecting the surroundings subtly. The camera angle captures the dwarf from a slightly elevated position, emphasizing his focused and contemplative pose.",
@@ -383,121 +383,186 @@
     }
   ],
   "rendering": {
+    "method_name": "Recent-Context Committing",
+    "visible_method_label": "Recent-context",
+    "visible_commit_row_labels": {
+      "sgf": "Recent (9 frames)",
+      "cf": "Recent-context (6 frames)"
+    },
+    "case_role": {
+      "sgf": "9-frame historical-source control, not the adopted 6-frame method",
+      "cf": "Adopted current-plus-previous committing"
+    },
+    "model_label_placement": "Left outer column, vertical, centered across each pair of rows",
     "figure_size_inches": [
       7.15,
-      5.7
+      5.28
     ],
     "frame_bounds": [
       {
         "asset": "assets/source/qualitative_grid_inputs/sgf_p019_s0_base_000s.png",
         "bounds_inches": [
-          0.66,
-          0.315,
-          2.1316666666666664,
-          1.2298076923076922
+          0.91,
+          0.16,
+          2.0483333333333333,
+          1.1817307692307693
         ]
       },
       {
         "asset": "assets/source/qualitative_grid_inputs/sgf_p019_s0_base_120s.png",
         "bounds_inches": [
-          2.8266666666666667,
-          0.315,
-          2.1316666666666664,
-          1.2298076923076922
+          2.9933333333333336,
+          0.16,
+          2.0483333333333333,
+          1.1817307692307693
         ]
       },
       {
         "asset": "assets/source/qualitative_grid_inputs/sgf_p019_s0_base_238s.png",
         "bounds_inches": [
-          4.993333333333333,
-          0.315,
-          2.1316666666666664,
-          1.2298076923076922
+          5.076666666666667,
+          0.16,
+          2.0483333333333333,
+          1.1817307692307693
         ]
       },
       {
         "asset": "assets/source/qualitative_grid_inputs/sgf_p019_s0_commit_000s.png",
         "bounds_inches": [
-          0.66,
-          1.579807692307692,
-          2.1316666666666664,
-          1.2298076923076922
+          0.91,
+          1.376730769230769,
+          2.0483333333333333,
+          1.1817307692307693
         ]
       },
       {
         "asset": "assets/source/qualitative_grid_inputs/sgf_p019_s0_commit_120s.png",
         "bounds_inches": [
-          2.8266666666666667,
-          1.579807692307692,
-          2.1316666666666664,
-          1.2298076923076922
+          2.9933333333333336,
+          1.376730769230769,
+          2.0483333333333333,
+          1.1817307692307693
         ]
       },
       {
         "asset": "assets/source/qualitative_grid_inputs/sgf_p019_s0_commit_238s.png",
         "bounds_inches": [
-          4.993333333333333,
-          1.579807692307692,
-          2.1316666666666664,
-          1.2298076923076922
+          5.076666666666667,
+          1.376730769230769,
+          2.0483333333333333,
+          1.1817307692307693
         ]
       },
       {
         "asset": "assets/source/qualitative_grid_inputs/cf_p010_s0_base_000s.png",
         "bounds_inches": [
-          0.66,
-          3.14,
-          2.1316666666666664,
-          1.2298076923076922
+          0.91,
+          2.82,
+          2.0483333333333333,
+          1.1817307692307693
         ]
       },
       {
         "asset": "assets/source/qualitative_grid_inputs/cf_p010_s0_base_120s.png",
         "bounds_inches": [
-          2.8266666666666667,
-          3.14,
-          2.1316666666666664,
-          1.2298076923076922
+          2.9933333333333336,
+          2.82,
+          2.0483333333333333,
+          1.1817307692307693
         ]
       },
       {
         "asset": "assets/source/qualitative_grid_inputs/cf_p010_s0_base_238s.png",
         "bounds_inches": [
-          4.993333333333333,
-          3.14,
-          2.1316666666666664,
-          1.2298076923076922
+          5.076666666666667,
+          2.82,
+          2.0483333333333333,
+          1.1817307692307693
         ]
       },
       {
         "asset": "assets/source/qualitative_grid_inputs/cf_p010_s0_commit_000s.png",
         "bounds_inches": [
-          0.66,
-          4.404807692307692,
-          2.1316666666666664,
-          1.2298076923076922
+          0.91,
+          4.036730769230769,
+          2.0483333333333333,
+          1.1817307692307693
         ]
       },
       {
         "asset": "assets/source/qualitative_grid_inputs/cf_p010_s0_commit_120s.png",
         "bounds_inches": [
-          2.8266666666666667,
-          4.404807692307692,
-          2.1316666666666664,
-          1.2298076923076922
+          2.9933333333333336,
+          4.036730769230769,
+          2.0483333333333333,
+          1.1817307692307693
         ]
       },
       {
         "asset": "assets/source/qualitative_grid_inputs/cf_p010_s0_commit_238s.png",
         "bounds_inches": [
-          4.993333333333333,
-          4.404807692307692,
-          2.1316666666666664,
-          1.2298076923076922
+          5.076666666666667,
+          4.036730769230769,
+          2.0483333333333333,
+          1.1817307692307693
         ]
       }
     ],
-    "image_editability": "Twelve separately embedded raster frames; labels and frame borders are vector objects, SVG text is live.",
+    "callouts": [
+      {
+        "case": "sgf",
+        "arm": "base",
+        "time_seconds": 238,
+        "source_ellipse_cx_cy_rx_ry": [
+          313,
+          120,
+          82,
+          91
+        ]
+      },
+      {
+        "case": "sgf",
+        "arm": "commit",
+        "time_seconds": 238,
+        "source_ellipse_cx_cy_rx_ry": [
+          267,
+          111,
+          84,
+          96
+        ]
+      },
+      {
+        "case": "cf",
+        "arm": "base",
+        "time_seconds": 120,
+        "source_ellipse_cx_cy_rx_ry": [
+          357,
+          55,
+          48,
+          42
+        ]
+      },
+      {
+        "case": "cf",
+        "arm": "commit",
+        "time_seconds": 120,
+        "source_ellipse_cx_cy_rx_ry": [
+          357,
+          55,
+          48,
+          42
+        ]
+      }
+    ],
+    "callout_style": {
+      "fill": "none",
+      "color": "#FFD23F",
+      "line_width_pt": 1.65,
+      "halo_color": "#202B33",
+      "halo_width_pt": 2.6,
+      "meaning": "Church structure at 238 s on SGF and the matched external-hand region at 120 s on CF; visual guides only, not a measured ROI."
+    },
+    "image_editability": "Twelve separately embedded raster frames; labels, frame borders, and transparent callouts are vector objects, SVG text is live.",
     "output_files": [
       "assets/qualitative_grid.pdf",
       "assets/qualitative_grid.svg",
@@ -508,5 +573,6 @@
   "source_configuration_references": [
     "integrations/context_forcing/README.md",
     "integrations/sgf/README.md"
-  ]
+  ],
+  "label_edit": "SGF Recent (9 frames) is the original historical-source control; CF is the 6-frame current-plus-previous method. Four transparent yellow vector circles with dark outlines; original frame pixels remain untouched."
 }

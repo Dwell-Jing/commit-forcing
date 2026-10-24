@@ -1,0 +1,90 @@
+{
+  "purpose": "Original SGF source-control example and accepted vector layout anchors. No new inference or retouching.",
+  "layout_anchors": {
+    "powerpoint_reference": "figure1_outcomes_editable_v2.pptx",
+    "approved_sha256": "feccd26a470f4cfb9c9fbaaecb0e739df704fe41abb03eb7d73aeb35ec9b898e",
+    "accepted_edit_count": 6,
+    "committing_bracket_paths": {
+      "nonrecent": "M1059 315.2 V328.2 H2124.133333333333 V315.2",
+      "recent": "M1319.5333333333333 1035.2 V1043.2 H2122 V1035.2"
+    },
+    "result_arrow_paths": {
+      "nonrecent": "M2477.8 500.000052104598 L2532 500.000052104598 M2513.9333333333334 504.46666666666664 L2532 500.000052104598 L2513.9333333333334 495.53333333333336",
+      "recent": "M2478.5333333333333 1222.0334091571888 L2532 1222.0334091571888 M2514.1777777777775 1228.5333333333333 L2532 1222.0334091571888 L2514.1777777777775 1215.5333333333333"
+    },
+    "committing_brackets_include_current_clean_input": true,
+    "source_powerpoint_preserved": true,
+    "powerpoint_is_reference_only_not_runtime_dependency": true
+  },
+  "semantics": {
+    "figure_type": "Conceptual source-dependency overview and authentic qualitative results, not a fixed-clean paired reconstruction",
+    "shared_clean_role": "The shared operator path illustrates identical policies and tensor roles; the actual free trajectories each generate their own clean latents.",
+    "denoising_source_view": "Nonrecent and two Recent history cards remain fully visible. Current is a flat 5x3 grid filled only with illustrative noise, with no scene or person underneath. Denoising produces the clean latent; committing Current cards use the same full-cell flat grid without noise. Grid divisions are symbolic, not latent frames or model layers. Scene-card counts are role-level illustrations, not physical-cache frame counts.",
+    "native_committing": "sink3 + recent6 + current3 = 12 latent frames",
+    "recent_committing": "recent6 + current3 = 9 latent frames",
+    "slabs": "Slab glyphs outside the filmstrip indicate tensor/block roles; their offsets do not assert the number of Transformer layers, latent frames, tensor channels or physical-cache frames. Inline Current instead uses a flat grid. Clean latents are not per-layer KV.",
+    "persistent_sequence": "Distinct later blocks construct their own KV. Arrows denote further autoregressive generation, not direct KV decoding or copying the first KV.",
+    "gray_marks": "Schematic source-dependent influence carried into subsequent KV; shape, area, number and density are not quantitative. Fragmentation/spatial spread is not a measured monotone increase or acceleration of drift.",
+    "unmarked_recent": "Gridded recent-context glyphs without gray patches omit the depicted direct Nonrecent dependency; they do not imply empty KV, zero values, zero indirect historical dependence or zero total drift.",
+    "no_lag_curve": "No b+1/b+3, numeric lag, measured KV norm or monotone growth/decay series is drawn.",
+    "film_triangles": "Small rightward triangles mark temporal direction along the filmstrip, not an attention mask or a propagation wedge.",
+    "no_extra_module_forward_or_storage": true,
+    "photos": "Same prompt0 and initial-noise seed0 at238s; two separate free trajectories. Each original416x240 PNG is embedded unchanged and displayed through the same [90,0,326,240] crop. The apparent white rectangle was the real source frame illuminated shop sign, not a diagram artifact; no inpainting, retouching or selective crop was applied."
+  },
+  "original_frames": [
+    {
+      "arm": "native",
+      "path": "assets/source/teaser_inputs/sgf_p000_s0_native_238s.png",
+      "sha256": "db8c1f57dea9834b7dc09b122b953b905c97ab10d6913c711c3cc9f14cf9f262",
+      "display_rect": [
+        2540,
+        130,
+        589.5166666666667,
+        434.0
+      ],
+      "source_frame_size": [
+        416,
+        240
+      ],
+      "display_crop_xywh": [
+        90,
+        0,
+        326,
+        240
+      ],
+      "same_crop_for_both_arms": true,
+      "pixels_repainted_or_generated": false,
+      "crop_reason": "Tighter subject framing; removes the original upper-left illuminated shop sign from both display windows",
+      "seconds": 238,
+      "prompt": 0,
+      "seed": 0
+    },
+    {
+      "arm": "commit",
+      "path": "assets/source/teaser_inputs/sgf_p000_s0_commit_238s.png",
+      "sha256": "9e39361944106808815f4d433155eab33c8ad5d833d79ac56997724ff96bf7db",
+      "display_rect": [
+        2540,
+        850,
+        589.5166666666667,
+        434.0
+      ],
+      "source_frame_size": [
+        416,
+        240
+      ],
+      "display_crop_xywh": [
+        90,
+        0,
+        326,
+        240
+      ],
+      "same_crop_for_both_arms": true,
+      "pixels_repainted_or_generated": false,
+      "crop_reason": "Tighter subject framing; removes the original upper-left illuminated shop sign from both display windows",
+      "seconds": 238,
+      "prompt": 0,
+      "seed": 0
+    }
+  ]
+}

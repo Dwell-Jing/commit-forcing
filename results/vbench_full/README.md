@@ -1,6 +1,9 @@
 # Full VBench
 
-**Current main results:** [common946: all 8 paired configurations](common946/README.md), with official record-weighted aggregation and prompt-cluster intervals.
+**Current main results:** [common946: six paired generators](common946/README.md), each using Recent-Context
+Committing with the current and immediately preceding blocks (6 latent frames after startup). Updated summaries
+live under [common946/current6](common946/current6/). The original eight-pair package remains a separate historical
+record, including the two 9-frame ID-Forcing framework adaptations.
 
 ## Earlier three-model analysis
 
@@ -9,7 +12,9 @@ VBench-Long ([pipeline](../../eval/vbench_full/README.md)). Total, Quality and S
 `cal_final_score.py`; Δ is the paired difference with its 95% bootstrap interval over the 944 distinct prompts, `*` when
 the interval excludes 0.
 
-The tables are in [RESULTS.md](../../RESULTS.md#full-vbench).
+This earlier package retains 9-frame SGF, 21-frame RF-TF and 6-frame CF controls. It differs from the current
+six-generator method and the later historical eight-pair aggregation. Current and preserved results appear in
+[RESULTS.md](../../RESULTS.md#full-vbench).
 
 | File | Content |
 |---|---|
@@ -21,8 +26,8 @@ The tables are in [RESULTS.md](../../RESULTS.md#full-vbench).
 python eval/vbench_full/compare.py --spec results/vbench_full/specs/sgf.json
 ```
 
-| Arm | Integration and flags |
+| Historical arm | Integration and recorded committing context |
 |---|---|
-| `sgf`, `sgf+rule` | `integrations/sgf --reading native --rule off/on` |
-| `rf`, `rf+rule` | `integrations/recency_forcing --reading rf --rule off/on` |
-| `context_forcing`, `context_forcing+rule` | `integrations/context_forcing --rule off/on` |
+| `sgf`, `sgf+rule` | SGF native denoising; Base / 9-frame recent-context control |
+| `rf`, `rf+rule` | RF-TF denoising; Base / 21-frame recent-context control |
+| `context_forcing`, `context_forcing+rule` | Context Forcing; Base / 6-frame recent-context committing |

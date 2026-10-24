@@ -2,10 +2,10 @@
 
 <h1>What Helps Denoising Can Hurt Memory:<br>Rethinking History in Long Video Generation</h1>
 
-**Commit Forcing: a training-free rule for what a long-video model writes into its KV cache.**
+**Recent-Context Committing: construct new KV from the current and immediately preceding blocks.**
 
 [![Paper](https://img.shields.io/badge/Paper-coming%20soon-b31b1b.svg)](#news)&nbsp;
-[![Models](https://img.shields.io/badge/models-7-orange.svg)](#supported-models)&nbsp;
+[![Models](https://img.shields.io/badge/models-6-orange.svg)](#supported-models)&nbsp;
 [![Videos](https://img.shields.io/badge/videos-60%E2%80%93240%20s-orange.svg)](RESULTS.md)&nbsp;
 [![Code](https://img.shields.io/badge/code-Apache--2.0-blue.svg)](LICENSE)
 
@@ -31,9 +31,13 @@ future blocks. On LongLive and SGF, sink access helps denoising but can increase
 At fixed context size and temporal positions, older trajectory content produces lower mean long-range Subject
 Consistency on both generators.
 
-**Commit Forcing** preserves the base denoising policy and constructs clean KV from the current block and a
-configurable window of recent frames from the original generated trajectory. It requires no training or additional
-DiT forwards. On SGF, the sink stays stored and available during denoising; only its direct use during committing is masked.
+**Recent-Context Committing** preserves the base denoising policy and constructs new clean KV using the current
+block and the immediately preceding block from the original generated trajectory. The current block supplies clean
+latents; the preceding block is accessed through its stored KV. With 3 latent frames per block, the committing
+context contains 6 frames after startup (3 at the first block). Direct access to other history, including sink KV, is
+excluded during committing. Base cache storage and update remain in place; earlier history can still affect new KV
+indirectly through the generated current block and the preceding block's KV. The scheme requires no training or
+additional DiT forwards. Repository names and CLI flags retain their existing spelling for compatibility.
 
 ## Contributions
 
@@ -44,63 +48,65 @@ DiT forwards. On SGF, the sink stays stored and available during denoising; only
   committing intervention propagates through recent KV with clean latents fixed. Recent versus self-only committing
   exposes generator-dependent continuity and motion tradeoffs.
   ([historical recency](analysis/committing_content_age/README.md), [KV propagation](analysis/committing_propagation/README.md))
-- **Training-free committing.** Across 7 methods and 8 configurations, Commit Forcing improves Quality and Total
-  significantly in 5 configurations on 60-second VBench. Long-range Subject gains reproduce with 2 generation seeds
-  and extend to 240-second videos. ([results](#results))
+- **Training-free committing.** On 60-second VBench, current-plus-previous-block committing improves Quality and
+  Total significantly on 5 of 6 generators; all six paired point estimates are positive. LongLive gains in long-range
+  Subject Consistency extend to 120 and 240 seconds. Separate wider-context controls retain their two-seed results.
+  ([results](#results))
 
 <p align="center">
-  <img src="assets/method.png" width="92%" alt="Commit Forcing: preserve base denoising and select a recent trajectory window for clean KV construction.">
+  <img src="assets/method.png" width="92%" alt="Recent-Context Committing: construct new KV from the current and immediately preceding blocks while preserving base denoising and storage.">
 </p>
 
-<sub>The clean committing pass reads the current block and a configurable recent window. Base denoising and cache
-storage remain in place; the window controls the dependencies carried into newly constructed KV.</sub>
+<sub>The clean committing pass reads the current block and stored KV of the immediately preceding block: 3 + 3
+latent frames. Base denoising and cache storage remain in place.</sub>
 
 ## Results
 
 **Main evaluation: full VBench, 60 s**, the common 946-entry suite, one video per entry (generation seed 0), all 16 dimensions.
-Each row compares the same released weights with and without Commit Forcing. Native denoising and sampler settings
-remain model-specific; the generation prompts and scoring protocol are shared. The committing adaptations are
-described in [Supported models](#supported-models).
+Each row compares the same released weights with and without Recent-Context Committing. Every adapted generator
+uses the current and immediately preceding blocks (6 latent frames after startup). Native denoising, sampler and
+physical-storage settings remain model-specific; prompts and scoring protocol are shared.
 
 <table>
 <thead>
 <tr><th rowspan="2" align="left">Model</th><th colspan="3">Quality</th><th colspan="3">Total</th></tr>
-<tr><th>Base</th><th>+ CF</th><th>Δ</th><th>Base</th><th>+ CF</th><th>Δ</th></tr>
+<tr><th>Base</th><th>Recent-context</th><th>Δ</th><th>Base</th><th>Recent-context</th><th>Δ</th></tr>
 </thead>
 <tbody>
 <tr><td>Context Forcing</td><td align="right">84.79</td><td align="right">85.25</td><td align="right"><b>+0.46</b></td><td align="right">82.24</td><td align="right">82.68</td><td align="right"><b>+0.44</b></td></tr>
-<tr><td>ID-Forcing on LongLive</td><td align="right">84.91</td><td align="right">84.64</td><td align="right">−0.27</td><td align="right">82.92</td><td align="right">82.91</td><td align="right">−0.01</td></tr>
-<tr><td>Recency Forcing, training-free †</td><td align="right">84.77</td><td align="right">85.24</td><td align="right"><b>+0.47</b></td><td align="right">82.24</td><td align="right">83.08</td><td align="right"><b>+0.85</b></td></tr>
-<tr><td>ID-Forcing on Self-Forcing</td><td align="right">85.26</td><td align="right">85.21</td><td align="right">−0.05</td><td align="right">82.96</td><td align="right">83.15</td><td align="right">+0.19</td></tr>
-<tr><td>Rolling Sink</td><td align="right">84.84</td><td align="right">85.15</td><td align="right"><b>+0.32</b></td><td align="right">82.90</td><td align="right">83.18</td><td align="right"><b>+0.28</b></td></tr>
+<tr><td>Rolling Sink</td><td align="right">84.84</td><td align="right">85.25</td><td align="right"><b>+0.41</b></td><td align="right">82.90</td><td align="right">83.26</td><td align="right"><b>+0.36</b></td></tr>
+<tr><td>Recency Forcing, training-free †</td><td align="right">84.77</td><td align="right">85.42</td><td align="right"><b>+0.65</b></td><td align="right">82.24</td><td align="right">83.34</td><td align="right"><b>+1.10</b></td></tr>
 <tr><td>LongLive</td><td align="right">84.70</td><td align="right">84.99</td><td align="right"><b>+0.29</b></td><td align="right">83.05</td><td align="right">83.36</td><td align="right"><b>+0.31</b></td></tr>
-<tr><td>SGF+</td><td align="right">86.32</td><td align="right">86.61</td><td align="right">+0.29</td><td align="right">84.30</td><td align="right">84.60</td><td align="right">+0.30</td></tr>
-<tr><td>SGF</td><td align="right">86.06</td><td align="right">87.22</td><td align="right"><b>+1.16</b></td><td align="right">83.85</td><td align="right">84.94</td><td align="right"><b>+1.09</b></td></tr>
+<tr><td>SGF+</td><td align="right">86.32</td><td align="right">86.63</td><td align="right">+0.32</td><td align="right">84.30</td><td align="right">84.64</td><td align="right">+0.34</td></tr>
+<tr><td>SGF</td><td align="right">86.06</td><td align="right">87.33</td><td align="right"><b>+1.27</b></td><td align="right">83.85</td><td align="right">84.82</td><td align="right"><b>+0.98</b></td></tr>
 </tbody>
 </table>
 
-Rows follow the paper's ascending Total with Commit Forcing. Scores ×100. **+ CF**: + Commit Forcing; **Δ**: + CF − Base. Bold Δ marks statistically significant changes.
-Quality combines seven visual dimensions; Total also includes nine semantic dimensions.
-† RF-TF applies Recency Forcing's Temporal Response Bias to released Self-Forcing weights; it uses no RF-trained checkpoint.
-Quality and Total improve significantly in 5 configurations. SGF has the largest Total gain, +1.09 points.
+Rows follow ascending Total with recent-context committing. Scores ×100; differences are computed before rounding.
+Bold Δ marks a paired 95% prompt-cluster interval excluding 0. Quality combines seven visual dimensions; Total
+also includes nine semantic dimensions. † RF-TF applies Recency Forcing's Temporal Response Bias to released
+Self-Forcing weights; it uses no RF-trained checkpoint.
+Quality and Total improve significantly on 5 of 6 generators. RF-TF has the largest Total gain, +1.10 points.
+SGF's Quality gain is +1.27, of which Dynamic Degree contributes +1.01; Motion Smoothness decreases by 0.29 points.
 [All dimensions, intervals and protocol records](results/vbench_full/common946/README.md).
-SGF's Quality gain is concentrated in motion retention: Dynamic Degree contributes 1.10 of its 1.16 points.
-[Quality decomposition and measured cost](analysis/quality_cost/README.md).
+The two 9-frame ID-Forcing adaptations are [separate framework comparisons](RESULTS.md#id-forcing-framework-comparisons).
 
-**MovieGen cross-protocol check, 60 s videos**, 200 fixed [MovieGen prompts](eval/prompts/README.md), generation seed 0.
+**Supporting context controls: MovieGen, 60 s videos**, 200 fixed [MovieGen prompts](eval/prompts/README.md), generation seed 0.
 Quality combines VBench's seven visual dimensions using its official normalization and weights.
 
-| Model | Base | + Commit Forcing | Δ Quality | Δ Consistency |
+| Model | Base | Recent-context control | Δ Quality | Δ Consistency |
 |:---|--:|--:|--:|--:|
-| SGF | 83.58 | 84.62 | **+1.04** | **+4.40** |
-| Recency Forcing, training-free † | 82.01 | 82.47 | **+0.46** | **+3.86** |
+| SGF, 9 frames | 83.58 | 84.62 | **+1.04** | **+4.40** |
+| RF-TF †, 21 frames | 82.01 | 82.47 | **+0.46** | **+3.86** |
 | LongLive | 82.23 | 82.73 | **+0.49** | **+1.20** |
 | Context Forcing, sink exclusion | 82.78 | 83.11 | **+0.32** | **+1.80** |
 | Context Forcing, full rule | 82.78 | 82.91 | +0.13 | **+3.23** |
-| Rolling Sink | 82.61 | 82.72 | +0.11 | **+0.67** |
-| Self-Forcing with sink | 81.33 | 81.63 | +0.31 | **+3.38** |
+| Rolling Sink, 21 frames | 82.61 | 82.72 | +0.11 | **+0.67** |
+| Self-Forcing with sink, 21 frames | 81.33 | 81.63 | +0.31 | **+3.38** |
 
-Base: the original model. + Commit Forcing: the same weights and initial noise, with Commit Forcing (no training).
+These supporting studies retain their original contexts: 9 frames on SGF, 21 on RF-TF, Rolling Sink and
+Self-Forcing with sink, and 6 on LongLive and CF's full rule. The CF sink-exclusion row is a separate control.
+They do not evaluate the updated 6-frame SGF, RF-TF or Rolling Sink method arms.
 Consistency: VBench-Long's clip-to-clip subject consistency, our measure of long-range consistency.
 **bold Δ**: the paired 95% bootstrap interval excludes 0. All seven clip-to-clip Subject gains reproduce with generation
 seed 1. [Both seeds and all metrics](RESULTS.md#committing-replication). SGF+, ID-Forcing and SGF + RF compatibility
@@ -108,20 +114,21 @@ comparisons remain in [RESULTS.md](RESULTS.md).
 
 The standard suite scores dimension-specific subsets and applies VBench's static filter for Flickering.
 The MovieGen evaluation scores all seven visual dimensions on each prompt and leaves Flickering unfiltered.
-Each Base / + Commit Forcing pair shares its inputs and scoring settings.
+Each Base / adapted pair shares its inputs and scoring settings.
 LongLive uses 6-frame committing: 3 recent frames and the current 3-frame block.
 
 **Longer videos, 120–240 s**, VBench-Long Quality. Compare within each prompt set:
 
-| Model | Length | Prompts | Base | + Commit Forcing | Δ Quality | Δ Consistency |
+| Model | Length | Prompts | Base | Recent-context | Δ Quality | Δ Consistency |
 |:---|:---|:---|--:|--:|--:|--:|
-| SGF | 240 s | 32 MovieGen | 83.97 | 84.69 | **+0.72** | **+5.07** |
+| SGF, 9-frame control | 240 s | 32 MovieGen | 83.97 | 84.69 | **+0.72** | **+5.07** |
 | Context Forcing | 240 s | 32 MovieGen | 83.60 | 84.04 | +0.44 | **+2.23** |
 | LongLive, 6 frames | 120 s | 128 of ID-Forcing | 81.72 | 82.05 | **+0.33** | **+1.87** |
 | LongLive, 6 frames | 240 s | 128 of ID-Forcing | 81.56 | 81.84 | **+0.28** | **+2.55** |
-| ID-Forcing on Self-Forcing | 240 s | 128 of ID-Forcing | 81.32 | 81.65 | **+0.34** | **+3.58** |
+| ID-Forcing on Self-Forcing, 9-frame adaptation | 240 s | 128 of ID-Forcing | 81.32 | 81.65 | **+0.34** | **+3.58** |
 
-Intervals, the second seed, 120 s videos and every component score: **[RESULTS.md](RESULTS.md)**.
+CF and LongLive use the current and preceding blocks. SGF remains a wider-context supporting reference; the
+ID-Forcing adaptation uses 9 frames within its own framework. Intervals, the second seed, 120 s videos and every component score: **[RESULTS.md](RESULTS.md)**.
 The 240-second LongLive six-frame results are complete; the [12-frame control](results/long_horizon/README.md) remains available.
 
 ## Human evaluation
@@ -131,20 +138,22 @@ units, including one joint response from 3 people. Win rates exclude ties.
 
 | Comparison | Subject and scene consistency | Overall preference |
 |:---|--:|--:|
-| SGF + Commit Forcing vs. SGF | **75%** | **74%** |
-| LongLive + Commit Forcing vs. LongLive | 43% | 45% |
-| LongLive + Commit Forcing vs. ID-Forcing | **90%** | **88%** |
+| SGF, 9-frame recent-context control vs. SGF | **75%** | **74%** |
+| LongLive + Recent-Context Committing vs. LongLive | 43% | 45% |
+| LongLive + Recent-Context Committing vs. ID-Forcing | **90%** | **88%** |
 
+The SGF rates describe the 9-frame supporting control. LongLive uses the current and preceding blocks.
 [Counts, recorded intervals and evaluation protocol](results/human_evaluation/README.md).
 
 ## Qualitative comparisons
 
 <p align="center">
-  <img src="assets/qualitative_grid.png" width="100%" alt="Paired SGF and Context Forcing frames at 0, 120 and 238 seconds, with Base and Commit Forcing rows.">
+  <img src="assets/qualitative_grid.png" width="100%" alt="Paired SGF and Context Forcing frames at 0, 120 and 238 seconds, with base and recent-context rows.">
 </p>
 
-Paired 240-second examples from the paper, using the same prompt and initial-noise seed. SGF retains church and
-coastline details; Context Forcing retains the requested figure inside a glass sphere. The CF example has a lower
+Paired 240-second examples use the same prompt and initial-noise seed. SGF is the 9-frame source-control reference;
+Context Forcing uses the current and preceding blocks. SGF retains church and coastline details; Context Forcing
+retains the requested figure inside a glass sphere. The CF example has a lower
 Quality score (−0.40 points). [Selection and source frames](assets/README.md) · [More examples and videos](assets/qualitative/README.md).
 
 ## Quickstart
@@ -160,6 +169,9 @@ Install the [tested environment](setup/README.md) and download the weights as de
 [integration README](#supported-models).
 
 ### 2. Generate
+
+The default rule uses the current and immediately preceding blocks (6 latent frames after startup). Historical
+9-frame SGF controls use `--commit-profile legacy`; see the [integration settings](integrations/sgf/README.md).
 
 ```bash
 python integrations/sgf/generate.py --code third_party/sgf --reading native --rule on \
@@ -182,40 +194,44 @@ python eval/vbench_long/collect.py --work vb_work --label sgf+rule --out scores.
 python eval/vbench_long/compare.py --scores scores.csv --seed 0 --pair sgf+rule:sgf
 ```
 
-The [VBench-Long pipeline](eval/vbench_long/README.md) gives the setup (VBench @45e79ec) and the statistics; the
+The [VBench-Long pipeline](eval/vbench_long/README.md) gives the setup (VBench @45e79ec) and the statistics; a new
+6-frame rollf200 run is distinct from the archived 9-frame SGF supporting control. The
 [full-VBench pipeline](eval/vbench_full/README.md) scores the 946-prompt suite.
 
 ### 4. Reproduce our tables
 
 ```bash
 python eval/vbench_full/reproduce_common946.py
+python eval/vbench_full/reproduce_common946.py --profile historical
 python assets/source/make_commit_effects.py --check-only
 ```
 
-These commands verify the main VBench scores and the two-seed committing figure. Inputs and reproduction commands
-for the other comparisons are listed in [RESULTS.md](RESULTS.md) and [results/](results/README.md).
+The default command validates current point estimates, normalization, component sums and correspondence to the
+frozen reported intervals; it does not recompute the updated arms' intervals. The historical profile replays the
+preserved package's paired bootstrap from public per-prompt contributions. The last command checks the supporting
+two-seed figure. Other comparisons and commands are listed in [RESULTS.md](RESULTS.md) and [results/](results/README.md).
 
 ## Supported models
 
-| Model | Upstream code | Commit pass reads: Base | + Commit Forcing |
-|:---|:---|:---|:---|
-| [SGF](integrations/sgf/README.md) | [Self_Gradient_Forcing](https://github.com/zhuang2002/Self_Gradient_Forcing) | sink + recent frames | newest 9 frames |
-| [SGF+](integrations/sgf_plus/README.md) | [Self_Gradient_Forcing_Plus](https://github.com/Zihan-Su/Self_Gradient_Forcing_Plus) | sink + recent frames | newest 9 frames |
-| [Recency Forcing](integrations/recency_forcing/README.md) | [Self-Forcing](https://github.com/guandeh17/Self-Forcing) | sink 3 + newest 18 frames | newest 21 frames |
-| [LongLive](integrations/longlive/README.md) | [LongLive](https://github.com/NVlabs/LongLive) | sink 3 + newest 9 frames | newest 6 frames |
-| [Context Forcing](integrations/context_forcing/README.md) | [Context-Forcing](https://github.com/chenshuo20/Context-Forcing) | sink + slow memory + fast window | fast window |
-| [Rolling Sink](integrations/rolling_sink/README.md) | [Rolling-Sink](https://github.com/Rolling-Sink/Rolling-Sink) | replayed history | real committed history |
-| [ID-Forcing](integrations/id_forcing/README.md) | [ID-Forcing](https://github.com/In-Distribution-Forcing/ID-Forcing) | the chunk itself | the 2 previous chunks + the chunk |
+The current main method uses the same 6-frame committing context on each of these generators. The released
+integration interfaces and historical controls are documented per model; a command reproducing a supporting
+control should retain that control's original context.
 
-The last two columns list what the commit pass reads. Each folder holds the patch (ID-Forcing: none; we import its code
-from your checkout), `generate.py` and a README with the setup and the activation counters that confirm Commit Forcing
-is on.
+| Model | Upstream code | Current main committing context |
+|:---|:---|:---|
+| [SGF](integrations/sgf/README.md) | [Self_Gradient_Forcing](https://github.com/zhuang2002/Self_Gradient_Forcing) | current block + immediately preceding block |
+| [SGF+](integrations/sgf_plus/README.md) | [Self_Gradient_Forcing_Plus](https://github.com/Zihan-Su/Self_Gradient_Forcing_Plus) | current block + immediately preceding block |
+| [Recency Forcing, training-free](integrations/recency_forcing/README.md) | [Self-Forcing](https://github.com/guandeh17/Self-Forcing) | current block + immediately preceding block |
+| [LongLive](integrations/longlive/README.md) | [LongLive](https://github.com/NVlabs/LongLive) | current block + immediately preceding block |
+| [Context Forcing](integrations/context_forcing/README.md) | [Context-Forcing](https://github.com/chenshuo20/Context-Forcing) | current block + immediately preceding block |
+| [Rolling Sink](integrations/rolling_sink/README.md) | [Rolling-Sink](https://github.com/Rolling-Sink/Rolling-Sink) | current block + immediately preceding block |
 
-On ID-Forcing/Self-Forcing, the adaptation also retains the original handover KV and omits recurrent tail re-encoding.
-LongLive's standard-suite comparison uses 6-frame committing with 12 physical cache frames in both arms.
-The earlier custom-prompt runs use 15 physical frames in both arms; the 12-frame committing variant remains a control.
-Recent history is defined by its original time in the generated trajectory; replaying an old
-frame into a nearby cache slot does not make it recent.
+[ID-Forcing](integrations/id_forcing/README.md) is retained as a separate framework comparison with 9-frame
+adaptations (6 historical + 3 current frames). On its Self-Forcing backbone, the adaptation also retains original
+handover KV and omits recurrent tail re-encoding.
+LongLive's standard-suite comparison uses 12 physical cache frames in both arms. Its custom-prompt runs retain
+15 physical frames in both arms; 12-frame committing remains a control. Recent history is defined by its original
+time in the generated trajectory; replaying an old frame into a nearby cache slot does not make it recent.
 
 ## Mechanism analyses
 
@@ -248,7 +264,7 @@ intervened entries leave the cache at lag 3. The difference decays across blocks
 Generation probes show small differences without significant signed saturation or brightness shifts.
 [Intervention and readouts](analysis/committing_propagation/README.md).
 
-The [SGF equal-count control](analysis/sgf_committing_controls/README.md) compares 2 nine-frame contexts within the
+The supporting 9-frame [SGF equal-count control](analysis/sgf_committing_controls/README.md) compares 2 nine-frame contexts within the
 same physical cache. Recent context improves Quality by 1.25 and clip-to-clip Subject by 4.54 points over sink plus recent.
 Relative to self-only, it improves smoothness and flicker while reducing Dynamic Degree, with no significant Quality
 or long-range Subject advantage. [Window comparisons](analysis/commit_window/README.md).
@@ -266,9 +282,10 @@ available. [Diagnostic metrics](analysis/metrics/README.md) defines the associat
 
 ## Scope
 
-We evaluate released Wan-based generators with persistent KV and a clean committing pass. On base Self-Forcing,
-committing already excludes nonrecent history, so Commit Forcing makes no change. Effects vary with the generator
-and recent-window length. Training the committing rule and learned context selection are future work.
+We evaluate released Wan-based generators with persistent KV and a clean committing pass. Window comparisons
+show generator-dependent continuity and motion tradeoffs; they do not establish a universally optimal context
+length. The main method fixes the context to the current and immediately preceding blocks. Training the committing
+rule and learned context selection are future work.
 
 ## Read more
 

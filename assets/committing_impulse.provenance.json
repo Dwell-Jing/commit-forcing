@@ -1,5 +1,6 @@
 {
   "artifact": "committing_impulse",
+  "status": "Current shared-palette rendering with shortened axis labels",
   "source": "assets/source/make_committing_impulse.py",
   "data": {
     "path": "assets/source/kv_propagation.csv",
@@ -124,15 +125,58 @@
       0.0
     ]
   },
+  "axis_labels": {
+    "x": "Blocks after intervention",
+    "y": "KV difference"
+  },
+  "palette": {
+    "source": "assets/source/paper_palette.py",
+    "K": "#202B33",
+    "V": "#A64F35",
+    "Self-only": "#67717A"
+  },
+  "legend": [
+    "K",
+    "V",
+    "Self-only"
+  ],
+  "removed": [
+    "In-plot cache-removal text",
+    "Vertical cache-removal line",
+    "Pre-removal gray shading"
+  ],
   "preserved": [
     "All original K/V means and 95% intervals",
     "Self-only zero negative control",
-    "Axis limits/ticks/labels",
-    "Three-series legend",
-    "Marker and line styles"
+    "Axis limits/ticks",
+    "All three series and their markers"
   ],
   "scope": "Relative L2 differences in later-block KV under paired fixed clean inputs; not a video-quality or visible-drift score",
   "interpretation": "Recent-context reconstruction transmits differences that decay. Self-only reads no earlier blocks and transmits no later-KV difference under this controlled protocol. The plot does not rank generation quality.",
-  "canonical_pdf_sha256": "d42685f1488b454371b19e4be007db487d0010a4a7b29541a3c99ae1e0dbf7f1",
-  "canonical_svg_sha256": "427e9121e137d9706b754e64861b35bc9fd8a9918b019856cd6b816a1d73b5c0"
+  "caption_handoff": "K and V are relative L2 differences in subsequent-block KV under recent-context committing with clean latents fixed. Keep the lag3 original-entry removal and 95% prompt-bootstrap intervals in the caption. Self-only K and V are zero; all means and intervals remain unchanged.",
+  "exports": {
+    "pdf": "58f0e003f9eb107696281451c610c30312d211719149e1a1392d2183bb91077a",
+    "svg": "8dd957a9cd8d00331869bd505506f73ccb5849a9e57bf265ab71cfd92a6db29a"
+  },
+  "source_sha256": "b22b5b0fbffaa1267d3362ef03e8be0a5e235d8a6a096ad08dd9fb6c8c49034d",
+  "publication_exports": {
+    "pdf": "58f0e003f9eb107696281451c610c30312d211719149e1a1392d2183bb91077a",
+    "svg": "8dd957a9cd8d00331869bd505506f73ccb5849a9e57bf265ab71cfd92a6db29a",
+    "png": "c821c7ddbbb0d70c30922ea393cbe47d905cf7ccb7d5e3551c69a60706c1683c"
+  },
+  "canonical_export_identity": {
+    "canonical_figure": "figures/committing_impulse",
+    "pdf_and_svg": "Copied byte-for-byte from the current accepted manuscript figure exports",
+    "png": "Rendered from the released PDF at 2200 pixels wide"
+  },
+  "regeneration_validation": {
+    "rendered_size": [
+      2200,
+      860
+    ],
+    "pdf_rgb_pixel_equal": true,
+    "mean_channel_difference": 0.0,
+    "pixels_differ": 0,
+    "svg_byte_equal": false
+  }
 }

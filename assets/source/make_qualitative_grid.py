@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Render a paired 240-second case grid using only archived video frames.
 
-The released 416 x 240 PNG cells preserve the decoded archived contact-sheet
-pixels. Their source hashes and selection record accompany the frames. Neither frames nor evaluator
+The released PNG inputs are the unchanged 416 x 240 cells decoded from
+archived contact sheets. The recorded hashes and source selection accompany
+the inputs; no private contact sheets are required to rerender this layout. Neither frames nor evaluator
 outputs are generated, retouched, or rescored. The figure's SVG retains live
 text and twelve separate PNG images; PDF is exported from the same layout.
 
@@ -11,21 +12,25 @@ Run with a Python environment containing Pillow, numpy, and matplotlib.
 
 from __future__ import annotations
 
+import csv
+import argparse
 import hashlib
 import json
 import os
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-FIG = ROOT / "assets"
-ASSET = FIG / "source/qualitative_grid_inputs"
+FIG = Path(os.environ.get("FIGURE_OUTPUT_DIR", ROOT / "assets"))
+ASSET = ROOT / "assets/source/qualitative_grid_inputs"
 PREVIEW = FIG
-os.environ.setdefault("MPLCONFIGDIR", str(Path(os.environ.get("TMPDIR", "/tmp")) / "commit-forcing-mpl"))
+STEM = "qualitative_grid"
+os.environ.setdefault("MPLCONFIGDIR", str(Path(os.environ.get("TMPDIR", "/tmp")) / "recent-context-mpl"))
 
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle
+from matplotlib.patches import Ellipse, Rectangle
 import numpy as np
 from PIL import Image
 
@@ -37,22 +42,31 @@ SHEET_SIZE = (2170, 508)
 INK = "#202B33"
 MUTED = "#67717A"
 RULE = "#C6CDD1"
+CALLOUT_YELLOW = "#FFD23F"
+# Source-pixel coordinates: center x/y and radius x/y. These are transparent
+# vector guides, not quantitative regions or edits to the archived frames.
+CALLOUTS = {
+    ("sgf", "base", 238): (313, 120, 82, 91),
+    ("sgf", "commit", 238): (267, 111, 84, 96),
+    ("cf", "base", 120): (357, 55, 48, 42),
+    ("cf", "commit", 120): (357, 55, 48, 42),
+}
 
 CASES = (
     {
         "alias": "sgf", "pair": "SGF", "prompt_index": 19,
-        "heading": "(a) SGF: church on the Amalfi Coast",
+        "heading": "SGF",
         "base_arm": "SGF_N", "commit_arm": "SGF_W",
         "configuration": "Native SGF denoising; committing reads the newest 9 trajectory frames, excluding the sink.",
-        "visible_observation": "Base changes the church/coast composition across these samples; Commit Forcing retains a more similar church/coast layout.",
+        "visible_observation": "Base changes the church/coast composition across these samples; Recent-Context Committing retains a more similar church/coast layout.",
         "interpretation_limit": "The prompt requests a circling drone view. Composition stability alone does not establish motion quality or prompt adherence; initial rendered frames are visibly different.",
     },
     {
         "alias": "cf", "pair": "Context Forcing", "prompt_index": 10,
-        "heading": "(b) CF (full rule): Zen garden in a glass sphere",
+        "heading": "Context Forcing",
         "base_arm": "CF", "commit_arm": "CF_W",
-        "configuration": "Native CF denoising; full committing rule excludes sink, slow memory, and stale frames, retaining fast FIFO/current context.",
-        "visible_observation": "An external large hand is visible in Base at 120 s and multiple rake-like tools at 238 s; the Commit Forcing samples retain the small figure inside the sphere without that external hand.",
+        "configuration": "Native CF denoising; committing reads the current 3 and immediately preceding 3 latent frames, excluding direct sink and earlier-memory access.",
+        "visible_observation": "An external large hand is visible in Base at 120 s and multiple rake-like tools at 238 s; the Recent-Context Committing samples retain the small figure inside the sphere without that external hand.",
         "interpretation_limit": "The prompt requests the small figure raking sand inside the sphere; no external hand is requested. This readable visual contrast coincides with a negative per-video Quality change, not an overall metric improvement.",
     },
 )
@@ -66,6 +80,15 @@ def rel(path: Path) -> str:
     return os.path.relpath(path, ROOT)
 
 
+def write_json_atomic(path: Path, data: dict) -> None:
+    temp = path.with_name("." + path.name + ".tmp")
+    try:
+        temp.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
+        temp.replace(path)
+    finally:
+        temp.unlink(missing_ok=True)
+
+
 def render(frame_records: list[dict]) -> dict:
     plt.rcParams.update({
         "font.family": "sans-serif", "font.sans-serif": ["Arial", "DejaVu Sans"],
@@ -73,11 +96,11 @@ def render(frame_records: list[dict]) -> dict:
         "svg.fonttype": "none", "pdf.fonttype": 42, "ps.fonttype": 42,
         "figure.facecolor": "white", "savefig.facecolor": "white",
     })
-    width, height = 7.15, 5.70
-    left, right, h_gap, v_gap = .66, .025, .035, .035
+    width, height = 7.15, 5.28
+    left, right, h_gap, v_gap = .91, .025, .035, .035
     frame_w = (width - left - right - 2 * h_gap) / 3
     frame_h = frame_w * CELL_H / CELL_W
-    group_top = (.315, 3.14)
+    group_top = (.16, 2.82)
     fig = plt.figure(figsize=(width, height))
     by_key = {(r["case"], r["display_arm"], r["time_seconds"]): r for r in frame_records}
     positions = []
@@ -87,12 +110,14 @@ def render(frame_records: list[dict]) -> dict:
 
     for case_index, case in enumerate(CASES):
         top = group_top[case_index]
-        txt(.035, top - .245, case["heading"], fontsize=9.9, fontweight="bold", va="center")
+        txt(.115, top + frame_h + v_gap / 2, case["heading"], fontsize=9.9,
+            rotation=90, rotation_mode="anchor", ha="center", va="center")
         for col, sec in enumerate(TIMES):
             x = left + col * (frame_w + h_gap)
             txt(x + frame_w / 2, top - .075, f"{sec} s", fontsize=9.0,
                 color=MUTED, ha="center", va="center")
-        for row_index, (arm, label) in enumerate((("base", "Base"), ("commit", "+Commit\nForcing"))):
+        commit_label = "Recent\n(9 frames)" if case["alias"] == "sgf" else "Recent-\ncontext"
+        for row_index, (arm, label) in enumerate((("base", "Base"), ("commit", commit_label))):
             y = top + row_index * (frame_h + v_gap)
             txt(left - .065, y + frame_h / 2, label, fontsize=9.0,
                 ha="right", va="center", linespacing=1.20)
@@ -103,6 +128,13 @@ def render(frame_records: list[dict]) -> dict:
                                      frame_w / width, frame_h / height))
                 with Image.open(ROOT / frame["asset"]) as im:
                     axes.imshow(np.asarray(im), interpolation="none", aspect="equal")
+                callout = CALLOUTS.get((case["alias"], arm, sec))
+                if callout is not None:
+                    cx, cy, rx, ry = callout
+                    for color, line_width in ((INK, 2.6), (CALLOUT_YELLOW, 1.65)):
+                        axes.add_patch(Ellipse((cx, cy), 2 * rx, 2 * ry,
+                                              fill=False, edgecolor=color,
+                                              linewidth=line_width, zorder=5))
                 axes.set_axis_off()
                 # The stroke is outside the image; it does not alter frame pixels.
                 fig.add_artist(Rectangle((x / width, 1 - (y + frame_h) / height),
@@ -114,22 +146,32 @@ def render(frame_records: list[dict]) -> dict:
     temp_paths = []
     try:
         for fmt, folder in (("pdf", FIG), ("svg", FIG), ("png", PREVIEW)):
-            destination = folder / f"qualitative_grid.{fmt}"
-            temp = folder / f".qualitative_grid.render.{fmt}"
+            destination = folder / f"{STEM}.{fmt}"
+            temp = folder / f".{STEM}.render.{fmt}"
             temp_paths.append(temp)
-            metadata = ({"Title": "Paired 240-second qualitative cases", "CreationDate": None,
+            metadata = ({"Title": "Recent-Context Committing: paired 240-second qualitative cases", "CreationDate": None,
                          "ModDate": None} if fmt == "pdf" else
-                        {"Title": "Paired 240-second qualitative cases", "Date": None} if fmt == "svg" else None)
+                        {"Title": "Recent-Context Committing: paired 240-second qualitative cases", "Date": None} if fmt == "svg" else None)
             fig.savefig(temp, format=fmt, dpi=300, metadata=metadata)
             temp.replace(destination)
     finally:
         plt.close(fig)
         for temp in temp_paths:
             temp.unlink(missing_ok=True)
-    return {"figure_size_inches": [width, height], "frame_bounds": positions,
-            "image_editability": "Twelve separately embedded raster frames; labels and frame borders are vector objects, SVG text is live.",
-            "output_files": [rel(FIG / "qualitative_grid.pdf"), rel(FIG / "qualitative_grid.svg"),
-                             rel(PREVIEW / "qualitative_grid.png")]}
+    return {"method_name": "Recent-Context Committing", "visible_method_label": "Recent-context",
+            "visible_commit_row_labels": {"sgf": "Recent (9 frames)", "cf": "Recent-context (6 frames)"},
+            "case_role": {"sgf": "9-frame historical-source control, not the adopted 6-frame method", "cf": "Adopted current-plus-previous committing"},
+            "model_label_placement": "Left outer column, vertical, centered across each pair of rows",
+            "figure_size_inches": [width, height], "frame_bounds": positions,
+            "callouts": [{"case": case, "arm": arm, "time_seconds": sec,
+                          "source_ellipse_cx_cy_rx_ry": list(ellipse)}
+                         for (case, arm, sec), ellipse in CALLOUTS.items()],
+            "callout_style": {"fill": "none", "color": CALLOUT_YELLOW,
+                              "line_width_pt": 1.65, "halo_color": INK,
+                              "halo_width_pt": 2.6,
+                              "meaning": "Church structure at 238 s on SGF and the matched external-hand region at 120 s on CF; visual guides only, not a measured ROI."},
+            "image_editability": "Twelve separately embedded raster frames; labels, frame borders, and transparent callouts are vector objects, SVG text is live.",
+            "output_files": [f"assets/{STEM}.{ext}" for ext in ("pdf", "svg", "png")]}
 
 
 def main() -> None:
@@ -144,10 +186,14 @@ def main() -> None:
         with Image.open(path) as im:
             if im.size != (CELL_W, CELL_H):
                 raise ValueError(f"Frame geometry mismatch: {path.name}")
-    FIG.mkdir(exist_ok=True)
-    render(frames)
+    FIG.mkdir(parents=True, exist_ok=True)
+    rendering = render(frames)
+    subprocess.run(["pdftoppm", "-singlefile", "-png", "-scale-to", "2200", str(FIG / "qualitative_grid.pdf"), str(FIG / "qualitative_grid")], check=True)
+    record["rendering"] = rendering
+    record["label_edit"] = "SGF Recent (9 frames) is the original source-control example; CF uses current plus previous (6 frames). Four transparent yellow circles with dark outlines highlight paired comparison regions."
+    record["source"] = "assets/source/make_qualitative_grid.py"
+    write_json_atomic(FIG / "qualitative_grid.provenance.json", record)
     print("Created qualitative_grid.pdf/.svg/.png from twelve recorded frames")
-
 
 if __name__ == "__main__":
     main()

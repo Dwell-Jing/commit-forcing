@@ -2,7 +2,9 @@
 
 VBench-Long on 120 s and 240 s videos, scored as in [`results`](../README.md), generation seed 0. The tables are in
 [RESULTS.md](../../RESULTS.md#longer-videos); this page describes the prompts, the drift measure, the files and the
-commands.
+commands. CF and LongLive use the current and immediately preceding blocks (6 latent frames). SGF remains
+a 9-frame source-control reference; its +5.07 consistency gain is supporting evidence for that wider context.
+ID-Forcing retains its separate 9-frame framework adaptation.
 
 ## 240 s, 32 MovieGen prompts
 
@@ -13,7 +15,7 @@ The first 32 extended MovieGen prompts of Self-Forcing (`prompts/MovieGenVideoBe
 ## 120 s and 240 s, ID-Forcing's 128 MovieGen prompts
 
 The MovieGen prompts of ID-Forcing (`prompts/moviegenbench_128.txt` of its repository). ID-Forcing on Self-Forcing
-+ Commit Forcing uses recent-context KV construction with the documented handover and re-encoding changes
+with the 9-frame adaptation uses recent-context KV construction with the documented handover and re-encoding changes
 ([`analysis/not_ood`](../../analysis/not_ood/README.md)).
 
 The original 120/240-second files retain LongLive's base-policy and 12-frame committing control, both with 15-frame
@@ -40,13 +42,12 @@ python eval/vbench_long/compare.py --spec results/long_horizon/specs/idf128_240s
 python results/long_horizon/longlive6_240/replay.py
 ```
 
-To regenerate an arm, run its integration with `--seconds 120` or `240` and score it with
+To regenerate an arm, retain its recorded committing context (including the wider-context profile for SGF) and
+run its integration with `--seconds 120` or `240`. Score it with
 [`eval/vbench_long`](../../eval/vbench_long/README.md) (`prep.py --num-prompts 32` or `128`); for the MovieGen32 table, add
 the quality drift:
 
 ```bash
-python integrations/sgf/generate.py --code third_party/sgf --reading native --rule on --seconds 240 --seed 0 \
-    --prompts third_party/recency_forcing/prompts/MovieGenVideoBench_extended.txt --ids 0-31 --out outputs/moviegen32_240s/sgf
 python results/long_horizon/quality_drift.py collect --work vb_work --label sgf+rule --out quality_drift.csv
 # Historical 12-frame committing control (15-frame physical storage):
 python integrations/longlive/generate.py --code third_party/longlive --rule on --commit-profile legacy12 \
@@ -54,16 +55,16 @@ python integrations/longlive/generate.py --code third_party/longlive --rule on -
     --out outputs/idf128_120s/longlive12
 ```
 
-| Arm | Integration and flags |
+| Historical arm | Integration and recorded committing context |
 |---|---|
-| `sgf`, `sgf+rule` | `integrations/sgf --reading native --rule off/on` |
-| `context_forcing`, `+rule`, `+sink_only` | `integrations/context_forcing --rule off/on/sink-only` |
+| `sgf`, `sgf+rule` | SGF native denoising; Base / 9-frame source-control reference |
+| `context_forcing`, `+rule`, `+sink_only` | Context Forcing; Base / 6-frame full rule / sink-exclusion control |
 | `context_forcing+memory_only` | `integrations/context_forcing --rule memory-only` (exclude slow memory and older frames while retaining sink + recent) |
 | `longlive` | historical Base access with 15-frame physical storage (`analysis/longlive_sink/generate.py --arm LLS_33`) |
 | `longlive+rule` | historical 12-frame committing control, 15-frame physical storage (`integrations/longlive --rule on --commit-profile legacy12`) |
-| `idf_sf`, `idf_sf+rule` | `integrations/id_forcing --generator self_forcing --rule off/on` |
-| `rf+rule` | `integrations/recency_forcing --reading rf --rule on` |
+| `idf_sf`, `idf_sf+rule` | ID-Forcing on Self-Forcing; Base / 9-frame framework adaptation |
+| `rf+rule` | RF-TF denoising; 21-frame recent-context control |
 | `sf` | Self-Forcing (no sink): `analysis/sf_router --route G3_R21` |
 
-The RF + Commit Forcing long-horizon arm stores 24 physical frames and disables TRB during clean committing.
+The RF-TF 21-frame recent-context long-horizon control stores 24 physical frames and disables TRB during clean committing.
 It has no matched RF-only arm at either duration. See [RF implementations](../../integrations/recency_forcing/README.md#rf-implementations).

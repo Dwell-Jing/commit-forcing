@@ -1,4 +1,4 @@
-"""Rolling Sink (arXiv 2602.07775) with or without Commit Forcing.
+"""Rolling Sink (arXiv 2602.07775) with or without Recent-Context Committing.
 
     python integrations/rolling_sink/generate.py --code /path/to/Rolling-Sink --rule on \
         --prompts eval/prompts/rollf200.txt --ids 0-199 --seconds 60 --seed 0 --out outputs/rolling_sink
@@ -13,21 +13,28 @@ import torch
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 from common import runner  # noqa: E402
+from integrations.commit_contract import check_read_counts  # noqa: E402
 
 BASE = "rolling_sink"
 
 
-def parse_args():
+def parse_args(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--code", required=True, help="Rolling-Sink checkout with commit_rule.patch applied")
     runner.add_common_args(parser)
-    args = parser.parse_args()
+    parser.add_argument("--commit-profile", choices=["recent6", "legacy21"], default="recent6",
+                        help="on: recent6 reads current + previous real block; legacy21 reads the full real archive")
+    args = parser.parse_args(argv)
     # absolute paths, since load_pipeline chdirs
     args.code = os.path.abspath(args.code)
     args.prompts = os.path.abspath(args.prompts)
     args.out = os.path.abspath(args.out)
     args.ckpt = os.path.abspath(args.ckpt or os.path.join(args.code, "checkpoints", "self_forcing_dmd.pt"))
     return args
+
+
+def commit_window(args):
+    return 6 if args.commit_profile == "recent6" else 21
 
 
 def load_pipeline(args):
@@ -37,9 +44,13 @@ def load_pipeline(args):
     from omegaconf import OmegaConf
     from pipeline import CausalInferencePipeline
 
+    if getattr(CausalInferencePipeline, "COMMIT_RULE_VERSION", 0) < 2:
+        raise SystemExit(f"{args.code}: reapply the current integrations/rolling_sink/commit_rule.patch")
+
     config = OmegaConf.merge(OmegaConf.load("configs/default_config.yaml"),
                              OmegaConf.load("configs/self_forcing_dmd.yaml"))
-    pipe = CausalInferencePipeline(config, device=torch.device("cuda"), commit_rule=args.rule == "on")
+    pipe = CausalInferencePipeline(config, device=torch.device("cuda"), commit_rule=args.rule == "on",
+                                   commit_frames=commit_window(args))
     pipe.generator.load_state_dict(torch.load(args.ckpt, map_location="cpu")["generator_ema"])
     pipe = pipe.to(dtype=torch.bfloat16)
     for module in (pipe.text_encoder, pipe.generator, pipe.vae):
@@ -52,6 +63,7 @@ def generate(pipe, prompt, latent_frames):
     layers = [block.self_attn for block in pipe.generator.model.blocks]
     for layer in layers:
         layer.num_real_commits = layer.num_replays = 0
+        layer.commit_read_frame_counts.clear()
     # upstream repeats one block of noise for every block
     noise = torch.randn([1, runner.CHUNK, 16, 60, 104], device="cuda", dtype=torch.bfloat16)
     noise = noise.repeat(1, latent_frames // runner.CHUNK, 1, 1, 1)
@@ -63,6 +75,14 @@ def generate(pipe, prompt, latent_frames):
     expected = len(layers) * counters["blocks"] if pipe.commit_rule else 0
     if counters["real_commits"] != expected:
         raise RuntimeError(f"activation check failed: {counters}, want {expected} real commits")
+    reads = {}
+    for layer in layers:
+        for n, count in layer.commit_read_frame_counts.items():
+            reads[n] = reads.get(n, 0) + count
+    check_read_counts(reads, counters["blocks"], len(layers), pipe.commit_frames if pipe.commit_rule else None)
+    counters["commit_read_frame_counts"] = reads
+    counters["commit_frames"] = pipe.commit_frames if pipe.commit_rule else None
+    counters["real_archive_frames"] = pipe.kv_cache1[0]["real_k"].shape[1] // pipe.frame_seq_length if pipe.commit_rule else 0
     return 255.0 * video[0].permute(0, 2, 3, 1), counters
 
 
@@ -80,7 +100,8 @@ def main():
         with runner.Timer() as timer:
             video, counters = generate(pipe, prompts[idx], frames)
         runner.save(args, idx, video, dict(
-            base=BASE, rule=args.rule, idx=idx, seed=args.seed, noise_seed=noise_seed, prompt=prompts[idx],
+            base=BASE, rule=args.rule, commit_profile=args.commit_profile,
+            idx=idx, seed=args.seed, noise_seed=noise_seed, prompt=prompts[idx],
             seconds=args.seconds, latent_frames=frames, video_frames=video.shape[0], counters=counters,
             wall_s=round(timer.seconds, 1)))
         print(f"[{BASE}] rule {args.rule} seed {args.seed} idx {idx:03d}: {timer.seconds:.0f} s {counters}", flush=True)

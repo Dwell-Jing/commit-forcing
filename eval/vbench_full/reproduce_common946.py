@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Recompute the common946 results from official per-prompt contributions."""
+"""Validate current six-generator scores, or replay historical prompt statistics."""
 import argparse
 import csv
 import hashlib
@@ -23,6 +23,7 @@ NORMALIZE = {
     'overall_consistency': (0, .364),
 }
 MODELS = ('SGF', 'RF', 'CF', 'SGFP', 'LL', 'RS', 'IDFSF', 'IDFLL')
+CURRENT_MODELS = MODELS[:6]
 
 
 def require(value, message):
@@ -152,10 +153,120 @@ def reproduce(data, models=None):
           f'{3*len(selected)} aggregate and {16*len(selected)} component intervals checked with 4,000 paired draws.')
 
 
+def reproduce_current(data, models=None):
+    """Validate frozen aggregate sources without claiming a new bootstrap replay."""
+    selected = CURRENT_MODELS if models is None else tuple(models)
+    require(bool(selected) and len(set(selected)) == len(selected)
+            and set(selected) <= set(CURRENT_MODELS), 'Select current primary generators')
+    manifest = json.loads((data/'data_manifest.json').read_text())
+    require(manifest['profile'] == 'current6' and not manifest['per_prompt_data_included'],
+            'Unexpected current release profile')
+    for name, digest in manifest['sha256'].items():
+        require(Path(name).name == name, 'Unexpected data path')
+        require(hashlib.sha256((data/name).read_bytes()).hexdigest() == digest,
+                'Changed current data: '+name)
+    for name, digest in manifest['reference_package_sha256'].items():
+        require(Path(name).name == name, 'Unexpected reference path')
+        require(hashlib.sha256((data.parent/name).read_bytes()).hexdigest() == digest,
+                'Changed historical reference: '+name)
+    protocol = json.loads((data/'protocol.json').read_text())
+    require(protocol['committing_context']['total_latent_frames'] == 6
+            and protocol['committing_context']['previous_latent_frames'] == 3,
+            'Current committing context must be current plus previous block')
+    points = read_csv(data/'full_scores.csv')
+    arms = {m+s for m in CURRENT_MODELS for s in ('_N', '_W')}
+    require(len(points) == 12 and {r['arm'] for r in points} == arms,
+            'Expected six complete current comparisons')
+    points = {r['arm']:r for r in points}
+    for arm, row in points.items():
+        raw = np.array([float(row[d])/100 for d in DIMS])
+        for metric, value in composites(raw).items():
+            verify_close(value, float(row[metric]), arm+' '+metric)
+    source = json.loads((data/'source_results.json').read_text())
+    mapping = {'SGF':'SGF_W6', 'RF':'K_RFw6', 'SGFP':'SGFP_W6', 'RS':'RS_W6'}
+    historical_points = {r['arm']:r for r in read_csv(data.parent/'full_scores.csv')}
+    historical_stats = {(r['model'],r['metric']):r
+                        for name in ('aggregate_paired_ci.csv','component_paired_ci.csv')
+                        for r in read_csv(data.parent/name)}
+    saved = [r for name in ('aggregate_paired_ci.csv','component_paired_ci.csv')
+             for r in read_csv(data/name)]
+    require(len(saved) == 114 and len({(r['model'],r['metric']) for r in saved}) == 114,
+            'Expected 18 aggregate and 96 component contrasts')
+    for model in CURRENT_MODELS:
+        for suffix in ('_N','_W'):
+            arm = model+suffix
+            if model in mapping:
+                src = source['summary'][model+'_N' if suffix == '_N' else mapping[model]]
+                for metric in ('quality','semantic','total'):
+                    verify_close(float(points[arm][metric]), src[metric], arm+' source')
+                for metric in DIMS:
+                    verify_close(float(points[arm][metric]), 100*src['components'][metric],
+                                 arm+' component source')
+            else:
+                require(points[arm] == historical_points[arm], arm+' frozen reference changed')
+    for row in saved:
+        model, metric = row['model'], row['metric']
+        require(model in CURRENT_MODELS and metric in ('quality','semantic','total')+DIMS,
+                'Unexpected contrast identity')
+        observed = float(points[model+'_W'][metric])-float(points[model+'_N'][metric])
+        verify_close(observed, float(row['delta']), model+' '+metric+' difference')
+        if model in mapping:
+            family = 'component_delta_percent' if metric in DIMS else 'aggregate_delta'
+            expected = source['comparisons'][mapping[model]+'_vs_'+model+'_N'][family][metric]
+            values = [expected['delta'],*expected['ci95'],expected['valid_draws']]
+        else:
+            ref = historical_stats[model,metric]
+            values = [float(ref[k]) for k in ('delta','ci95_low','ci95_high','valid_draws')]
+        verify_close([float(row[k]) for k in ('delta','ci95_low','ci95_high','valid_draws')],
+                     values, model+' '+metric+' frozen interval')
+    decomposition = read_csv(data/'quality_decomposition.csv')
+    require(len(decomposition) == 6, 'Missing Quality decomposition')
+    for row in decomposition:
+        model = row['model']
+        terms = []
+        for metric in QUALITY:
+            difference = float(points[model+'_W'][metric])-float(points[model+'_N'][metric])
+            term = (.5 if metric == 'dynamic_degree' else 1)*difference
+            term /= (NORMALIZE[metric][1]-NORMALIZE[metric][0])*6.5
+            verify_close(term, float(row[metric]), model+' weighted '+metric)
+            terms.append(term)
+        verify_close(sum(terms), float(row['quality_delta']), model+' seven-term sum')
+    windows = read_csv(data/'window_comparisons.csv')
+    expected_windows = {(m, metric) for m in mapping
+                        for metric in ('quality', 'semantic', 'total')}
+    require(len(windows) == 12
+            and {(r['model'], r['metric']) for r in windows} == expected_windows,
+            'Expected 12 current versus historical window contrasts')
+    for row in windows:
+        model, metric = row['model'], row['metric']
+        require(int(row['new_context']) == 6
+                and int(row['reference_context']) == (21 if model in ('RF','RS') else 9),
+                'Unexpected window-comparison context')
+        expected = source['comparisons'][mapping[model]+'_vs_'+model+'_W']['aggregate_delta'][metric]
+        verify_close([float(row[k]) for k in ('delta','ci95_low','ci95_high','valid_draws')],
+                     [expected['delta'], *expected['ci95'], expected['valid_draws']],
+                     model+' '+metric+' window contrast')
+    for model in selected:
+        print(f"{model:6s} Quality {float(points[model+'_N']['quality']):.4f} -> "
+              f"{float(points[model+'_W']['quality']):.4f}; current6 sources verified")
+    print('Verified 12 arms, 16 dimensions, 114 saved contrasts, 12 window contrasts '
+          'and six Quality decompositions. '
+          'Current confidence intervals are checked against frozen reports; they are not '
+          'recomputed from new per-prompt records. Use --profile historical for the public '
+          'historical prompt-bootstrap replay.')
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--data', type=Path, default=Path(__file__).resolve().parents[2]/'results/vbench_full/common946')
+    parser.add_argument('--profile', choices=('current6','historical'), default='current6')
+    parser.add_argument('--data', type=Path, help='Override the selected profile directory')
     parser.add_argument('--models', nargs='+', choices=MODELS,
-                        help='Recompute intervals only for these models; still validate every arm and point estimate')
+                        help='Select displayed models (current6) or interval replays (historical); '
+                             'every arm and point estimate is still checked')
     args = parser.parse_args()
-    reproduce(args.data, args.models)
+    suite = Path(__file__).resolve().parents[2]/'results/vbench_full/common946'
+    data = args.data or (suite/'current6' if args.profile == 'current6' else suite)
+    if args.profile == 'current6':
+        reproduce_current(data, args.models)
+    else:
+        reproduce(data, args.models)

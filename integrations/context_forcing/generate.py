@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Context Forcing (arXiv 2602.06028) with or without Commit Forcing.
+"""Context Forcing (arXiv 2602.06028) with or without Recent-Context Committing.
 
     python integrations/context_forcing/generate.py --code /path/to/Context-Forcing --rule on \
         --prompts eval/prompts/rollf200.txt --ids 0-199 --seconds 60 --seed 0 --out outputs/context_forcing
@@ -25,7 +25,7 @@ CONFIG = "configs/context_dmd_inference.yaml"
 EMA_PREFIX = "model._fsdp_wrapped_module."
 
 
-def parse_args():
+def parse_args(argv=None):
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter,
                                 conflict_handler="resolve")
     add_common_args(p)
@@ -34,7 +34,7 @@ def parse_args():
     p.add_argument("--code", required=True, help="Context-Forcing copy with commit_rule.patch applied")
     p.add_argument("--attn", choices=["cudnn", "flash"], default="cudnn",
                    help="cudnn: PyTorch SDPA; flash: upstream flash-attn")
-    args = p.parse_args()
+    args = p.parse_args(argv)
     for key in ("prompts", "out", "code"):
         setattr(args, key, os.path.abspath(getattr(args, key)))
     args.ckpt = os.path.abspath(args.ckpt or os.path.join(args.code, "checkpoints", "model.pt"))
@@ -121,6 +121,12 @@ def main():
             torch.cuda.synchronize()
         counters = commit_counters(pipe)
         assert counters["commit_passes"] == frames // CHUNK, counters
+        if args.rule == "on":
+            expected = [min((b + 1) * CHUNK, 6) for b in range(frames // CHUNK)]
+            for block in pipe.generator.model.blocks:
+                actual = [cached - (lo - hi) for cached, hi, lo in block.self_attn.commit_log]
+                if actual != expected:
+                    raise RuntimeError(f"commit read lengths {actual}, expected {expected}")
         pipe.kv_cache1 = pipe.crossattn_cache = None  # free memory before decoding
         with Timer() as dec:
             video = decode_uint8(pipe.vae, latents)

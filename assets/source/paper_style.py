@@ -1,22 +1,21 @@
 """Shared print-size style and atomic exports for measured paper figures."""
 from pathlib import Path
 import os
+import subprocess
+from paper_palette import (INK, MUTED, RULE, BLUE, ACCENT, POSITIVE,
+                           PLOT_PRIMARY, PLOT_SECONDARY, PLOT_CONTROL)
 
 ROOT = Path(__file__).resolve().parents[2]
-FIG = ROOT / 'assets'
+FIG = Path(os.environ.get('FIGURE_OUTPUT_DIR', ROOT / 'assets'))
 PRE = FIG
-os.environ.setdefault('MPLCONFIGDIR', str(Path(os.environ.get('TMPDIR', '/tmp')) / 'commit-forcing-mpl'))
+os.environ.setdefault('MPLCONFIGDIR', str(Path(os.environ.get('TMPDIR', '/tmp')) / 'recent-context-mpl'))
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-INK = '#202B33'
-MUTED = '#67717A'
-RULE = '#D8DDE0'
-GREEN = '#237C51'
-BLUE = '#527F9D'
-ACCENT = '#AD5036'
+# Compatibility name for archived plots and explicit positive-status badges.
+GREEN = POSITIVE
 
 
 def apply_style():
@@ -73,4 +72,5 @@ def export(fig, stem):
         for temporary, _ in candidates:
             temporary.unlink(missing_ok=True)
         plt.close(fig)
-    print(f'Created {stem}: PDF, editable SVG, PNG preview')
+    subprocess.run(['pdftoppm', '-singlefile', '-png', '-scale-to', '2200', str(FIG / f'{stem}.pdf'), str(PRE / stem)], check=True)
+    print(f'Created {stem}: PDF, editable SVG, actual-PDF PNG preview')

@@ -1,19 +1,229 @@
 # Results
 
-Scores ×100. **Base** is the original model; **+ Commit Forcing** applies Commit Forcing to the same model, with the
-same initial noise. **Δ** is the paired difference over prompts, with its 95% bootstrap interval in brackets (4,000
-resamples); `*` marks an interval that excludes 0. **Consistency** is VBench-Long's clip-to-clip subject consistency,
-our measure of long-range consistency. † RF-TF applies the public Recency Forcing Temporal Response Bias to released
-Self-Forcing weights, without an RF-trained checkpoint.
+Scores ×100. **Base** is the original generator. **Recent-context** in the current main evaluation means
+**Recent-Context Committing**: the clean current block plus stored KV of the immediately preceding block,
+3 + 3 latent frames after startup. Base denoising, cache storage and update remain in place. Other history is
+excluded from direct committing access but can still influence the generated block and preceding-block KV.
+Repository and CLI names retain their existing spelling for compatibility.
 
-[Full VBench](#full-vbench) · [MovieGen 60 s](#60-s-videos) · [Longer videos](#longer-videos) ·
-[Committing controls](#committing-controls) · [Human evaluation](results/human_evaluation/README.md) · [Quality and cost](analysis/quality_cost/README.md) ·
+**Δ** is the paired difference over prompts with its 95% bootstrap interval (4,000 draws); `*` marks an interval
+excluding 0. Differences are computed before rounding. **Consistency** is VBench-Long's clip-to-clip Subject
+Consistency. † RF-TF applies the public Recency Forcing Temporal Response Bias to released Self-Forcing weights,
+without an RF-trained checkpoint. Wider-context studies are labelled as supporting controls below.
+
+[Full VBench](#full-vbench) · [ID-Forcing framework comparisons](#id-forcing-framework-comparisons) ·
+[MovieGen 60 s](#60-s-videos) · [Longer videos](#longer-videos) · [Committing controls](#committing-controls) ·
+[Human evaluation](results/human_evaluation/README.md) · [Quality and cost](analysis/quality_cost/README.md) ·
 [per-video data and commands](results/README.md) · [← Home](README.md)
 
 ## Full VBench
 
-**Common main protocol:** 946 VBench entries, one nominal 60 s video per entry, all 16 dimensions.
-The 7 methods form 8 paired configurations because ID-Forcing is evaluated on two backbones.
+**Current main protocol:** 946 metadata entries, 944 distinct original prompts, one nominal 60-second video per
+entry (generation seed 0), six paired generators and all 16 dimensions. Generation uses Wan-expanded prompts;
+scoring uses original VBench metadata, dimension-specific subsets and the official Flickering filter. Each pair
+retains its released weights and base denoising/sampler/storage settings. All adapted arms commit from the current
+and immediately preceding blocks. SGF+ uses its official 12-frame physical configuration; LongLive stores
+12 physical cache frames in both arms.
+
+<table>
+<thead>
+<tr><th rowspan="2" align="left">Model</th><th colspan="3">Quality</th><th colspan="3">Total</th></tr>
+<tr><th>Base</th><th>Recent-context</th><th>Δ</th><th>Base</th><th>Recent-context</th><th>Δ</th></tr>
+</thead>
+<tbody>
+<tr><td>Context Forcing</td><td align="right">84.79</td><td align="right">85.25</td><td align="right"><b>+0.46</b></td><td align="right">82.24</td><td align="right">82.68</td><td align="right"><b>+0.44</b></td></tr>
+<tr><td>Rolling Sink</td><td align="right">84.84</td><td align="right">85.25</td><td align="right"><b>+0.41</b></td><td align="right">82.90</td><td align="right">83.26</td><td align="right"><b>+0.36</b></td></tr>
+<tr><td>Recency Forcing, training-free †</td><td align="right">84.77</td><td align="right">85.42</td><td align="right"><b>+0.65</b></td><td align="right">82.24</td><td align="right">83.34</td><td align="right"><b>+1.10</b></td></tr>
+<tr><td>LongLive</td><td align="right">84.70</td><td align="right">84.99</td><td align="right"><b>+0.29</b></td><td align="right">83.05</td><td align="right">83.36</td><td align="right"><b>+0.31</b></td></tr>
+<tr><td>SGF+</td><td align="right">86.32</td><td align="right">86.63</td><td align="right">+0.32</td><td align="right">84.30</td><td align="right">84.64</td><td align="right">+0.34</td></tr>
+<tr><td>SGF</td><td align="right">86.06</td><td align="right">87.33</td><td align="right"><b>+1.27</b></td><td align="right">83.85</td><td align="right">84.82</td><td align="right"><b>+0.98</b></td></tr>
+</tbody>
+</table>
+
+Rows follow ascending adapted Total. Bold Δ marks a paired 95% interval excluding 0. Quality and Total improve
+significantly on 5 of 6 generators; all six point estimates are positive. RF-TF has the largest Total increase,
++1.10 points. SGF has the largest Quality increase, +1.27 points.
+Intervals use 4,000 paired draws over 944 original-prompt clusters, retaining each arm's official surviving-record
+weights, including its own Flickering filter and omitted Color records.
+Current intervals are frozen as reported. The [current source summaries and historical raw package](results/vbench_full/common946/README.md)
+provide point-estimate checks for the current method and full bootstrap replay for the preserved historical package.
+
+<details>
+<summary>Current main evaluation: all 16 dimensions and aggregate intervals</summary>
+
+**Context Forcing — 6-frame committing**
+
+| Metric | Base | Recent-context | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 84.79 | 85.25 | +0.46* [+0.09, +0.85] |
+| Semantic | 72.03 | 72.41 | +0.38 [−0.49, +1.25] |
+| Total | 82.24 | 82.68 | +0.44* [+0.10, +0.81] |
+| Subject consistency | 97.75 | 97.96 | +0.21* [+0.07, +0.37] |
+| Background consistency | 96.63 | 96.92 | +0.29* [+0.19, +0.40] |
+| Temporal flickering | 99.30 | 99.21 | −0.09* [−0.14, −0.04] |
+| Motion smoothness | 98.55 | 98.43 | −0.12* [−0.21, −0.02] |
+| Dynamic degree | 58.89 | 62.31 | +3.43 [−1.32, +8.20] |
+| Aesthetic quality | 65.41 | 65.82 | +0.41 [−0.02, +0.85] |
+| Imaging quality | 69.47 | 70.32 | +0.84* [+0.30, +1.41] |
+| Object class | 88.63 | 87.23 | −1.40 [−4.42, +1.23] |
+| Multiple objects | 70.79 | 73.34 | +2.55 [−0.97, +6.33] |
+| Human action | 91.33 | 93.67 | +2.33* [+0.46, +4.56] |
+| Color | 84.31 | 85.09 | +0.77 [−2.27, +3.74] |
+| Spatial relationship | 69.19 | 67.40 | −1.79 [−5.12, +1.25] |
+| Scene | 40.20 | 39.47 | −0.73 [−4.02, +2.55] |
+| Appearance style | 20.88 | 20.97 | +0.09 [−0.07, +0.24] |
+| Temporal style | 20.83 | 21.10 | +0.26 [−0.01, +0.52] |
+| Overall consistency | 23.60 | 23.89 | +0.29 [−0.02, +0.61] |
+
+**Rolling Sink — 6-frame committing**
+
+| Metric | Base | Recent-context | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 84.84 | 85.25 | +0.41* [+0.15, +0.69] |
+| Semantic | 75.13 | 75.31 | +0.17 [−0.53, +0.88] |
+| Total | 82.90 | 83.26 | +0.36* [+0.10, +0.63] |
+| Subject consistency | 98.09 | 98.28 | +0.18* [+0.04, +0.34] |
+| Background consistency | 97.07 | 97.34 | +0.27* [+0.19, +0.36] |
+| Temporal flickering | 99.11 | 99.06 | −0.05* [−0.11, −0.00] |
+| Motion smoothness | 98.77 | 98.66 | −0.11* [−0.21, −0.03] |
+| Dynamic degree | 53.94 | 57.41 | +3.47* [+0.64, +6.44] |
+| Aesthetic quality | 65.53 | 66.02 | +0.49* [+0.06, +0.95] |
+| Imaging quality | 70.88 | 71.28 | +0.40 [−0.31, +1.20] |
+| Object class | 89.97 | 89.85 | −0.12 [−1.32, +0.91] |
+| Multiple objects | 74.51 | 74.31 | −0.21 [−2.88, +2.18] |
+| Human action | 91.17 | 90.67 | −0.50 [−3.33, +2.28] |
+| Color | 91.58 | 92.98 | +1.40 [−1.36, +4.33] |
+| Spatial relationship | 72.81 | 73.46 | +0.65 [−1.35, +2.58] |
+| Scene | 42.81 | 43.63 | +0.82 [−1.98, +3.66] |
+| Appearance style | 20.77 | 20.74 | −0.03 [−0.17, +0.10] |
+| Temporal style | 22.85 | 22.71 | −0.14* [−0.28, −0.00] |
+| Overall consistency | 24.98 | 24.92 | −0.06 [−0.34, +0.15] |
+
+**RF-TF † — 6-frame committing**
+
+| Metric | Base | Recent-context | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 84.77 | 85.42 | +0.65* [+0.27, +1.01] |
+| Semantic | 72.10 | 75.00 | +2.90* [+1.97, +3.82] |
+| Total | 82.24 | 83.34 | +1.10* [+0.74, +1.45] |
+| Subject consistency | 96.73 | 97.36 | +0.63* [+0.44, +0.82] |
+| Background consistency | 95.92 | 96.70 | +0.77* [+0.67, +0.88] |
+| Temporal flickering | 98.88 | 98.96 | +0.09* [+0.03, +0.16] |
+| Motion smoothness | 98.37 | 98.31 | −0.05 [−0.14, +0.03] |
+| Dynamic degree | 70.28 | 67.36 | −2.92 [−7.67, +1.60] |
+| Aesthetic quality | 62.65 | 65.03 | +2.38* [+1.75, +3.04] |
+| Imaging quality | 70.34 | 71.82 | +1.48* [+0.72, +2.28] |
+| Object class | 88.05 | 90.49 | +2.44 [−0.22, +5.64] |
+| Multiple objects | 63.58 | 70.46 | +6.88* [+3.20, +10.56] |
+| Human action | 92.83 | 94.67 | +1.83 [−0.35, +4.26] |
+| Color | 87.96 | 89.78 | +1.82 [−1.13, +4.56] |
+| Spatial relationship | 73.15 | 75.76 | +2.61 [−0.68, +5.64] |
+| Scene | 35.47 | 43.01 | +7.55* [+3.61, +11.75] |
+| Appearance style | 20.66 | 20.60 | −0.06 [−0.27, +0.16] |
+| Temporal style | 21.96 | 22.36 | +0.40* [+0.03, +0.78] |
+| Overall consistency | 24.59 | 24.77 | +0.18 [−0.14, +0.49] |
+
+**LongLive — 6-frame committing**
+
+| Metric | Base | Recent-context | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 84.70 | 84.99 | +0.29* [+0.05, +0.52] |
+| Semantic | 76.43 | 76.84 | +0.41 [−0.09, +0.91] |
+| Total | 83.05 | 83.36 | +0.31* [+0.10, +0.52] |
+| Subject consistency | 97.96 | 98.00 | +0.05 [−0.06, +0.15] |
+| Background consistency | 97.11 | 97.23 | +0.12* [+0.06, +0.19] |
+| Temporal flickering | 99.29 | 99.28 | −0.01 [−0.04, +0.02] |
+| Motion smoothness | 98.69 | 98.55 | −0.14* [−0.20, −0.08] |
+| Dynamic degree | 52.13 | 54.81 | +2.69 [−0.38, +5.65] |
+| Aesthetic quality | 66.30 | 66.71 | +0.40* [+0.12, +0.70] |
+| Imaging quality | 70.03 | 70.46 | +0.42* [+0.11, +0.72] |
+| Object class | 89.18 | 88.52 | −0.65 [−2.02, +0.58] |
+| Multiple objects | 78.40 | 79.91 | +1.51* [+0.10, +3.17] |
+| Human action | 94.83 | 95.50 | +0.67 [−0.64, +2.14] |
+| Color | 92.17 | 92.04 | −0.13 [−1.49, +1.35] |
+| Spatial relationship | 75.80 | 76.30 | +0.50 [−1.70, +2.70] |
+| Scene | 44.77 | 45.71 | +0.94 [−1.20, +3.17] |
+| Appearance style | 20.69 | 20.73 | +0.04 [−0.06, +0.14] |
+| Temporal style | 22.49 | 22.65 | +0.16* [+0.04, +0.30] |
+| Overall consistency | 25.08 | 25.09 | +0.02 [−0.10, +0.13] |
+
+**SGF+ — 6-frame committing**
+
+| Metric | Base | Recent-context | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 86.32 | 86.63 | +0.32 [−0.15, +0.81] |
+| Semantic | 76.22 | 76.66 | +0.45 [−0.20, +1.13] |
+| Total | 84.30 | 84.64 | +0.34 [−0.07, +0.76] |
+| Subject consistency | 98.51 | 98.81 | +0.30* [+0.20, +0.41] |
+| Background consistency | 96.93 | 97.53 | +0.61* [+0.51, +0.70] |
+| Temporal flickering | 99.23 | 99.32 | +0.10* [+0.03, +0.16] |
+| Motion smoothness | 98.75 | 98.67 | −0.09* [−0.17, −0.01] |
+| Dynamic degree | 64.86 | 66.48 | +1.62 [−4.73, +8.25] |
+| Aesthetic quality | 67.86 | 68.10 | +0.24 [−0.07, +0.56] |
+| Imaging quality | 72.17 | 72.04 | −0.13 [−0.56, +0.29] |
+| Object class | 87.61 | 87.89 | +0.28 [−0.49, +1.18] |
+| Multiple objects | 77.62 | 79.00 | +1.39 [−0.60, +3.74] |
+| Human action | 91.83 | 93.33 | +1.50 [−0.17, +3.65] |
+| Color | 89.74 | 89.55 | −0.19 [−2.84, +2.20] |
+| Spatial relationship | 79.78 | 77.27 | −2.51 [−5.40, +0.18] |
+| Scene | 47.11 | 49.55 | +2.45 [−0.27, +5.61] |
+| Appearance style | 20.65 | 20.72 | +0.08 [−0.03, +0.19] |
+| Temporal style | 22.44 | 22.54 | +0.10 [−0.07, +0.26] |
+| Overall consistency | 24.82 | 24.84 | +0.02 [−0.15, +0.19] |
+
+**SGF — 6-frame committing**
+
+| Metric | Base | Recent-context | Δ [95% CI] |
+|:---|---:|---:|:---|
+| Quality | 86.06 | 87.33 | +1.27* [+0.76, +1.88] |
+| Semantic | 74.99 | 74.78 | −0.21 [−1.62, +1.18] |
+| Total | 83.85 | 84.82 | +0.98* [+0.45, +1.53] |
+| Subject consistency | 98.26 | 98.51 | +0.25* [+0.10, +0.40] |
+| Background consistency | 96.69 | 97.17 | +0.48* [+0.34, +0.63] |
+| Temporal flickering | 98.95 | 98.99 | +0.04 [−0.06, +0.14] |
+| Motion smoothness | 98.63 | 98.35 | −0.29* [−0.40, −0.17] |
+| Dynamic degree | 67.45 | 80.56 | +13.10* [+6.38, +20.50] |
+| Aesthetic quality | 67.06 | 68.20 | +1.15* [+0.46, +1.92] |
+| Imaging quality | 71.82 | 72.32 | +0.50 [−0.25, +1.27] |
+| Object class | 86.00 | 90.82 | +4.82* [+0.94, +9.51] |
+| Multiple objects | 71.24 | 71.72 | +0.48 [−5.18, +6.12] |
+| Human action | 92.33 | 91.50 | −0.83 [−5.68, +3.82] |
+| Color | 89.60 | 87.71 | −1.90 [−5.93, +2.00] |
+| Spatial relationship | 76.29 | 74.20 | −2.09 [−7.02, +2.62] |
+| Scene | 48.09 | 44.73 | −3.36 [−9.20, +2.40] |
+| Appearance style | 20.61 | 20.76 | +0.15 [−0.10, +0.38] |
+| Temporal style | 22.05 | 22.35 | +0.30 [−0.06, +0.68] |
+| Overall consistency | 24.84 | 24.97 | +0.13 [−0.27, +0.54] |
+
+</details>
+
+## ID-Forcing framework comparisons
+
+These separate 9-frame adaptations use 6 historical frames plus the current 3-frame block within ID-Forcing.
+They differ from the 6-frame main method. The Self-Forcing adaptation also changes cache handover and omits
+recurrent tail recaching. Quality and Total intervals include 0 on both backbones; Semantic increases on both.
+Dynamic Degree decreases by 3.80 points on Self-Forcing and 6.16 on LongLive, with intervals excluding 0.
+
+| Framework | Score | Base | 9-frame adaptation | Δ [95% CI] |
+|:---|:---|---:|---:|:---|
+| ID-Forcing on Self-Forcing | Quality | 85.26 | 85.21 | −0.05 [−0.30, +0.19] |
+| | Semantic | 73.76 | 74.90 | +1.14* [+0.39, +1.91] |
+| | Total | 82.96 | 83.15 | +0.19 [−0.07, +0.43] |
+| ID-Forcing on LongLive | Quality | 84.91 | 84.64 | −0.27 [−0.61, +0.05] |
+| | Semantic | 74.93 | 75.98 | +1.05* [+0.35, +1.75] |
+| | Total | 82.92 | 82.91 | −0.01 [−0.32, +0.29] |
+
+The preserved package below retains all component scores, intervals and protocol records for these adaptations.
+
+<details>
+<summary>Historical common946 package: original 8 pairs and LongLive 12-frame control</summary>
+
+SGF and SGF+ use 9-frame controls; RF-TF and Rolling Sink use 21-frame controls. CF and LongLive use 6 frames.
+The two ID-Forcing adaptations use 9 frames. The frozen raw 16-arm package and its scores are preserved; this
+foldout does not substitute these contexts for the current six-generator method.
+
+**Historical common946 protocol:** 946 VBench entries, one nominal 60 s video per entry, all 16 dimensions.
+This preserved package contains 8 paired configurations, including the two 9-frame ID-Forcing adaptations.
 Each pair uses the same released weights, prompt and per-prompt seed. Native denoising and sampler settings remain
 model-specific; SGF+ uses its official 12-frame configuration. LongLive uses 6-frame committing and 12 physical
 cache frames in both arms. IDF-SF changes handover and tail recaching, as documented in the integration READMEs.
@@ -22,7 +232,7 @@ Generation uses Wan-expanded prompts; scoring uses their original VBench metadat
 <table>
 <thead>
 <tr><th rowspan="2" align="left">Model</th><th colspan="3">Quality</th><th colspan="3">Total</th></tr>
-<tr><th>Base</th><th>+ CF</th><th>Δ</th><th>Base</th><th>+ CF</th><th>Δ</th></tr>
+<tr><th>Base</th><th>Recent-context control</th><th>Δ</th><th>Base</th><th>Recent-context control</th><th>Δ</th></tr>
 </thead>
 <tbody>
 <tr><td>Context Forcing</td><td align="right">84.79</td><td align="right">85.25</td><td align="right"><b>+0.46</b></td><td align="right">82.24</td><td align="right">82.68</td><td align="right"><b>+0.44</b></td></tr>
@@ -38,9 +248,9 @@ Generation uses Wan-expanded prompts; scoring uses their original VBench metadat
 
 Intervals use 4,000 paired bootstrap draws of 944 distinct original-prompt clusters (seed 20261011).
 Aggregation retains each arm's official output-record weights, including its own Flickering filter and omitted Color records.
-This updates the earlier three-model summary with consistent denominators; earlier CSVs and specs remain under
+This historical package updated the earlier three-model summary with consistent denominators; earlier CSVs and specs remain under
 [`results/vbench_full`](results/vbench_full/README.md).
-Rows follow Total with Commit Forcing, in ascending order. Quality and Total improve significantly in 5 of the 8 configurations.
+Rows follow Total with recent-context control, in ascending order. In this historical package, Quality and Total improve significantly in 5 of the 8 configurations.
 Unrounded scores, all component intervals, coverage, configuration records and the CPU reproduction command:
 [`common946`](results/vbench_full/common946/README.md).
 
@@ -49,7 +259,7 @@ Unrounded scores, all component intervals, coverage, configuration records and t
 
 **SGF**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 86.06 | 87.22 | +1.16* [+0.57, +1.81] |
 | Semantic | 74.99 | 75.79 | +0.80 [−0.61, +2.24] |
@@ -73,7 +283,7 @@ Unrounded scores, all component intervals, coverage, configuration records and t
 
 **Recency Forcing, training-free †**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 84.77 | 85.24 | +0.47* [+0.16, +0.79] |
 | Semantic | 72.10 | 74.44 | +2.35* [+1.57, +3.09] |
@@ -97,7 +307,7 @@ Unrounded scores, all component intervals, coverage, configuration records and t
 
 **Context Forcing**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 84.79 | 85.25 | +0.46* [+0.09, +0.85] |
 | Semantic | 72.03 | 72.41 | +0.38 [−0.49, +1.25] |
@@ -121,7 +331,7 @@ Unrounded scores, all component intervals, coverage, configuration records and t
 
 **SGF+**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 86.32 | 86.61 | +0.29 [−0.19, +0.78] |
 | Semantic | 76.22 | 76.56 | +0.34 [−0.27, +0.96] |
@@ -145,7 +355,7 @@ Unrounded scores, all component intervals, coverage, configuration records and t
 
 **LongLive (6-frame committing)**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 84.70 | 84.99 | +0.29* [+0.05, +0.52] |
 | Semantic | 76.43 | 76.84 | +0.41 [−0.09, +0.91] |
@@ -171,7 +381,7 @@ Unrounded scores, all component intervals, coverage, configuration records and t
 
 **Rolling Sink**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 84.84 | 85.15 | +0.32* [+0.11, +0.53] |
 | Semantic | 75.13 | 75.27 | +0.14 [−0.34, +0.62] |
@@ -195,7 +405,7 @@ Unrounded scores, all component intervals, coverage, configuration records and t
 
 **ID-Forcing on Self-Forcing**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 85.26 | 85.21 | −0.05 [−0.30, +0.19] |
 | Semantic | 73.76 | 74.90 | +1.14* [+0.39, +1.91] |
@@ -219,7 +429,7 @@ Unrounded scores, all component intervals, coverage, configuration records and t
 
 **ID-Forcing on LongLive**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 84.91 | 84.64 | −0.27 [−0.61, +0.05] |
 | Semantic | 74.93 | 75.98 | +1.05* [+0.35, +1.75] |
@@ -247,11 +457,11 @@ Unrounded scores, all component intervals, coverage, configuration records and t
 <summary>LongLive standard suite: original 12-frame control</summary>
 
 This control commits 12 frames and stores 15 physical cache frames; its base stores 12.
-It is separate from the 6-frame main comparison above.
+It is separate from the 6-frame current method comparison.
 
 **LongLive (12-frame control)**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 84.70 | 84.91 | +0.21 [−0.01, +0.44] |
 | Semantic | 76.43 | 76.58 | +0.15 [−0.25, +0.56] |
@@ -279,12 +489,29 @@ Neither interval excludes zero. [Original package](results/vbench_full/common946
 
 </details>
 
+</details>
+
 ## Committing controls
+
+### Standard-suite context sizes
+
+These paired comparisons retain base denoising and physical storage while replacing the earlier recent-context
+controls with current-plus-previous-block committing. Frame counts include the current 3-frame block. None of
+the four Quality intervals excludes zero; the RF-TF Total interval excludes zero before rounding.
+
+| Generator | Contrast | Δ Quality [95% CI] | Δ Semantic [95% CI] | Δ Total [95% CI] |
+|:---|:---|:---|:---|:---|
+| SGF | 6 − 9 frames | +0.11 [−0.25, +0.46] | −1.01 [−2.55, +0.50] | −0.11 [−0.53, +0.29] |
+| RF-TF | 6 − 21 frames | +0.18 [−0.07, +0.41] | +0.56 [−0.24, +1.36] | +0.26* [+0.00007, +0.51] |
+| SGF+ | 6 − 9 frames | +0.03 [−0.08, +0.14] | +0.11 [−0.11, +0.33] | +0.04 [−0.05, +0.14] |
+| Rolling Sink | 6 − 21 frames | +0.09 [−0.05, +0.25] | +0.04 [−0.42, +0.50] | +0.08 [−0.06, +0.24] |
+
+[Unrounded window contrasts](results/vbench_full/common946/current6/window_comparisons.csv).
 
 ### SGF: equal read count and self-only
 
 These comparisons use 200 rollf200 prompts, 60-second videos and generation seeds 0 and 1. They are separate from
-the standard 946-entry suite. A is original SGF (sink 3 + recent 6 + current 3); B is Commit Forcing (recent 6 +
+the standard 946-entry suite. A is original SGF (sink 3 + recent 6 + current 3); B is the 9-frame recent-context control (recent 6 +
 current 3); C is self-only (current 3); D retains the sink at the same read count as B (sink 3 + recent 3 + current 3).
 Every group retains the 12-frame physical cache, base denoising and the original selected-slot RoPE positions.
 
@@ -330,14 +557,15 @@ excludes zero. [All components, saved feature arrays and CPU replay](analysis/si
 
 ### Quality decomposition and inference cost
 
-Dynamic Degree contributes +1.10 of SGF's +1.16 standard-suite Quality points. RF-TF's largest contributions come
-from Aesthetic and Imaging Quality. The [complete decomposition and cost tables](analysis/quality_cost/README.md)
-retain all eight configurations and the original component changes.
+For the current 6-frame SGF arm, Dynamic Degree contributes +1.01 of the +1.27 Quality points; Motion Smoothness
+decreases by 0.29 points. The [historical decomposition and cost tables](analysis/quality_cost/README.md) retain
+the original eight configurations, including SGF's 9-frame +1.16 Quality control (+1.10 from Dynamic Degree).
+Those earlier component and timing records do not measure the updated 6-frame SGF, SGF+, RF-TF or Rolling Sink arms.
 
 LongLive cost uses four technical repeats of the same 60-second prompt after warm-up: mean wall time is
 231.1 s for Base and 223.8 s for 6-frame committing, an observed 3.2% reduction. Peak device memory is 35.9 GiB
 in both arms. The other configurations each use one warmed-up video per arm. Rolling Sink peak device memory
-is 41.9 GiB for Base and 48.1 GiB with Commit Forcing; IDF-SF reduces clean forward calls from 155 to 80.
+is 41.9 GiB for Base and 48.1 GiB with recent-context control; IDF-SF reduces clean forward calls from 155 to 80.
 The original 12-frame LongLive measurement remains a control in the [cost records](analysis/quality_cost/README.md).
 
 The [LongLive quick-window confirmation](analysis/commit_window/README.md#quick-window-confirmation) uses a separate
@@ -348,12 +576,14 @@ choice is then evaluated on the separate 946-entry suite above. Its standard-sui
 ## 60 s videos
 
 VBench-Long on 200 fixed [rollf200](eval/prompts/README.md) MovieGen prompts, using the official seven-dimensional
-Quality formula. All seven dimensions are scored on each prompt, with fused Subject / Background consistency
-and unfiltered Flickering ([pipeline](eval/vbench_long/README.md)).
+Quality formula. These supporting controls retain 9-frame SGF and 21-frame RF-TF, Rolling Sink and Self-Forcing
+with sink; LongLive and CF's full rule use 6 frames. CF sink exclusion is a separate source control. All seven
+dimensions are scored on each prompt, with fused Subject / Background consistency and unfiltered Flickering
+([pipeline](eval/vbench_long/README.md)). These are separate from the current six-generator main evaluation.
 
-### Committing comparisons
+### Supporting context-control comparisons
 
-| Model | Base | + Commit Forcing | Δ Quality | Δ Consistency |
+| Model | Base | + recent-context control | Δ Quality | Δ Consistency |
 |:---|---:|---:|:---|:---|
 | SGF | 83.58 | 84.62 | +1.04*&nbsp;[+0.67,&nbsp;+1.41] | +4.40*&nbsp;[+3.51,&nbsp;+5.27] |
 | RF-TF † | 82.01 | 82.47 | +0.46*&nbsp;[+0.27,&nbsp;+0.65] | +3.86*&nbsp;[+3.22,&nbsp;+4.51] |
@@ -363,14 +593,14 @@ and unfiltered Flickering ([pipeline](eval/vbench_long/README.md)).
 | Rolling Sink | 82.61 | 82.72 | +0.11&nbsp;[−0.02,&nbsp;+0.24] | +0.67*&nbsp;[+0.18,&nbsp;+1.20] |
 | Self-Forcing with sink | 81.33 | 81.63 | +0.31&nbsp;[−0.30,&nbsp;+0.83] | +3.38*&nbsp;[+2.73,&nbsp;+4.06] |
 
-LongLive uses 6-frame committing. Its historical rollf200 Base and Commit Forcing arms both store 15 physical
+LongLive uses 6-frame committing. Its historical rollf200 Base and recent-context control arms both store 15 physical
 cache frames. Full 12-frame and self-only controls retain their original scores below.
 
 <a id="committing-replication"></a>
 
 ### Generation-seed replication
 
-The same seven committing configurations, 200 rollf200 prompts per generation seed, fixed released weights.
+The same seven supporting context-control configurations, 200 rollf200 prompts per generation seed, fixed released weights.
 All clip-to-clip Subject gains reproduce with seed 1. `*` denotes an interval excluding zero.
 
 | Configuration | Δ Quality, seed 0 | Δ Quality, seed 1 | Δ Consistency, seed 0 | Δ Consistency, seed 1 |
@@ -387,11 +617,14 @@ All clip-to-clip Subject gains reproduce with seed 1. `*` denotes an interval ex
 
 Sources: [seed 0](results/tables/vbl60_seed0.txt), [LongLive 6-frame seed 0](results/tables/vbl60_longlive_commit_window.txt),
 [seed 1 SGF/LongLive](results/tables/vbl60_seed1_a.txt), [seed 1 remaining configurations](results/tables/vbl60_seed1_b.txt).
-[Figure inputs and CPU replay](assets/README.md). The corresponding specs and all metrics remain below.
+[Figure inputs and CPU replay](assets/README.md). The figure retains 9-frame SGF, 21-frame RF-TF/Rolling Sink/SF with sink and 6-frame CF/LongLive.
+The corresponding specs and all metrics remain below.
 
 ### Additional backbone comparisons
 
-| Model | Seed | Base | + Commit Forcing | Δ Quality | Δ Consistency |
+These SGF+ and ID-Forcing comparisons use their original 9-frame adaptations.
+
+| Model | Seed | Base | + recent-context control | Δ Quality | Δ Consistency |
 |:---|--:|---:|---:|:---|:---|
 | SGF+ | 0 | 84.23 | 84.34 | +0.12&nbsp;[−0.26,&nbsp;+0.48] | +2.84*&nbsp;[+2.06,&nbsp;+3.59] |
 | ID-Forcing on Self-Forcing | 0 | 82.20 | 82.44 | +0.23*&nbsp;[+0.07,&nbsp;+0.40] | +2.53*&nbsp;[+1.99,&nbsp;+3.09] |
@@ -404,23 +637,23 @@ Sources: [seed 0](results/tables/vbl60_seed0.txt), [LongLive 6-frame seed 0](res
 
 Supplementary fixed-weight comparisons at 60 s, 200 rollf200 prompts and generation seed 0. Each within-group
 committing contrast retains denoising and physical storage. RF denoising on SGF uses 21 physical frames, unlike
-the 24-frame SF-based RF-TF in the main table. Clean committing disables TRB in both RF implementations.
+the 24-frame SF-based RF-TF supporting control. Clean committing disables TRB in both RF implementations.
 
 | Within-group committing contrast | Physical frames | Δ Quality | Δ Consistency |
 |:---|---:|:---|:---|
-| SGF + Commit Forcing − SGF | 12 | +1.04*&nbsp;[+0.67,&nbsp;+1.40] | +4.40* |
-| SGF with RF denoising + Commit Forcing − SGF with RF denoising | 21 | +0.30*&nbsp;[+0.0005,&nbsp;+0.61] | +3.35*&nbsp;[+2.55,&nbsp;+4.19] |
+| SGF + recent-context control − SGF | 12 | +1.04*&nbsp;[+0.67,&nbsp;+1.40] | +4.40* |
+| SGF with RF denoising + recent-context control − SGF with RF denoising | 21 | +0.30*&nbsp;[+0.0005,&nbsp;+0.61] | +3.35*&nbsp;[+2.55,&nbsp;+4.19] |
 
 | Cross-group contrast, including denoising and budget changes | Δ Quality | Δ Consistency |
 |:---|:---|:---|
-| Add RF denoising to Commit Forcing, 12 → 21 frames | +0.10&nbsp;[−0.19,&nbsp;+0.39] | +0.12 |
+| Add RF denoising to recent-context control, 12 → 21 frames | +0.10&nbsp;[−0.19,&nbsp;+0.39] | +0.12 |
 | RF reading versus base SGF, 12 → 21 frames | +0.84*&nbsp;[+0.56,&nbsp;+1.14] | +1.17* |
-| SGF + Commit Forcing versus SGF + RF reading, 12 versus 21 frames | +0.20&nbsp;[−0.13,&nbsp;+0.55] | +3.23* |
+| SGF + recent-context control versus SGF + RF reading, 12 versus 21 frames | +0.20&nbsp;[−0.13,&nbsp;+0.55] | +3.23* |
 
 [Exact table](results/tables/vbl60_sgf_rf.txt) · [spec](results/specs/vbl60_sgf_rf.json).
 The independent SF distant-denoising results are preserved [separately](analysis/read_locus/formal_60s.md).
 
-The 120/240-second RF + Commit Forcing runs use the main 24-frame SF implementation. Those long-horizon
+The 120/240-second RF + recent-context control runs use the main 24-frame SF implementation. Those long-horizon
 experiments have no matched RF-only arm; their whole-configuration scores do not isolate the committing gain.
 [RF configurations](integrations/recency_forcing/README.md#rf-implementations).
 
@@ -450,15 +683,15 @@ and scoring settings have not been matched, so these columns do not establish a 
 | LongLive | commit pass reads the newest 6 frames | 0 | +0.49*&nbsp;[+0.33,&nbsp;+0.66] | +1.20* |
 | LongLive | commit pass reads the newest 6 frames | 1 | +0.46*&nbsp;[+0.30,&nbsp;+0.64] | +1.06* |
 | LongLive | commit pass reads the newest 9 frames | 0 | +0.48*&nbsp;[+0.33,&nbsp;+0.64] | +1.22* |
-| Self-Forcing + sink | + Commit Forcing | 0 | +0.31&nbsp;[−0.30,&nbsp;+0.83] | +3.38* |
-| Self-Forcing + sink | + Commit Forcing | 1 | +0.20&nbsp;[−0.28,&nbsp;+0.59] | +3.40* |
+| Self-Forcing + sink | + recent-context control | 0 | +0.31&nbsp;[−0.30,&nbsp;+0.83] | +3.38* |
+| Self-Forcing + sink | + recent-context control | 1 | +0.20&nbsp;[−0.28,&nbsp;+0.59] | +3.40* |
 | Self-Forcing + sink | commit pass reads only its own block | 0 | −0.05&nbsp;[−0.71,&nbsp;+0.49] | −0.49 |
-| Recency Forcing †, 2nd implementation | + Commit Forcing | 0 | +0.49*&nbsp;[+0.26,&nbsp;+0.72] | +4.71* |
+| Recency Forcing †, 2nd implementation | + recent-context control | 0 | +0.49*&nbsp;[+0.26,&nbsp;+0.72] | +4.71* |
 
 <details>
 <summary>All metrics, 60 s</summary>
 
-The original `longlive+rule` label denotes 12-frame committing. The 6-frame main comparison uses
+The original `longlive+rule` label denotes 12-frame committing. The 6-frame supporting comparison uses
 `longlive+commit6` in the window and seed-1 tables. Historical table specs and scores are preserved.
 
 <details>
@@ -467,9 +700,9 @@ The original `longlive+rule` label denotes 12-frame committing. The 6-frame main
 Source: [`results/tables/vbl60_seed0.txt`](results/tables/vbl60_seed0.txt) · spec [`results/specs/vbl60_seed0.json`](results/specs/vbl60_seed0.json)
 
 
-**Self-Forcing + sink + Commit Forcing** vs **Self-Forcing + sink**
+**Self-Forcing + sink + recent-context control** vs **Self-Forcing + sink**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 81.33 | 81.63 | +0.31&nbsp;[−0.30,&nbsp;+0.83] |
 | Dynamic degree | 57.52 | 59.58 | +2.07&nbsp;[−0.38,&nbsp;+4.43] |
@@ -483,9 +716,9 @@ Source: [`results/tables/vbl60_seed0.txt`](results/tables/vbl60_seed0.txt) · sp
 | Subject, clip to clip (Consistency) | 75.18 | 78.56 | +3.38*&nbsp;[+2.73,&nbsp;+4.06] |
 | Background, clip to clip | 80.64 | 83.31 | +2.66*&nbsp;[+2.24,&nbsp;+3.11] |
 
-**Recency Forcing + Commit Forcing** vs **Recency Forcing**
+**Recency Forcing + recent-context control** vs **Recency Forcing**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 82.01 | 82.47 | +0.46*&nbsp;[+0.27,&nbsp;+0.65] |
 | Dynamic degree | 63.20 | 63.93 | +0.73&nbsp;[−1.28,&nbsp;+2.83] |
@@ -499,9 +732,9 @@ Source: [`results/tables/vbl60_seed0.txt`](results/tables/vbl60_seed0.txt) · sp
 | Subject, clip to clip (Consistency) | 75.02 | 78.88 | +3.86*&nbsp;[+3.22,&nbsp;+4.51] |
 | Background, clip to clip | 80.79 | 83.51 | +2.72*&nbsp;[+2.31,&nbsp;+3.13] |
 
-**ID-Forcing on Self-Forcing + Commit Forcing** vs **ID-Forcing on Self-Forcing**
+**ID-Forcing on Self-Forcing + recent-context control** vs **ID-Forcing on Self-Forcing**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 82.20 | 82.44 | +0.23*&nbsp;[+0.07,&nbsp;+0.40] |
 | Dynamic degree | 61.95 | 60.78 | −1.17&nbsp;[−3.27,&nbsp;+0.98] |
@@ -531,9 +764,9 @@ Source: [`results/tables/vbl60_seed0.txt`](results/tables/vbl60_seed0.txt) · sp
 | Subject, clip to clip (Consistency) | 75.18 | 74.69 | −0.49&nbsp;[−1.51,&nbsp;+0.55] |
 | Background, clip to clip | 80.64 | 81.33 | +0.69*&nbsp;[+0.02,&nbsp;+1.41] |
 
-**Self-Forcing + sink + Commit Forcing** vs **Self-Forcing + sink, commit pass reads only its block**
+**Self-Forcing + sink + recent-context control** vs **Self-Forcing + sink, commit pass reads only its block**
 
-| Metric | Self-Forcing + sink, commit pass reads only its block | Self-Forcing + sink + Commit Forcing | Δ [95% CI] |
+| Metric | Self-Forcing + sink, commit pass reads only its block | Self-Forcing + sink + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 81.28 | 81.63 | +0.36&nbsp;[−0.16,&nbsp;+0.81] |
 | Dynamic degree | 67.80 | 59.58 | −8.22*&nbsp;[−11.67,&nbsp;−4.90] |
@@ -549,7 +782,7 @@ Source: [`results/tables/vbl60_seed0.txt`](results/tables/vbl60_seed0.txt) · sp
 
 **LongLive, 12-frame control** vs **LongLive**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 82.23 | 82.65 | +0.42*&nbsp;[+0.27,&nbsp;+0.57] |
 | Dynamic degree | 42.98 | 49.38 | +6.40*&nbsp;[+4.43,&nbsp;+8.57] |
@@ -565,7 +798,7 @@ Source: [`results/tables/vbl60_seed0.txt`](results/tables/vbl60_seed0.txt) · sp
 
 **ID-Forcing on LongLive, 12-frame control** vs **ID-Forcing on LongLive**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 82.54 | 82.45 | −0.09&nbsp;[−0.25,&nbsp;+0.06] |
 | Dynamic degree | 52.52 | 47.05 | −5.47*&nbsp;[−7.73,&nbsp;−3.33] |
@@ -611,9 +844,9 @@ Source: [`results/tables/vbl60_seed0.txt`](results/tables/vbl60_seed0.txt) · sp
 | Subject, clip to clip (Consistency) | 86.21 | 86.93 | +0.72*&nbsp;[+0.32,&nbsp;+1.13] |
 | Background, clip to clip | 88.79 | 89.17 | +0.38*&nbsp;[+0.15,&nbsp;+0.60] |
 
-**SGF + Commit Forcing** vs **SGF**
+**SGF + recent-context control** vs **SGF**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 83.58 | 84.62 | +1.04*&nbsp;[+0.67,&nbsp;+1.41] |
 | Dynamic degree | 54.92 | 68.30 | +13.38*&nbsp;[+8.73,&nbsp;+17.93] |
@@ -627,9 +860,9 @@ Source: [`results/tables/vbl60_seed0.txt`](results/tables/vbl60_seed0.txt) · sp
 | Subject, clip to clip (Consistency) | 86.54 | 90.93 | +4.40*&nbsp;[+3.51,&nbsp;+5.27] |
 | Background, clip to clip | 89.78 | 92.46 | +2.68*&nbsp;[+2.20,&nbsp;+3.17] |
 
-**Recency Forcing, 2nd implementation + Commit Forcing** vs **Recency Forcing, 2nd implementation**
+**Recency Forcing, 2nd implementation + recent-context control** vs **Recency Forcing, 2nd implementation**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 81.89 | 82.38 | +0.49*&nbsp;[+0.26,&nbsp;+0.72] |
 | Dynamic degree | 62.13 | 62.65 | +0.52&nbsp;[−1.78,&nbsp;+2.77] |
@@ -643,9 +876,9 @@ Source: [`results/tables/vbl60_seed0.txt`](results/tables/vbl60_seed0.txt) · sp
 | Subject, clip to clip (Consistency) | 74.75 | 79.46 | +4.71*&nbsp;[+3.78,&nbsp;+5.64] |
 | Background, clip to clip | 80.58 | 84.03 | +3.45*&nbsp;[+2.89,&nbsp;+4.04] |
 
-**Context Forcing + Commit Forcing** vs **Context Forcing**
+**Context Forcing + recent-context control** vs **Context Forcing**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 82.78 | 82.91 | +0.13&nbsp;[−0.10,&nbsp;+0.35] |
 | Dynamic degree | 60.62 | 59.57 | −1.05&nbsp;[−4.05,&nbsp;+1.92] |
@@ -675,9 +908,9 @@ Source: [`results/tables/vbl60_seed0.txt`](results/tables/vbl60_seed0.txt) · sp
 | Subject, clip to clip (Consistency) | 78.72 | 80.52 | +1.80*&nbsp;[+1.20,&nbsp;+2.42] |
 | Background, clip to clip | 82.29 | 84.09 | +1.80*&nbsp;[+1.36,&nbsp;+2.24] |
 
-**Rolling Sink + Commit Forcing** vs **Rolling Sink**
+**Rolling Sink + recent-context control** vs **Rolling Sink**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 82.61 | 82.72 | +0.11&nbsp;[−0.02,&nbsp;+0.24] |
 | Dynamic degree | 45.85 | 49.53 | +3.68*&nbsp;[+1.75,&nbsp;+5.58] |
@@ -698,9 +931,9 @@ Source: [`results/tables/vbl60_seed0.txt`](results/tables/vbl60_seed0.txt) · sp
 
 Source: [`results/tables/vbl60_sgf_rf.txt`](results/tables/vbl60_sgf_rf.txt) · spec [`results/specs/vbl60_sgf_rf.json`](results/specs/vbl60_sgf_rf.json)
 
-**SGF + Commit Forcing** vs **SGF**
+**SGF + recent-context control** vs **SGF**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 83.58 | 84.62 | +1.04*&nbsp;[+0.67,&nbsp;+1.40] |
 | Dynamic degree | 54.92 | 68.30 | +13.38*&nbsp;[+8.70,&nbsp;+18.05] |
@@ -730,9 +963,9 @@ Source: [`results/tables/vbl60_sgf_rf.txt`](results/tables/vbl60_sgf_rf.txt) · 
 | Subject, clip to clip (Consistency) | 86.54 | 87.71 | +1.17*&nbsp;[+0.33,&nbsp;+2.02] |
 | Background, clip to clip | 89.78 | 90.39 | +0.61*&nbsp;[+0.18,&nbsp;+1.05] |
 
-**SGF + RF reading + Commit Forcing** vs **SGF + RF reading**
+**SGF + RF reading + recent-context control** vs **SGF + RF reading**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 84.42 | 84.72 | +0.30*&nbsp;[+0.00,&nbsp;+0.61] |
 | Dynamic degree | 66.67 | 69.52 | +2.85&nbsp;[−0.97,&nbsp;+6.53] |
@@ -746,9 +979,9 @@ Source: [`results/tables/vbl60_sgf_rf.txt`](results/tables/vbl60_sgf_rf.txt) · 
 | Subject, clip to clip (Consistency) | 87.71 | 91.06 | +3.35*&nbsp;[+2.55,&nbsp;+4.19] |
 | Background, clip to clip | 90.39 | 92.53 | +2.14*&nbsp;[+1.59,&nbsp;+2.70] |
 
-**SGF + RF reading + Commit Forcing** vs **SGF + Commit Forcing**
+**SGF + RF reading + recent-context control** vs **SGF + recent-context control**
 
-| Metric | SGF + Commit Forcing | SGF + RF reading + Commit Forcing | Δ [95% CI] |
+| Metric | SGF + recent-context control | SGF + RF reading + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 84.62 | 84.72 | +0.10&nbsp;[−0.19,&nbsp;+0.39] |
 | Dynamic degree | 68.30 | 69.52 | +1.22&nbsp;[−2.48,&nbsp;+5.02] |
@@ -762,9 +995,9 @@ Source: [`results/tables/vbl60_sgf_rf.txt`](results/tables/vbl60_sgf_rf.txt) · 
 | Subject, clip to clip (Consistency) | 90.93 | 91.06 | +0.12&nbsp;[−0.53,&nbsp;+0.78] |
 | Background, clip to clip | 92.46 | 92.53 | +0.07&nbsp;[−0.33,&nbsp;+0.46] |
 
-**SGF + Commit Forcing** vs **SGF + RF reading**
+**SGF + recent-context control** vs **SGF + RF reading**
 
-| Metric | SGF + RF reading | SGF + Commit Forcing | Δ [95% CI] |
+| Metric | SGF + RF reading | SGF + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 84.42 | 84.62 | +0.20&nbsp;[−0.13,&nbsp;+0.55] |
 | Dynamic degree | 66.67 | 68.30 | +1.63&nbsp;[−2.83,&nbsp;+5.90] |
@@ -785,9 +1018,9 @@ Source: [`results/tables/vbl60_sgf_rf.txt`](results/tables/vbl60_sgf_rf.txt) · 
 
 Source: [`results/tables/vbl60_sgf_plus.txt`](results/tables/vbl60_sgf_plus.txt) · spec [`results/specs/vbl60_sgf_plus.json`](results/specs/vbl60_sgf_plus.json)
 
-**SGF+ + Commit Forcing** vs **SGF+**
+**SGF+ + recent-context control** vs **SGF+**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 84.23 | 84.34 | +0.12&nbsp;[−0.26,&nbsp;+0.48] |
 | Dynamic degree | 55.32 | 59.58 | +4.27&nbsp;[−0.85,&nbsp;+9.10] |
@@ -918,9 +1151,9 @@ Source: [`results/tables/vbl60_longlive_commit6_vs_12.txt`](results/tables/vbl60
 
 Source: [`results/tables/vbl60_seed1_a.txt`](results/tables/vbl60_seed1_a.txt) · spec [`results/specs/vbl60_seed1_a.json`](results/specs/vbl60_seed1_a.json)
 
-**SGF + Commit Forcing** vs **SGF**
+**SGF + recent-context control** vs **SGF**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 83.85 | 84.71 | +0.86*&nbsp;[+0.52,&nbsp;+1.21] |
 | Dynamic degree | 57.27 | 70.58 | +13.32*&nbsp;[+9.05,&nbsp;+17.62] |
@@ -936,7 +1169,7 @@ Source: [`results/tables/vbl60_seed1_a.txt`](results/tables/vbl60_seed1_a.txt) �
 
 **LongLive, 12-frame control** vs **LongLive**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 82.19 | 82.67 | +0.48*&nbsp;[+0.33,&nbsp;+0.64] |
 | Dynamic degree | 42.03 | 50.20 | +8.17*&nbsp;[+6.23,&nbsp;+10.18] |
@@ -950,9 +1183,9 @@ Source: [`results/tables/vbl60_seed1_a.txt`](results/tables/vbl60_seed1_a.txt) �
 | Subject, clip to clip (Consistency) | 86.02 | 86.70 | +0.68*&nbsp;[+0.35,&nbsp;+1.01] |
 | Background, clip to clip | 88.20 | 88.84 | +0.64*&nbsp;[+0.43,&nbsp;+0.86] |
 
-**ID-Forcing on Self-Forcing + Commit Forcing** vs **ID-Forcing on Self-Forcing**
+**ID-Forcing on Self-Forcing + recent-context control** vs **ID-Forcing on Self-Forcing**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 82.47 | 82.67 | +0.20*&nbsp;[+0.04,&nbsp;+0.37] |
 | Dynamic degree | 65.23 | 62.98 | −2.25*&nbsp;[−4.45,&nbsp;−0.15] |
@@ -1037,9 +1270,9 @@ Source: [`results/tables/vbl60_seed1_a.txt`](results/tables/vbl60_seed1_a.txt) �
 
 Source: [`results/tables/vbl60_seed1_b.txt`](results/tables/vbl60_seed1_b.txt) · spec [`results/specs/vbl60_seed1_b.json`](results/specs/vbl60_seed1_b.json)
 
-**Recency Forcing + Commit Forcing** vs **Recency Forcing**
+**Recency Forcing + recent-context control** vs **Recency Forcing**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 82.00 | 82.56 | +0.56*&nbsp;[+0.38,&nbsp;+0.73] |
 | Dynamic degree | 63.25 | 65.37 | +2.12*&nbsp;[+0.43,&nbsp;+3.82] |
@@ -1069,9 +1302,9 @@ Source: [`results/tables/vbl60_seed1_b.txt`](results/tables/vbl60_seed1_b.txt) �
 | Subject, clip to clip (Consistency) | 78.63 | 80.24 | +1.61*&nbsp;[+1.02,&nbsp;+2.22] |
 | Background, clip to clip | 81.93 | 84.04 | +2.10*&nbsp;[+1.64,&nbsp;+2.56] |
 
-**Context Forcing + Commit Forcing** vs **Context Forcing**
+**Context Forcing + recent-context control** vs **Context Forcing**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 82.70 | 83.12 | +0.43*&nbsp;[+0.22,&nbsp;+0.64] |
 | Dynamic degree | 60.27 | 61.60 | +1.33&nbsp;[−1.45,&nbsp;+4.13] |
@@ -1086,9 +1319,9 @@ Source: [`results/tables/vbl60_seed1_b.txt`](results/tables/vbl60_seed1_b.txt) �
 | Background, clip to clip | 81.93 | 85.26 | +3.32*&nbsp;[+2.80,&nbsp;+3.87] |
 
 
-**Rolling Sink + Commit Forcing** vs **Rolling Sink**
+**Rolling Sink + recent-context control** vs **Rolling Sink**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 82.40 | 82.55 | +0.16*&nbsp;[+0.02,&nbsp;+0.30] |
 | Dynamic degree | 43.42 | 47.58 | +4.17*&nbsp;[+2.57,&nbsp;+5.88] |
@@ -1102,9 +1335,9 @@ Source: [`results/tables/vbl60_seed1_b.txt`](results/tables/vbl60_seed1_b.txt) �
 | Subject, clip to clip (Consistency) | 86.34 | 87.32 | +0.98*&nbsp;[+0.58,&nbsp;+1.41] |
 | Background, clip to clip | 88.79 | 89.45 | +0.66*&nbsp;[+0.39,&nbsp;+0.96] |
 
-**Self-Forcing + sink + Commit Forcing** vs **Self-Forcing + sink**
+**Self-Forcing + sink + recent-context control** vs **Self-Forcing + sink**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 81.35 | 81.54 | +0.20&nbsp;[−0.28,&nbsp;+0.59] |
 | Dynamic degree | 58.22 | 58.87 | +0.65&nbsp;[−2.00,&nbsp;+3.40] |
@@ -1124,11 +1357,15 @@ Source: [`results/tables/vbl60_seed1_b.txt`](results/tables/vbl60_seed1_b.txt) �
 
 ## Longer videos
 
+CF and LongLive retain current-plus-previous-block (6-frame) committing at 120–240 seconds. SGF uses the
+9-frame wider-context source-control reference; its +5.07 consistency gain does not evaluate the updated
+6-frame SGF main arm. ID-Forcing uses its separate 9-frame framework adaptation.
+
 **240 s, 32 MovieGen prompts** (the first 32 extended MovieGen prompts of Self-Forcing). Drift: imaging quality of the first 2 s clip minus that of the last one (lower is better).
 
-| Model | Base | + Commit Forcing | Δ Quality | Δ Consistency | Δ Drift |
+| Model | Base | + recent-context control | Δ Quality | Δ Consistency | Δ Drift |
 |:---|---:|---:|:---|:---|:---|
-| SGF | 83.97 | 84.69 | +0.72*&nbsp;[+0.07,&nbsp;+1.37] | +5.07* | +0.28 |
+| SGF, 9-frame control | 83.97 | 84.69 | +0.72*&nbsp;[+0.07,&nbsp;+1.37] | +5.07* | +0.28 |
 | Context Forcing | 83.60 | 84.04 | +0.44&nbsp;[−0.08,&nbsp;+0.97] | +2.23* | −0.75 |
 
 **Variants**, 240 s:
@@ -1140,7 +1377,7 @@ Source: [`results/tables/vbl60_seed1_b.txt`](results/tables/vbl60_seed1_b.txt) �
 
 **120 s and 240 s, ID-Forcing's 128 MovieGen prompts.**
 
-| Model | Length | Base | + Commit Forcing | Δ Quality | Δ Consistency |
+| Model | Length | Base | + recent-context control | Δ Quality | Δ Consistency |
 |:---|---:|---:|---:|:---|:---|
 | LongLive, 6 frames | 120 s | 81.72 | 82.05 | +0.33*&nbsp;[+0.16,&nbsp;+0.50] | +1.87*&nbsp;[+1.39,&nbsp;+2.36] |
 | LongLive, 12-frame control | 120 s | 81.72 | 81.93 | +0.21*&nbsp;[+0.05,&nbsp;+0.37] | +1.09*&nbsp;[+0.62,&nbsp;+1.57] |
@@ -1162,9 +1399,9 @@ Base and both recent-context LongLive arms in these custom-prompt runs store 15 
 
 Source: [`results/long_horizon/tables/moviegen32_240s_sgf.txt`](results/long_horizon/tables/moviegen32_240s_sgf.txt) · spec [`results/long_horizon/specs/moviegen32_240s_sgf.json`](results/long_horizon/specs/moviegen32_240s_sgf.json)
 
-**SGF + Commit Forcing** vs **SGF**
+**SGF + recent-context control** vs **SGF**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 83.97 | 84.69 | +0.72*&nbsp;[+0.07,&nbsp;+1.37] |
 | Dynamic degree | 49.11 | 59.69 | +10.57*&nbsp;[+2.24,&nbsp;+18.99] |
@@ -1207,9 +1444,9 @@ Source: [`results/long_horizon/tables/moviegen32_240s_context_forcing.txt`](resu
 | Drift, first vs last clip | 0.70 | -1.18 | −1.88&nbsp;[−4.20,&nbsp;+0.20] |
 | Drift, first 5 vs last 5 clips | 0.73 | -1.38 | −2.10*&nbsp;[−4.05,&nbsp;−0.49] |
 
-**Context Forcing + Commit Forcing** vs **Context Forcing**
+**Context Forcing + recent-context control** vs **Context Forcing**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 83.60 | 84.04 | +0.44&nbsp;[−0.08,&nbsp;+0.97] |
 | Dynamic degree | 58.46 | 59.64 | +1.17&nbsp;[−5.03,&nbsp;+7.40] |
@@ -1271,9 +1508,9 @@ Source: [`results/long_horizon/tables/moviegen32_240s_context_forcing.txt`](resu
 
 Source: [`results/long_horizon/tables/idf128_120s.txt`](results/long_horizon/tables/idf128_120s.txt) · spec [`results/long_horizon/specs/idf128_120s.json`](results/long_horizon/specs/idf128_120s.json)
 
-**ID-Forcing on Self-Forcing + Commit Forcing** vs **ID-Forcing on Self-Forcing**
+**ID-Forcing on Self-Forcing + recent-context control** vs **ID-Forcing on Self-Forcing**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 81.62 | 81.68 | +0.06&nbsp;[−0.15,&nbsp;+0.26] |
 | Dynamic degree | 64.27 | 60.49 | −3.78*&nbsp;[−6.39,&nbsp;−1.34] |
@@ -1289,7 +1526,7 @@ Source: [`results/long_horizon/tables/idf128_120s.txt`](results/long_horizon/tab
 
 **LongLive, 12-frame control** vs **LongLive**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 81.72 | 81.93 | +0.21*&nbsp;[+0.05,&nbsp;+0.37] |
 | Dynamic degree | 42.96 | 46.42 | +3.46*&nbsp;[+1.48,&nbsp;+5.56] |
@@ -1310,9 +1547,9 @@ Source: [`results/long_horizon/tables/idf128_120s.txt`](results/long_horizon/tab
 
 Source: [`results/long_horizon/tables/idf128_240s.txt`](results/long_horizon/tables/idf128_240s.txt) · spec [`results/long_horizon/specs/idf128_240s.json`](results/long_horizon/specs/idf128_240s.json)
 
-**ID-Forcing on Self-Forcing + Commit Forcing** vs **ID-Forcing on Self-Forcing**
+**ID-Forcing on Self-Forcing + recent-context control** vs **ID-Forcing on Self-Forcing**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 81.32 | 81.65 | +0.34*&nbsp;[+0.05,&nbsp;+0.70] |
 | Dynamic degree | 63.67 | 61.05 | −2.62*&nbsp;[−5.01,&nbsp;−0.34] |
@@ -1328,7 +1565,7 @@ Source: [`results/long_horizon/tables/idf128_240s.txt`](results/long_horizon/tab
 
 **LongLive, 12-frame control** vs **LongLive**
 
-| Metric | Base | + Commit Forcing | Δ [95% CI] |
+| Metric | Base | + recent-context control | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 81.56 | 81.84 | +0.28*&nbsp;[+0.10,&nbsp;+0.46] |
 | Dynamic degree | 41.56 | 45.98 | +4.41*&nbsp;[+2.16,&nbsp;+6.85] |

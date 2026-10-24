@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""SGF+ (Self Gradient Forcing Plus, chunkwise, arXiv 2610.10429) with or without Commit Forcing.
+r"""SGF+ (Self Gradient Forcing Plus, chunkwise, arXiv 2610.10429) with or without Recent-Context Committing.
 
     python integrations/sgf_plus/generate.py --rule on --code ../Self_Gradient_Forcing_Plus \
         --prompts eval/prompts/rollf200.txt --ids 0-199 --seconds 60 --seed 0 --out outputs/sgf_plus
@@ -15,18 +15,21 @@ import torch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from common import runner  # noqa: E402
+from integrations.commit_contract import check_read_counts, read_count_delta  # noqa: E402
 
-WINDOW = 9  # latent frames the commit pass reads with --rule on
+WINDOW = 6  # current clean block + immediately preceding block
 # KV cache: sink 3 + FIFO 6 + current 3 latent frames
 GEOMETRY = dict(kv_cache_max_frames=12, kv_cache_sink=3, kv_cache_train_frames=21, kv_cache_position_mode="top_aligned")
 COUNTERS = ("commit_calls", "rule_reads", "sink_dropped")
 
 
-def parse_args():
+def parse_args(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     runner.add_common_args(parser)
     parser.add_argument("--code", required=True, help="Self_Gradient_Forcing_Plus checkout with commit_rule.patch")
-    args = parser.parse_args()
+    parser.add_argument("--commit-profile", choices=["recent6", "legacy9"], default="recent6",
+                        help="on: recent6 reads 6 latent frames; legacy9 retains the previous 9-frame control")
+    args = parser.parse_args(argv)
     # absolute paths before chdir
     args.code = os.path.abspath(args.code)
     args.ckpt = os.path.abspath(args.ckpt or os.path.join(args.code, "hf_weights", "chunkwise", "model.pt"))
@@ -67,9 +70,10 @@ def generate(pipe, prompt, frames, device):
     return 255.0 * video[0].permute(0, 2, 3, 1).cpu()
 
 
-def check_activation(counts, blocks, layers, rule_on):
+def check_activation(counts, blocks, layers, rule_on, window=WINDOW):
     """One commit pass per block; with the rule on, every layer of it applies the rule."""
-    want = dict(commit_calls=blocks, rule_reads=layers * blocks if rule_on else 0)
+    want = dict(commit_calls=blocks, rule_reads=layers * blocks if rule_on else 0,
+                sink_dropped=layers * max(0, blocks - window // runner.CHUNK) if rule_on else 0)
     got = {k: counts[k] for k in want}
     if got != want:
         raise RuntimeError(f"activation check failed: {got}, expected {want}")
@@ -87,18 +91,25 @@ def main():
     torch.set_grad_enabled(False)
     device = torch.device("cuda")
     pipe, rule, weights = load_pipeline(args, device)
-    rule.update(on=args.rule == "on", window=WINDOW)
+    if "read_frame_counts" not in rule:
+        raise SystemExit(f"{args.code}: reapply the current integrations/sgf_plus/commit_rule.patch")
+    window = WINDOW if args.commit_profile == "recent6" else 9
+    rule.update(on=args.rule == "on", window=window)
     assert pipe.num_frame_per_block == runner.CHUNK, pipe.num_frame_per_block
     blocks, layers = frames // runner.CHUNK, len(pipe.generator.model.blocks)
 
     for idx in ids:
         before = {k: rule[k] for k in COUNTERS}
+        before_reads = dict(rule["read_frame_counts"])
         noise_seed = runner.seed_everything(args.seed, idx)
         with runner.Timer() as timer:
             video = generate(pipe, prompts[idx], frames, device)
         counts = {k: rule[k] - before[k] for k in COUNTERS}
-        check_activation(counts, blocks, layers, rule["on"])
-        meta = dict(base="sgf_plus", rule=args.rule, window=WINDOW if rule["on"] else None, prompt=prompts[idx],
+        check_activation(counts, blocks, layers, rule["on"], window)
+        reads = read_count_delta(rule["read_frame_counts"], before_reads)
+        check_read_counts(reads, blocks, layers, window if rule["on"] else None)
+        meta = dict(base="sgf_plus", rule=args.rule, commit_profile=args.commit_profile,
+                    window=window if rule["on"] else None, commit_read_frame_counts=reads, prompt=prompts[idx],
                     idx=idx, seed=args.seed, noise_seed=noise_seed, seconds=args.seconds, latent_frames=frames,
                     geometry=GEOMETRY, ckpt=args.ckpt, weights=weights, wall_s=round(timer.seconds, 1), **counts)
         runner.save(args, idx, video, meta)

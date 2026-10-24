@@ -1,27 +1,36 @@
 diff --git a/pipeline/causal_inference.py b/pipeline/causal_inference.py
-index facecbe..82567fd
 --- a/pipeline/causal_inference.py
 +++ b/pipeline/causal_inference.py
-@@ -20,7 +20,8 @@ class CausalInferencePipeline(torch.nn.Module):
+@@ -14,13 +14,17 @@
+
+
+ class CausalInferencePipeline(torch.nn.Module):
++    COMMIT_RULE_VERSION = 2
++
+     def __init__(
+             self,
+             args,
              device,
              generator=None,
              text_encoder=None,
 -            vae=None
 +            vae=None,
-+            commit_rule=False
++            commit_rule=False,
++            commit_frames=6
      ):
          super().__init__()
          # Step 1: Initialize all models
-@@ -41,6 +42,8 @@ class CausalInferencePipeline(torch.nn.Module):
+@@ -41,6 +45,9 @@
          self.frame_seq_length = 1560
- 
+
          self.kv_cache1 = None
 +        # if True, the commit pass reads a rolling cache of real committed K/V
 +        self.commit_rule = commit_rule
++        self.commit_frames = commit_frames
          self.args = args
          self.num_frame_per_block = getattr(args, "num_frame_per_block", 1)
          self.local_attn_size = self.generator.model.local_attn_size
-@@ -123,6 +126,11 @@ class CausalInferencePipeline(torch.nn.Module):
+@@ -123,6 +130,11 @@
                      [0], dtype=torch.long, device=noise.device)
                  self.kv_cache1[block_index]["local_end_index"] = torch.tensor(
                      [0], dtype=torch.long, device=noise.device)
@@ -30,43 +39,45 @@ index facecbe..82567fd
 +                        [0], dtype=torch.long, device=noise.device)
 +                    self.kv_cache1[block_index]["real_local_end_index"] = torch.tensor(
 +                        [0], dtype=torch.long, device=noise.device)
- 
+
          # Step 2: Cache context feature
          current_start_frame = 0
-@@ -253,6 +261,14 @@ class CausalInferencePipeline(torch.nn.Module):
+@@ -253,6 +265,15 @@
                  "local_end_index": torch.tensor([0], dtype=torch.long, device=device)
              })
- 
+
 +        if self.commit_rule:
 +            # rolling cache of real committed K/V, same size as the Rolling Sink cache
 +            for cache in kv_cache1:
++                cache["commit_frames"] = self.commit_frames
 +                cache["real_k"] = torch.zeros_like(cache["k"])
 +                cache["real_v"] = torch.zeros_like(cache["v"])
 +                cache["real_global_end_index"] = torch.tensor([0], dtype=torch.long, device=device)
 +                cache["real_local_end_index"] = torch.tensor([0], dtype=torch.long, device=device)
 +
          self.kv_cache1 = kv_cache1  # always store the clean cache
- 
+
      def _initialize_crossattn_cache(self, batch_size, dtype, device):
 diff --git a/wan/modules/causal_model.py b/wan/modules/causal_model.py
-index ed71ab9..1b320ce
 --- a/wan/modules/causal_model.py
 +++ b/wan/modules/causal_model.py
-@@ -87,6 +87,9 @@ class CausalWanSelfAttention(nn.Module):
+@@ -87,6 +87,10 @@
          self.qk_norm = qk_norm
          self.eps = eps
          self.max_attention_size = 32760 if local_attn_size == -1 else local_attn_size * 1560
 +        # activation counters of this layer
 +        self.num_real_commits = 0
 +        self.num_replays = 0
- 
++        self.commit_read_frame_counts = {}
+
          # layers
          self.q = nn.Linear(dim, dim)
-@@ -96,6 +99,27 @@ class CausalWanSelfAttention(nn.Module):
+@@ -95,6 +99,32 @@
+         self.o = nn.Linear(dim, dim)
          self.norm_q = WanRMSNorm(dim, eps=eps) if qk_norm else nn.Identity()
          self.norm_k = WanRMSNorm(dim, eps=eps) if qk_norm else nn.Identity()
- 
-+    def _attend_real_history(self, kv_cache, roped_query, roped_key, v, current_end):
++
++    def _attend_real_history(self, kv_cache, roped_query, roped_key, v, current_end, frame_seqlen):
 +        """Write the clean block into kv_cache["real_k"] / ["real_v"] and attend to them (no replayed frames)."""
 +        real_k, real_v = kv_cache["real_k"], kv_cache["real_v"]
 +        cache_size, num_new_tokens = real_k.shape[1], roped_key.shape[1]
@@ -84,16 +95,20 @@ index ed71ab9..1b320ce
 +        kv_cache["real_global_end_index"].fill_(current_end)
 +        kv_cache["real_local_end_index"].fill_(local_end_index)
 +        self.num_real_commits += 1
-+        start = max(0, local_end_index - self.max_attention_size)
++        # Archive capacity and denoising/replay storage stay fixed; narrow only the commit read.
++        read_tokens = kv_cache["commit_frames"] * frame_seqlen
++        start = max(0, local_end_index - read_tokens)
++        n_read = (local_end_index - start) // frame_seqlen
++        reads = self.commit_read_frame_counts
++        reads[n_read] = reads.get(n_read, 0) + 1
 +        return attention(roped_query, real_k[:, start:local_end_index], real_v[:, start:local_end_index])
-+
+
      def forward(
          self,
-         x,
-@@ -249,13 +273,18 @@ class CausalWanSelfAttention(nn.Module):
+@@ -249,13 +279,18 @@
                  kv_cache["k_original"][:, local_start_index:local_end_index] = k
                  kv_cache["v_original"][:, local_start_index:local_end_index] = v
- 
+
 -            x = attention(
 -                roped_query,
 -                kv_cache["k"][:, max(0, local_end_index - self.max_attention_size):local_end_index],
@@ -101,14 +116,14 @@ index ed71ab9..1b320ce
 -            )
 +            if timestep == 0 and "real_k" in kv_cache:
 +                # the commit pass reads real committed K/V, not the replayed frames
-+                x = self._attend_real_history(kv_cache, roped_query, roped_key, v, current_end)
++                x = self._attend_real_history(kv_cache, roped_query, roped_key, v, current_end, frame_seqlen)
 +            else:
 +                x = attention(
 +                    roped_query,
 +                    kv_cache["k"][:, max(0, local_end_index - self.max_attention_size):local_end_index],
 +                    kv_cache["v"][:, max(0, local_end_index - self.max_attention_size):local_end_index]
 +                )
- 
+
              if timestep == 0 and current_end - 3 * frame_seqlen >= self.max_attention_size:
 +                self.num_replays += 1  # counter only
                  current_start_frame_RS = current_start_frame - 3

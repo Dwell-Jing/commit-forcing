@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""ID-Forcing (arXiv 2610.03120) on LongLive or Self-Forcing, with or without Commit Forcing.
+r"""ID-Forcing on LongLive or Self-Forcing, with or without the separate 9-frame recent-context adaptation.
 
     python integrations/id_forcing/generate.py --generator longlive --rule on --idf-code /path/to/ID-Forcing \
         --prompts eval/prompts/rollf200.txt --ids 0-199 --seconds 60 --seed 0 --out outputs/id_forcing

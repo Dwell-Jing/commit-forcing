@@ -1,0 +1,54 @@
+{
+  "protocol_id": "vbench-long-wan-full946-current-plus-previous-20261024",
+  "method": "Recent-Context Committing",
+  "primary_models": [
+    "CF",
+    "RS",
+    "RF",
+    "LL",
+    "SGFP",
+    "SGF"
+  ],
+  "arm_aliases": {
+    "SGF_W": "SGF_W6",
+    "RF_W": "K_RFw6",
+    "SGFP_W": "SGFP_W6",
+    "RS_W": "RS_W6",
+    "LL_W": "W946_W6S",
+    "CF_W": "CF_W"
+  },
+  "committing_context": {
+    "current_latent_frames": 3,
+    "previous_latent_frames": 3,
+    "total_latent_frames": 6,
+    "startup": "current block alone when no preceding block is available"
+  },
+  "denoising": "base generator policy unchanged",
+  "samples_per_entry": 1,
+  "entries": 946,
+  "prompt_clusters": 944,
+  "generation_seed": 0,
+  "seconds": 60,
+  "fps": 16,
+  "resolution": [
+    832,
+    480
+  ],
+  "benchmark_commit": "45e79ec14e69a2187202c675d2dbce1a71843d53",
+  "scoring": "official VBench-Long 16 dimensions; long_vbench_standard; static filtering for Temporal Flickering; official fused Subject/Background scores",
+  "bootstrap": {
+    "repetitions": 4000,
+    "seed": 20261011,
+    "unit": "paired canonical original-prompt cluster",
+    "reported_intervals": "Frozen source reports; new per-prompt contributions are not included in this aggregate release."
+  },
+  "reference_package": "../",
+  "reference_source_sha256": {
+    "full_scores.csv": "4b9a99f02978cf7a2143931157617ff763eded29202f512dc647e8ea1c04667a",
+    "aggregate_paired_ci.csv": "48dc11f2b16c7bcd2926baefb242064471e655a159d4a78b3cdc4ca176eca466",
+    "component_paired_ci.csv": "6bfa6331816c4f9e874106e2b95f9631b71bcab879ea5a895eda625de2fe96cf",
+    "protocol.json": "720af356b1da2d5c862783041e1b6dcf8b5ba3ad8c19b73284b636353d9309ec"
+  },
+  "pairing": "Same prompts and generation-seed conventions. Historical SGF intermediate RNG states are not matched; prompt-level pairing is retained. Model-specific protocols are recorded in the reference package.",
+  "id_framework_adaptations": "Nine-frame adaptations remain in the historical reference package and later framework comparisons, outside these six primary generators."
+}

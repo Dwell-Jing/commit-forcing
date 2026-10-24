@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Self Gradient Forcing (chunkwise checkpoint) with or without Commit Forcing.
+"""Self Gradient Forcing (chunkwise checkpoint) with or without Recent-Context Committing.
 
     python integrations/sgf/generate.py --code /path/to/Self_Gradient_Forcing --rule on --reading native \
         --prompts eval/prompts/rollf200.txt --ids 0-199 --seconds 60 --seed 0 --out outputs/sgf
@@ -15,11 +15,12 @@ import torch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from common import runner  # noqa: E402
+from integrations.commit_contract import check_read_counts, read_count_delta  # noqa: E402
 
 CONFIG = "configs/self_gradient_forcing_chunkwise.yaml"
 CKPT = "checkpoints/chunkwise/ar/model.pt"
 STREAMING = dict(long_video=True, kv_cache_sink=3, kv_cache_train_frames=21, kv_cache_position_mode="top_aligned")
-READINGS = {  # cache_frames includes the sink; window: commit read with the rule on
+READINGS = {  # window preserves the historical controls used by analysis callers
     "native": dict(cache_frames=12, window=9, trb=False),
     "rf": dict(cache_frames=21, window=18, trb=True),
 }
@@ -69,13 +70,23 @@ def check_counters(counts, blocks, layers, steps, rule_on, trb):
         raise RuntimeError(f"activation counters {counts}, expected {want}")
 
 
-def main():
-    parser = argparse.ArgumentParser(description="Self Gradient Forcing with or without Commit Forcing")
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description="Self Gradient Forcing with or without Recent-Context Committing")
     runner.add_common_args(parser)
     parser.add_argument("--reading", choices=sorted(READINGS), default="native",
                         help="native: SGF's own cache; rf: Recency Forcing reading")
     parser.add_argument("--code", required=True, help="upstream checkout with commit_rule.patch applied")
-    args = parser.parse_args()
+    parser.add_argument("--commit-profile", choices=["recent6", "legacy"], default="recent6",
+                        help="on: recent6 reads current + previous block; legacy reads native 9 / rf 18")
+    return parser.parse_args(argv)
+
+
+def commit_window(args):
+    return (6 if args.commit_profile == "recent6" else READINGS[args.reading]["window"]) if args.rule == "on" else None
+
+
+def main():
+    args = parse_args()
 
     code = os.path.abspath(args.code)  # before chdir
     ckpt = os.path.abspath(args.ckpt) if args.ckpt else os.path.join(code, CKPT)
@@ -89,14 +100,20 @@ def main():
 
     reading = READINGS[args.reading]
     pipe, rule = load_pipeline(code, ckpt)
-    rule.update(window=reading["window"] if args.rule == "on" else None, trb=reading["trb"])
+    if "read_frame_counts" not in rule:
+        raise SystemExit(f"{code}: reapply the current integrations/sgf/commit_rule.patch")
+    rule.update(window=commit_window(args), trb=reading["trb"])
     blocks = frames // pipe.num_frame_per_block
     for idx in ids:
+        before_reads = dict(rule["read_frame_counts"])
         noise_seed = runner.seed_everything(args.seed, idx)
         video, counts, wall = generate(pipe, rule, reading["cache_frames"], prompts[idx], frames, noise_seed)
         check_counters(counts, blocks, len(pipe.generator.model.blocks), len(pipe.denoising_step_list),
                        args.rule == "on", reading["trb"])
-        meta = dict(base="sgf", rule=args.rule, reading=args.reading, commit_window=rule["window"],
+        reads = read_count_delta(rule["read_frame_counts"], before_reads)
+        check_read_counts(reads, blocks, len(pipe.generator.model.blocks), rule["window"])
+        meta = dict(base="sgf", rule=args.rule, reading=args.reading, commit_profile=args.commit_profile,
+                    commit_window=rule["window"], commit_read_frame_counts=reads,
                     cache_frames=reading["cache_frames"], sink_frames=STREAMING["kv_cache_sink"], seed=args.seed,
                     idx=idx, prompt=prompts[idx], seconds=args.seconds, latent_frames=frames, ckpt=ckpt,
                     counters=counts, wall_s=round(wall, 1))

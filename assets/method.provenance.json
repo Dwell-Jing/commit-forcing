@@ -1,102 +1,581 @@
 {
-  "artifact": "method_overview",
+  "artifact": "method",
+  "status": "Canonical Figure4; current-plus-previous committing",
+  "source": "assets/source/make_method.py",
+  "source_sha256": "fa31db7d45b793f116f731611a71a13f472dac35b8c0fb32aef6ee664b8b501e",
   "physical_size_mm": [
     178,
-    88.19090909090909
+    37.21818181818182
   ],
-  "computation": {
+  "minimum_font_points_at_178mm": 8.715246957766643,
+  "minimum_font_points_at_168mm": 8.225626342161776,
+  "upper_computation": {
+    "asset": "assets/source/method_upper.svg",
+    "asset_sha256": "1c7587e65cd70b538f6c0f2af47efed1b7d489f37df7abb081b5a63116eebc8f",
+    "operators_arrows_and_tensor_geometry_preserved": true,
+    "label_change": "Committing-side Recent becomes Previous block; denoising Recent is retained",
+    "representation": "Native three-slab stacks with one 4:3 front grid; operators and connections preserved",
+    "helper": "assets/source/method_glyphs.py",
+    "helper_sha256": "374defd8a31b679d56e8d384adea72de9f26b6519d51094658545edd7fb32077",
+    "glyph_contract": {
+      "glyph_count": 19,
+      "native_vector_primitives": true,
+      "grammar": "Three slabs; exactly one 3-by-3 grid on the front slab; 4:3 front aspect",
+      "slab_count_and_grid_are_symbolic": true,
+      "slabs_encode_neither_layers_nor_latent_frames": true,
+      "clean_latent_is_not_kv": true,
+      "glyph_nonuniform_transforms": false,
+      "global_upper_transform": "translate(0 -32)",
+      "noise_pattern": "draft-noise-hatch",
+      "noise_overlay_front_only": true,
+      "noise_texture": "Falling diagonals with opacity decreasing across denoising states",
+      "noise_distinct_from_excluded_history_hatch": true,
+      "removed_top_level_elements": {
+        "g": 8,
+        "rect": 39,
+        "path": 58
+      },
+      "removed_top_level_element_count": 105,
+      "retained_element_count": 33,
+      "retained_element_sha256_before": "5cb97e11005e3d5b67cc59111d4fe4fe117cd13faefc28cac4670e8b880f09c4",
+      "retained_element_sha256_after": "5cb97e11005e3d5b67cc59111d4fe4fe117cd13faefc28cac4670e8b880f09c4",
+      "retained_elements_byte_identical": true,
+      "all_labels_sha256": "89d64e101e9bcecce15ac37a7be844cd524b00ef2047a34282e12ef7b5156a78",
+      "all_arrow_and_cross_paths_sha256": "4c3e014dcef34e625ecfc9c2d243178763753623ca0748f2ac00f390c028dc31",
+      "all_processor_and_container_boxes_sha256": "b21e426a068df8a098887638495efc70466dd45ec818773449a30b128bcd960d",
+      "arrow_path_count": 14,
+      "cross_path_count": 1,
+      "topology_unchanged": true,
+      "current_and_historical_inputs_separate": true,
+      "old_cache_and_new_kv_inputs_separate": true,
+      "lower_access_masks_touched": false
+    },
+    "glyphs": [
+      {
+        "id": "draft-glyph-nonrecent-denoising",
+        "role": "nonrecent-denoising",
+        "content_kind": "historical-kv",
+        "front_rect": {
+          "x": 282,
+          "y": 141,
+          "width": 96,
+          "height": 72
+        },
+        "front_aspect_ratio": "4:3",
+        "slab_count": 3,
+        "slab_offset": 5.28,
+        "front_grid": [
+          3,
+          3
+        ],
+        "front_grid_count": 1,
+        "back_slabs_gridded": false,
+        "noise_opacity": null,
+        "noise_is_front_only": false,
+        "stroke": "#67717A",
+        "fill": "#E8EBED",
+        "transform": null
+      },
+      {
+        "id": "draft-glyph-recent-denoising",
+        "role": "recent-denoising",
+        "content_kind": "historical-kv",
+        "front_rect": {
+          "x": 527,
+          "y": 141,
+          "width": 96,
+          "height": 72
+        },
+        "front_aspect_ratio": "4:3",
+        "slab_count": 3,
+        "slab_offset": 5.28,
+        "front_grid": [
+          3,
+          3
+        ],
+        "front_grid_count": 1,
+        "back_slabs_gridded": false,
+        "noise_opacity": null,
+        "noise_is_front_only": false,
+        "stroke": "#527F9D",
+        "fill": "#D7E7F2",
+        "transform": null
+      },
+      {
+        "id": "draft-glyph-nonrecent-committing",
+        "role": "nonrecent-committing",
+        "content_kind": "historical-kv",
+        "front_rect": {
+          "x": 1137,
+          "y": 141,
+          "width": 96,
+          "height": 72
+        },
+        "front_aspect_ratio": "4:3",
+        "slab_count": 3,
+        "slab_offset": 5.28,
+        "front_grid": [
+          3,
+          3
+        ],
+        "front_grid_count": 1,
+        "back_slabs_gridded": false,
+        "noise_opacity": null,
+        "noise_is_front_only": false,
+        "stroke": "#67717A",
+        "fill": "#E8EBED",
+        "transform": null
+      },
+      {
+        "id": "draft-glyph-recent-committing",
+        "role": "recent-committing",
+        "content_kind": "historical-kv",
+        "front_rect": {
+          "x": 1337,
+          "y": 141,
+          "width": 96,
+          "height": 72
+        },
+        "front_aspect_ratio": "4:3",
+        "slab_count": 3,
+        "slab_offset": 5.28,
+        "front_grid": [
+          3,
+          3
+        ],
+        "front_grid_count": 1,
+        "back_slabs_gridded": false,
+        "noise_opacity": null,
+        "noise_is_front_only": false,
+        "stroke": "#527F9D",
+        "fill": "#D7E7F2",
+        "transform": null
+      },
+      {
+        "id": "draft-glyph-noisy-input",
+        "role": "noisy-current-input",
+        "content_kind": "noisy-latent",
+        "front_rect": {
+          "x": 30,
+          "y": 271,
+          "width": 112,
+          "height": 84
+        },
+        "front_aspect_ratio": "4:3",
+        "slab_count": 3,
+        "slab_offset": 6.16,
+        "front_grid": [
+          3,
+          3
+        ],
+        "front_grid_count": 1,
+        "back_slabs_gridded": false,
+        "noise_opacity": 1,
+        "noise_is_front_only": true,
+        "stroke": "#67717A",
+        "fill": "#F4F6F7",
+        "transform": null
+      },
+      {
+        "id": "draft-glyph-clean-latent",
+        "role": "clean-current-latent",
+        "content_kind": "clean-latent-not-kv",
+        "front_rect": {
+          "x": 785,
+          "y": 271,
+          "width": 112,
+          "height": 84
+        },
+        "front_aspect_ratio": "4:3",
+        "slab_count": 3,
+        "slab_offset": 6.16,
+        "front_grid": [
+          3,
+          3
+        ],
+        "front_grid_count": 1,
+        "back_slabs_gridded": false,
+        "noise_opacity": null,
+        "noise_is_front_only": false,
+        "stroke": "#527F9D",
+        "fill": "#D7E7F2",
+        "transform": null
+      },
+      {
+        "id": "draft-glyph-new-kv",
+        "role": "new-committed-kv",
+        "content_kind": "kv",
+        "front_rect": {
+          "x": 1573,
+          "y": 271,
+          "width": 112,
+          "height": 84
+        },
+        "front_aspect_ratio": "4:3",
+        "slab_count": 3,
+        "slab_offset": 6.16,
+        "front_grid": [
+          3,
+          3
+        ],
+        "front_grid_count": 1,
+        "back_slabs_gridded": false,
+        "noise_opacity": null,
+        "noise_is_front_only": false,
+        "stroke": "#A64F35",
+        "fill": "#F2DCCE",
+        "transform": null
+      },
+      {
+        "id": "draft-glyph-denoising-state-1",
+        "role": "intermediate-denoising-state",
+        "content_kind": "latent",
+        "front_rect": {
+          "x": 265,
+          "y": 325,
+          "width": 48,
+          "height": 36
+        },
+        "front_aspect_ratio": "4:3",
+        "slab_count": 3,
+        "slab_offset": 2.64,
+        "front_grid": [
+          3,
+          3
+        ],
+        "front_grid_count": 1,
+        "back_slabs_gridded": false,
+        "noise_opacity": 1,
+        "noise_is_front_only": true,
+        "stroke": "#67717A",
+        "fill": "#F4F6F7",
+        "transform": null
+      },
+      {
+        "id": "draft-glyph-denoising-state-2",
+        "role": "intermediate-denoising-state",
+        "content_kind": "latent",
+        "front_rect": {
+          "x": 375,
+          "y": 325,
+          "width": 48,
+          "height": 36
+        },
+        "front_aspect_ratio": "4:3",
+        "slab_count": 3,
+        "slab_offset": 2.64,
+        "front_grid": [
+          3,
+          3
+        ],
+        "front_grid_count": 1,
+        "back_slabs_gridded": false,
+        "noise_opacity": 0.65,
+        "noise_is_front_only": true,
+        "stroke": "#67717A",
+        "fill": "#F4F6F7",
+        "transform": null
+      },
+      {
+        "id": "draft-glyph-denoising-state-3",
+        "role": "intermediate-denoising-state",
+        "content_kind": "latent",
+        "front_rect": {
+          "x": 485,
+          "y": 325,
+          "width": 48,
+          "height": 36
+        },
+        "front_aspect_ratio": "4:3",
+        "slab_count": 3,
+        "slab_offset": 2.64,
+        "front_grid": [
+          3,
+          3
+        ],
+        "front_grid_count": 1,
+        "back_slabs_gridded": false,
+        "noise_opacity": 0.3,
+        "noise_is_front_only": true,
+        "stroke": "#67717A",
+        "fill": "#F4F6F7",
+        "transform": null
+      },
+      {
+        "id": "draft-glyph-denoising-state-4",
+        "role": "intermediate-denoising-state",
+        "content_kind": "latent",
+        "front_rect": {
+          "x": 595,
+          "y": 325,
+          "width": 48,
+          "height": 36
+        },
+        "front_aspect_ratio": "4:3",
+        "slab_count": 3,
+        "slab_offset": 2.64,
+        "front_grid": [
+          3,
+          3
+        ],
+        "front_grid_count": 1,
+        "back_slabs_gridded": false,
+        "noise_opacity": 0.06,
+        "noise_is_front_only": true,
+        "stroke": "#67717A",
+        "fill": "#F4F6F7",
+        "transform": null
+      },
+      {
+        "id": "draft-glyph-previous-cache-1",
+        "role": "previous-cache-nonrecent",
+        "content_kind": "historical-kv",
+        "front_rect": {
+          "x": 1851,
+          "y": 160,
+          "width": 52,
+          "height": 39
+        },
+        "front_aspect_ratio": "4:3",
+        "slab_count": 3,
+        "slab_offset": 2.86,
+        "front_grid": [
+          3,
+          3
+        ],
+        "front_grid_count": 1,
+        "back_slabs_gridded": false,
+        "noise_opacity": null,
+        "noise_is_front_only": false,
+        "stroke": "#67717A",
+        "fill": "#E8EBED",
+        "transform": null
+      },
+      {
+        "id": "draft-glyph-previous-cache-2",
+        "role": "previous-cache-recent",
+        "content_kind": "historical-kv",
+        "front_rect": {
+          "x": 1917,
+          "y": 160,
+          "width": 52,
+          "height": 39
+        },
+        "front_aspect_ratio": "4:3",
+        "slab_count": 3,
+        "slab_offset": 2.86,
+        "front_grid": [
+          3,
+          3
+        ],
+        "front_grid_count": 1,
+        "back_slabs_gridded": false,
+        "noise_opacity": null,
+        "noise_is_front_only": false,
+        "stroke": "#527F9D",
+        "fill": "#D7E7F2",
+        "transform": null
+      },
+      {
+        "id": "draft-glyph-previous-cache-3",
+        "role": "previous-cache-recent",
+        "content_kind": "historical-kv",
+        "front_rect": {
+          "x": 1983,
+          "y": 160,
+          "width": 52,
+          "height": 39
+        },
+        "front_aspect_ratio": "4:3",
+        "slab_count": 3,
+        "slab_offset": 2.86,
+        "front_grid": [
+          3,
+          3
+        ],
+        "front_grid_count": 1,
+        "back_slabs_gridded": false,
+        "noise_opacity": null,
+        "noise_is_front_only": false,
+        "stroke": "#527F9D",
+        "fill": "#D7E7F2",
+        "transform": null
+      },
+      {
+        "id": "draft-glyph-previous-cache-4",
+        "role": "previous-cache-recent",
+        "content_kind": "historical-kv",
+        "front_rect": {
+          "x": 2049,
+          "y": 160,
+          "width": 52,
+          "height": 39
+        },
+        "front_aspect_ratio": "4:3",
+        "slab_count": 3,
+        "slab_offset": 2.86,
+        "front_grid": [
+          3,
+          3
+        ],
+        "front_grid_count": 1,
+        "back_slabs_gridded": false,
+        "noise_opacity": null,
+        "noise_is_front_only": false,
+        "stroke": "#527F9D",
+        "fill": "#D7E7F2",
+        "transform": null
+      },
+      {
+        "id": "draft-glyph-updated-cache-1",
+        "role": "updated-cache-nonrecent",
+        "content_kind": "kv",
+        "front_rect": {
+          "x": 1803,
+          "y": 323,
+          "width": 64,
+          "height": 48
+        },
+        "front_aspect_ratio": "4:3",
+        "slab_count": 3,
+        "slab_offset": 3.52,
+        "front_grid": [
+          3,
+          3
+        ],
+        "front_grid_count": 1,
+        "back_slabs_gridded": false,
+        "noise_opacity": null,
+        "noise_is_front_only": false,
+        "stroke": "#67717A",
+        "fill": "#E8EBED",
+        "transform": null
+      },
+      {
+        "id": "draft-glyph-updated-cache-2",
+        "role": "updated-cache-recent",
+        "content_kind": "kv",
+        "front_rect": {
+          "x": 1887,
+          "y": 323,
+          "width": 64,
+          "height": 48
+        },
+        "front_aspect_ratio": "4:3",
+        "slab_count": 3,
+        "slab_offset": 3.52,
+        "front_grid": [
+          3,
+          3
+        ],
+        "front_grid_count": 1,
+        "back_slabs_gridded": false,
+        "noise_opacity": null,
+        "noise_is_front_only": false,
+        "stroke": "#527F9D",
+        "fill": "#D7E7F2",
+        "transform": null
+      },
+      {
+        "id": "draft-glyph-updated-cache-3",
+        "role": "updated-cache-recent",
+        "content_kind": "kv",
+        "front_rect": {
+          "x": 1971,
+          "y": 323,
+          "width": 64,
+          "height": 48
+        },
+        "front_aspect_ratio": "4:3",
+        "slab_count": 3,
+        "slab_offset": 3.52,
+        "front_grid": [
+          3,
+          3
+        ],
+        "front_grid_count": 1,
+        "back_slabs_gridded": false,
+        "noise_opacity": null,
+        "noise_is_front_only": false,
+        "stroke": "#527F9D",
+        "fill": "#D7E7F2",
+        "transform": null
+      },
+      {
+        "id": "draft-glyph-updated-cache-4",
+        "role": "updated-cache-new",
+        "content_kind": "kv",
+        "front_rect": {
+          "x": 2055,
+          "y": 323,
+          "width": 64,
+          "height": 48
+        },
+        "front_aspect_ratio": "4:3",
+        "slab_count": 3,
+        "slab_offset": 3.52,
+        "front_grid": [
+          3,
+          3
+        ],
+        "front_grid_count": 1,
+        "back_slabs_gridded": false,
+        "noise_opacity": null,
+        "noise_is_front_only": false,
+        "stroke": "#A64F35",
+        "fill": "#F2DCCE",
+        "transform": null
+      }
+    ],
     "flow": "Base denoising -> current clean block -> committing t0 -> new KV -> base cache update -> next block",
-    "current_and_recent_inputs_separate": true,
-    "old_cache_and_new_kv_inputs_separate": true,
-    "current_kv_recomputed": true,
-    "cache_update_unchanged": true,
-    "no_new_router_or_forward": true,
-    "denoising_policy_unchanged": true,
-    "glyph_geometry_preserved_from_adopted_upper": true,
-    "vertical_translation": -32
+    "current_and_history_inputs_separate": true,
+    "old_cache_and_new_kv_inputs_separate": true
   },
-  "window_order": [
-    12,
-    9,
-    6,
-    3
+  "committing_context": {
+    "current_blocks": 1,
+    "historical_blocks": 1,
+    "historical_selection": "Immediately preceding block in the original generated trajectory",
+    "latent_frames_per_block": 3,
+    "total_latent_frames": 6,
+    "first_block_uses_current_only": true,
+    "nonrecent_directly_accessed": false,
+    "base_denoising_policy_preserved": true,
+    "base_cache_update_preserved": true
+  },
+  "scientific_boundaries": [
+    "The method uses current plus immediately preceding block, not a choice among window options",
+    "History outside that direct committing context remains stored under the base policy",
+    "Indirect history through the generated current block or previous KV is retained",
+    "The first block uses the current block only",
+    "No new model forward, memory-eviction algorithm, or inference cache is introduced",
+    "Stacks and front grids count neither latent frames nor network layers; Clean block remains latent"
   ],
-  "windows": [
-    {
-      "window_w": 12,
-      "historical_frames_directly_accessed": 9,
-      "historical_blocks_directly_accessed": [
-        -3,
-        -2,
-        -1
-      ],
-      "current_frames_directly_accessed": 3,
-      "sink_and_nonrecent_directly_accessed": false,
-      "known_self_only": false,
-      "bracket_x": [
-        810,
-        2110
-      ]
-    },
-    {
-      "window_w": 9,
-      "historical_frames_directly_accessed": 6,
-      "historical_blocks_directly_accessed": [
-        -2,
-        -1
-      ],
-      "current_frames_directly_accessed": 3,
-      "sink_and_nonrecent_directly_accessed": false,
-      "known_self_only": false,
-      "bracket_x": [
-        1120,
-        2110
-      ]
-    },
-    {
-      "window_w": 6,
-      "historical_frames_directly_accessed": 3,
-      "historical_blocks_directly_accessed": [
-        -1
-      ],
-      "current_frames_directly_accessed": 3,
-      "sink_and_nonrecent_directly_accessed": false,
-      "known_self_only": false,
-      "bracket_x": [
-        1430,
-        2110
-      ]
-    },
-    {
-      "window_w": 3,
-      "historical_frames_directly_accessed": 0,
-      "historical_blocks_directly_accessed": [],
-      "current_frames_directly_accessed": 3,
-      "sink_and_nonrecent_directly_accessed": false,
-      "known_self_only": true,
-      "bracket_x": [
-        1840,
-        2110
-      ]
-    }
-  ],
-  "lower_access_axis": {
-    "is_common_physical_cache": false,
-    "per_temporal_block_latent_frames": 3,
-    "nonrecent_column_is_categorical": true,
-    "trajectory_age": "Original generated trajectory, not current cache-slot placement",
-    "hatching": "No direct committing access; historical KV remains stored",
-    "current": "Clean current input; current KV is recomputed by the forward",
-    "self_only": "Known zero-history endpoint, not a full ID-Forcing framework label"
+  "caption_handoff": "Committing constructs new KV from the clean current block and KV of the immediately preceding block at t=0. Denoising and cache update follow the base generator. The current and previous blocks each contain three latent frames; when no previous block exists, committing uses current only. Other stored history, including sink KV, remains available under the base denoising policy but is excluded from direct committing access. Stacks and grids are schematic and count neither frames nor layers.",
+  "window_options_removed": true,
+  "lettered_panel_labels": false,
+  "export_sha256": {
+    "svg": "37782972e91f7e68ea16bf0c81ef351071a1642b5fec3e7a85ff1e75981aac7b",
+    "pdf": "bd71636b340139f6abc9f4233f5b76b307d8b737dce3fdf23c0fe885468ea2cb",
+    "actual_pdf_png": "5afaf7c402afef3019c3ac9498a11d4b3c6a0a68342a16a7a1e4a50aa425630f"
   },
-  "indirect_history": "Masking direct input does not erase historical influence through current clean latents or recent KV",
-  "rule_is_not_semantic_classifier": true,
-  "extra_inference_storage": false,
-  "source": "assets/source/make_method.py",
-  "upper_vector_asset": {
-    "path": "assets/source/method_upper.svg",
-    "sha256": "1c7587e65cd70b538f6c0f2af47efed1b7d489f37df7abb081b5a63116eebc8f"
+  "publication_exports": {
+    "pdf": "bd71636b340139f6abc9f4233f5b76b307d8b737dce3fdf23c0fe885468ea2cb",
+    "svg": "37782972e91f7e68ea16bf0c81ef351071a1642b5fec3e7a85ff1e75981aac7b",
+    "png": "5afaf7c402afef3019c3ac9498a11d4b3c6a0a68342a16a7a1e4a50aa425630f"
   },
-  "canonical_pdf_sha256": "ccf553d3a14c515726c43f401d239bb2e51f95d3dbc00f18e3946180cb6ba7b3",
-  "canonical_svg_sha256": "59355b021c51573591770e1f86c07abdef06361d1af97e23742a743970c1d2d1"
+  "canonical_export_identity": {
+    "canonical_figure": "figures/method_overview",
+    "pdf_and_svg": "Copied byte-for-byte from the current accepted manuscript figure exports",
+    "png": "Rendered from the released PDF at 2200 pixels wide"
+  },
+  "regeneration_validation": {
+    "rendered_size": [
+      2200,
+      460
+    ],
+    "pdf_rgb_pixel_equal": true,
+    "mean_channel_difference": 0.0,
+    "pixels_differ": 0,
+    "svg_byte_equal": true
+  }
 }

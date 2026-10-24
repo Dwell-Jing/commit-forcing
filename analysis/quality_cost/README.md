@@ -1,9 +1,31 @@
 # Quality decomposition and computation cost
 
-## Where the Quality change comes from
+## Current six-generator Quality effects
 
-The common 946-entry VBench evaluation uses seven normalized visual dimensions for Quality. The table decomposes
-the Base / +Commit Forcing difference into those seven contributions, in Quality points ×100.
+The current method commits the current block and the immediately preceding block (6 latent frames). Its standard-suite Quality changes decompose as follows.
+
+| Generator | Δ Quality | Subject | Background | Flicker | MotionSm | Dynamic | Aesthetic | Imaging |
+|:---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Context Forcing | +0.46 | +0.04 | +0.06 | -0.04 | -0.06 | +0.26 | +0.06 | +0.13 |
+| Rolling Sink | +0.41 | +0.03 | +0.06 | -0.02 | -0.06 | +0.27 | +0.08 | +0.06 |
+| RF-TF | +0.65 | +0.11 | +0.16 | +0.04 | -0.03 | -0.22 | +0.37 | +0.23 |
+| LongLive | +0.29 | +0.01 | +0.03 | -0.00 | -0.07 | +0.21 | +0.06 | +0.07 |
+| SGF+ | +0.32 | +0.05 | +0.13 | +0.04 | -0.05 | +0.12 | +0.04 | -0.02 |
+| SGF | +1.27 | +0.05 | +0.10 | +0.02 | -0.15 | +1.01 | +0.18 | +0.08 |
+
+SGF's +1.27 Quality gain includes +1.01 from Dynamic Degree; Motion Smoothness changes by −0.29 raw score points. RF-TF has the largest Total gain (+1.10) and its Quality gain is driven mainly by Aesthetic and Imaging Quality.
+
+[Current unrounded contributions](../../results/vbench_full/common946/current6/quality_decomposition.csv) · [Current scores and frozen intervals](../../results/vbench_full/common946/current6/README.md). The current validator checks official normalization and seven-term sums:
+
+```bash
+python eval/vbench_full/reproduce_common946.py
+```
+
+The measurements below retain their original contexts: SGF/SGF+9 frames, RF-TF/Rolling Sink21, CF/LongLive6, and ID-framework adaptations9. Their costs are not new six-frame timing runs for every generator.
+
+## Historical context-control Quality decomposition
+
+The historical eight-configuration VBench comparison uses seven normalized visual dimensions for Quality. The following table retains its original Base / context-control differences, in Quality points ×100.
 
 | Model | Δ Quality | Subject | Background | Flicker | MotionSm | Dynamic | Aesthetic | Imaging |
 |:---|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -100,7 +122,7 @@ This earlier single-video control uses 12 physical frames in Base and 15 in +CF.
 [original cost report](data/COST_report.md) and [archived CSV](data/ablation12/cost_measurements.csv); these memory
 values are not assigned to the new committing-6 row.
 
-## Reproduce the tables
+## Reproduce the historical controls
 
 ```bash
 python analysis/quality_cost/reproduce.py
