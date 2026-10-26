@@ -293,14 +293,17 @@ components. This control retains base denoising access and uses the earlier 9-fr
   <img src="assets/committing_correction_dose.png" width="78%" alt="Four LongLive spatial-averaging controls: independently measured attention-correction norm ratios versus retained consistency gain and motion suppression, with eight observed points.">
 </p>
 
-**Window effects.** On LongLive, spatial averaging retains part of the history-induced attention correction,
+**Why one preceding block.** On LongLive, spatial averaging retains part of the history-induced attention correction,
 its consistency gain and its suppression of motion. The horizontal axis measures the correction's norm before
 the attention output projection. Four spatial-averaging controls support a smoothing interpretation of the
-consistency–motion tradeoff.
+consistency–motion tradeoff. SG16 departs from equal retention, preserving 0.42 of the consistency gain and 0.61
+of the motion suppression. Selecting recent-context KV for deep layers and self-only KV for shallower layers
+adds 0.26 consistency points over full recent-context committing.
 
 Adding a second preceding block gives only a 0.02-point consistency change on LongLive, without a significant
 gain. Earlier dependencies can already travel through the preceding block's KV, which may reduce the benefit of
-reading older blocks again. Wider-window declines are consistent with interference from outdated content:
+reading older blocks again. The fixed-latent SGF propagation probe offers cross-model corroboration of this
+indirect path. Wider-window declines are consistent with interference from outdated content:
 fixed-size recency controls and regionally averaged sink corrections retain consistency losses.
 [Definitions, normalization and deep-layer KV confirmation](analysis/window_effects/README.md).
 

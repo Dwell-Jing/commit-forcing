@@ -3,8 +3,8 @@
   "updated": "2026-10-26",
   "assets": {
     "assets/README.md": {
-      "sha256": "be6ec0160a4c3630aa793ac39b37a6065c0bccc9f56043a318c4119c50811118",
-      "bytes": 7840
+      "sha256": "f726332d7b5609cc4e2b28edc652c70eeec86d8de7254976edb48c825e6fa17e",
+      "bytes": 7951
     },
     "assets/archive/README.md": {
       "sha256": "e9d3eb8e85cf50ac29c779bcd17c582fb29ba3540e9e2cc81881c1b9f6e2c4f0",
@@ -571,12 +571,12 @@
       "height": 1409
     },
     "assets/committing_correction_dose.provenance.json": {
-      "sha256": "cd71d59f0ee478f76dfd12be1e1fd868f10a2ea7d9fb1ed0402a6a1af1a8a013",
-      "bytes": 3215
+      "sha256": "2abdce044a6adc3db514cec414f16178cbe03630197a52ebfcc064130462411e",
+      "bytes": 3316
     },
     "assets/source/make_committing_correction_dose.py": {
-      "sha256": "5248f6b12925012e58382332c365412a1597bf27445ab40c1c58a7be929f8118",
-      "bytes": 7630
+      "sha256": "8f6d18d6804729f6f381d3140e1704d64bb3e6d6edfc91c80656c2e852d1945d",
+      "bytes": 7750
     }
   },
   "teaser": {
@@ -636,7 +636,7 @@
     "provenance": "assets/committing_content_age.provenance.json",
     "per_video_data": "assets/source/committing_content_age_scores.csv",
     "means": "assets/source/committing_content_age_data.json",
-    "protocol": "rollf200 prompts 0–99, 60 s, generation seed 0; 3 historical plus 3 current latent frames at fixed assigned positions; base denoising retained.",
+    "protocol": "rollf200 prompts 0\u201399, 60 s, generation seed 0; 3 historical plus 3 current latent frames at fixed assigned positions; base denoising retained.",
     "reproduction": "python assets/source/make_committing_content_age.py",
     "content": "Ten finite-lag means on one recency-only axis. Both sink source controls remain verified and retained in the released data.",
     "plotted_lags": [
@@ -937,7 +937,7 @@
     "renderer": "assets/source/make_committing_correction_dose.py",
     "provenance": "assets/committing_correction_dose.provenance.json",
     "data": "analysis/window_effects/summary.json",
-    "manuscript_role": "Main-text Window Effects figure",
+    "manuscript_role": "Main-text Why One Preceding Block figure",
     "n_spatial_averaging_arms": 4,
     "n_empirical_effect_points": 8,
     "x_definition": "Reported pre-output-projection committing attention correction norm ratio; not a KV norm or inferred from scores.",

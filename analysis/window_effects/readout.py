@@ -22,9 +22,10 @@ def check_metric(metric, name):
             raise ValueError(f"Aggregate outside interval: {name}")
         if decision is not None and decision != (lo > 0 or hi < 0):
             raise ValueError(f"Interval and reported decision disagree: {name}")
-    suffix = "" if interval is None else f" [{interval[0]:+.2f}, {interval[1]:+.2f}]"
+    precision = metric.get("display_decimals", 2)
+    suffix = "" if interval is None else f" [{interval[0]:+.{precision}f}, {interval[1]:+.{precision}f}]"
     status = "unreported" if decision is None else "excludes zero" if decision else "includes zero"
-    print(f"  {name}: {delta:+.2f}{suffix} ({status})")
+    print(f"  {name}: {delta:+.{precision}f}{suffix} ({status})")
 
 
 def main():
@@ -58,6 +59,8 @@ def main():
     print("\nDeep-KV selection confirmation")
     for name, metric in summary["deep_KV_confirmation"]["metrics"].items():
         check_metric(metric, name)
+    print("\nSelf-only minus full recent-context, same confirmation seeds 2/3")
+    check_metric(summary["deep_KV_confirmation"]["self_only_minus_full_recent_context"], "Subject c2c")
     sink = summary["decline_controls"]["pooled_sink_variant"]
     print("\nFP16 minus recent-context")
     for name, metric in sink["metrics"].items():
@@ -65,7 +68,7 @@ def main():
     print("\nFP16 minus FR")
     for name, metric in sink["improvement_over_unaveraged_FR"].items():
         check_metric(metric, name)
-    print("\nChecked 12 retention fractions and 9 reported comparison values.")
+    print("\nChecked 12 retention fractions and 10 reported comparison values.")
     print("No fractions, confidence intervals or evaluation statistics re-estimated.")
 
 

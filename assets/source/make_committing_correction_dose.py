@@ -129,7 +129,7 @@ def main():
         'source_sha256':sha(Path(__file__).resolve()),
         'aggregate_source':SOURCE.relative_to(ROOT).as_posix(),
         'aggregate_source_sha256':sha(SOURCE),
-        'source_overleaf_commit':'85b6572eeaa51e55adb6fa153c69a8cb2a2fb313',
+        'source_overleaf_commit':json.loads(SOURCE.read_text())['overleaf_source_commit'],
         'plotted_points':points,
         'correction_definition':'D = attention(q, current+previous K/V) - attention(q, current K/V), evaluated before the attention output projection. This is an attention-output correction, not a stored-KV difference.',
         'x_definition':'Reported ||pool(D)||_F / ||D||_F. This ratio is measured independently of outcome effects.',
@@ -140,6 +140,7 @@ def main():
         'precision':'Reported two-decimal ratios are preserved; no new norm measurements, intervals or outcome statistics are computed.',
         'reference':'The y=x line is an equal-fraction reference, not a fit. Plus signs at (0,0) and (1,1) define normalization and are not additional observations.',
         'scope':'Four spatial-averaging interventions and eight effect points on LongLive. No strict linear law or unique smoothing mechanism is established.',
+        'SG16_departure':'Retained consistency gain 0.42 differs from retained motion suppression 0.61.',
         'excluded':'P and U have no reported horizontal norm ratio in this study and are not plotted.',
         'size_mm':[WIDTH_MM, HEIGHT_MM], 'minimum_font_pt':8.8,
         'exports':{ext:sha(FIG/f'{stem}.{ext}') for ext in ['pdf', 'svg']}}

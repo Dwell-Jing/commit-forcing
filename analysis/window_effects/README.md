@@ -1,4 +1,4 @@
-# Window effects
+# Why One Preceding Block
 
 The committing-window scans show rising consistency, a plateau, and a decline as more history is read.
 The controls below support a temporal-smoothing interpretation of the initial gain and an outdated-content
@@ -40,23 +40,29 @@ between correction magnitude and both effects, while pooling also changes correc
 establish a strict linear law or a unique smoothing mechanism. P and U have no reported horizontal norm ratios
 in this comparison and are not plotted.
 
+SG16 departs from equal retention: its consistency-gain fraction is 0.42 and its motion-suppression fraction is 0.61.
+
 ### Confirmation by selecting KV versions during denoising
 
 A separate LongLive diagnostic constructs recent-context and self-only KV versions for each block. At all four
 denoising steps, zero-indexed layers 15–29 read the recent-context version and layers 0–14 read the self-only
 version. The confirmation uses 200 rollf200 prompts, new generation seeds 2 and 3, and 400 paired 60-second outputs.
-The reference uses recent-context KV throughout denoising.
+The reference is full recent-context committing (MOT_w6), using recent-context KV throughout denoising.
 
 | Metric | Layer-selective minus reference | Reported significance |
 |:---|---:|:---|
-| Clip-to-clip Subject Consistency | +0.26 | Significant |
+| Clip-to-clip Subject Consistency | +0.257 [+0.045, +0.477] | Significant |
 | Dynamic Degree | −0.47 | Not significant |
 | Quality | −0.03 | Not significant |
 | Temporal Flickering | −0.06 | Significant decrease |
 | G | +0.14 [−0.20, +0.48] | Not significant |
 
-Scores use 0–100 points. Only the G interval is supplied in this manuscript paragraph; other interval endpoints
-remain unreported. The selection diagnostic localizes an effect of recent-context KV during denoising, with a
+The +0.257 change is an additional gain over full recent-context committing. In this same confirmation set,
+self-only committing scores 1.10 points below the full scheme. That seed-2/3 contrast is separate from the
+seed-0 self-only comparison used for effect normalization; their values are not combined.
+
+Scores use 0–100 points. The manuscript supplies Subject c2c and G intervals; other interval endpoints remain
+unreported. The selection diagnostic localizes an effect of recent-context KV during denoising, with a
 flicker cost and no significant G gain. It does not identify a unique encoded attribute. Constructing two KV
 versions belongs to this diagnostic, rather than the one-pass main committing rule.
 
@@ -68,9 +74,10 @@ in that separate record.
 
 On LongLive, adding a second preceding block changes Subject c2c by +0.02 points without a significant gain.
 The preceding block's KV can already carry earlier dependencies, which may reduce the benefit of reading those
-blocks directly again. The [SGF fixed-latent probe](../committing_propagation/README.md) demonstrates an indirect
-path: differences persist in later KV after directly affected entries leave the cache, with decreasing magnitude.
-This provides a possible explanation of the plateau, rather than a causal test of its mechanism.
+blocks directly again. As cross-model corroboration, the [SGF fixed-latent probe](../committing_propagation/README.md)
+demonstrates an indirect path: differences persist in later KV after directly affected entries leave the cache,
+with decreasing magnitude. This supports a possible explanation of LongLive's plateau, rather than a direct
+causal test of that plateau in LongLive.
 
 ## Decline: outdated-content interference
 
@@ -96,7 +103,7 @@ remain available, including negative results, nonsignificant results, positive c
 ## Aggregate record
 
 [`summary.json`](summary.json) transcribes reported aggregates from Overleaf commit
-`85b6572eeaa51e55adb6fa153c69a8cb2a2fb313` and records the relevant source SHA-256 hashes.
+`6a1fe891587440c56f78e7eb728a4a21a02b2114` and records the relevant source SHA-256 hashes.
 It contains no per-prompt numerical records, videos, personal answers or participant identifiers.
 
 ```bash

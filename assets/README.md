@@ -15,6 +15,7 @@ The qualitative grid uses fixed SGF prompt 19 and Context Forcing prompt 10, see
 
 The main correction-dose figure uses four LongLive spatial-averaging arms (CG, CM16, SG16 and CM64), with two measured effect points per arm. The horizontal coordinate is the reported norm ratio of the committing attention-output correction **before the output projection**: `||pool(D)||_F / ||D||_F`, with `D = attention(current + previous) − attention(current only)`. It is not a stored-KV norm or inferred from effect scores. Vertical coordinates retain the reported fractions of consistency gain and motion suppression. Variant outcomes use 100 prompts; effect normalization uses the reported 200-prompt recent-context/self-only endpoints. The dashed `y=x` line and plus signs at `(0,0)` and `(1,1)` denote equal-fraction retention and normalization, not fitted behavior or extra observations. [Definitions, reported ratios and complete window controls](../analysis/window_effects/README.md).
 
+SG16 departs from equal retention, preserving 0.42 of the consistency gain and 0.61 of the motion suppression.
 The complete 27-variant discovery scatter remains a supplementary figure. Neither it nor the dose figure establishes a strict linear law or a unique smoothing mechanism. Separate confirmation findings and their costs remain in the complete results.
 
 ## Reproduction

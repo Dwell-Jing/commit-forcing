@@ -1,10 +1,10 @@
 {
   "artifact": "committing_correction_dose",
   "source": "assets/source/make_committing_correction_dose.py",
-  "source_sha256": "5248f6b12925012e58382332c365412a1597bf27445ab40c1c58a7be929f8118",
+  "source_sha256": "8f6d18d6804729f6f381d3140e1704d64bb3e6d6edfc91c80656c2e852d1945d",
   "aggregate_source": "analysis/window_effects/summary.json",
-  "aggregate_source_sha256": "8463bbe9beefe19e920f1503daf835d80d304c98111abf52884940eadaf13f20",
-  "source_overleaf_commit": "85b6572eeaa51e55adb6fa153c69a8cb2a2fb313",
+  "aggregate_source_sha256": "c75980ae6254dae7610a8ce9e74a478829945e684c3b8c5450c776c73983ab5a",
+  "source_overleaf_commit": "6a1fe891587440c56f78e7eb728a4a21a02b2114",
   "plotted_points": [
     {
       "code": "CG",
@@ -83,5 +83,6 @@
     "svg_byte_equal": false,
     "svg_geometry_style_text_equal_after_ID_and_version_normalization": true
   },
-  "regeneration_environment": "Matplotlib 3.10.0; canonical manuscript export uses 3.10.8. Released PDF/SVG retain canonical bytes."
+  "regeneration_environment": "Matplotlib 3.10.0; canonical manuscript export uses 3.10.8. Released PDF/SVG retain canonical bytes.",
+  "SG16_departure": "Retained consistency gain 0.42 differs from retained motion suppression 0.61."
 }

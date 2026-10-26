@@ -1,12 +1,12 @@
 {
   "export_kind": "reported aggregate values only",
-  "overleaf_source_commit": "85b6572eeaa51e55adb6fa153c69a8cb2a2fb313",
+  "overleaf_source_commit": "6a1fe891587440c56f78e7eb728a4a21a02b2114",
   "export_date": "2026-10-26",
   "statistics_recomputed": false,
   "per_prompt_values_included": false,
   "source_sha256": {
-    "sections/03-history-mechanisms.tex": "cd05a6c6f36cf4b0a0aebe063a55b7534065e438c374262b8906bab098530d5b",
-    "appendix/result-details.tex": "ba58b80036c6ad7aae03121aa8016fedbb409ffd9e7eb598f6b24b5ae2b47e85",
+    "sections/03-history-mechanisms.tex": "e518212ade215b82d3c19063afa846f2fc8bc937f52f6c75174544c59b9294db",
+    "appendix/result-details.tex": "a4af5f9b5b908fb62eaf5a38dfdbc725932bb0b722bf16e5dcc9917cb4d83040",
     "tables/committing_variants_discovery.tex": "ca9ed22896c038af8df8313f090972e66c824e9a4226782d1c65a4d84e7543ed"
   },
   "pooling_protocol": {
@@ -103,7 +103,8 @@
     "normalization_endpoints_are_additional_observations": false,
     "error_bars_reported": false,
     "error_bars_reconstructed": false,
-    "unmeasured_P_and_U_included": false
+    "unmeasured_P_and_U_included": false,
+    "SG16_departure_from_equal_retention": "Retained consistency gain 0.42 differs from retained motion suppression 0.61."
   },
   "plateau": {
     "generator": "LongLive",
@@ -120,7 +121,9 @@
     },
     "possible_explanation": "The preceding block KV can already retain earlier dependencies, reducing the marginal benefit of direct access to those blocks.",
     "causal_mechanism_of_plateau_established": false,
-    "supporting_probe": "../committing_propagation/README.md"
+    "supporting_probe": "../committing_propagation/README.md",
+    "supporting_probe_generator": "SGF",
+    "supporting_probe_scope": "Cross-model corroboration of an indirect KV path, not a direct causal test of the LongLive plateau."
   },
   "deep_KV_confirmation": {
     "generator": "LongLive",
@@ -147,12 +150,16 @@
       14
     ],
     "layer_range_endpoints_inclusive": true,
-    "reference": "recent-context KV throughout denoising",
+    "reference": "Full recent-context committing (MOT_w6); recent-context KV throughout denoising",
     "metrics": {
       "Subject c2c": {
-        "delta": 0.26,
-        "interval_95": null,
-        "reported_interval_excludes_zero": true
+        "delta": 0.257,
+        "interval_95": [
+          0.045,
+          0.477
+        ],
+        "reported_interval_excludes_zero": true,
+        "display_decimals": 3
       },
       "Dynamic Degree": {
         "delta": -0.47,
@@ -178,8 +185,14 @@
         "reported_interval_excludes_zero": false
       }
     },
-    "interpretation": "KV-version selection localizes an effect during denoising without identifying a unique encoded attribute. G is not significantly above the reference.",
-    "diagnostic_is_main_method": false
+    "interpretation": "The layer-selective scheme adds consistency over full recent-context committing. G remains nonsignificant, and the diagnostic does not identify a unique encoded attribute.",
+    "diagnostic_is_main_method": false,
+    "self_only_minus_full_recent_context": {
+      "delta": -1.1,
+      "interval_95": null,
+      "reported_interval_excludes_zero": null
+    },
+    "self_only_reference_scope": "Same 200 prompts and generation seeds 2/3. Separate from the seed-0 self-only reference; no cross-seed arithmetic."
   },
   "decline_controls": {
     "fixed_size_age_control": "../committing_content_age/README.md",
