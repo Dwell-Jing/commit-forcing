@@ -47,7 +47,7 @@ CALLOUT_YELLOW = "#FFD23F"
 # vector guides, not quantitative regions or edits to the archived frames.
 CALLOUTS = {
     ("sgf", "base", 238): (313, 120, 82, 91),
-    ("sgf", "commit", 238): (267, 111, 84, 96),
+    ("sgf", "commit", 238): (277, 122, 87, 102),
     ("cf", "base", 120): (357, 55, 48, 42),
     ("cf", "commit", 120): (357, 55, 48, 42),
 }
@@ -56,8 +56,8 @@ CASES = (
     {
         "alias": "sgf", "pair": "SGF", "prompt_index": 19,
         "heading": "SGF",
-        "base_arm": "SGF_N", "commit_arm": "SGF_W",
-        "configuration": "Native SGF denoising; committing reads the newest 9 trajectory frames, excluding the sink.",
+        "base_arm": "SGF_N", "commit_arm": "SGF_W6",
+        "configuration": "Native SGF denoising; committing reads the current 3 and immediately preceding 3 latent frames, excluding direct sink access.",
         "visible_observation": "Base changes the church/coast composition across these samples; Recent-Context Committing retains a more similar church/coast layout.",
         "interpretation_limit": "The prompt requests a circling drone view. Composition stability alone does not establish motion quality or prompt adherence; initial rendered frames are visibly different.",
     },
@@ -116,7 +116,7 @@ def render(frame_records: list[dict]) -> dict:
             x = left + col * (frame_w + h_gap)
             txt(x + frame_w / 2, top - .075, f"{sec} s", fontsize=9.0,
                 color=MUTED, ha="center", va="center")
-        commit_label = "Recent\n(9 frames)" if case["alias"] == "sgf" else "Recent-\ncontext"
+        commit_label = "Recent-\ncontext"
         for row_index, (arm, label) in enumerate((("base", "Base"), ("commit", commit_label))):
             y = top + row_index * (frame_h + v_gap)
             txt(left - .065, y + frame_h / 2, label, fontsize=9.0,
@@ -159,8 +159,8 @@ def render(frame_records: list[dict]) -> dict:
         for temp in temp_paths:
             temp.unlink(missing_ok=True)
     return {"method_name": "Recent-Context Committing", "visible_method_label": "Recent-context",
-            "visible_commit_row_labels": {"sgf": "Recent (9 frames)", "cf": "Recent-context (6 frames)"},
-            "case_role": {"sgf": "9-frame historical-source control, not the adopted 6-frame method", "cf": "Adopted current-plus-previous committing"},
+            "visible_commit_row_labels": {"sgf": "Recent-context (6 frames)", "cf": "Recent-context (6 frames)"},
+            "case_role": {"sgf": "Adopted current-plus-previous six-frame method, actual SGF_W6 output", "cf": "Adopted current-plus-previous committing"},
             "model_label_placement": "Left outer column, vertical, centered across each pair of rows",
             "figure_size_inches": [width, height], "frame_bounds": positions,
             "callouts": [{"case": case, "arm": arm, "time_seconds": sec,
@@ -190,7 +190,7 @@ def main() -> None:
     rendering = render(frames)
     subprocess.run(["pdftoppm", "-singlefile", "-png", "-scale-to", "2200", str(FIG / "qualitative_grid.pdf"), str(FIG / "qualitative_grid")], check=True)
     record["rendering"] = rendering
-    record["label_edit"] = "SGF Recent (9 frames) is the original source-control example; CF uses current plus previous (6 frames). Four transparent yellow circles with dark outlines highlight paired comparison regions."
+    record["label_edit"] = "Both SGF and CF use current plus previous (6 frames). Four transparent yellow circles with dark outlines highlight paired comparison regions."
     record["source"] = "assets/source/make_qualitative_grid.py"
     write_json_atomic(FIG / "qualitative_grid.provenance.json", record)
     print("Created qualitative_grid.pdf/.svg/.png from twelve recorded frames")

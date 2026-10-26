@@ -1,0 +1,1279 @@
+{
+  "export_kind": "reported aggregate values only",
+  "overleaf_source_commit": "6d6394380687d64fe505f050330f9118773a2e37",
+  "export_date": "2026-10-26",
+  "statistics_recomputed": false,
+  "per_prompt_values_included": false,
+  "source_sha256": {
+    "tables/committing_variants_discovery.tex": "ca9ed22896c038af8df8313f090972e66c824e9a4226782d1c65a4d84e7543ed",
+    "appendix/result-details.tex": "ca5dae278ed1350b11aeea1be4119c2637d192fbc71c5af3e0e3143df768e914",
+    "sections/03-history-mechanisms.tex": "0d300cb68c07d46001e2de89ef5d328a60b05cce04dc9b959e1247cad04e5003"
+  },
+  "interval_precision": "Intervals retain the displayed manuscript precision; reported significance is preserved. Missing interval endpoints are null.",
+  "discovery_protocol": {
+    "generator": "LongLive",
+    "prompt_pool": "rollf200",
+    "prompt_indices": [
+      0,
+      99
+    ],
+    "prompt_count": 100,
+    "duration_seconds": 60,
+    "generation_seed": 0,
+    "evaluation": "VBench-Long",
+    "scale": "0-100 score points",
+    "reference": "current-plus-previous-block committing (6 latent frames)",
+    "base_denoising_preserved": true,
+    "bootstrap_draws": 4000,
+    "bootstrap_unit": "paired prompt"
+  },
+  "reference_line": {
+    "formula": "G = delta Subject c2c - s * delta Dynamic Degree",
+    "slope_numerator": -1.0,
+    "slope_denominator": 3.63,
+    "slope": -0.27548209366391185,
+    "recent_context_endpoint": [
+      0.0,
+      0.0
+    ],
+    "self_only_endpoint": [
+      3.63,
+      -1.0
+    ],
+    "endpoint_prompt_count": 200,
+    "generation_seed": 0,
+    "line_is_fit_to_discovery_points": false,
+    "endpoint_uncertainty_reported": false
+  },
+  "discovery_variants": [
+    {
+      "id": "U",
+      "variant": "Uniform scaling",
+      "definition": "Uniformly scale the recent-history correction to match the magnitude of frame averaging (P).",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": 0.5,
+          "display": "+0.50",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": 0.03,
+          "display": "+0.03",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "G": {
+          "delta": 0.17,
+          "display": "+0.17",
+          "interval_95": [
+            -0.27,
+            0.6
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": 0.03,
+          "display": "+0.03",
+          "interval_95": [
+            -0.07,
+            0.13
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "P",
+      "variant": "Frame averaging",
+      "definition": "Average the recent-history correction across the current block's three frames.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": -1.7,
+          "display": "-1.70",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": -0.45,
+          "display": "-0.45",
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        },
+        "G": {
+          "delta": -0.92,
+          "display": "-0.92",
+          "interval_95": [
+            -1.52,
+            -0.35
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "Quality": {
+          "delta": -0.19,
+          "display": "-0.19",
+          "interval_95": [
+            -0.34,
+            -0.06
+          ],
+          "reported_interval_excludes_zero": true
+        }
+      }
+    },
+    {
+      "id": "M",
+      "variant": "Motion mask",
+      "definition": "Suppress the correction on the 30% of patches with greatest motion.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": -0.07,
+          "display": "-0.07",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": -0.23,
+          "display": "-0.23",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "G": {
+          "delta": -0.25,
+          "display": "-0.25",
+          "interval_95": [
+            -0.85,
+            0.34
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": -0.07,
+          "display": "-0.07",
+          "interval_95": [
+            -0.21,
+            0.07
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "Mr",
+      "variant": "Random mask",
+      "definition": "Suppress the correction on a random 30% of patches.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": 0.43,
+          "display": "+0.43",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": -0.11,
+          "display": "-0.11",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "G": {
+          "delta": 0.01,
+          "display": "+0.01",
+          "interval_95": [
+            -0.52,
+            0.53
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": 0.04,
+          "display": "+0.04",
+          "interval_95": [
+            -0.09,
+            0.16
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "KR",
+      "variant": "Mixed K/V",
+      "definition": "Use K from recent-context committing and V from self-only committing.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": -1.53,
+          "display": "-1.53",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": 0.24,
+          "display": "+0.24",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "G": {
+          "delta": -0.18,
+          "display": "-0.18",
+          "interval_95": [
+            -0.83,
+            0.44
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": -0.09,
+          "display": "-0.09",
+          "interval_95": [
+            -0.25,
+            0.06
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "SF0",
+      "variant": "First frame only",
+      "definition": "Allow history access only for the first frame of the current block.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": -1.93,
+          "display": "-1.93",
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        },
+        "Subject c2c": {
+          "delta": 0.12,
+          "display": "+0.12",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "G": {
+          "delta": -0.41,
+          "display": "-0.41",
+          "interval_95": [
+            -1.0,
+            0.14
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": -0.16,
+          "display": "-0.16",
+          "interval_95": [
+            -0.3,
+            -0.02
+          ],
+          "reported_interval_excludes_zero": true
+        }
+      }
+    },
+    {
+      "id": "SF2",
+      "variant": "Last frame only",
+      "definition": "Allow history access only for the last frame of the current block.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": 3.87,
+          "display": "+3.87",
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        },
+        "Subject c2c": {
+          "delta": -0.81,
+          "display": "-0.81",
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        },
+        "G": {
+          "delta": 0.26,
+          "display": "+0.26",
+          "interval_95": [
+            -0.28,
+            0.79
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": 0.08,
+          "display": "+0.08",
+          "interval_95": [
+            -0.07,
+            0.22
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "ALT2",
+      "variant": "Alternating 2",
+      "definition": "Use self-only committing once every two blocks.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": 2.23,
+          "display": "+2.23",
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        },
+        "Subject c2c": {
+          "delta": -0.5,
+          "display": "-0.50",
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        },
+        "G": {
+          "delta": 0.12,
+          "display": "+0.12",
+          "interval_95": [
+            -0.48,
+            0.74
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": 0.04,
+          "display": "+0.04",
+          "interval_95": [
+            -0.1,
+            0.18
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "ALT3",
+      "variant": "Alternating 3",
+      "definition": "Use self-only committing once every three blocks.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": 0.1,
+          "display": "+0.10",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": -0.24,
+          "display": "-0.24",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "G": {
+          "delta": -0.21,
+          "display": "-0.21",
+          "interval_95": [
+            -0.7,
+            0.28
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": -0.07,
+          "display": "-0.07",
+          "interval_95": [
+            -0.18,
+            0.04
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "CN30",
+      "variant": "Commit noise 30",
+      "definition": "Commit at noise level 30 on the 0-1000 schedule.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": 0.67,
+          "display": "+0.67",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": -1.35,
+          "display": "-1.35",
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        },
+        "G": {
+          "delta": -1.17,
+          "display": "-1.17",
+          "interval_95": [
+            -1.96,
+            -0.4
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "Quality": {
+          "delta": 0.08,
+          "display": "+0.08",
+          "interval_95": [
+            -0.12,
+            0.27
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "CN100",
+      "variant": "Commit noise 100",
+      "definition": "Commit at noise level 100 on the 0-1000 schedule.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": 1.03,
+          "display": "+1.03",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": -0.71,
+          "display": "-0.71",
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        },
+        "G": {
+          "delta": -0.42,
+          "display": "-0.42",
+          "interval_95": [
+            -1.01,
+            0.19
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": -0.0,
+          "display": "-0.00",
+          "interval_95": [
+            -0.17,
+            0.17
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "T15",
+      "variant": "Sharpen 1.5",
+      "definition": "Multiply historical attention logits by 1.5 while preserving total historical attention share.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": -1.37,
+          "display": "-1.37",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": 0.4,
+          "display": "+0.40",
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        },
+        "G": {
+          "delta": 0.03,
+          "display": "+0.03",
+          "interval_95": [
+            -0.52,
+            0.59
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": -0.11,
+          "display": "-0.11",
+          "interval_95": [
+            -0.25,
+            0.03
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "T2",
+      "variant": "Sharpen 2",
+      "definition": "Multiply historical attention logits by 2 while preserving total historical attention share.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": 1.63,
+          "display": "+1.63",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": 0.08,
+          "display": "+0.08",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "G": {
+          "delta": 0.53,
+          "display": "+0.53",
+          "interval_95": [
+            -0.2,
+            1.27
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": -0.04,
+          "display": "-0.04",
+          "interval_95": [
+            -0.22,
+            0.14
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "T3",
+      "variant": "Sharpen 3",
+      "definition": "Multiply historical attention logits by 3 while preserving total historical attention share.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": 2.0,
+          "display": "+2.00",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": -0.32,
+          "display": "-0.32",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "G": {
+          "delta": 0.23,
+          "display": "+0.23",
+          "interval_95": [
+            -0.64,
+            1.08
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": -0.12,
+          "display": "-0.12",
+          "interval_95": [
+            -0.34,
+            0.07
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "T4",
+      "variant": "Sharpen 4",
+      "definition": "Multiply historical attention logits by 4 while preserving total historical attention share.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": -0.23,
+          "display": "-0.23",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": -0.95,
+          "display": "-0.95",
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        },
+        "G": {
+          "delta": -1.01,
+          "display": "-1.01",
+          "interval_95": [
+            -2.03,
+            0.02
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": -0.36,
+          "display": "-0.36",
+          "interval_95": [
+            -0.61,
+            -0.11
+          ],
+          "reported_interval_excludes_zero": true
+        }
+      }
+    },
+    {
+      "id": "AL",
+      "variant": "Global alignment",
+      "definition": "Apply the estimated global displacement to historical key positions.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": -0.33,
+          "display": "-0.33",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": 0.07,
+          "display": "+0.07",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "G": {
+          "delta": -0.02,
+          "display": "-0.02",
+          "interval_95": [
+            -0.46,
+            0.39
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": -0.04,
+          "display": "-0.04",
+          "interval_95": [
+            -0.13,
+            0.06
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "AL2",
+      "variant": "Alignment 2x",
+      "definition": "Apply twice the estimated global displacement to historical key positions.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": 0.5,
+          "display": "+0.50",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": -0.03,
+          "display": "-0.03",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "G": {
+          "delta": 0.11,
+          "display": "+0.11",
+          "interval_95": [
+            -0.3,
+            0.53
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": -0.03,
+          "display": "-0.03",
+          "interval_95": [
+            -0.13,
+            0.07
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "ALr",
+      "variant": "Global random",
+      "definition": "Apply an equal-length displacement in a random direction.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": 0.3,
+          "display": "+0.30",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": 0.12,
+          "display": "+0.12",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "G": {
+          "delta": 0.2,
+          "display": "+0.20",
+          "interval_95": [
+            -0.2,
+            0.59
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": 0.03,
+          "display": "+0.03",
+          "interval_95": [
+            -0.06,
+            0.12
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "ALL",
+      "variant": "Token alignment",
+      "definition": "Apply token-specific displacements to historical key positions.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": -0.53,
+          "display": "-0.53",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": 0.02,
+          "display": "+0.02",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "G": {
+          "delta": -0.13,
+          "display": "-0.13",
+          "interval_95": [
+            -0.61,
+            0.39
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": -0.08,
+          "display": "-0.08",
+          "interval_95": [
+            -0.2,
+            0.04
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "ALLr",
+      "variant": "Token random",
+      "definition": "Apply matched token-specific displacements in random directions.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": -0.17,
+          "display": "-0.17",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": -0.1,
+          "display": "-0.10",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "G": {
+          "delta": -0.15,
+          "display": "-0.15",
+          "interval_95": [
+            -0.67,
+            0.32
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": -0.08,
+          "display": "-0.08",
+          "interval_95": [
+            -0.19,
+            0.03
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "CM16",
+      "variant": "16 content regions",
+      "definition": "Average the recent-history correction within 16 content regions in each frame.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": 1.9,
+          "display": "+1.90",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": -0.53,
+          "display": "-0.53",
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        },
+        "G": {
+          "delta": -0.01,
+          "display": "-0.01",
+          "interval_95": [
+            -0.61,
+            0.61
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": -0.01,
+          "display": "-0.01",
+          "interval_95": [
+            -0.16,
+            0.14
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "CM64",
+      "variant": "64 content regions",
+      "definition": "Average the recent-history correction within 64 content regions in each frame.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": 1.87,
+          "display": "+1.87",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": -0.45,
+          "display": "-0.45",
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        },
+        "G": {
+          "delta": 0.06,
+          "display": "+0.06",
+          "interval_95": [
+            -0.56,
+            0.66
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": -0.0,
+          "display": "-0.00",
+          "interval_95": [
+            -0.15,
+            0.15
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "CG",
+      "variant": "Spatial mean per frame",
+      "definition": "Average the recent-history correction spatially within each frame.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": 2.3,
+          "display": "+2.30",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": -0.71,
+          "display": "-0.71",
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        },
+        "G": {
+          "delta": -0.07,
+          "display": "-0.07",
+          "interval_95": [
+            -0.77,
+            0.62
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": 0.02,
+          "display": "+0.02",
+          "interval_95": [
+            -0.15,
+            0.19
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "SG16",
+      "variant": "16 spatial regions",
+      "definition": "Average the recent-history correction in a 4x4 spatial grid.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": 1.43,
+          "display": "+1.43",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": -0.58,
+          "display": "-0.58",
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        },
+        "G": {
+          "delta": -0.18,
+          "display": "-0.18",
+          "interval_95": [
+            -0.82,
+            0.44
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Quality": {
+          "delta": -0.04,
+          "display": "-0.04",
+          "interval_95": [
+            -0.19,
+            0.1
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "FR",
+      "variant": "Sink correction",
+      "definition": "Add the sink-induced correction.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": -5.87,
+          "display": "-5.87",
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        },
+        "Subject c2c": {
+          "delta": -2.07,
+          "display": "-2.07",
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        },
+        "G": {
+          "delta": -3.69,
+          "display": "-3.69",
+          "interval_95": [
+            -4.7,
+            -2.72
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "Quality": {
+          "delta": -0.64,
+          "display": "-0.64",
+          "interval_95": [
+            -0.9,
+            -0.38
+          ],
+          "reported_interval_excludes_zero": true
+        }
+      }
+    },
+    {
+      "id": "FP16",
+      "variant": "Pooled sink correction",
+      "definition": "Average the sink-induced correction within 16 content regions before adding it.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": -4.37,
+          "display": "-4.37",
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        },
+        "Subject c2c": {
+          "delta": -1.76,
+          "display": "-1.76",
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        },
+        "G": {
+          "delta": -2.97,
+          "display": "-2.97",
+          "interval_95": [
+            -3.92,
+            -2.07
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "Quality": {
+          "delta": -0.42,
+          "display": "-0.42",
+          "interval_95": [
+            -0.68,
+            -0.18
+          ],
+          "reported_interval_excludes_zero": true
+        }
+      }
+    },
+    {
+      "id": "SFP16",
+      "variant": "Self-only + pooled sink",
+      "definition": "Add the regionally averaged sink-induced correction to self-only committing.",
+      "metrics": {
+        "Dynamic Degree": {
+          "delta": -1.03,
+          "display": "-1.03",
+          "interval_95": null,
+          "reported_interval_excludes_zero": false
+        },
+        "Subject c2c": {
+          "delta": -2.06,
+          "display": "-2.06",
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        },
+        "G": {
+          "delta": -2.35,
+          "display": "-2.35",
+          "interval_95": [
+            -3.26,
+            -1.43
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "Quality": {
+          "delta": -0.39,
+          "display": "-0.39",
+          "interval_95": [
+            -0.62,
+            -0.16
+          ],
+          "reported_interval_excludes_zero": true
+        }
+      }
+    }
+  ],
+  "discovery_interval_summary": {
+    "G_includes_zero": 22,
+    "G_entirely_below_zero": 5,
+    "G_entirely_above_zero": 0,
+    "below_zero_ids": [
+      "P",
+      "CN30",
+      "FR",
+      "FP16",
+      "SFP16"
+    ]
+  },
+  "additional_comparisons": [
+    {
+      "id": "regional_sink_correction",
+      "protocol": {
+        "generator": "LongLive",
+        "prompt_count": 100,
+        "generation_seed": 0,
+        "duration_seconds": 60
+      },
+      "contrast": "FP16 minus FR",
+      "metrics": {
+        "G": {
+          "delta": 0.72,
+          "interval_95": [
+            0.05,
+            1.37
+          ],
+          "reported_interval_excludes_zero": true
+        }
+      },
+      "interpretation": "Regional averaging reduces the loss; FP16 still has negative G. This does not remove all spatial or geometric information."
+    },
+    {
+      "id": "token_relocation_control",
+      "protocol": {
+        "generator": "LongLive",
+        "prompt_count": 100,
+        "generation_seed": 0,
+        "duration_seconds": 60
+      },
+      "contrast": "Token relocation minus matched random-direction control",
+      "metrics": {
+        "G": {
+          "delta": 0.02,
+          "interval_95": [
+            -0.46,
+            0.51
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "content_region_control",
+      "protocol": {
+        "generator": "LongLive",
+        "prompt_count": 100,
+        "generation_seed": 0,
+        "duration_seconds": 60
+      },
+      "contrast": "16 content regions minus 4x4 spatial regions",
+      "metrics": {
+        "G": {
+          "delta": 0.17,
+          "interval_95": [
+            -0.16,
+            0.5
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "id": "lookahead_control",
+      "protocol": {
+        "generator": "LongLive",
+        "prompt_indices": [
+          0,
+          39
+        ],
+        "prompt_count": 40,
+        "generation_seed": 0,
+        "duration_seconds": 60,
+        "candidate_windows_frames": [
+          3,
+          6,
+          12
+        ],
+        "future_blocks_per_candidate": 2,
+        "selection_score": "DINO consistency plus weighted RAFT motion",
+        "matched_compute_control": "Fixed 6-frame window; select among three noise samples with the same score"
+      },
+      "contrast": "Look-ahead window selection minus noise selection",
+      "metrics": {
+        "G": {
+          "delta": -0.08,
+          "interval_95": [
+            -1,
+            0.88
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      },
+      "interpretation": "Both improve over the original six-frame rollout; their G difference is not significant."
+    },
+    {
+      "id": "longlive_sharpening_confirmation",
+      "protocol": {
+        "generator": "LongLive",
+        "prompt_count": 200,
+        "generation_seeds": [
+          2,
+          3
+        ],
+        "paired_videos": 400,
+        "duration_seconds": 60,
+        "historical_logit_multiplier": 2,
+        "historical_attention_share_preserved": true,
+        "confirmation_separate_from_discovery": true
+      },
+      "contrast": "Attention sharpening minus current-plus-previous-block committing",
+      "metrics": {
+        "G": {
+          "delta": 0.44,
+          "interval_95": [
+            0.06,
+            0.81
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "Quality": {
+          "delta": -0.05,
+          "interval_95": [
+            -0.15,
+            0.05
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Temporal Flickering": {
+          "delta": -0.29,
+          "interval_95": null,
+          "reported_interval_excludes_zero": null
+        }
+      },
+      "cost_type": "temporal quality"
+    },
+    {
+      "id": "cf_sharpening_heldout",
+      "protocol": {
+        "generator": "Context Forcing",
+        "prompt_pool": "rollf200",
+        "prompt_indices": [
+          100,
+          199
+        ],
+        "prompt_count": 100,
+        "duration_seconds": 60,
+        "historical_logit_multiplier": 2,
+        "historical_attention_share_preserved": true,
+        "confirmation_held_out_from_prompts_0_99": true,
+        "generation_seed_reported_in_manuscript": null
+      },
+      "contrast": "Attention sharpening minus current-plus-previous-block committing",
+      "reference": "CF's own self-only--6-frame line",
+      "metrics": {
+        "G": {
+          "delta": 0.97,
+          "interval_95": [
+            0.29,
+            1.69
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "Quality": {
+          "delta": -0.08,
+          "interval_95": [
+            -0.32,
+            0.18
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Dynamic Degree": {
+          "delta": -3.17,
+          "interval_95": null,
+          "reported_interval_excludes_zero": true
+        }
+      },
+      "cost_type": "motion"
+    },
+    {
+      "id": "longlive_sharpening_standard_suite",
+      "protocol": {
+        "generator": "LongLive",
+        "suite": "standard VBench",
+        "historical_logit_multiplier": 2,
+        "historical_attention_share_preserved": true
+      },
+      "contrast": "Attention sharpening minus current-plus-previous-block committing",
+      "metrics": {
+        "Total": {
+          "delta": -0.06,
+          "interval_95": [
+            -0.22,
+            0.11
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Motion Smoothness": {
+          "delta": -0.11,
+          "interval_95": null,
+          "reported_interval_excludes_zero": null
+        }
+      },
+      "cost_type": "temporal quality"
+    }
+  ],
+  "extra_old_KV_control": {
+    "aggregate_record": "../kv_construction/summary.json",
+    "description": "No tested extra-old-KV condition has a significant Subject c2c gain; complete gains, losses and intervals are retained in the linked aggregate record."
+  },
+  "scope": {
+    "line_is_universal_law": false,
+    "all_variants_are_strictly_collinear": false,
+    "zero_inclusion_establishes_equivalence": false,
+    "confirmation_sharpening_is_part_of_discovery_scatter": false,
+    "regional_averaging_eliminates_all_geometry": false,
+    "runtime_cost_measurements_supplied_for_sharpening": false
+  }
+}

@@ -1,12 +1,12 @@
 {
-  "purpose": "Original SGF source-control example and accepted vector layout anchors. No new inference or retouching.",
+  "purpose": "Same fixed SGF case, genuine current-plus-previous six-frame output and portable vector layout anchors.",
   "layout_anchors": {
     "powerpoint_reference": "figure1_outcomes_editable_v2.pptx",
     "approved_sha256": "feccd26a470f4cfb9c9fbaaecb0e739df704fe41abb03eb7d73aeb35ec9b898e",
     "accepted_edit_count": 6,
     "committing_bracket_paths": {
       "nonrecent": "M1059 315.2 V328.2 H2124.133333333333 V315.2",
-      "recent": "M1319.5333333333333 1035.2 V1043.2 H2122 V1035.2"
+      "recent": "M1580 1035.2 V1043.2 H2122 V1035.2"
     },
     "result_arrow_paths": {
       "nonrecent": "M2477.8 500.000052104598 L2532 500.000052104598 M2513.9333333333334 504.46666666666664 L2532 500.000052104598 L2513.9333333333334 495.53333333333336",
@@ -14,14 +14,15 @@
     },
     "committing_brackets_include_current_clean_input": true,
     "source_powerpoint_preserved": true,
-    "powerpoint_is_reference_only_not_runtime_dependency": true
+    "powerpoint_is_reference_only_not_runtime_dependency": true,
+    "powerpoint_is_historical_nine_frame_reference_only": true
   },
   "semantics": {
     "figure_type": "Conceptual source-dependency overview and authentic qualitative results, not a fixed-clean paired reconstruction",
     "shared_clean_role": "The shared operator path illustrates identical policies and tensor roles; the actual free trajectories each generate their own clean latents.",
     "denoising_source_view": "Nonrecent and two Recent history cards remain fully visible. Current is a flat 5x3 grid filled only with illustrative noise, with no scene or person underneath. Denoising produces the clean latent; committing Current cards use the same full-cell flat grid without noise. Grid divisions are symbolic, not latent frames or model layers. Scene-card counts are role-level illustrations, not physical-cache frame counts.",
-    "native_committing": "sink3 + recent6 + current3 = 12 latent frames",
-    "recent_committing": "recent6 + current3 = 9 latent frames",
+    "native_committing": "sink 3 + recent 6 + current 3 = 12 latent frames",
+    "recent_committing": "immediately preceding block3 + current 3 = 6 latent frames",
     "slabs": "Slab glyphs outside the filmstrip indicate tensor/block roles; their offsets do not assert the number of Transformer layers, latent frames, tensor channels or physical-cache frames. Inline Current instead uses a flat grid. Clean latents are not per-layer KV.",
     "persistent_sequence": "Distinct later blocks construct their own KV. Arrows denote further autoregressive generation, not direct KV decoding or copying the first KV.",
     "gray_marks": "Schematic source-dependent influence carried into subsequent KV; shape, area, number and density are not quantitative. Fragmentation/spatial spread is not a measured monotone increase or acceleration of drift.",
@@ -29,7 +30,8 @@
     "no_lag_curve": "No b+1/b+3, numeric lag, measured KV norm or monotone growth/decay series is drawn.",
     "film_triangles": "Small rightward triangles mark temporal direction along the filmstrip, not an attention mask or a propagation wedge.",
     "no_extra_module_forward_or_storage": true,
-    "photos": "Same prompt0 and initial-noise seed0 at238s; two separate free trajectories. Each original416x240 PNG is embedded unchanged and displayed through the same [90,0,326,240] crop. The apparent white rectangle was the real source frame illuminated shop sign, not a diagram artifact; no inpainting, retouching or selective crop was applied."
+    "photos": "Same fixed prompt 0 and initial-noise seed 0 at 238 s; native 12 versus actual SGF_W6. Original baseline PNG bytes are preserved. The SGF_W6 display PNG is decoded from the existing video and resized to 416x240. Both use the same [90,0,326,240] crop; no scene retouching or inpainting.",
+    "lower_selection": "Only the newest Recent block and Current are directly visible; nonrecent and older recent cards remain stored but are masked from committing."
   },
   "original_frames": [
     {
@@ -57,12 +59,13 @@
       "crop_reason": "Tighter subject framing; removes the original upper-left illuminated shop sign from both display windows",
       "seconds": 238,
       "prompt": 0,
-      "seed": 0
+      "seed": 0,
+      "source_arm": "SGF_N"
     },
     {
       "arm": "commit",
-      "path": "assets/source/teaser_inputs/sgf_p000_s0_commit_238s.png",
-      "sha256": "9e39361944106808815f4d433155eab33c8ad5d833d79ac56997724ff96bf7db",
+      "path": "assets/source/teaser_inputs/sgf_p000_s0_commit6_238s.png",
+      "sha256": "321acd35033f6acc561943cec26fe27fdff8659505415ad9a0c632df82cc625c",
       "display_rect": [
         2540,
         850,
@@ -84,7 +87,15 @@
       "crop_reason": "Tighter subject framing; removes the original upper-left illuminated shop sign from both display windows",
       "seconds": 238,
       "prompt": 0,
-      "seed": 0
+      "seed": 0,
+      "source_arm": "SGF_W6"
     }
-  ]
+  ],
+  "source_overleaf_commit": "6d6394380687d64fe505f050330f9118773a2e37",
+  "current_method": {
+    "current_latent_frames": 3,
+    "immediately_preceding_latent_frames": 3,
+    "total_latent_frames": 6
+  },
+  "selection": "Prompt0, seed 0 and 238 s were fixed before replacing the method image with its corresponding actual six-frame output."
 }

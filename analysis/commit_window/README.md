@@ -10,6 +10,22 @@ The tables below retain the historical window and self-only studies. The current
 reads six frames during committing and stores 12 physical frames, matching Base storage; its separate standard-suite
 evaluation is in [common946](../../results/vbench_full/common946/README.md).
 
+## Current window scans
+
+LongLive reaches its observed consistency plateau with the current and preceding blocks. Denser RF-TF and
+Rolling Sink scans place their plateaus at 6–12 and 6–9 frames, respectively. SF with a sink favors 9–12 frames:
+9 minus 6 improves clip-to-clip Subject Consistency by +0.51 [+0.18, +0.84] when the two seeds are averaged within
+each prompt. Its 21-frame context scores lower than 9 frames.
+
+Framewise SGF generates one latent frame per block. Two frames therefore implement current-plus-previous-block
+committing; its separate temporal-span diagnostic has a 3–6-frame plateau and lower consistency at 9–17 frames.
+On blockwise SGF, SGF+ and CF, the tested recent windows show no significant consistency gain over self-only.
+[Recorded window levels, paired intervals and source summaries](../../results/current6_custom/README.md) retain
+the distinct prompt sets and block sizes. These scans describe generator-dependent plateaus rather than a shared
+optimal frame count.
+
+## Historical controls
+
 The core three-context comparison uses 200 `rollf200` prompts at 60 seconds, generation seed 0, and VBench-Long
 scores ×100. Fused Subject is `subject_consistency`; Subject c2c is the separate clip-to-clip readout.
 

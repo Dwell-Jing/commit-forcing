@@ -24,7 +24,7 @@ FONT = 54
 # Brackets include the current clean input; unedited vertical arrows stay put.
 COMMITTING_BRACKETS = {
     'nonrecent': 'M1059 315.2 V328.2 H2124.133333333333 V315.2',
-    'recent': 'M1319.5333333333333 1035.2 V1043.2 H2122 V1035.2',
+    'recent': 'M1580 1035.2 V1043.2 H2122 V1035.2',
 }
 RESULT_ARROWS = {
     'nonrecent': (
@@ -218,7 +218,7 @@ def clothing_callout(d,example):
     crop_x,crop_y,crop_width,crop_height=example['display_crop_xywh']
     scale=width/crop_width
     # Highlight the specific garment named in each annotation, avoiding the face.
-    source_ellipse=([219,163,49,67] if example['arm']=='native' else [235,117,47,53])
+    source_ellipse=([219,163,49,67] if example['arm']=='native' else [225,114,42,47])
     cx=x+(source_ellipse[0]-crop_x)*scale
     cy=y+(source_ellipse[1]-crop_y)*scale
     rx=source_ellipse[2]*scale; ry=source_ellipse[3]*scale
@@ -343,14 +343,17 @@ def main(draft=True):
     positions=(1660,1940,2220)
     for name,cy,fy,off,key in [
             ('nonrecent',500,130,(),'native'),
-            ('recent',1220,850,(0,),'commit')]:
+            ('recent',1220,850,(0,1),'commit')]:
         strip=filmstrip(d,1050,fy,1080,name,masked_indices=off)
         strips.append(strip)
-        d.text(1450,fy-45,'Nonrecent + Recent' if name=='nonrecent' else 'Recent',FONT,INK,'middle')
+        recent_center=strip['cell_rects'][2][0]+strip['cell_rects'][2][2]/2
+        d.text(1450 if name=='nonrecent' else recent_center,fy-45,
+               'Nonrecent + Recent' if name=='nonrecent' else 'Recent',FONT,INK,'middle')
         current=strip['cell_rects'][3]
         d.text(current[0]+current[2]/2,fy-45,'Current',FONT,ACCENT,'middle')
         by=selection_bracket(d,strip,name=='recent')
-        _arrow(d,1450,by+10,1450,cy-85,BLUE if name=='recent' else MUTED,2.7)
+        _arrow(d,1450 if name=='nonrecent' else recent_center,by+10,1450,cy-85,
+               BLUE if name=='recent' else MUTED,2.7)
         d.rect(1280,cy-65,340,130,ACCENT,2,'#FCF9F6')
         d.text(1450,cy+17,'Committing',FONT,ACCENT,'middle')
         _arrow(d,1624,cy,1655,cy,ACCENT,3.1)
@@ -379,7 +382,7 @@ def main(draft=True):
 
     source_record=json.loads((ASSET/'source.json').read_text())
     manifest={
-        'artifact':stem, 'status':'Adopted Figure1; preserved source-control example',
+        'artifact':stem, 'status':'Adopted Figure1; actual current-plus-previous six-frame SGF example',
         'source':'assets/source/make_teaser.py','source_sha256':sha(Path(__file__).resolve()),
         'method_name':'Recent-Context Committing','canvas':[W,H],
         'print_width_mm':178,'minimum_font_pt':FONT/W*178/25.4*72,

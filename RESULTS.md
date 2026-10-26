@@ -13,6 +13,7 @@ without an RF-trained checkpoint. Wider-context studies are labelled as supporti
 
 [Full VBench](#full-vbench) · [ID-Forcing framework comparisons](#id-forcing-framework-comparisons) ·
 [MovieGen 60 s](#60-s-videos) · [Longer videos](#longer-videos) · [Committing controls](#committing-controls) ·
+[Current six-frame custom-prompt results](#current-six-frame-custom-prompt-results) · [Committing variants](#committing-variants) ·
 [KV construction](#kv-construction-controls) · [Transfer boundaries](#transfer-boundaries) ·
 [Human evaluation](results/human_evaluation/README.md) · [Quality and cost](analysis/quality_cost/README.md) ·
 [per-video data and commands](results/README.md) · [← Home](README.md)
@@ -492,6 +493,32 @@ Neither interval excludes zero. [Original package](results/vbench_full/common946
 
 </details>
 
+## Current six-frame custom-prompt results
+
+These rollf200 comparisons use 200 paired prompts, 60-second videos and the current-plus-previous-block context.
+Each row gives Recent-context minus Base; scores and recorded intervals are ×100. The standard 946-entry suite
+above uses a different prompt protocol and generator set.
+
+| Configuration | Seed | Quality: Base | Recent-context | Δ Quality [95% CI] | Δ Subject c2c [95% CI] | Δ Dynamic [95% CI] |
+|:---|--:|--:|--:|:---|:---|:---|
+| SGF | 0 | 83.58 | 84.51 | +0.93* [+0.55, +1.30] | +4.76* [+3.79, +5.73] | +11.33* [+6.53, +15.98] |
+| RF-TF | 0 | 82.01 | 82.43 | +0.42* [+0.18, +0.66] | +6.36* [+5.46, +7.24] | −3.92* [−6.75, −1.17] |
+| LongLive | 0 | 82.23 | 82.73 | +0.49* [+0.33, +0.66] | +1.20* [+0.84, +1.58] | +6.42* [+4.27, +8.58] |
+| Context Forcing | 0 | 82.78 | 82.91 | +0.13 [−0.10, +0.35] | +3.23* [+2.56, +3.94] | −1.05 [−4.05, +1.92] |
+| Rolling Sink | 0 | 82.61 | 82.68 | +0.07 [−0.13, +0.27] | +2.45* [+1.81, +3.17] | +2.02 [−0.83, +4.73] |
+| SF with sink | 0 | 81.33 | 81.64 | +0.31 [−0.15, +0.84] | +4.44* [+3.60, +5.25] | −0.93 [−3.92, +2.17] |
+| SGF | 1 | 83.85 | 84.42 | +0.57* [+0.24, +0.91] | +4.91* [+3.92, +5.90] | +8.55* [+3.98, +13.07] |
+| RF-TF | 1 | 82.00 | 82.69 | +0.69* [+0.46, +0.92] | +6.57* [+5.71, +7.46] | −0.05 [−2.35, +2.23] |
+| LongLive | 1 | 82.19 | 82.66 | +0.46* [+0.30, +0.64] | +1.06* [+0.72, +1.43] | +6.62* [+4.53, +8.73] |
+| Context Forcing | 1 | 82.70 | 83.12 | +0.43* [+0.22, +0.64] | +3.53* [+2.83, +4.26] | +1.33 [−1.45, +4.13] |
+| Rolling Sink | 1 | 82.40 | 82.66 | +0.26* [+0.07, +0.45] | +2.54* [+1.96, +3.18] | +4.05* [+1.83, +6.30] |
+| SF with sink | 1 | 81.35 | 81.57 | +0.23 [−0.42, +0.80] | +4.16* [+3.33, +4.96] | +0.68 [−2.67, +4.07] |
+
+All six clip-to-clip Subject gains are significant with both seeds. Dynamic Degree changes differ across generators.
+On SGF, a descriptive regression adjustment for paired Dynamic Degree differences gives a seed-0 intercept of
++4.87 [+3.89, +5.95], using 2,000 prompt-bootstrap draws. This is an adjusted estimate from existing paired videos.
+[Aggregate records, base and recent-context consistency scores, and the separate CF sink-exclusion component](results/current6_custom/README.md).
+
 ## Committing controls
 
 ### Standard-suite context sizes
@@ -548,6 +575,21 @@ A window sweep on rollf200 prompts 0–99 covers SGF, SGF+, RF-TF, Rolling Sink 
 Quality intervals include zero. Six frames versus 21 improves long-range Subject by 2.27* points on RF-TF and
 1.85* on Rolling Sink, with Dynamic point changes −2.70* and −2.57.
 [Complete scores and intervals](analysis/commit_window/data/window_controls/README.md).
+
+Denser scans show consistency plateaus at 6–12 frames on RF-TF and 6–9 on Rolling Sink. SF with a sink favors
+9–12 frames: 9 minus 6 gives +0.51 [+0.18, +0.84] when generation seeds 0 and 1 are averaged within each prompt.
+Framewise SGF also has an intermediate-window plateau, but its one-frame blocks make 2 frames the
+current-plus-previous-block setting; 6 frames is a separate temporal-span diagnostic.
+[Window levels, paired contrasts and protocol differences](results/current6_custom/README.md).
+
+### Committing variants
+
+The [27-variant discovery table and separate confirmation results](analysis/committing_variants/README.md) compare
+consistency and motion relative to six-frame LongLive committing. The discovery set uses 100 rollf200 prompts,
+60-second videos and seed 0. The reference slope, −1.00/3.63, comes from the 200-prompt self-only comparison.
+For vertical departure G from this line, 22 paired intervals include zero and five lie below it. Separate
+attention-sharpening confirmations yield positive G changes alongside temporal-quality or motion costs. The
+aggregate record retains the definitions, comparisons, confirmation protocols and component costs.
 
 ### Diagnostic similarity components
 
@@ -1446,7 +1488,6 @@ The 60-second and 120-second studies use separate prompt pools and sampling prot
 
 | Comparison | Duration | Subject and scene consistency | Overall preference |
 |:---|:---:|--:|--:|
-| SGF, 9-frame recent-context control vs. SGF | 60 s | 75% | 74% |
 | LongLive + Recent-Context Committing vs. LongLive | 60 s | 43% | 45% |
 | LongLive + Recent-Context Committing vs. LongLive | 120 s | 83.5% | 82.9% |
 | LongLive + Recent-Context Committing vs. ID-Forcing | 60 s | 90% | 88% |
@@ -1456,13 +1497,19 @@ non-project assessors responding independently. Consistency counts are 111 wins,
 preference counts are 107, 22 and 21. Reported prompt-cluster 95% intervals are [73.2%, 92.2%] and [72.6%, 92.1%],
 respectively. All five assessors are retained. The original three 60-second comparisons and their six count rows
 are preserved. Differences between the two studies do not isolate duration, and their participants are not pooled.
-[Complete protocols, counts and aggregate checks](results/human_evaluation/README.md).
+The earlier SGF nine-frame evaluation (75% / 74%) is a supporting reference, with its original counts retained in
+the [complete human-evaluation record](results/human_evaluation/README.md).
 
 ## Longer videos
 
-CF and LongLive retain current-plus-previous-block (6-frame) committing at 120–240 seconds. SGF uses the
-9-frame wider-context source-control reference; its +5.07 consistency gain does not evaluate the updated
-6-frame SGF main arm. ID-Forcing uses its separate 9-frame framework adaptation.
+SGF, CF and LongLive retain current-plus-previous-block (6-frame) committing in the current long-video comparisons.
+The earlier SGF 9-frame control remains separate, and ID-Forcing uses its own 9-frame framework adaptation.
+
+**Current six-frame SGF, 240 s:** 32 extended MovieGen prompts, generation seed 0. Quality changes from 83.97 to
+84.87, a paired +0.90 [−0.002, +1.82]; the interval includes zero. Clip-to-clip Subject Consistency increases by
++5.42 [+3.02, +8.09], while fused Subject and Background increase by +0.34 [+0.14, +0.55] and +0.42 [+0.22, +0.65].
+Dynamic Degree is 49.11 → 60.62. These are distinct from the historical nine-frame results below.
+[Aggregate source and protocol](results/current6_custom/README.md).
 
 **240 s, 32 MovieGen prompts** (the first 32 extended MovieGen prompts of Self-Forcing). Drift: imaging quality of the first 2 s clip minus that of the last one (lower is better).
 

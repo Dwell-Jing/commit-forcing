@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[2]
 FIG = ROOT / "assets"
 PRE = FIG
 ASSET = ROOT / "assets/source/teaser_inputs"
-FRAME = {"native": ASSET / "sgf_p000_s0_native_238s.png", "commit": ASSET / "sgf_p000_s0_commit_238s.png"}
+FRAME = {"native": ASSET / "sgf_p000_s0_native_238s.png", "commit": ASSET / "sgf_p000_s0_commit6_238s.png"}
 
 class Drawing:
     def __init__(self, width, height, title):

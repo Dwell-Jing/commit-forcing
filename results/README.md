@@ -63,6 +63,8 @@ See the [window controls](../analysis/commit_window/README.md) and
 
 ## Further evidence
 
+- [Current six-frame custom-prompt results and window scans](current6_custom/README.md): aggregate records for both generation seeds and the six-frame SGF 240-second comparison.
+- [Committing variants](../analysis/committing_variants/README.md): all 27 discovery variants, separate confirmations and component costs.
 - [Full VBench: 946 entries and 16 dimensions](vbench_full/README.md).
 - [120- and 240-second videos](long_horizon/README.md), including [six-frame LongLive at 240 seconds](long_horizon/longlive6_240/README.md).
 - [Human evaluation](human_evaluation/README.md).

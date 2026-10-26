@@ -1,0 +1,364 @@
+{
+  "artifact": "committing_tradeoff_variants",
+  "source": "assets/source/make_committing_tradeoff_variants.py",
+  "source_sha256": "9ce51ee9844dccce9436f9681f48445aee154ad374579a9bd811d297b27f0f9a",
+  "aggregate_source": "analysis/committing_variants/summary.json",
+  "aggregate_source_sha256": "94ab0090ad78e842bffb376a525493e138b3269000e7abd506e7c658a88da8fc",
+  "source_overleaf_commit": "6d6394380687d64fe505f050330f9118773a2e37",
+  "physical_size_mm": [
+    168,
+    84
+  ],
+  "axes": {
+    "x": "Delta Dynamic Degree",
+    "y": "Delta Subject c2c",
+    "units": "points on 0-100 scales, relative to six-frame committing"
+  },
+  "reference": {
+    "formula": "G = delta Subject c2c - s * delta Dynamic Degree",
+    "slope_numerator": -1.0,
+    "slope_denominator": 3.63,
+    "slope": -0.27548209366391185,
+    "recent_context_endpoint": [
+      0.0,
+      0.0
+    ],
+    "self_only_endpoint": [
+      3.63,
+      -1.0
+    ],
+    "endpoint_prompt_count": 200,
+    "generation_seed": 0,
+    "line_is_fit_to_discovery_points": false,
+    "endpoint_uncertainty_reported": false
+  },
+  "scatter_offsets": [
+    {
+      "code": "U",
+      "offset": [
+        0.5,
+        0.03
+      ],
+      "marker": "o",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "P",
+      "offset": [
+        -1.7,
+        -0.45
+      ],
+      "marker": "s",
+      "edgecolor": "#202B33",
+      "filled": true,
+      "size_points_squared": 33
+    },
+    {
+      "code": "M",
+      "offset": [
+        -0.07,
+        -0.23
+      ],
+      "marker": "^",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "Mr",
+      "offset": [
+        0.43,
+        -0.11
+      ],
+      "marker": "^",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "KR",
+      "offset": [
+        -1.53,
+        0.24
+      ],
+      "marker": "^",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "SF0",
+      "offset": [
+        -1.93,
+        0.12
+      ],
+      "marker": "^",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "SF2",
+      "offset": [
+        3.87,
+        -0.81
+      ],
+      "marker": "^",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "ALT2",
+      "offset": [
+        2.23,
+        -0.5
+      ],
+      "marker": "^",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "ALT3",
+      "offset": [
+        0.1,
+        -0.24
+      ],
+      "marker": "^",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "CN30",
+      "offset": [
+        0.67,
+        -1.35
+      ],
+      "marker": "^",
+      "edgecolor": "#202B33",
+      "filled": true,
+      "size_points_squared": 33
+    },
+    {
+      "code": "CN100",
+      "offset": [
+        1.03,
+        -0.71
+      ],
+      "marker": "^",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "T15",
+      "offset": [
+        -1.37,
+        0.4
+      ],
+      "marker": "o",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "T2",
+      "offset": [
+        1.63,
+        0.08
+      ],
+      "marker": "o",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "T3",
+      "offset": [
+        2.0,
+        -0.32
+      ],
+      "marker": "o",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "T4",
+      "offset": [
+        -0.23,
+        -0.95
+      ],
+      "marker": "o",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "AL",
+      "offset": [
+        -0.33,
+        0.07
+      ],
+      "marker": "s",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "AL2",
+      "offset": [
+        0.5,
+        -0.03
+      ],
+      "marker": "s",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "ALr",
+      "offset": [
+        0.3,
+        0.12
+      ],
+      "marker": "s",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "ALL",
+      "offset": [
+        -0.53,
+        0.02
+      ],
+      "marker": "s",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "ALLr",
+      "offset": [
+        -0.17,
+        -0.1
+      ],
+      "marker": "s",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "CM16",
+      "offset": [
+        1.9,
+        -0.53
+      ],
+      "marker": "s",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "CM64",
+      "offset": [
+        1.87,
+        -0.45
+      ],
+      "marker": "s",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "CG",
+      "offset": [
+        2.3,
+        -0.71
+      ],
+      "marker": "s",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "SG16",
+      "offset": [
+        1.43,
+        -0.58
+      ],
+      "marker": "s",
+      "edgecolor": "#202B33",
+      "filled": false,
+      "size_points_squared": 33
+    },
+    {
+      "code": "FR",
+      "offset": [
+        -5.87,
+        -2.07
+      ],
+      "marker": "D",
+      "edgecolor": "#A64F35",
+      "filled": true,
+      "size_points_squared": 43
+    },
+    {
+      "code": "FP16",
+      "offset": [
+        -4.37,
+        -1.76
+      ],
+      "marker": "D",
+      "edgecolor": "#A64F35",
+      "filled": true,
+      "size_points_squared": 43
+    },
+    {
+      "code": "SFP16",
+      "offset": [
+        -1.03,
+        -2.06
+      ],
+      "marker": "D",
+      "edgecolor": "#A64F35",
+      "filled": true,
+      "size_points_squared": 43
+    }
+  ],
+  "reported_G_intervals_include_zero": 22,
+  "reported_G_intervals_below_zero": [
+    "CN30",
+    "FP16",
+    "FR",
+    "P",
+    "SFP16"
+  ],
+  "encoding": {
+    "open_symbols": "Reported G interval includes zero",
+    "filled_symbols": "Reported G interval excludes zero; all five below zero",
+    "clay": "Sink-derived corrections FR, FP16 and SFP16",
+    "shapes": "Intervention families; not pooled statistical groups"
+  },
+  "scope": "All 27 discovery means are shown at reported coordinates. The dashed endpoint reference is not a fit or a universal causal law. Confirmation-set sharpening and its costs are reported separately.",
+  "exports": {
+    "pdf": "7545098ddcf414585d42db69411c29e39b826fbfd6a8deb4a4392af2d99dc2b0",
+    "svg": "58feff1dc0defe18802561936bf262a8531af5e925856c0bd60d6eafc3a5468b"
+  },
+  "regeneration_validation": {
+    "rendered_size": [
+      2200,
+      1101
+    ],
+    "pdf_rgb_pixel_equal": false,
+    "mean_channel_difference": 1.8500608262461125,
+    "pixels_differ": 31753,
+    "svg_byte_equal": false
+  },
+  "regeneration_environment": "Matplotlib 3.10.0; manuscript plot exports use 3.10.8. Released PDF/SVG retain manuscript bytes."
+}

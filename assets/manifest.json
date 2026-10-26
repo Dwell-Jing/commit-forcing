@@ -3,12 +3,12 @@
   "updated": "2026-10-26",
   "assets": {
     "assets/README.md": {
-      "sha256": "52589f4912a4b540bbcbdd87be23cd090b9f8f39cb302e229283d5fee38e41f8",
-      "bytes": 5464
+      "sha256": "692f0e86b5a5162b994564a269a05a48440a188f50c1b17e6204cdc64ba7f621",
+      "bytes": 6523
     },
     "assets/archive/README.md": {
-      "sha256": "0f637082eb4e7fb7946a8292072cd9c267dc01d08fe6742301c6c379be60573f",
-      "bytes": 457
+      "sha256": "e9d3eb8e85cf50ac29c779bcd17c582fb29ba3540e9e2cc81881c1b9f6e2c4f0",
+      "bytes": 964
     },
     "assets/archive/teaser_denoising_legacy.png": {
       "sha256": "fc00d576661ad43204571c6aacebd766cfaf3cbe5dad46a3a00c79f422c86c68",
@@ -273,22 +273,22 @@
       "height": 369
     },
     "assets/qualitative_grid.pdf": {
-      "sha256": "a293ac4d7b27eea23820a6b82463ccd2516c7c05984bd6892faff71585fba8d5",
-      "bytes": 2064296
+      "sha256": "a795c68d8a0bb58d9f3061f3a59bcbffc2de9c8b8dae50ff94a5edd5b8a3b8ad",
+      "bytes": 2027080
     },
     "assets/qualitative_grid.png": {
-      "sha256": "11464844ba439bc5d0ce784a4a2254b6bc5d8f98e2445387c703ef43f67c07d0",
-      "bytes": 3581948,
+      "sha256": "2d8ab3be507d5ba51a54b6a58a0da79e245e42778e5d2f967b2c63131a529e66",
+      "bytes": 3508171,
       "width": 2200,
       "height": 1625
     },
     "assets/qualitative_grid.provenance.json": {
-      "sha256": "d45027f6e024abf19a28f541127a495e4ac446078255789afc12718158ea5cd5",
-      "bytes": 20834
+      "sha256": "0dfdfe2e96f28e79354e91779fe132665c3166353269d35806d9c3913fa2565e",
+      "bytes": 15374
     },
     "assets/qualitative_grid.svg": {
-      "sha256": "c400e50d98b3aa55e3ba97828f69040fe763c463f2a23ff4664a73b6f7fefa51",
-      "bytes": 3081060
+      "sha256": "0a51a31e98ea83c6587f14bbb49c4225f644aaf6315f04508ff785ceae233db7",
+      "bytes": 3020074
     },
     "assets/sgf_committing_controls.pdf": {
       "sha256": "8533a89e724ca6ac4e7e32ea2170b8ac1b1391aa85b68349e4b0b17a43676b7d",
@@ -345,16 +345,16 @@
       "bytes": 9381
     },
     "assets/source/make_qualitative_grid.py": {
-      "sha256": "95e64965938966e5a84f51b868fb97382f546b6d39c4f545f39540ebd973074d",
-      "bytes": 10189
+      "sha256": "ac284fe2efc5034fc79e90bb5895377f4dc402d532521d8f1574e1b7acbed82f",
+      "bytes": 10135
     },
     "assets/source/make_sgf_committing_controls.py": {
       "sha256": "caaf5cac5691b577be4948d3466142b0bf0317a5d95a32c534387bcf04983255",
       "bytes": 10892
     },
     "assets/source/make_teaser.py": {
-      "sha256": "78deee40f8821d0871fc30e529e5deb1fe36f83a9c9d8c0cb4f2d80ca95a10a0",
-      "bytes": 19750
+      "sha256": "31dbe3c74be7710d0213831b630064ef6d46b12fec8f497aad328b331144ad1d",
+      "bytes": 19943
     },
     "assets/source/method_glyphs.py": {
       "sha256": "374defd8a31b679d56e8d384adea72de9f26b6519d51094658545edd7fb32077",
@@ -445,12 +445,12 @@
       "height": 240
     },
     "assets/source/qualitative_grid_inputs/source.json": {
-      "sha256": "9012bef46c37689a2d9ed8578475f620a1183d47f02b70860e324e370aed535c",
-      "bytes": 19986
+      "sha256": "3f1b7ea8e788dc2a96556dba6dc617f6879952845db08ae603905b327706ff82",
+      "bytes": 9740
     },
     "assets/source/teaser_drawing.py": {
-      "sha256": "a9261d7610139615723005f781b2fc132fd9195b28516d2dff2e5aedd023b56c",
-      "bytes": 6545
+      "sha256": "0168c80a88c8d6193c0e2ebbbd8568da26313b00a8d9605b93d5059b930b87de",
+      "bytes": 6546
     },
     "assets/source/teaser_inputs/eye_read.svg": {
       "sha256": "99504fb6e64175b75fdedbdcb6544588f61f149a96b9c712a7a5b47119fe8e79",
@@ -481,26 +481,80 @@
       "height": 240
     },
     "assets/source/teaser_inputs/source.json": {
-      "sha256": "02faa161e85c3bf336ad4fb7d965ab5dd64aa6c73832e76663bc598dfc73a84b",
-      "bytes": 4986
+      "sha256": "a989a33f2a26e648da550a9b12dfc422f3c3cc163cd3009bf79caf7d0f8f4e0b",
+      "bytes": 5583
     },
     "assets/teaser.pdf": {
-      "sha256": "5c862b859a2dc755ab02ba7e23696c4fc2dd0dd491635f9fbe38257c6a6905a6",
-      "bytes": 598503
+      "sha256": "0cdece4f2a553dd243af53dea2e1a7789c07c033d68992234ac2dcf47cd2865a",
+      "bytes": 591467
     },
     "assets/teaser.png": {
-      "sha256": "df9e273b0d68e0185f0a44ab154085db346184a9f74bf57dd2d7fa32ad936ddb",
-      "bytes": 561958,
+      "sha256": "8afdb6898de4d6dda3d536906faf583c794d2da6e640e9ffb7ac609a1c1f27c1",
+      "bytes": 548680,
       "width": 2200,
       "height": 1032
     },
     "assets/teaser.provenance.json": {
-      "sha256": "f25224b1c934546141871abeaaa7cecd08d5f3f633760393981794bab60ce816",
-      "bytes": 56898
+      "sha256": "246875a508f99c7661f51e92b9b79fb5c1b66e1188135abbd6e0cb7472d2c766",
+      "bytes": 56931
     },
     "assets/teaser.svg": {
-      "sha256": "1c38eb46dc6a540c9ea4fc85928ed6532eb598115ce94b03f315afdfa7a10d0a",
-      "bytes": 621510
+      "sha256": "2abd340f01f6a6e846ae936d6ed941b21dfc13de9a5cc3e731785c48145c4f66",
+      "bytes": 651254
+    },
+    "assets/committing_tradeoff_variants.png": {
+      "sha256": "977dc847c7db238d80f426e1d643ca49b4508fcbbc9272355e64e592fc9a596c",
+      "bytes": 117000,
+      "width": 2200,
+      "height": 1101
+    },
+    "assets/committing_tradeoff_variants.pdf": {
+      "sha256": "7545098ddcf414585d42db69411c29e39b826fbfd6a8deb4a4392af2d99dc2b0",
+      "bytes": 25908
+    },
+    "assets/committing_tradeoff_variants.svg": {
+      "sha256": "58feff1dc0defe18802561936bf262a8531af5e925856c0bd60d6eafc3a5468b",
+      "bytes": 22817
+    },
+    "assets/committing_tradeoff_variants.provenance.json": {
+      "sha256": "595b7fcd2d1c1922c17488397cf2867dacad6e1a47e672bc9d5da0e53d170ee0",
+      "bytes": 7539
+    },
+    "assets/archive/sgf_nine_frame_qualitative_source.json": {
+      "sha256": "9012bef46c37689a2d9ed8578475f620a1183d47f02b70860e324e370aed535c",
+      "bytes": 19986
+    },
+    "assets/archive/sgf_nine_frame_teaser_source.json": {
+      "sha256": "02faa161e85c3bf336ad4fb7d965ab5dd64aa6c73832e76663bc598dfc73a84b",
+      "bytes": 4986
+    },
+    "assets/source/make_committing_tradeoff_variants.py": {
+      "sha256": "9ce51ee9844dccce9436f9681f48445aee154ad374579a9bd811d297b27f0f9a",
+      "bytes": 8830
+    },
+    "assets/source/qualitative_grid_inputs/sgf_p019_s0_commit6_000s.png": {
+      "sha256": "1300034b26373d15a69bf4de804633cf753f268118fc448d0857428cfd70b0b4",
+      "bytes": 186845,
+      "width": 416,
+      "height": 240
+    },
+    "assets/source/qualitative_grid_inputs/sgf_p019_s0_commit6_238s.png": {
+      "sha256": "f07d61ce4970a80c65d618510106abc1d8050cdce3b22f74137099181f2cb1db",
+      "bytes": 196782,
+      "width": 416,
+      "height": 240
+    },
+    "assets/source/qualitative_grid_inputs/sgf_p019_s0_commit6_120s.png": {
+      "sha256": "cf312adbeb9c6262c876eb982929cf1a14edfd1b1551b86a4adbbda76005a73f",
+      "bytes": 194965,
+      "width": 416,
+      "height": 240
+    },
+    "assets/source/teaser_inputs/sgf_p000_s0_commit6_238s.png": {
+      "sha256": "321acd35033f6acc561943cec26fe27fdff8659505415ad9a0c632df82cc625c",
+      "bytes": 214496,
+      "width": 416,
+      "height": 240
     }
   },
   "teaser": {
@@ -513,8 +567,8 @@
       "rollout_seconds": 240,
       "frame_seconds": 238
     },
-    "roles": "Editable schematic source roles and unchanged original SGF photographs with common recorded display crop.",
-    "intervention": "Original source-control example: native SGF commits with sink3 + recent6 + current3 = 12 frames; recent-only control uses recent6 + current3 = 9. It is separate from the adopted six-frame method.",
+    "roles": "Editable schematic source roles and actual SGF_W6 case, with original baseline image and common crop preserved.",
+    "intervention": "Native SGF committing uses sink 3 + recent 6 + current 3=12 frames; adopted current-plus-previous committing uses previous 3 + current 3=6.",
     "previous_figure": "assets/archive/teaser_denoising_legacy.png",
     "reproduction": "python assets/source/make_teaser.py",
     "canvas": [
@@ -527,13 +581,13 @@
       "recent",
       "current live input"
     ],
-    "window": "Figure1 source-control comparison is base12 versus recent9; scene-card/grid counts are schematic, not frame counts.",
+    "window": "Lower branch masks nonrecent and older Recent, selecting newest Recent and Current; glyph counts are schematic.",
     "source_record": "assets/source/teaser_inputs/source.json"
   },
   "method": {
     "renderer": "assets/source/make_method.py",
     "provenance": "assets/method.provenance.json",
-    "content": "Compact upper computation only. Committing uses current3 plus immediately previous3 latent frames, six in total; current-only startup. Base denoising and cache update are retained.",
+    "content": "Compact upper computation only. Committing uses current 3 plus immediately previous 3 latent frames, six in total; current-only startup. Base denoising and cache update are retained.",
     "reproduction": "python assets/source/make_method.py",
     "window_options_removed": true,
     "canvas": [
@@ -560,7 +614,7 @@
     "provenance": "assets/committing_content_age.provenance.json",
     "per_video_data": "assets/source/committing_content_age_scores.csv",
     "means": "assets/source/committing_content_age_data.json",
-    "protocol": "rollf200 prompts 0\u201399, 60 s, generation seed 0; 3 historical plus 3 current latent frames at fixed assigned positions; base denoising retained.",
+    "protocol": "rollf200 prompts 0–99, 60 s, generation seed 0; 3 historical plus 3 current latent frames at fixed assigned positions; base denoising retained.",
     "reproduction": "python assets/source/make_committing_content_age.py",
     "content": "Ten finite-lag means on one recency-only axis. Both sink source controls remain verified and retained in the released data.",
     "plotted_lags": [
@@ -583,15 +637,16 @@
     "renderer": "assets/source/make_qualitative_grid.py",
     "provenance": "assets/qualitative_grid.provenance.json",
     "protocol": "240 s, 32-prompt MovieGen extension, generation seed 0; SGF prompt 19 and Context Forcing prompt 10; frames at 0/120/238 s.",
-    "selection": "Selected for visible differences; CF retains its negative per-video Quality result. Frames are exact decoded contact-sheet cells.",
+    "selection": "Fixed original prompts, seed and display times. SGF method images use actual SGF_W6 outputs; baseline and CF bytes remain unchanged. CF retains its negative previously reported per-video Quality result.",
     "reproduction": "python assets/source/make_qualitative_grid.py",
     "selection_record": "assets/source/qualitative_grid_inputs/source.json",
     "case_roles": {
-      "SGF": "Original 9-frame historical-source control",
-      "Context Forcing": "Adopted 6-frame current-plus-previous method"
+      "SGF": "Actual six-frame current-plus-previous method",
+      "Context Forcing": "Adopted six-frame current-plus-previous method"
     },
     "transparent_yellow_circles": 4,
-    "source_pngs_preserved": 12
+    "source_pngs_preserved": 12,
+    "new_sgf_six_frame_inputs": 3
   },
   "manuscript_exports": {
     "teaser": {
@@ -599,8 +654,8 @@
       "publication_asset": "assets/teaser",
       "pdf_svg_identity": "Byte-for-byte copies of current accepted manuscript figure exports",
       "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "5c862b859a2dc755ab02ba7e23696c4fc2dd0dd491635f9fbe38257c6a6905a6",
-      "svg_sha256": "1c38eb46dc6a540c9ea4fc85928ed6532eb598115ce94b03f315afdfa7a10d0a"
+      "pdf_sha256": "0cdece4f2a553dd243af53dea2e1a7789c07c033d68992234ac2dcf47cd2865a",
+      "svg_sha256": "2abd340f01f6a6e846ae936d6ed941b21dfc13de9a5cc3e731785c48145c4f66"
     },
     "method": {
       "manuscript_figure": "figures/method_overview",
@@ -631,8 +686,16 @@
       "publication_asset": "assets/qualitative_grid",
       "pdf_svg_identity": "Byte-for-byte copies of current accepted manuscript figure exports",
       "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "a293ac4d7b27eea23820a6b82463ccd2516c7c05984bd6892faff71585fba8d5",
-      "svg_sha256": "c400e50d98b3aa55e3ba97828f69040fe763c463f2a23ff4664a73b6f7fefa51"
+      "pdf_sha256": "a795c68d8a0bb58d9f3061f3a59bcbffc2de9c8b8dae50ff94a5edd5b8a3b8ad",
+      "svg_sha256": "0a51a31e98ea83c6587f14bbb49c4225f644aaf6315f04508ff785ceae233db7"
+    },
+    "committing_tradeoff_variants": {
+      "manuscript_figure": "figures/committing_tradeoff_variants",
+      "publication_asset": "assets/committing_tradeoff_variants",
+      "pdf_svg_identity": "Byte-for-byte copies of current accepted manuscript figure exports",
+      "png": "Rendered from the released PDF at 2200 pixels wide",
+      "pdf_sha256": "7545098ddcf414585d42db69411c29e39b826fbfd6a8deb4a4392af2d99dc2b0",
+      "svg_sha256": "58feff1dc0defe18802561936bf262a8531af5e925856c0bd60d6eafc3a5468b"
     }
   },
   "dependencies": {
@@ -650,8 +713,8 @@
     "canonical_matplotlib": "3.10.8"
   },
   "canonical_snapshot": {
-    "accepted_revision": "24c4a11",
-    "source_scope": "Five individual figure exports only; no full manuscript PDF or source is included."
+    "accepted_revision": "6d6394380687d64fe505f050330f9118773a2e37",
+    "source_scope": "Approved individual figures and aggregate records only; no full manuscript, private sidecar, new per-prompt scores or videos."
   },
   "regeneration_validation": {
     "teaser": {
@@ -699,9 +762,19 @@
         2200,
         1625
       ],
-      "pdf_rgb_pixel_equal": true,
-      "mean_channel_difference": 0.0,
-      "pixels_differ": 0,
+      "pdf_rgb_pixel_equal": false,
+      "mean_channel_difference": 0.004458554778554779,
+      "pixels_differ": 190,
+      "svg_byte_equal": false
+    },
+    "committing_tradeoff_variants": {
+      "rendered_size": [
+        2200,
+        1101
+      ],
+      "pdf_rgb_pixel_equal": false,
+      "mean_channel_difference": 1.8500608262461125,
+      "pixels_differ": 31753,
       "svg_byte_equal": false
     }
   },
@@ -775,6 +848,47 @@
       "asset": "assets/source/teaser_inputs/sgf_p000_s0_native_238s.png",
       "sha256": "db8c1f57dea9834b7dc09b122b953b905c97ab10d6913c711c3cc9f14cf9f262",
       "canonical_input_bytes_equal": true
+    },
+    {
+      "asset": "assets/source/teaser_inputs/sgf_p000_s0_commit6_238s.png",
+      "sha256": "321acd35033f6acc561943cec26fe27fdff8659505415ad9a0c632df82cc625c",
+      "canonical_input_bytes_equal": true,
+      "configuration": "SGF_W6,current3+previous3,seed0"
+    },
+    {
+      "asset": "assets/source/qualitative_grid_inputs/sgf_p019_s0_commit6_000s.png",
+      "sha256": "1300034b26373d15a69bf4de804633cf753f268118fc448d0857428cfd70b0b4",
+      "canonical_input_bytes_equal": true,
+      "configuration": "SGF_W6,current3+previous3,seed0"
+    },
+    {
+      "asset": "assets/source/qualitative_grid_inputs/sgf_p019_s0_commit6_120s.png",
+      "sha256": "cf312adbeb9c6262c876eb982929cf1a14edfd1b1551b86a4adbbda76005a73f",
+      "canonical_input_bytes_equal": true,
+      "configuration": "SGF_W6,current3+previous3,seed0"
+    },
+    {
+      "asset": "assets/source/qualitative_grid_inputs/sgf_p019_s0_commit6_238s.png",
+      "sha256": "f07d61ce4970a80c65d618510106abc1d8050cdce3b22f74137099181f2cb1db",
+      "canonical_input_bytes_equal": true,
+      "configuration": "SGF_W6,current3+previous3,seed0"
     }
-  ]
+  ],
+  "committing_tradeoff_variants": {
+    "renderer": "assets/source/make_committing_tradeoff_variants.py",
+    "provenance": "assets/committing_tradeoff_variants.provenance.json",
+    "data": "analysis/committing_variants/summary.json",
+    "n_variants": 27,
+    "protocol": "100 rollf200 prompts,60 s,seed 0; endpoint reference uses 200 prompts.",
+    "reference_line_is_fit": false,
+    "reported_G_intervals_include_zero": 22,
+    "reported_G_intervals_below_zero": [
+      "P",
+      "CN30",
+      "FR",
+      "FP16",
+      "SFP16"
+    ],
+    "reproduction": "python assets/source/make_committing_tradeoff_variants.py"
+  }
 }

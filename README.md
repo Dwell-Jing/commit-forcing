@@ -29,7 +29,9 @@
 Autoregressive video diffusion uses historical KV to denoise the current block and to construct clean KV for
 future blocks. On LongLive and SGF, sink access helps denoising but can increase drift during committing.
 At fixed context size and temporal positions, older trajectory content produces lower mean long-range Subject
-Consistency on both generators.
+Consistency on both generators. Across five configurations supporting longer histories, consistency rises,
+plateaus and then falls as the committing context expands. The plateau depends on the generator; SF with a sink
+favors a wider window.
 
 **Recent-Context Committing** preserves the base denoising policy and constructs new clean KV using the current
 block and the immediately preceding block from the original generated trajectory. The current block supplies clean
@@ -41,16 +43,15 @@ additional DiT forwards. Repository names and CLI flags retain their existing sp
 
 ## Contributions
 
-- **Stage and source effects.** Controlled interventions on LongLive and SGF show that historical context can have
-  different effects during denoising and committing, even at fixed read counts.
-  ([stage interventions](analysis/longlive_sink/README.md), [historical sources](analysis/committing_source/README.md))
-- **Committing dependencies.** We vary historical source and age at fixed context size and positions, distinguish
-  the KV read by denoising from the history read by later committing, and characterize generator-dependent
-  consistency and motion tradeoffs.
-  ([historical recency](analysis/committing_content_age/README.md), [KV construction](analysis/kv_construction/README.md))
+- **Stage and source effects.** History that helps denoising can impair later generation through committing.
+  SGF cache controls link the larger losses to construction of the KV supplied to denoising.
+  ([stage interventions](analysis/longlive_sink/README.md), [KV construction](analysis/kv_construction/README.md))
+- **Recency and window size.** Fixed-size controls show losses from older history; window scans reveal
+  generator-dependent plateaus followed by declines.
+  ([historical recency](analysis/committing_content_age/README.md), [window scans](analysis/commit_window/README.md))
 - **Training-free committing.** On 60-second VBench, current-plus-previous-block committing improves Quality and
   Total significantly on 5 of 6 generators; all six paired point estimates are positive. LongLive gains in long-range
-  Subject Consistency extend to 120 and 240 seconds. Separate wider-context controls retain their two-seed results.
+  Subject Consistency extend to 240 seconds, with favorable human judgments on 120-second LongLive videos.
   ([results](#results))
 
 <p align="center">
@@ -91,8 +92,25 @@ SGF's Quality gain is +1.27, of which Dynamic Degree contributes +1.01; Motion S
 [All dimensions, intervals and protocol records](results/vbench_full/common946/README.md).
 The two 9-frame ID-Forcing adaptations are [separate framework comparisons](RESULTS.md#id-forcing-framework-comparisons).
 
-**Supporting context controls: MovieGen, 60 s videos**, 200 fixed [MovieGen prompts](eval/prompts/README.md), generation seed 0.
+**MovieGen, 60 s videos**, 200 fixed [MovieGen prompts](eval/prompts/README.md), generation seed 0.
 Quality combines VBench's seven visual dimensions using its official normalization and weights.
+
+| Configuration | Base | Recent-context, 6 frames | Δ Quality | Δ Consistency |
+|:---|--:|--:|--:|--:|
+| SGF | 83.58 | 84.51 | **+0.93** | **+4.76** |
+| RF-TF † | 82.01 | 82.43 | **+0.42** | **+6.36** |
+| LongLive | 82.23 | 82.73 | **+0.49** | **+1.20** |
+| Context Forcing | 82.78 | 82.91 | +0.13 | **+3.23** |
+| Rolling Sink | 82.61 | 82.68 | +0.07 | **+2.45** |
+| Self-Forcing with sink | 81.33 | 81.64 | +0.31 | **+4.44** |
+
+Every adapted row uses the current and preceding blocks. All six Consistency gains reproduce with generation
+seed 1. This custom-prompt comparison includes SF with a sink; the standard-suite main table instead includes SGF+.
+Consistency is VBench-Long's clip-to-clip Subject Consistency; bold changes have paired intervals excluding zero.
+[Both seeds, motion changes and recorded intervals](results/current6_custom/README.md).
+
+<details>
+<summary>Historical wider-context and sink-exclusion controls</summary>
 
 | Model | Base | Recent-context control | Δ Quality | Δ Consistency |
 |:---|--:|--:|--:|--:|
@@ -112,6 +130,8 @@ Consistency: VBench-Long's clip-to-clip subject consistency, our measure of long
 seed 1. [Both seeds and all metrics](RESULTS.md#committing-replication). SGF+, ID-Forcing and SGF + RF compatibility
 comparisons remain in [RESULTS.md](RESULTS.md).
 
+</details>
+
 The standard suite scores dimension-specific subsets and applies VBench's static filter for Flickering.
 The MovieGen evaluation scores all seven visual dimensions on each prompt and leaves Flickering unfiltered.
 Each Base / adapted pair shares its inputs and scoring settings.
@@ -121,14 +141,16 @@ LongLive uses 6-frame committing: 3 recent frames and the current 3-frame block.
 
 | Model | Length | Prompts | Base | Recent-context | Δ Quality | Δ Consistency |
 |:---|:---|:---|--:|--:|--:|--:|
+| SGF, 6 frames | 240 s | 32 MovieGen | 83.97 | 84.87 | +0.90 | **+5.42** |
 | SGF, 9-frame control | 240 s | 32 MovieGen | 83.97 | 84.69 | **+0.72** | **+5.07** |
 | Context Forcing | 240 s | 32 MovieGen | 83.60 | 84.04 | +0.44 | **+2.23** |
 | LongLive, 6 frames | 120 s | 128 of ID-Forcing | 81.72 | 82.05 | **+0.33** | **+1.87** |
 | LongLive, 6 frames | 240 s | 128 of ID-Forcing | 81.56 | 81.84 | **+0.28** | **+2.55** |
 | ID-Forcing on Self-Forcing, 9-frame adaptation | 240 s | 128 of ID-Forcing | 81.32 | 81.65 | **+0.34** | **+3.58** |
 
-CF and LongLive use the current and preceding blocks. SGF remains a wider-context supporting reference; the
-ID-Forcing adaptation uses 9 frames within its own framework. Intervals, the second seed, 120 s videos and every component score: **[RESULTS.md](RESULTS.md)**.
+SGF's 6-frame arm, CF and LongLive use the current and preceding blocks. The SGF 9-frame row is a separate
+supporting control; the ID-Forcing adaptation uses 9 frames within its own framework. SGF's 6-frame Quality
+interval includes zero. Intervals and full scores: **[RESULTS.md](RESULTS.md)**.
 The 240-second LongLive six-frame results are complete; the [12-frame control](results/long_horizon/README.md) remains available.
 
 ## Human evaluation
@@ -137,7 +159,6 @@ Blinded pairwise comparisons; win rates exclude ties. Durations and sampling pro
 
 | Comparison | Duration | Subject and scene consistency | Overall preference |
 |:---|:---:|--:|--:|
-| SGF, 9-frame recent-context control vs. SGF | 60 s | **75%** | **74%** |
 | LongLive + Recent-Context Committing vs. LongLive | 60 s | 43% | 45% |
 | LongLive + Recent-Context Committing vs. LongLive | 120 s | **83.5%** | **82.9%** |
 | LongLive + Recent-Context Committing vs. ID-Forcing | 60 s | **90%** | **88%** |
@@ -145,8 +166,8 @@ Blinded pairwise comparisons; win rates exclude ties. Durations and sampling pro
 The 60-second study uses 18 rollf200 pairs per comparison and 3 response units from 5 people, including one joint
 response. The separate 120-second study uses 30 pairs from ID-Forcing's 128 MovieGen prompts, answered independently
 by 5 non-project assessors. The studies use different prompts and sampling; their difference does not isolate duration.
-The SGF rates describe the 9-frame supporting control. LongLive uses the current and preceding blocks.
-[Counts, recorded intervals and evaluation protocols](results/human_evaluation/README.md).
+All rows use current-plus-previous-block LongLive committing. The earlier SGF 9-frame evaluation remains a
+[supporting reference with its original counts and protocol](results/human_evaluation/README.md#60-second-study).
 
 ## Qualitative comparisons
 
@@ -154,8 +175,8 @@ The SGF rates describe the 9-frame supporting control. LongLive uses the current
   <img src="assets/qualitative_grid.png" width="100%" alt="Paired SGF and Context Forcing frames at 0, 120 and 238 seconds, with base and recent-context rows.">
 </p>
 
-Paired 240-second examples use the same prompt and initial-noise seed. SGF is the 9-frame source-control reference;
-Context Forcing uses the current and preceding blocks. SGF retains church and coastline details; Context Forcing
+Paired 240-second examples use the same prompt and initial-noise seed. Both SGF and Context Forcing use the
+current and preceding blocks (6 frames). SGF retains church and coastline details; Context Forcing
 retains the requested figure inside a glass sphere. The CF example has a lower
 Quality score (−0.40 points). [Selection and source frames](assets/README.md) · [More examples and videos](assets/qualitative/README.md).
 
@@ -248,6 +269,7 @@ time in the generated trajectory; replaying an old frame into a nearby cache slo
 | What does recent context retain over self-only? | [Continuity and motion tradeoffs](analysis/commit_window/README.md) |
 | How does recent context work within ID-Forcing? | [Cache-construction comparisons](analysis/not_ood/README.md) |
 | How many frames should the commit pass read? | [Commit window](analysis/commit_window/README.md) |
+| How far can consistency and motion be decoupled? | [Committing variants and confirmation tests](analysis/committing_variants/README.md) |
 | What contributes to the score and computational cost? | [Quality decomposition and inference measurements](analysis/quality_cost/README.md) |
 
 <p align="center">
@@ -265,6 +287,15 @@ Subject Consistency decreases across the tested lags of 1, 2, 4, 8 and 16 blocks
 Native construction of C alone changes these scores by −0.07 and −0.09, neither significant, while affecting other
 components. This control retains base denoising access and uses the earlier 9-frame recent context.
 [All four contrasts and LongLive extra-history controls](analysis/kv_construction/README.md).
+
+<p align="center">
+  <img src="assets/committing_tradeoff_variants.png" width="100%" alt="Twenty-seven LongLive committing variants: changes in Dynamic Degree and clip-to-clip Subject Consistency relative to six-frame committing, with a self-only reference line.">
+</p>
+
+**Limited decoupling.** The scatter compares 27 LongLive variants with the line joining self-only and recent-context
+committing. Filled markers have intervals entirely below this reference; open markers have intervals including
+zero. None has a significant gain above the reference in this discovery sweep. Separate confirmations find local
+gains with temporal-quality or motion costs. [Definitions, full results and confirmations](analysis/committing_variants/README.md).
 
 The supporting 9-frame [SGF equal-count control](analysis/sgf_committing_controls/README.md) compares 2 nine-frame contexts within the
 same physical cache. Recent context improves Quality by 1.25 and clip-to-clip Subject by 4.54 points over sink plus recent.
@@ -293,9 +324,10 @@ available. [Diagnostic metrics](analysis/metrics/README.md) defines the associat
 
 ## Scope
 
-We evaluate released Wan-based generators with persistent KV and a clean committing pass. Window comparisons
-show generator-dependent continuity and motion tradeoffs; they do not establish a universally optimal context
-length. The main method fixes the context to the current and immediately preceding blocks. Training the committing
+We evaluate released Wan-based generators with persistent KV and a clean committing pass. Longer-history scans
+show consistency plateaus and declines on LongLive, RF-TF, Rolling Sink, SF with a sink and framewise SGF. SF with
+a sink favors 9–12 frames; framewise SGF uses one-frame blocks and is a separate temporal-span diagnostic.
+The main method fixes the context to the current and immediately preceding blocks. Training the committing
 rule and learned context selection are future work. The separate Rolling Forcing and WorldPlay tests characterize
 limits of shorter contexts and transfer to joint context re-encoding.
 
