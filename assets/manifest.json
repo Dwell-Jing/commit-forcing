@@ -1,6 +1,6 @@
 {
   "schema": 3,
-  "updated": "2026-10-26",
+  "updated": "2026-10-27",
   "assets": {
     "assets/README.md": {
       "sha256": "f726332d7b5609cc4e2b28edc652c70eeec86d8de7254976edb48c825e6fa17e",
@@ -571,7 +571,7 @@
       "height": 1409
     },
     "assets/committing_correction_dose.provenance.json": {
-      "sha256": "2abdce044a6adc3db514cec414f16178cbe03630197a52ebfcc064130462411e",
+      "sha256": "e75d51f134978f999ea42365cd76b4ffad0724b53529cd5bc13e1222ba271805",
       "bytes": 3316
     },
     "assets/source/make_committing_correction_dose.py": {
@@ -937,7 +937,7 @@
     "renderer": "assets/source/make_committing_correction_dose.py",
     "provenance": "assets/committing_correction_dose.provenance.json",
     "data": "analysis/window_effects/summary.json",
-    "manuscript_role": "Main-text Why One Preceding Block figure",
+    "manuscript_role": "Main-text Window Mechanisms figure",
     "n_spatial_averaging_arms": 4,
     "n_empirical_effect_points": 8,
     "x_definition": "Reported pre-output-projection committing attention correction norm ratio; not a KV norm or inferred from scores.",

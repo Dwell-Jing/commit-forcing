@@ -1,4 +1,4 @@
-# Why One Preceding Block
+# Window Mechanisms
 
 The committing-window scans show rising consistency, a plateau, and a decline as more history is read.
 The controls below support a temporal-smoothing interpretation of the initial gain and an outdated-content
@@ -42,7 +42,7 @@ in this comparison and are not plotted.
 
 SG16 departs from equal retention: its consistency-gain fraction is 0.42 and its motion-suppression fraction is 0.61.
 
-### Confirmation by selecting KV versions during denoising
+### Deep-layer KV mechanism control
 
 A separate LongLive diagnostic constructs recent-context and self-only KV versions for each block. At all four
 denoising steps, zero-indexed layers 15–29 read the recent-context version and layers 0–14 read the self-only
@@ -62,9 +62,10 @@ self-only committing scores 1.10 points below the full scheme. That seed-2/3 con
 seed-0 self-only comparison used for effect normalization; their values are not combined.
 
 Scores use 0–100 points. The manuscript supplies Subject c2c and G intervals; other interval endpoints remain
-unreported. The selection diagnostic localizes an effect of recent-context KV during denoising, with a
-flicker cost and no significant G gain. It does not identify a unique encoded attribute. Constructing two KV
-versions belongs to this diagnostic, rather than the one-pass main committing rule.
+unreported. The G gain is not significant, and the Temporal Flickering score decreases significantly. We use
+the cache-selection result as a mechanistic control of the recent KV accessed during denoising. The Dynamic
+Degree difference is nonsignificant; this does not establish unchanged motion. Constructing two KV versions
+belongs to this diagnostic, rather than the one-pass main committing rule.
 
 The [extra-old-KV controls](../kv_construction/README.md#extra-old-kv-during-denoising) supply additional history
 during denoising without a significant Subject c2c gain. Their complete quality gains, losses and intervals remain
@@ -103,7 +104,7 @@ remain available, including negative results, nonsignificant results, positive c
 ## Aggregate record
 
 [`summary.json`](summary.json) transcribes reported aggregates from Overleaf commit
-`6a1fe891587440c56f78e7eb728a4a21a02b2114` and records the relevant source SHA-256 hashes.
+`08c51ba1f76a28a9a1fddc2d02573147455aa5a1` and records the relevant source SHA-256 hashes.
 It contains no per-prompt numerical records, videos, personal answers or participant identifiers.
 
 ```bash

@@ -56,7 +56,7 @@ def main():
     print("\nPlateau comparison")
     for name, metric in summary["plateau"]["metrics"].items():
         check_metric(metric, name)
-    print("\nDeep-KV selection confirmation")
+    print("\nDeep-layer KV mechanism control")
     for name, metric in summary["deep_KV_confirmation"]["metrics"].items():
         check_metric(metric, name)
     print("\nSelf-only minus full recent-context, same confirmation seeds 2/3")

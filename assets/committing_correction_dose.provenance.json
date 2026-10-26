@@ -3,8 +3,8 @@
   "source": "assets/source/make_committing_correction_dose.py",
   "source_sha256": "8f6d18d6804729f6f381d3140e1704d64bb3e6d6edfc91c80656c2e852d1945d",
   "aggregate_source": "analysis/window_effects/summary.json",
-  "aggregate_source_sha256": "c75980ae6254dae7610a8ce9e74a478829945e684c3b8c5450c776c73983ab5a",
-  "source_overleaf_commit": "6a1fe891587440c56f78e7eb728a4a21a02b2114",
+  "aggregate_source_sha256": "dcdfe7ea0c25f3481609e24eb83061dbb238d1df08b9f8fc77c5078cb6c7a356",
+  "source_overleaf_commit": "08c51ba1f76a28a9a1fddc2d02573147455aa5a1",
   "plotted_points": [
     {
       "code": "CG",

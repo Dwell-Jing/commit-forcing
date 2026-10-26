@@ -293,12 +293,13 @@ components. This control retains base denoising access and uses the earlier 9-fr
   <img src="assets/committing_correction_dose.png" width="78%" alt="Four LongLive spatial-averaging controls: independently measured attention-correction norm ratios versus retained consistency gain and motion suppression, with eight observed points.">
 </p>
 
-**Why one preceding block.** On LongLive, spatial averaging retains part of the history-induced attention correction,
+**Window mechanisms.** On LongLive, spatial averaging retains part of the history-induced attention correction,
 its consistency gain and its suppression of motion. The horizontal axis measures the correction's norm before
 the attention output projection. Four spatial-averaging controls support a smoothing interpretation of the
 consistency–motion tradeoff. SG16 departs from equal retention, preserving 0.42 of the consistency gain and 0.61
-of the motion suppression. Selecting recent-context KV for deep layers and self-only KV for shallower layers
-adds 0.26 consistency points over full recent-context committing.
+of the motion suppression. A separate deep-layer cache control links consistency to the recent KV used during
+denoising. It serves as a mechanistic control: G shows no significant improvement, and the Temporal Flickering
+score decreases.
 
 Adding a second preceding block gives only a 0.02-point consistency change on LongLive, without a significant
 gain. Earlier dependencies can already travel through the preceding block's KV, which may reduce the benefit of

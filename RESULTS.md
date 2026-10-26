@@ -13,7 +13,7 @@ without an RF-trained checkpoint. Wider-context studies are labelled as supporti
 
 [Full VBench](#full-vbench) · [ID-Forcing framework comparisons](#id-forcing-framework-comparisons) ·
 [MovieGen 60 s](#60-s-videos) · [Longer videos](#longer-videos) · [Committing controls](#committing-controls) ·
-[Current six-frame custom-prompt results](#current-six-frame-custom-prompt-results) · [Why one preceding block](#why-one-preceding-block) · [Committing variants](#committing-variants) ·
+[Current six-frame custom-prompt results](#current-six-frame-custom-prompt-results) · [Window mechanisms](#window-mechanisms) · [Committing variants](#committing-variants) ·
 [KV construction](#kv-construction-controls) · [Transfer boundaries](#transfer-boundaries) ·
 [Human evaluation](results/human_evaluation/README.md) · [Quality and cost](analysis/quality_cost/README.md) ·
 [per-video data and commands](results/README.md) · [← Home](README.md)
@@ -582,7 +582,7 @@ Framewise SGF also has an intermediate-window plateau, but its one-frame blocks 
 current-plus-previous-block setting; 6 frames is a separate temporal-span diagnostic.
 [Window levels, paired contrasts and protocol differences](results/current6_custom/README.md).
 
-### Why one preceding block
+### Window mechanisms
 
 On LongLive, spatial averaging of the history-induced committing-attention correction retains part of its
 consistency gain and motion suppression. The correction is D = O(current + history) − O(current), measured
@@ -611,24 +611,10 @@ support outdated-content interference in the decline. FP16, the regionally avera
 Subject c2c by −1.76 relative to recent-context committing; its separate G statistic is −2.97. Averaging preserves
 regional information and does not remove all geometric structure.
 
-**Deep-layer KV confirmation:** LongLive constructs recent-context and self-only KV versions. At all four
-denoising steps, zero-indexed layers 15–29 access recent-context KV and layers 0–14 access self-only KV. On 200
-rollf200 prompts with new generation seeds 2 and 3 (400 paired outputs), relative to full recent-context committing
-(MOT_w6, recent-context KV throughout denoising):
-
-| Metric | Change | Reported significance |
-|:---|--:|:---|
-| Subject c2c | +0.257 [+0.045, +0.477] | Significant |
-| Dynamic Degree | −0.47 | Not significant |
-| Quality | −0.03 | Not significant |
-| Temporal Flickering | −0.06 | Significant decrease |
-| G | +0.14 [−0.20, +0.48] | Not significant |
-
-The Subject c2c change is an additional gain over full recent-context committing. In this same seed-2/3
-confirmation, self-only committing scores 1.10 points below the full scheme. The separate seed-0 self-only
-reference used for the correction figure is retained with its own protocol. G remains nonsignificant.
-
-[Aggregate records, correction plot and confirmation protocol](analysis/window_effects/README.md).
+The deep-layer cache control links consistency to the recent KV used during denoising. Its G gain is not
+significant, and the Temporal Flickering score decreases significantly. We use this result as a mechanistic
+control. [Exact settings, comparison baseline, scores and intervals](analysis/window_effects/README.md#deep-layer-kv-mechanism-control)
+remain in the detailed analysis alongside the correction plot and aggregate record.
 
 ### Committing variants
 
