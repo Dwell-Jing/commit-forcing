@@ -53,7 +53,9 @@ python analysis/committing_content_age/tables.py --verify-contrasts
 
 Requires NumPy. [per_prompt.csv](data/per_prompt.csv) contains the 11 scored readouts before ×100 display scaling.
 `Quality` uses the seven-dimension min–max-normalized RF Table 3 definition, including Dynamic weight 0.5.
-Subject/Background are fused scores; `Subj_c2c`/`Bg_c2c` are unmapped clip-to-clip scores. The script prints all arm
+Subject/Background are fused scores; `Subj_c2c`/`Bg_c2c` are the interclip components before mapping and fusion.
+VBench-Long maps these terms and combines them with within-clip consistency at equal weights to form the fused
+scores. [Scoring details](../../eval/vbench_long/README.md). The script prints all arm
 means, replays 4,000-draw paired-prompt contrasts, and computes per-prompt least-squares trends against log2(lag),
 with bootstrap seed 20261017 for trends. [reported_contrasts.json](data/reported_contrasts.json) preserves the original
 15 contrasts; the verification option checks them against replay rather than replacing reported values.

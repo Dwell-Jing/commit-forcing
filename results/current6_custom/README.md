@@ -11,8 +11,9 @@ seeds. At 240 seconds on the first 32 extended MovieGen prompts, the gain is 5.4
 +0.90 [−0.002, +1.82], which is not significant. This differs from the archived nine-frame SGF control's +5.07
 consistency and +0.72 Quality changes. The six-frame cases in the current figures use the current method.
 
-A descriptive OLS adjustment of the seed-0 SGF 60-second paired consistency changes for paired Dynamic Degree
-changes gives an intercept of +4.87 [+3.89, +5.95] with 2,000 prompt-bootstrap draws. This regression adjustment
+A descriptive OLS adjustment of the seed-0 SGF 60-second paired consistency changes on the 200 rollf200 prompts
+for paired Dynamic Degree changes gives an intercept of +4.87 [+3.89, +5.95] with 2,000 prompt-bootstrap draws.
+This custom-prompt estimate is separate from the 946-entry standard-suite Quality gain. The regression adjustment
 does not hold motion fixed experimentally; the unadjusted Dynamic Degree increase is +11.33 points.
 
 ## Window boundaries
@@ -153,5 +154,5 @@ Each prompt contributes the average of its seed-0 and seed-1 differences before 
 | w=17 | 83.82 | 68.10 | 90.26 | 92.83 | +0.11 [-0.05, +0.30] | -1.76* [-2.37, -1.24] |
 
 Changes are relative to the 6-frame diagnostic. This generator uses one latent frame per block:
-2 frames implement current-plus-previous-block committing; 6 frames include five predecessors.
+2 frames implement current-plus-previous-block committing; 6 frames span six single-frame blocks, including five predecessors.
 The study uses rollf200 prompts 0–99 at 60 seconds with seed 0.

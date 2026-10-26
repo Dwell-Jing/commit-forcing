@@ -34,8 +34,10 @@ python eval/vbench_long/collect.py --work vb_work --label sgf+rule --out scores.
 python eval/vbench_long/compare.py --scores scores.csv --seed 0 --pair sgf+rule:sgf
 ```
 
-`score.sh` runs VBench-Long with `--mode long_custom_input --dev_flag`; `--dev_flag` fuses the in-clip and
-clip-to-clip parts of subject and background consistency (0.5 / 0.5, `configs/slow_fast_params.yaml`).
+`score.sh` runs VBench-Long with `--mode long_custom_input --dev_flag`; `--dev_flag` combines within-clip
+consistency and the mapped interclip term of Subject and Background with equal weights
+(0.5 / 0.5, `configs/slow_fast_params.yaml`). Subject c2c and Background c2c report the interclip components
+before this mapping and fusion; they are distinct from the fused per-video Subject/Background scores used in Quality.
 All seven dimensions are scored on every prompt, and Flickering is unfiltered. The separate
 [standard-suite evaluation](../vbench_full/README.md) uses dimension-specific prompt subsets and static filtering
 for Flickering. Recency Forcing Tab. 3 motivates the 200-prompt, 60 s setup; its exact prompt list and scoring

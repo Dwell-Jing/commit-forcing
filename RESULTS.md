@@ -8,7 +8,8 @@ Repository and CLI names retain their existing spelling for compatibility.
 
 **Δ** is the paired difference over prompts with its 95% bootstrap interval (4,000 draws); `*` marks an interval
 excluding 0. Differences are computed before rounding. **Consistency** is VBench-Long's clip-to-clip Subject
-Consistency. † RF-TF applies the public Recency Forcing Temporal Response Bias to released Self-Forcing weights,
+Consistency, its interclip component. [Mapping and fusion](eval/vbench_long/README.md) define its relation to the
+combined Subject score. † RF-TF applies the public Recency Forcing Temporal Response Bias to released Self-Forcing weights,
 without an RF-trained checkpoint. Wider-context studies are labelled as supporting controls below.
 
 [Full VBench](#full-vbench) · [ID-Forcing framework comparisons](#id-forcing-framework-comparisons) ·
@@ -42,10 +43,12 @@ and immediately preceding blocks. SGF+ uses its official 12-frame physical confi
 </tbody>
 </table>
 
-Rows follow ascending adapted Total. Bold Δ marks a paired 95% interval excluding 0. Quality and Total improve
-significantly on 5 of 6 generators; all six point estimates are positive. RF-TF has the largest Total increase,
-+1.10 points. SGF has the largest Quality increase, +1.27 points.
-Intervals use 4,000 paired draws over 944 original-prompt clusters, retaining each arm's official surviving-record
+Rows follow ascending adapted Total. Bold Δ marks a paired 95% interval excluding 0. On this 60-second standard
+suite, Quality and Total improve significantly on 5 of 6 generators; all six point estimates are positive.
+RF-TF has the largest Total increase, +1.10 points. SGF has the largest Quality increase, +1.27 points.
+On the separate 200-prompt rollf200 evaluation, SGF's estimated Subject c2c gain after descriptive regression
+adjustment is +4.87 points. The adjustment uses paired Dynamic Degree differences; its protocol and interval are recorded below.
+Standard-suite intervals use 4,000 paired draws over 944 original-prompt clusters, retaining each arm's official surviving-record
 weights, including its own Flickering filter and omitted Color records.
 Current intervals are frozen as reported. The [current source summaries and historical raw package](results/vbench_full/common946/README.md)
 provide point-estimate checks for the current method and full bootstrap replay for the preserved historical package.
@@ -515,8 +518,10 @@ above uses a different prompt protocol and generator set.
 | SF with sink | 1 | 81.35 | 81.57 | +0.23 [−0.42, +0.80] | +4.16* [+3.33, +4.96] | +0.68 [−2.67, +4.07] |
 
 All six clip-to-clip Subject gains are significant with both seeds. Dynamic Degree changes differ across generators.
-On SGF, a descriptive regression adjustment for paired Dynamic Degree differences gives a seed-0 intercept of
-+4.87 [+3.89, +5.95], using 2,000 prompt-bootstrap draws. This is an adjusted estimate from existing paired videos.
+On SGF, a descriptive regression adjustment for paired Dynamic Degree differences on these 200 rollf200 prompts
+at 60 seconds gives a seed-0 intercept of +4.87 [+3.89, +5.95], using 2,000 prompt-bootstrap draws. This is an
+adjusted estimate from existing paired videos, rather than an experiment holding motion fixed or a statistic
+from the 946-entry standard suite.
 [Aggregate records, base and recent-context consistency scores, and the separate CF sink-exclusion component](results/current6_custom/README.md).
 
 ## Committing controls

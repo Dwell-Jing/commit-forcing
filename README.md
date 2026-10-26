@@ -88,8 +88,12 @@ Rows follow ascending Total with recent-context committing. Scores ×100; differ
 Bold Δ marks a paired 95% prompt-cluster interval excluding 0. Quality combines seven visual dimensions; Total
 also includes nine semantic dimensions. † RF-TF applies Recency Forcing's Temporal Response Bias to released
 Self-Forcing weights; it uses no RF-trained checkpoint.
-Quality and Total improve significantly on 5 of 6 generators. RF-TF has the largest Total gain, +1.10 points.
-SGF's Quality gain is +1.27, of which Dynamic Degree contributes +1.01; Motion Smoothness decreases by 0.29 points.
+On the 60-second standard suite, Quality and Total improve significantly on 5 of 6 generators. RF-TF has the
+largest Total gain, +1.10 points, and SGF has the largest Quality gain, +1.27. On the separate 200-prompt rollf200
+evaluation, SGF's estimated clip-to-clip Subject gain is +4.87 points after descriptive regression adjustment for
+paired Dynamic Degree differences. This estimate comes from the paired videos, rather than an experiment with
+motion held fixed. In the standard-suite Quality decomposition, Dynamic Degree contributes +1.01 points;
+Motion Smoothness decreases by 0.29 points.
 [All dimensions, intervals and protocol records](results/vbench_full/common946/README.md).
 The two 9-frame ID-Forcing adaptations are [separate framework comparisons](RESULTS.md#id-forcing-framework-comparisons).
 
@@ -107,7 +111,8 @@ Quality combines VBench's seven visual dimensions using its official normalizati
 
 Every adapted row uses the current and preceding blocks. All six Consistency gains reproduce with generation
 seed 1. This custom-prompt comparison includes SF with a sink; the standard-suite main table instead includes SGF+.
-Consistency is VBench-Long's clip-to-clip Subject Consistency; bold changes have paired intervals excluding zero.
+Consistency is the interclip component of VBench-Long Subject Consistency; bold changes have paired intervals
+excluding zero. [Mapping and fusion with within-clip consistency](eval/vbench_long/README.md).
 [Both seeds, motion changes and recorded intervals](results/current6_custom/README.md).
 
 <details>
@@ -338,7 +343,7 @@ available. [Diagnostic metrics](analysis/metrics/README.md) defines the associat
 
 We evaluate released Wan-based generators with persistent KV and a clean committing pass. Longer-history scans
 show consistency plateaus and declines on LongLive, RF-TF, Rolling Sink, SF with a sink and framewise SGF. SF with
-a sink favors 9–12 frames; framewise SGF uses one-frame blocks and is a separate temporal-span diagnostic.
+a sink favors 9–12 frames. Framewise SGF uses one-frame blocks, so its six-frame diagnostic spans six blocks.
 The main method fixes the context to the current and immediately preceding blocks. Training the committing
 rule and learned context selection are future work. The separate Rolling Forcing and WorldPlay tests characterize
 limits of shorter contexts and transfer to joint context re-encoding.
