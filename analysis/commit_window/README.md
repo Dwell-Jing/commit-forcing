@@ -24,6 +24,10 @@ On blockwise SGF, SGF+ and CF, the tested recent windows show no significant con
 the distinct prompt sets and block sizes. These scans describe generator-dependent plateaus rather than a shared
 optimal frame count.
 
+[Correction-strength controls and deep-layer KV selection](../window_effects/README.md) examine the rise,
+plateau and decline. Spatial averaging supports a smoothing interpretation; the indirect path through preceding
+KV may contribute to the plateau, while the fixed-size recency intervention links older content to lower consistency.
+
 ## Historical controls
 
 The core three-context comparison uses 200 `rollf200` prompts at 60 seconds, generation seed 0, and VBench-Long

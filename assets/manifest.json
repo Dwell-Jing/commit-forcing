@@ -3,8 +3,8 @@
   "updated": "2026-10-26",
   "assets": {
     "assets/README.md": {
-      "sha256": "692f0e86b5a5162b994564a269a05a48440a188f50c1b17e6204cdc64ba7f621",
-      "bytes": 6523
+      "sha256": "be6ec0160a4c3630aa793ac39b37a6065c0bccc9f56043a318c4119c50811118",
+      "bytes": 7840
     },
     "assets/archive/README.md": {
       "sha256": "e9d3eb8e85cf50ac29c779bcd17c582fb29ba3540e9e2cc81881c1b9f6e2c4f0",
@@ -555,6 +555,28 @@
       "bytes": 214496,
       "width": 416,
       "height": 240
+    },
+    "assets/committing_correction_dose.svg": {
+      "sha256": "cfd786ff2cc35e8a786890e8e4aeac564be4544cce3ef9b8d6f1459f7aea11a7",
+      "bytes": 12757
+    },
+    "assets/committing_correction_dose.pdf": {
+      "sha256": "f49b6a470aaa7d5ca6901176c4be5e08572db63f5408183eddfea465a62c7181",
+      "bytes": 20540
+    },
+    "assets/committing_correction_dose.png": {
+      "sha256": "d07a5207585e7ade421717448644433344d6345ec80ce98f8426b397c3d53a0a",
+      "bytes": 106310,
+      "width": 2200,
+      "height": 1409
+    },
+    "assets/committing_correction_dose.provenance.json": {
+      "sha256": "cd71d59f0ee478f76dfd12be1e1fd868f10a2ea7d9fb1ed0402a6a1af1a8a013",
+      "bytes": 3215
+    },
+    "assets/source/make_committing_correction_dose.py": {
+      "sha256": "5248f6b12925012e58382332c365412a1597bf27445ab40c1c58a7be929f8118",
+      "bytes": 7630
     }
   },
   "teaser": {
@@ -696,6 +718,14 @@
       "png": "Rendered from the released PDF at 2200 pixels wide",
       "pdf_sha256": "7545098ddcf414585d42db69411c29e39b826fbfd6a8deb4a4392af2d99dc2b0",
       "svg_sha256": "58feff1dc0defe18802561936bf262a8531af5e925856c0bd60d6eafc3a5468b"
+    },
+    "committing_correction_dose": {
+      "manuscript_figure": "figures/committing_correction_dose",
+      "publication_asset": "assets/committing_correction_dose",
+      "pdf_svg_identity": "Byte-for-byte copies of current accepted manuscript figure exports",
+      "png": "Rendered from the released PDF at 2200 pixels wide",
+      "pdf_sha256": "f49b6a470aaa7d5ca6901176c4be5e08572db63f5408183eddfea465a62c7181",
+      "svg_sha256": "cfd786ff2cc35e8a786890e8e4aeac564be4544cce3ef9b8d6f1459f7aea11a7"
     }
   },
   "dependencies": {
@@ -713,7 +743,7 @@
     "canonical_matplotlib": "3.10.8"
   },
   "canonical_snapshot": {
-    "accepted_revision": "6d6394380687d64fe505f050330f9118773a2e37",
+    "accepted_revision": "85b6572eeaa51e55adb6fa153c69a8cb2a2fb313",
     "source_scope": "Approved individual figures and aggregate records only; no full manuscript, private sidecar, new per-prompt scores or videos."
   },
   "regeneration_validation": {
@@ -776,6 +806,17 @@
       "mean_channel_difference": 1.8500608262461125,
       "pixels_differ": 31753,
       "svg_byte_equal": false
+    },
+    "committing_correction_dose": {
+      "rendered_size": [
+        2200,
+        1409
+      ],
+      "pdf_rgb_pixel_equal": false,
+      "mean_channel_difference": 0.019291352130244962,
+      "pixels_differ": 746,
+      "svg_byte_equal": false,
+      "svg_geometry_style_text_equal_after_ID_and_version_normalization": true
     }
   },
   "input_preservation": [
@@ -889,6 +930,19 @@
       "FP16",
       "SFP16"
     ],
-    "reproduction": "python assets/source/make_committing_tradeoff_variants.py"
+    "reproduction": "python assets/source/make_committing_tradeoff_variants.py",
+    "manuscript_role": "Supplementary complete discovery controls"
+  },
+  "committing_correction_dose": {
+    "renderer": "assets/source/make_committing_correction_dose.py",
+    "provenance": "assets/committing_correction_dose.provenance.json",
+    "data": "analysis/window_effects/summary.json",
+    "manuscript_role": "Main-text Window Effects figure",
+    "n_spatial_averaging_arms": 4,
+    "n_empirical_effect_points": 8,
+    "x_definition": "Reported pre-output-projection committing attention correction norm ratio; not a KV norm or inferred from scores.",
+    "normalization_reference_points_are_observations": false,
+    "reference_line_is_fit": false,
+    "reproduction": "python assets/source/make_committing_correction_dose.py"
   }
 }

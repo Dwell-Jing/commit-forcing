@@ -63,6 +63,7 @@ See the [window controls](../analysis/commit_window/README.md) and
 
 ## Further evidence
 
+- [Window effects](../analysis/window_effects/README.md): independently measured correction ratios, retained effects and deep-layer KV confirmation.
 - [Current six-frame custom-prompt results and window scans](current6_custom/README.md): aggregate records for both generation seeds and the six-frame SGF 240-second comparison.
 - [Committing variants](../analysis/committing_variants/README.md): all 27 discovery variants, separate confirmations and component costs.
 - [Full VBench: 946 entries and 16 dimensions](vbench_full/README.md).

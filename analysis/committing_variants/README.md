@@ -1,5 +1,8 @@
 # Committing variants and limited decoupling
 
+This supplementary sweep accompanies the [window-effects analysis and correction-strength figure](../window_effects/README.md).
+The original 27 points, full table and separate confirmations are retained below.
+
 Changing committing can affect both long-range consistency and motion. This LongLive discovery sweep compares
 27 variants with the line joining recent-context and self-only committing. Twenty-two reported intervals for
 vertical departure from that reference include zero; five are below zero. Separate attention-sharpening

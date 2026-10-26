@@ -47,8 +47,9 @@ additional DiT forwards. Repository names and CLI flags retain their existing sp
   SGF cache controls link the larger losses to construction of the KV supplied to denoising.
   ([stage interventions](analysis/longlive_sink/README.md), [KV construction](analysis/kv_construction/README.md))
 - **Recency and window size.** Fixed-size controls show losses from older history; window scans reveal
-  generator-dependent plateaus followed by declines.
-  ([historical recency](analysis/committing_content_age/README.md), [window scans](analysis/commit_window/README.md))
+  generator-dependent plateaus followed by declines. Correction-strength controls link consistency gains to
+  motion suppression.
+  ([historical recency](analysis/committing_content_age/README.md), [window effects](analysis/window_effects/README.md))
 - **Training-free committing.** On 60-second VBench, current-plus-previous-block committing improves Quality and
   Total significantly on 5 of 6 generators; all six paired point estimates are positive. LongLive gains in long-range
   Subject Consistency extend to 240 seconds, with favorable human judgments on 120-second LongLive videos.
@@ -269,7 +270,7 @@ time in the generated trajectory; replaying an old frame into a nearby cache slo
 | What does recent context retain over self-only? | [Continuity and motion tradeoffs](analysis/commit_window/README.md) |
 | How does recent context work within ID-Forcing? | [Cache-construction comparisons](analysis/not_ood/README.md) |
 | How many frames should the commit pass read? | [Commit window](analysis/commit_window/README.md) |
-| How far can consistency and motion be decoupled? | [Committing variants and confirmation tests](analysis/committing_variants/README.md) |
+| Why does consistency rise, plateau and decline with window size? | [Window effects and correction controls](analysis/window_effects/README.md) |
 | What contributes to the score and computational cost? | [Quality decomposition and inference measurements](analysis/quality_cost/README.md) |
 
 <p align="center">
@@ -289,13 +290,19 @@ components. This control retains base denoising access and uses the earlier 9-fr
 [All four contrasts and LongLive extra-history controls](analysis/kv_construction/README.md).
 
 <p align="center">
-  <img src="assets/committing_tradeoff_variants.png" width="100%" alt="Twenty-seven LongLive committing variants: changes in Dynamic Degree and clip-to-clip Subject Consistency relative to six-frame committing, with a self-only reference line.">
+  <img src="assets/committing_correction_dose.png" width="78%" alt="Four LongLive spatial-averaging controls: independently measured attention-correction norm ratios versus retained consistency gain and motion suppression, with eight observed points.">
 </p>
 
-**Limited decoupling.** The scatter compares 27 LongLive variants with the line joining self-only and recent-context
-committing. Filled markers have intervals entirely below this reference; open markers have intervals including
-zero. None has a significant gain above the reference in this discovery sweep. Separate confirmations find local
-gains with temporal-quality or motion costs. [Definitions, full results and confirmations](analysis/committing_variants/README.md).
+**Window effects.** On LongLive, spatial averaging retains part of the history-induced attention correction,
+its consistency gain and its suppression of motion. The horizontal axis measures the correction's norm before
+the attention output projection. Four spatial-averaging controls support a smoothing interpretation of the
+consistency–motion tradeoff.
+
+Adding a second preceding block gives only a 0.02-point consistency change on LongLive, without a significant
+gain. Earlier dependencies can already travel through the preceding block's KV, which may reduce the benefit of
+reading older blocks again. Wider-window declines are consistent with interference from outdated content:
+fixed-size recency controls and regionally averaged sink corrections retain consistency losses.
+[Definitions, normalization and deep-layer KV confirmation](analysis/window_effects/README.md).
 
 The supporting 9-frame [SGF equal-count control](analysis/sgf_committing_controls/README.md) compares 2 nine-frame contexts within the
 same physical cache. Recent context improves Quality by 1.25 and clip-to-clip Subject by 4.54 points over sink plus recent.
@@ -305,6 +312,7 @@ or long-range Subject advantage. [Window comparisons](analysis/commit_window/REA
 Supplementary observations: [fixed-latent KV propagation](analysis/committing_propagation/README.md),
 [switching the committing context](analysis/commit_switch/README.md) and
 [SGF + RF-TF compatibility](RESULTS.md#sgf-rf-compatibility).
+[All 27 committing variants, scatter and separate confirmations](analysis/committing_variants/README.md) remain available.
 [DINOv2 Own/Sibling components](analysis/similarity_components/README.md) separate the appearance-similarity terms.
 
 ### Transfer boundaries

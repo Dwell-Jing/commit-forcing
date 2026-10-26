@@ -1,0 +1,87 @@
+{
+  "artifact": "committing_correction_dose",
+  "source": "assets/source/make_committing_correction_dose.py",
+  "source_sha256": "5248f6b12925012e58382332c365412a1597bf27445ab40c1c58a7be929f8118",
+  "aggregate_source": "analysis/window_effects/summary.json",
+  "aggregate_source_sha256": "8463bbe9beefe19e920f1503daf835d80d304c98111abf52884940eadaf13f20",
+  "source_overleaf_commit": "85b6572eeaa51e55adb6fa153c69a8cb2a2fb313",
+  "plotted_points": [
+    {
+      "code": "CG",
+      "consistency": [
+        0.36,
+        0.29
+      ],
+      "motion_suppression": [
+        0.36,
+        0.37
+      ]
+    },
+    {
+      "code": "CM16",
+      "consistency": [
+        0.47,
+        0.47
+      ],
+      "motion_suppression": [
+        0.47,
+        0.48
+      ]
+    },
+    {
+      "code": "SG16",
+      "consistency": [
+        0.48,
+        0.42
+      ],
+      "motion_suppression": [
+        0.48,
+        0.61
+      ]
+    },
+    {
+      "code": "CM64",
+      "consistency": [
+        0.56,
+        0.55
+      ],
+      "motion_suppression": [
+        0.56,
+        0.48
+      ]
+    }
+  ],
+  "correction_definition": "D = attention(q, current+previous K/V) - attention(q, current K/V), evaluated before the attention output projection. This is an attention-output correction, not a stored-KV difference.",
+  "x_definition": "Reported ||pool(D)||_F / ||D||_F. This ratio is measured independently of outcome effects.",
+  "norm_aggregation": "For each committing attention call, use current-token, head and channel dimensions. Average calls across 30 layers and 79 post-startup commits per video, then average the 100 video means.",
+  "y_definition": "Reported retained fractions of recent-context versus self-only consistency gain and motion suppression.",
+  "samples": {
+    "variant_outcomes": "100 rollf200 prompts, 60 seconds, generation seed 0",
+    "effect_normalization": "Reported 200-prompt endpoints: self-only minus recent-context is Dynamic +3.63 and Subject c2c -1.00"
+  },
+  "precision": "Reported two-decimal ratios are preserved; no new norm measurements, intervals or outcome statistics are computed.",
+  "reference": "The y=x line is an equal-fraction reference, not a fit. Plus signs at (0,0) and (1,1) define normalization and are not additional observations.",
+  "scope": "Four spatial-averaging interventions and eight effect points on LongLive. No strict linear law or unique smoothing mechanism is established.",
+  "excluded": "P and U have no reported horizontal norm ratio in this study and are not plotted.",
+  "size_mm": [
+    125,
+    80
+  ],
+  "minimum_font_pt": 8.8,
+  "exports": {
+    "pdf": "f49b6a470aaa7d5ca6901176c4be5e08572db63f5408183eddfea465a62c7181",
+    "svg": "cfd786ff2cc35e8a786890e8e4aeac564be4544cce3ef9b8d6f1459f7aea11a7"
+  },
+  "regeneration_validation": {
+    "rendered_size": [
+      2200,
+      1409
+    ],
+    "pdf_rgb_pixel_equal": false,
+    "mean_channel_difference": 0.019291352130244962,
+    "pixels_differ": 746,
+    "svg_byte_equal": false,
+    "svg_geometry_style_text_equal_after_ID_and_version_normalization": true
+  },
+  "regeneration_environment": "Matplotlib 3.10.0; canonical manuscript export uses 3.10.8. Released PDF/SVG retain canonical bytes."
+}

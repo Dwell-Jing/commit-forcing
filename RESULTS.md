@@ -13,7 +13,7 @@ without an RF-trained checkpoint. Wider-context studies are labelled as supporti
 
 [Full VBench](#full-vbench) · [ID-Forcing framework comparisons](#id-forcing-framework-comparisons) ·
 [MovieGen 60 s](#60-s-videos) · [Longer videos](#longer-videos) · [Committing controls](#committing-controls) ·
-[Current six-frame custom-prompt results](#current-six-frame-custom-prompt-results) · [Committing variants](#committing-variants) ·
+[Current six-frame custom-prompt results](#current-six-frame-custom-prompt-results) · [Window effects](#window-effects) · [Committing variants](#committing-variants) ·
 [KV construction](#kv-construction-controls) · [Transfer boundaries](#transfer-boundaries) ·
 [Human evaluation](results/human_evaluation/README.md) · [Quality and cost](analysis/quality_cost/README.md) ·
 [per-video data and commands](results/README.md) · [← Home](README.md)
@@ -581,6 +581,47 @@ Denser scans show consistency plateaus at 6–12 frames on RF-TF and 6–9 on Ro
 Framewise SGF also has an intermediate-window plateau, but its one-frame blocks make 2 frames the
 current-plus-previous-block setting; 6 frames is a separate temporal-span diagnostic.
 [Window levels, paired contrasts and protocol differences](results/current6_custom/README.md).
+
+### Window effects
+
+On LongLive, spatial averaging of the history-induced committing-attention correction retains part of its
+consistency gain and motion suppression. The correction is D = O(current + history) − O(current), measured
+before the attention output projection. Its retained magnitude is the independently measured Frobenius norm
+ratio ‖pool(D)‖ / max(‖D‖, 10⁻¹²), in float32 over current tokens, heads and channels. Ratios are averaged over
+30 layers and 79 post-startup committing passes within each video, then over 100 prompts.
+
+| Spatial averaging | Retained correction | Retained consistency gain | Retained motion suppression |
+|:---|--:|--:|--:|
+| CG: spatial mean per frame | 0.36 | 0.29 | 0.37 |
+| CM16: 16 content regions | 0.47 | 0.47 | 0.48 |
+| SG16: 4×4 spatial grid | 0.48 | 0.42 | 0.61 |
+| CM64: 64 content regions | 0.56 | 0.55 | 0.48 |
+
+The four variants supply eight outcome points. Retained effects use 1 − Δvariant / Δself for each metric,
+with the reported paired variant changes on 100 prompts and the original 200-prompt self-only reference.
+The horizontal axis is an attention-output correction ratio, not a KV tensor norm or an outcome-derived value.
+The figure's y=x line and endpoints define equal-fraction retention and normalization. These controls support
+a smoothing interpretation without isolating correction magnitude from all structural changes.
+
+The plateau may partly reflect indirect dependencies already carried in preceding-block KV; adding a second
+preceding block changes LongLive consistency by +0.02 without a significant gain. Fixed-position recency controls
+support outdated-content interference in the decline. FP16, the regionally averaged sink correction, changes
+Subject c2c by −1.76 relative to recent-context committing; its separate G statistic is −2.97. Averaging preserves
+regional information and does not remove all geometric structure.
+
+**Deep-layer KV confirmation:** LongLive constructs recent-context and self-only KV versions. At all four
+denoising steps, zero-indexed layers 15–29 access recent-context KV and layers 0–14 access self-only KV. On 200
+rollf200 prompts with new generation seeds 2 and 3 (400 paired outputs), relative to recent-context KV throughout:
+
+| Metric | Change | Reported significance |
+|:---|--:|:---|
+| Subject c2c | +0.26 | Significant |
+| Dynamic Degree | −0.47 | Not significant |
+| Quality | −0.03 | Not significant |
+| Temporal Flickering | −0.06 | Significant decrease |
+| G | +0.14 [−0.20, +0.48] | Not significant |
+
+[Aggregate records, correction plot and confirmation protocol](analysis/window_effects/README.md).
 
 ### Committing variants
 
