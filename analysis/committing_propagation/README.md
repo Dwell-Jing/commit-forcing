@@ -1,8 +1,14 @@
-# Propagation through recent committed KV
+# Supplementary: propagation through recent committed KV
 
-A committing intervention can change KV written by later blocks even when every clean latent block is fixed.
-The directly affected entries leave the cache, while differences in later KV persist and decay. This identifies
-recurrent dependence through committing; it does not establish a permanent harmful color shift.
+This supplementary study appears in Appendix A.6. A committing intervention can change KV written by later blocks
+even when every clean latent block is fixed. Differences in later KV remain after the directly affected entries
+leave the cache and decay across blocks. Late generation probes have small output differences without significant
+signed saturation or brightness shifts.
+
+The separate [KV construction control](../kv_construction/README.md) distinguishes the KV consumed by denoising
+from the history read by later committing. In that SGF setting, the larger Quality and clip-to-clip consistency
+losses follow construction of the denoising-facing KV. The recursive propagation observed here is a supplementary
+dependency measurement, not an attribution of those losses or all drift to a single pathway.
 
 ![Fixed-content KV propagation](../../assets/committing_impulse.png)
 

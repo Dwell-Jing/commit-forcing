@@ -1,0 +1,203 @@
+{
+  "export_kind": "reported aggregate values only",
+  "overleaf_source_commit": "aa824d948a805ba903da04dbe39473633b257309",
+  "export_date": "2026-10-26",
+  "statistics_recomputed": false,
+  "per_prompt_values_included": false,
+  "interval_precision": "Intervals retain the displayed source precision; significance retains the original reported decision.",
+  "source_sha256": {
+    "appendix/transfer-boundaries.tex": "2a2a496854924fdd1622f7ee1c34b366aa19f94eb8cb5b7c2456b116f05609d5"
+  },
+  "experiments": [
+    {
+      "id": "released_rolling_forcing",
+      "scale": "0-100 score points",
+      "paper": "https://arxiv.org/abs/2509.25161",
+      "protocol": {
+        "prompts": "rollf200 indices 0-99",
+        "prompt_count": 100,
+        "seconds": 60,
+        "generation_seed": 0,
+        "bootstrap_draws": 4000,
+        "bootstrap_unit": "prompt",
+        "reference": "released Rolling Forcing weights; recent 21 latent frames including current 3; initial global block excluded",
+        "intervention_start": "after cache fills",
+        "held_fixed": [
+          "denoising",
+          "sampler",
+          "cache geometry",
+          "positional encoding",
+          "generation noise"
+        ],
+        "distinct_from": "Recency Forcing training-free bias on Self-Forcing weights (RF-TF)"
+      },
+      "contrasts": [
+        {
+          "label": "Global 3 + recent 18 minus recent 21",
+          "metrics": {
+            "Quality": {
+              "delta": -0.18,
+              "interval_95": [
+                -0.31,
+                -0.03
+              ],
+              "reported_interval_excludes_zero": true
+            },
+            "Dynamic Degree": {
+              "delta": -0.2,
+              "interval_95": null,
+              "reported_interval_excludes_zero": false
+            },
+            "Subject c2c": {
+              "delta": -0.61,
+              "interval_95": null,
+              "reported_interval_excludes_zero": true
+            },
+            "Background c2c": {
+              "delta": -0.57,
+              "interval_95": null,
+              "reported_interval_excludes_zero": true
+            }
+          }
+        },
+        {
+          "label": "Recent 6 minus recent 21",
+          "metrics": {
+            "Quality": {
+              "delta": -0.09,
+              "interval_95": [
+                -0.25,
+                0.07
+              ],
+              "reported_interval_excludes_zero": false
+            },
+            "Dynamic Degree": {
+              "delta": -0.67,
+              "interval_95": null,
+              "reported_interval_excludes_zero": false
+            },
+            "Subject c2c": {
+              "delta": -0.65,
+              "interval_95": null,
+              "reported_interval_excludes_zero": true
+            },
+            "Background c2c": {
+              "delta": -0.31,
+              "interval_95": null,
+              "reported_interval_excludes_zero": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "worldplay_context_reencoding",
+      "scale": "original diagnostic scales; not VBench score points",
+      "paper": "https://arxiv.org/abs/2512.14614",
+      "protocol": {
+        "model": "HunyuanVideo-1.5 action model",
+        "denoising_steps": 4,
+        "resolution": "480p",
+        "block_latent_frames": 4,
+        "default_context": "latest 12 latent frames plus up to 8 older frames (initial block and camera-overlap retrieved clip), jointly re-encoded noncausally",
+        "persistent_committing_chain": false,
+        "denoising_reads_constructed_memory_kv": true,
+        "intervention": "restrict recent-frame queries during context construction to text and recent-frame keys; older-frame queries retain all keys",
+        "scene_count": 10,
+        "default_generation_seeds": [
+          1,
+          2
+        ],
+        "default_trajectories": [
+          "40-second rotation with two full yaw turns",
+          "20-second forward-and-back walk",
+          "40-second forward walk"
+        ],
+        "pairing": "scene, trajectory and generation seed",
+        "bootstrap_draws": 4000,
+        "bootstrap_unit": "scene",
+        "return_similarity": "DINOv2 similarity to opening at final return pose, restricted to rotation and forward-and-back trajectories",
+        "color_drift": "sum of absolute deviations from 1 of late/early saturation and brightness ratios; final/first 5 seconds",
+        "seam_ratio": "frame change at block boundaries",
+        "one_second_similarity": "DINOv2 similarity of frames one second apart",
+        "context40_test": "same 10 scenes, 40-second rotation, generation seed 1; restricted vs unrestricted at 40-frame budget"
+      },
+      "contrasts": [
+        {
+          "label": "Restricted minus unrestricted at 20 frames",
+          "metrics": {
+            "Final-return similarity": {
+              "delta": -0.0317,
+              "interval_95": [
+                -0.1141,
+                0.0545
+              ],
+              "reported_interval_excludes_zero": false
+            },
+            "Color drift": {
+              "delta": -0.0142,
+              "interval_95": [
+                -0.0676,
+                0.0353
+              ],
+              "reported_interval_excludes_zero": false
+            },
+            "Seam ratio": {
+              "delta": 0.2067,
+              "interval_95": [
+                0.0338,
+                0.3842
+              ],
+              "reported_interval_excludes_zero": true
+            },
+            "1-second similarity": {
+              "delta": -0.0089,
+              "interval_95": [
+                -0.0167,
+                -0.0025
+              ],
+              "reported_interval_excludes_zero": true
+            }
+          }
+        },
+        {
+          "label": "Restricted minus unrestricted at 40 frames",
+          "metrics": {
+            "Final-return similarity": {
+              "delta": -0.1769,
+              "interval_95": [
+                -0.2926,
+                -0.0636
+              ],
+              "reported_interval_excludes_zero": true
+            },
+            "Color drift": {
+              "delta": -0.0885,
+              "interval_95": [
+                -0.235,
+                0.0796
+              ],
+              "reported_interval_excludes_zero": false
+            },
+            "Seam ratio": {
+              "delta": 0.1542,
+              "interval_95": [
+                -0.0019,
+                0.3111
+              ],
+              "reported_interval_excludes_zero": false
+            },
+            "1-second similarity": {
+              "delta": -0.0114,
+              "interval_95": [
+                -0.0242,
+                0.0024
+              ],
+              "reported_interval_excludes_zero": false
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Results
 
-Scores ×100. **Base** is the original generator. **Recent-context** in the current main evaluation means
+Scores ×100 unless stated otherwise. **Base** is the original generator. **Recent-context** in the current main evaluation means
 **Recent-Context Committing**: the clean current block plus stored KV of the immediately preceding block,
 3 + 3 latent frames after startup. Base denoising, cache storage and update remain in place. Other history is
 excluded from direct committing access but can still influence the generated block and preceding-block KV.
@@ -13,6 +13,7 @@ without an RF-trained checkpoint. Wider-context studies are labelled as supporti
 
 [Full VBench](#full-vbench) · [ID-Forcing framework comparisons](#id-forcing-framework-comparisons) ·
 [MovieGen 60 s](#60-s-videos) · [Longer videos](#longer-videos) · [Committing controls](#committing-controls) ·
+[KV construction](#kv-construction-controls) · [Transfer boundaries](#transfer-boundaries) ·
 [Human evaluation](results/human_evaluation/README.md) · [Quality and cost](analysis/quality_cost/README.md) ·
 [per-video data and commands](results/README.md) · [← Home](README.md)
 
@@ -572,6 +573,90 @@ The [LongLive quick-window confirmation](analysis/commit_window/README.md#quick-
 59-prompt set, 48-second videos and three seeds. Fixed 6-frame committing improves Quality and clip-to-clip Subject
 over 12 frames; motion-based adaptive selection adds no benefit over the fixed 6-frame window. The 6-frame
 choice is then evaluated on the separate 946-entry suite above. Its standard-suite physical cache remains 12 frames.
+
+## KV construction controls
+
+### SGF: separate KV for denoising and later committing
+
+D is the cache read by denoising; C supplies history to later committing passes. Both versions of new KV are
+constructed by reading C. Each clean block has two committing forwards in this diagnostic, with a separate context
+choice for each output. Base denoising access remains unchanged. Both caches store 12 latent frames.
+
+The reference constructs both D and C with recent-only 9-frame access. N12 denotes sink 3 + recent 6 + current 3;
+R9 denotes recent 6 + current 3; S3 denotes the current block. This is the earlier nine-frame control, separate
+from the six-frame current-plus-previous main method. All rows use rollf200 prompts 0–99, 60 seconds and generation seed 0.
+
+| D construction | C construction | Δ Quality [95% interval] | Δ Dynamic | Δ Subject c2c |
+|:---|:---|--:|--:|--:|
+| N12 | N12 | −0.59* [−1.04, −0.16] | −10.37* | −3.98* |
+| N12 | R9 | −1.12* [−1.58, −0.69] | −13.83* | −5.67* |
+| R9 | N12 | −0.07 [−0.24, +0.08] | −1.63 | −0.09 |
+| R9 | S3 | −0.05 [−0.28, +0.20] | +2.10 | −2.99* |
+
+The larger Quality and long-range consistency losses follow native construction of D. Native construction of C
+alone has nonsignificant Quality and Subject changes, while Aesthetic Quality changes by −0.22, Motion Smoothness
+by +0.10 and Temporal Flickering by +0.13 points. Self-only construction of C reduces Subject c2c by 2.99 points.
+[Configurations and recorded aggregates](analysis/kv_construction/README.md).
+
+The separate [fixed-latent propagation study](analysis/committing_propagation/README.md), retained as supplementary
+material, measures decaying KV differences. It does not by itself attribute these performance losses or all drift
+to recurrence. The main method still reuses one existing committing pass without additional DiT forwards.
+
+### LongLive: extra old KV during denoising
+
+The base denoising context retains its sink and newest trajectory frames. Extra self-only KV from selected older
+blocks is appended in condition A at steps 3–4, layers 20–29, or B at all four steps, layers 15–29. A20 compresses
+each source block to 20 summary tokens with token multiplicity preserved; A + R6 adds condition A to six-frame
+committing. Other conditions use self-only committing. Values are changes from the indicated reference.
+
+| Contrast | Prompts | Δ Quality | Δ Dynamic | Δ Subject c2c | Δ Imaging | Δ Aesthetic |
+|:---|--:|--:|--:|--:|--:|--:|
+| A − self-only | 200 | −0.03 | +0.78 | +0.03 | −0.39* | −0.24* |
+| B − self-only | 100 | +0.05 | +2.03 | +0.09 | −0.55* | −0.38* |
+| A20 − self-only | 100 | +0.11* | +1.63* | −0.23 | +0.15* | −0.07 |
+| (A + R6) − R6 | 100 | −0.12* | −0.43 | +0.07 | −0.50* | −0.21* |
+
+All use 60-second videos and generation seed 0. None of the four Subject c2c intervals excludes zero. Compressed
+A20 improves Quality and Imaging, whereas A, B and the add-on lower Imaging and Aesthetic Quality. In the sampled
+attention probe, A's extra old KV receives mean share 0.187; attention allocation does not establish a consistency
+benefit. [Exact source blocks, sampling, compression and all intervals](analysis/kv_construction/README.md#extra-old-kv-during-denoising).
+
+## Transfer boundaries
+
+### Released Rolling Forcing
+
+This model uses released **Rolling Forcing** weights, distinct from Recency Forcing and the main-table RF-TF
+reproduction. The reference commits with the newest 21 latent frames, including the current block. Denoising,
+cache geometry, positions and generation noise are retained. Evaluation uses rollf200 prompts 0–99 at 60 seconds,
+generation seed 0.
+
+| Committing context | Δ Quality [95% interval] | Δ Dynamic | Δ Subject c2c | Δ Background c2c |
+|:---|--:|--:|--:|--:|
+| Global 3 + recent 18 | −0.18* [−0.31, −0.03] | −0.20 | −0.61* | −0.57* |
+| Recent 6 | −0.09 [−0.25, +0.07] | −0.67 | −0.65* | −0.31* |
+
+The native 21-frame context retains higher clip-to-clip Subject and Background Consistency than the six-frame
+context; their Quality difference is nonsignificant. [Protocol and aggregate source](analysis/transfer_boundaries/README.md).
+
+### WorldPlay joint context re-encoding
+
+WorldPlay jointly re-encodes recent and retrieved older latents before denoising, without a persistent committing
+chain. The intervention restricts recent-frame queries to text and recent-frame keys; older-frame queries retain
+all keys. Denoising still reads the resulting KV, including older context. Each comparison retains its context budget.
+
+| Metric | Δ at 20 frames | Δ at 40 frames |
+|:---|--:|--:|
+| Final-return similarity ↑ | −0.0317 [−0.1141, +0.0545] | −0.1769* [−0.2926, −0.0636] |
+| Color drift ↓ | −0.0142 [−0.0676, +0.0353] | −0.0885 [−0.2350, +0.0796] |
+| Seam ratio ↓ | +0.2067* [+0.0338, +0.3842] | +0.1542 [−0.0019, +0.3111] |
+| 1-second similarity ↑ | −0.0089* [−0.0167, −0.0025] | −0.0114 [−0.0242, +0.0024] |
+
+These values retain their original scales, without ×100 conversion. The 20-frame test uses 10 released scenes,
+seeds 1/2 and three camera trajectories; return similarity uses only the two returning trajectories. The separate
+40-frame test uses the rotation trajectory and seed 1. Intervals use 4,000 paired scene-bootstrap draws.
+Restricting older context increases seams and reduces one-second similarity at 20 frames, and lowers return
+similarity at 40 frames. Other intervals include zero.
+[Trajectories, metric definitions and aggregate sources](analysis/transfer_boundaries/README.md).
 
 ## 60 s videos
 

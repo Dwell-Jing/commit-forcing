@@ -1,10 +1,10 @@
 {
   "schema": 3,
-  "updated": "2026-10-25",
+  "updated": "2026-10-26",
   "assets": {
     "assets/README.md": {
-      "sha256": "0f68ba9f963ae8f275ed1fefaf01d337aba3308c5a24a18421e3ab782b544a90",
-      "bytes": 5106
+      "sha256": "52589f4912a4b540bbcbdd87be23cd090b9f8f39cb302e229283d5fee38e41f8",
+      "bytes": 5464
     },
     "assets/archive/README.md": {
       "sha256": "0f637082eb4e7fb7946a8292072cd9c267dc01d08fe6742301c6c379be60573f",
@@ -560,7 +560,7 @@
     "provenance": "assets/committing_content_age.provenance.json",
     "per_video_data": "assets/source/committing_content_age_scores.csv",
     "means": "assets/source/committing_content_age_data.json",
-    "protocol": "rollf200 prompts 0–99, 60 s, generation seed 0; 3 historical plus 3 current latent frames at fixed assigned positions; base denoising retained.",
+    "protocol": "rollf200 prompts 0\u201399, 60 s, generation seed 0; 3 historical plus 3 current latent frames at fixed assigned positions; base denoising retained.",
     "reproduction": "python assets/source/make_committing_content_age.py",
     "content": "Ten finite-lag means on one recency-only axis. Both sink source controls remain verified and retained in the released data.",
     "plotted_lags": [

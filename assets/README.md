@@ -1,16 +1,15 @@
 # Figures
 
-The five current paper figures are supplied as editable SVG, vector PDF, and PNG previews. Released PDFs and SVGs are byte-for-byte copies of the current accepted manuscript figure exports. Every PNG is rendered from its released PDF at 2200 pixels wide.
+The four main-text figures below are supplied as editable SVG, vector PDF, and PNG previews. Released PDFs and SVGs are byte-for-byte copies of the manuscript figure exports. Every PNG is rendered from its released PDF at 2200 pixels wide. The propagation figure is retained with the supplementary assets for Appendix A.6.
 
 | Asset | Content | Portable source |
 |:---|:---|:---|
 | [`teaser.png`](teaser.png) | Historical-source dependency overview and the original SGF base-12 versus recent-9 example at 238 s | [`make_teaser.py`](source/make_teaser.py) |
 | [`method.png`](method.png) | Recent-Context Committing from the current block and immediately previous block, six latent frames in total | [`make_method.py`](source/make_method.py) |
 | [`committing_content_age.png`](committing_content_age.png) | SGF and LongLive Subject c2c at tested history lags 1–16 blocks | [`make_committing_content_age.py`](source/make_committing_content_age.py) |
-| [`committing_impulse.png`](committing_impulse.png) | Recorded K/V propagation after one fixed-content intervention, with the self-only zero control | [`make_committing_impulse.py`](source/make_committing_impulse.py) |
 | [`qualitative_grid.png`](qualitative_grid.png) | Original SGF 9-frame source control and Context Forcing 6-frame method at 0, 120, and 238 s | [`make_qualitative_grid.py`](source/make_qualitative_grid.py) |
 
-The adopted method includes three current and three immediately preceding latent frames; the first block commits from current only. Base denoising and cache update remain unchanged. Figure 4 is the compact computation diagram, with no alternative-window panel. Figure 1 remains the original base-12 versus recent-9 source-control example; it does not depict a new six-frame case. Its two original PNGs, common `[90, 0, 326, 240]` display crop, and accepted PowerPoint bracket/arrow coordinates are retained in [`teaser_inputs/source.json`](source/teaser_inputs/source.json).
+The adopted method includes three current and three immediately preceding latent frames; the first block commits from current only. Base denoising and cache update remain unchanged. The method figure is the compact computation diagram, with no alternative-window panel. Figure 1 remains the original base-12 versus recent-9 source-control example; it does not depict a new six-frame case. Its two original PNGs, common `[90, 0, 326, 240]` display crop, and accepted PowerPoint bracket/arrow coordinates are retained in [`teaser_inputs/source.json`](source/teaser_inputs/source.json).
 
 The qualitative grid labels SGF “Recent (9 frames)” and Context Forcing “Recent-context”; the latter is the six-frame current-plus-previous method. Four transparent yellow vector circles with dark outlines highlight paired comparison regions. The twelve 416 × 240 source PNGs remain byte-for-byte unchanged. Selection and per-case scores are in [`qualitative_grid_inputs/source.json`](source/qualitative_grid_inputs/source.json), including the Context Forcing case’s negative Quality change.
 
@@ -36,6 +35,7 @@ Hashes, dimensions, source mappings, and regeneration checks are recorded in [`m
 
 These assets retain their recorded protocols and configurations:
 
+- [`committing_impulse.png`](committing_impulse.png), [`SVG`](committing_impulse.svg), and [`PDF`](committing_impulse.pdf): Appendix A.6's decaying K/V differences after a fixed-content committing intervention, with the self-only zero control. [Source](source/make_committing_impulse.py) and [complete supplementary study](../analysis/committing_propagation/README.md). The separate [KV construction control](../analysis/kv_construction/README.md) addresses the larger Quality and consistency losses.
 - [`sgf_committing_controls.png`](sgf_committing_controls.png): committing-source read sets at equal frame count, and recent versus self-only. [Protocol and results](../analysis/sgf_committing_controls/README.md).
 - [`commit_effects.png`](commit_effects.png): paired 60 s Quality and Subject c2c changes for two generation seeds. [Source](source/make_commit_effects.py).
 - [`qualitative/`](qualitative/README.md): additional paired videos and frames, with historical configurations identified.

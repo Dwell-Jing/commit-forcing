@@ -44,10 +44,10 @@ additional DiT forwards. Repository names and CLI flags retain their existing sp
 - **Stage and source effects.** Controlled interventions on LongLive and SGF show that historical context can have
   different effects during denoising and committing, even at fixed read counts.
   ([stage interventions](analysis/longlive_sink/README.md), [historical sources](analysis/committing_source/README.md))
-- **Recency and propagation.** We vary historical age at fixed context size and positions, and isolate how a single
-  committing intervention propagates through recent KV with clean latents fixed. Recent versus self-only committing
-  exposes generator-dependent continuity and motion tradeoffs.
-  ([historical recency](analysis/committing_content_age/README.md), [KV propagation](analysis/committing_propagation/README.md))
+- **Committing dependencies.** We vary historical source and age at fixed context size and positions, distinguish
+  the KV read by denoising from the history read by later committing, and characterize generator-dependent
+  consistency and motion tradeoffs.
+  ([historical recency](analysis/committing_content_age/README.md), [KV construction](analysis/kv_construction/README.md))
 - **Training-free committing.** On 60-second VBench, current-plus-previous-block committing improves Quality and
   Total significantly on 5 of 6 generators; all six paired point estimates are positive. LongLive gains in long-range
   Subject Consistency extend to 120 and 240 seconds. Separate wider-context controls retain their two-seed results.
@@ -240,7 +240,8 @@ time in the generated trajectory; replaying an old frame into a nearby cache slo
 | How does sink access differ across stages? | [LongLive and SGF stage interventions](analysis/longlive_sink/README.md) |
 | Does the source or position of history matter? | [Source and position controls](analysis/committing_source/README.md) · [SGF equal-count control](analysis/sgf_committing_controls/README.md) |
 | Does historical age matter at a fixed context size? | [Fixed-position recency intervention](analysis/committing_content_age/README.md) |
-| Can a committing change outlast the directly affected KV? | [Fixed-latent propagation](analysis/committing_propagation/README.md) |
+| Which constructed KV carries the larger generation losses? | [Separate denoising and committing caches](analysis/kv_construction/README.md) |
+| Does extra old KV during denoising reproduce the gain? | [LongLive extra-history controls](analysis/kv_construction/README.md#extra-old-kv-during-denoising) |
 | What does recent context retain over self-only? | [Continuity and motion tradeoffs](analysis/commit_window/README.md) |
 | How does recent context work within ID-Forcing? | [Cache-construction comparisons](analysis/not_ood/README.md) |
 | How many frames should the commit pass read? | [Commit window](analysis/commit_window/README.md) |
@@ -255,23 +256,30 @@ Subject Consistency decreases across the tested lags of 1, 2, 4, 8 and 16 blocks
 0.69 points on SGF and 2.46 on LongLive relative to the newest; Dynamic Degree increases.
 [Scores, controls and protocol](analysis/committing_content_age/README.md).
 
-<p align="center">
-  <img src="assets/committing_impulse.png" width="100%" alt="With clean latents fixed, later KV retains a decaying difference after the directly intervened entries leave the cache at lag 3; self-only propagation is zero.">
-</p>
-
-**KV propagation.** With the clean video latents fixed, one committing change affects later KV even after the directly
-intervened entries leave the cache at lag 3. The difference decays across blocks; the self-only control is zero.
-Generation probes show small differences without significant signed saturation or brightness shifts.
-[Intervention and readouts](analysis/committing_propagation/README.md).
+**KV construction.** A two-cache SGF control separates KV read by denoising (D) from history read by later committing
+(C); both KV versions are constructed using history from C. Native construction of D alone reduces Quality by
+1.12 and clip-to-clip Subject Consistency by 5.67 points relative to recent-only construction of both caches.
+Native construction of C alone changes these scores by −0.07 and −0.09, neither significant, while affecting other
+components. This control retains base denoising access and uses the earlier 9-frame recent context.
+[All four contrasts and LongLive extra-history controls](analysis/kv_construction/README.md).
 
 The supporting 9-frame [SGF equal-count control](analysis/sgf_committing_controls/README.md) compares 2 nine-frame contexts within the
 same physical cache. Recent context improves Quality by 1.25 and clip-to-clip Subject by 4.54 points over sink plus recent.
 Relative to self-only, it improves smoothness and flicker while reducing Dynamic Degree, with no significant Quality
 or long-range Subject advantage. [Window comparisons](analysis/commit_window/README.md).
 
-Supplementary observations: [switching the committing context](analysis/commit_switch/README.md) and
+Supplementary observations: [fixed-latent KV propagation](analysis/committing_propagation/README.md),
+[switching the committing context](analysis/commit_switch/README.md) and
 [SGF + RF-TF compatibility](RESULTS.md#sgf-rf-compatibility).
 [DINOv2 Own/Sibling components](analysis/similarity_components/README.md) separate the appearance-similarity terms.
+
+### Transfer boundaries
+
+Released **Rolling Forcing** retains better clip-to-clip consistency with its native 21-frame recent context than
+with 6 frames. This is separate from the training-free Recency Forcing reproduction (RF-TF) in the main table.
+On **WorldPlay**, restricting older-context access during joint context re-encoding worsens some temporal measures
+at the default budget and lowers return similarity at the larger tested budget. Denoising still reads the constructed
+memory KV. [Protocols, aggregate results and intervals](analysis/transfer_boundaries/README.md).
 
 ### Independent denoising studies
 
@@ -285,7 +293,8 @@ available. [Diagnostic metrics](analysis/metrics/README.md) defines the associat
 We evaluate released Wan-based generators with persistent KV and a clean committing pass. Window comparisons
 show generator-dependent continuity and motion tradeoffs; they do not establish a universally optimal context
 length. The main method fixes the context to the current and immediately preceding blocks. Training the committing
-rule and learned context selection are future work.
+rule and learned context selection are future work. The separate Rolling Forcing and WorldPlay tests characterize
+limits of shorter contexts and transfer to joint context re-encoding.
 
 ## Read more
 

@@ -1,0 +1,373 @@
+{
+  "export_kind": "reported aggregate values only",
+  "overleaf_source_commit": "aa824d948a805ba903da04dbe39473633b257309",
+  "export_date": "2026-10-26",
+  "statistics_recomputed": false,
+  "per_prompt_values_included": false,
+  "interval_precision": "Intervals retain the displayed source precision; significance retains the original reported decision.",
+  "source_sha256": {
+    "appendix/committing-pathways.tex": "090de678b5a23519a7ab06f24f496600fbb68bdabb6212a96792dd51d35c5fcc",
+    "tables/sgf_cache_pathways.tex": "bbff6dcb7f7d16cd4e967fd537a216e672f520e1e3b8011823ac305bb27d2536",
+    "tables/extra_old_history.tex": "bc8ef4796b0694f86182b5e2b5035b207b8ceaa99be10eb1ee4f0adcaf6ad4aa"
+  },
+  "experiments": [
+    {
+      "id": "sgf_split_cache",
+      "scale": "0-100 score points",
+      "protocol": {
+        "prompts": "rollf200 indices 0-99",
+        "prompt_count": 100,
+        "seconds": 60,
+        "generation_seed": 0,
+        "bootstrap_draws": 4000,
+        "bootstrap_unit": "prompt",
+        "physical_frames_per_cache": 12,
+        "reference": "D=R9, C=R9",
+        "D": "KV directly consumed by denoising with its base read policy",
+        "C": "historical KV used to construct both cache entries during subsequent committing",
+        "policies": {
+          "N12": "3 sink + 6 recent + 3 current",
+          "R9": "6 recent + 3 current",
+          "S3": "3 current"
+        },
+        "reference_predates_six_frame_main_method": true
+      },
+      "contrasts": [
+        {
+          "label": "D=N12, C=N12 minus D=R9, C=R9",
+          "metrics": {
+            "Quality": {
+              "delta": -0.59,
+              "interval_95": [
+                -1.04,
+                -0.16
+              ],
+              "reported_interval_excludes_zero": true
+            },
+            "Dynamic Degree": {
+              "delta": -10.37,
+              "interval_95": null,
+              "reported_interval_excludes_zero": true
+            },
+            "Subject c2c": {
+              "delta": -3.98,
+              "interval_95": null,
+              "reported_interval_excludes_zero": true
+            }
+          }
+        },
+        {
+          "label": "D=N12, C=R9 minus D=R9, C=R9",
+          "metrics": {
+            "Quality": {
+              "delta": -1.12,
+              "interval_95": [
+                -1.58,
+                -0.69
+              ],
+              "reported_interval_excludes_zero": true
+            },
+            "Dynamic Degree": {
+              "delta": -13.83,
+              "interval_95": null,
+              "reported_interval_excludes_zero": true
+            },
+            "Subject c2c": {
+              "delta": -5.67,
+              "interval_95": null,
+              "reported_interval_excludes_zero": true
+            }
+          }
+        },
+        {
+          "label": "D=R9, C=N12 minus D=R9, C=R9",
+          "metrics": {
+            "Quality": {
+              "delta": -0.07,
+              "interval_95": [
+                -0.24,
+                0.08
+              ],
+              "reported_interval_excludes_zero": false
+            },
+            "Dynamic Degree": {
+              "delta": -1.63,
+              "interval_95": null,
+              "reported_interval_excludes_zero": false
+            },
+            "Subject c2c": {
+              "delta": -0.09,
+              "interval_95": null,
+              "reported_interval_excludes_zero": false
+            },
+            "Aesthetic Quality": {
+              "delta": -0.22,
+              "interval_95": null,
+              "reported_interval_excludes_zero": null
+            },
+            "Motion Smoothness": {
+              "delta": 0.1,
+              "interval_95": null,
+              "reported_interval_excludes_zero": null
+            },
+            "Temporal Flickering": {
+              "delta": 0.13,
+              "interval_95": null,
+              "reported_interval_excludes_zero": null
+            }
+          }
+        },
+        {
+          "label": "D=R9, C=S3 minus D=R9, C=R9",
+          "metrics": {
+            "Quality": {
+              "delta": -0.05,
+              "interval_95": [
+                -0.28,
+                0.2
+              ],
+              "reported_interval_excludes_zero": false
+            },
+            "Dynamic Degree": {
+              "delta": 2.1,
+              "interval_95": null,
+              "reported_interval_excludes_zero": false
+            },
+            "Subject c2c": {
+              "delta": -2.99,
+              "interval_95": null,
+              "reported_interval_excludes_zero": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "longlive_extra_old_kv",
+      "scale": "0-100 score points",
+      "protocol": {
+        "prompts": "rollf200",
+        "seconds": 60,
+        "generation_seed": 0,
+        "bootstrap_draws": 4000,
+        "bootstrap_unit": "prompt",
+        "base_denoising": "3 sink + newest 9 trajectory frames, including current 3",
+        "sources": "distinct original trajectory blocks {1, floor((b-2)/2), b-3}, from block b=4",
+        "source_kv": "self-only constructed KV at original temporal positions",
+        "tokens_per_source_block": 4680,
+        "A": "denoising steps 3-4 of 4, layers 20-29",
+        "B": "all 4 denoising steps, layers 15-29",
+        "block_and_layer_indexing": "zero-based",
+        "A20": "20 spatial summary tokens per source block over a 5x4 grid and all 3 frames; keys averaged after removing RoPE, then positioned at cell and middle-frame locations; each token repeated 234 times",
+        "A_plus_R6": "A with 6-frame committing; sources obtained in separate self-only passes",
+        "S3": "self-only committing: current 3 latent frames",
+        "R6": "current 3 and preceding 3 latent frames"
+      },
+      "contrasts": [
+        {
+          "label": "A minus S3",
+          "prompt_count": 200,
+          "metrics": {
+            "Quality": {
+              "delta": -0.03,
+              "interval_95": [
+                -0.1,
+                0.05
+              ],
+              "reported_interval_excludes_zero": false
+            },
+            "Dynamic Degree": {
+              "delta": 0.78,
+              "interval_95": [
+                -0.13,
+                1.67
+              ],
+              "reported_interval_excludes_zero": false
+            },
+            "Subject c2c": {
+              "delta": 0.03,
+              "interval_95": [
+                -0.14,
+                0.2
+              ],
+              "reported_interval_excludes_zero": false
+            },
+            "Imaging Quality": {
+              "delta": -0.39,
+              "interval_95": [
+                -0.57,
+                -0.23
+              ],
+              "reported_interval_excludes_zero": true
+            },
+            "Aesthetic Quality": {
+              "delta": -0.24,
+              "interval_95": [
+                -0.34,
+                -0.13
+              ],
+              "reported_interval_excludes_zero": true
+            }
+          }
+        },
+        {
+          "label": "B minus S3",
+          "prompt_count": 100,
+          "metrics": {
+            "Quality": {
+              "delta": 0.05,
+              "interval_95": [
+                -0.13,
+                0.22
+              ],
+              "reported_interval_excludes_zero": false
+            },
+            "Dynamic Degree": {
+              "delta": 2.03,
+              "interval_95": [
+                -0.27,
+                4.13
+              ],
+              "reported_interval_excludes_zero": false
+            },
+            "Subject c2c": {
+              "delta": 0.09,
+              "interval_95": [
+                -0.31,
+                0.48
+              ],
+              "reported_interval_excludes_zero": false
+            },
+            "Imaging Quality": {
+              "delta": -0.55,
+              "interval_95": [
+                -0.83,
+                -0.27
+              ],
+              "reported_interval_excludes_zero": true
+            },
+            "Aesthetic Quality": {
+              "delta": -0.38,
+              "interval_95": [
+                -0.59,
+                -0.19
+              ],
+              "reported_interval_excludes_zero": true
+            }
+          }
+        },
+        {
+          "label": "A20 minus S3",
+          "prompt_count": 100,
+          "metrics": {
+            "Quality": {
+              "delta": 0.11,
+              "interval_95": [
+                0.01,
+                0.21
+              ],
+              "reported_interval_excludes_zero": true
+            },
+            "Dynamic Degree": {
+              "delta": 1.63,
+              "interval_95": [
+                0.5,
+                2.93
+              ],
+              "reported_interval_excludes_zero": true
+            },
+            "Subject c2c": {
+              "delta": -0.23,
+              "interval_95": [
+                -0.52,
+                0.04
+              ],
+              "reported_interval_excludes_zero": false
+            },
+            "Imaging Quality": {
+              "delta": 0.15,
+              "interval_95": [
+                0.0,
+                0.29
+              ],
+              "reported_interval_excludes_zero": true
+            },
+            "Aesthetic Quality": {
+              "delta": -0.07,
+              "interval_95": [
+                -0.2,
+                0.06
+              ],
+              "reported_interval_excludes_zero": false
+            }
+          }
+        },
+        {
+          "label": "A+R6 minus R6",
+          "prompt_count": 100,
+          "metrics": {
+            "Quality": {
+              "delta": -0.12,
+              "interval_95": [
+                -0.23,
+                -0.01
+              ],
+              "reported_interval_excludes_zero": true
+            },
+            "Dynamic Degree": {
+              "delta": -0.43,
+              "interval_95": [
+                -1.9,
+                0.97
+              ],
+              "reported_interval_excludes_zero": false
+            },
+            "Subject c2c": {
+              "delta": 0.07,
+              "interval_95": [
+                -0.2,
+                0.33
+              ],
+              "reported_interval_excludes_zero": false
+            },
+            "Imaging Quality": {
+              "delta": -0.5,
+              "interval_95": [
+                -0.7,
+                -0.32
+              ],
+              "reported_interval_excludes_zero": true
+            },
+            "Aesthetic Quality": {
+              "delta": -0.21,
+              "interval_95": [
+                -0.36,
+                -0.06
+              ],
+              "reported_interval_excludes_zero": true
+            }
+          }
+        }
+      ],
+      "attention_aggregate": {
+        "condition": "A",
+        "prompt_indices": [
+          3,
+          41
+        ],
+        "blocks": "5,15,...,75",
+        "aggregation": "mean over the specified denoising steps, layers, sampled blocks and two prompts",
+        "shares": {
+          "extra old KV": 0.187,
+          "sink": 0.106,
+          "recent": 0.216,
+          "current": 0.491
+        }
+      },
+      "reference_consistency_gain": {
+        "contrast": "R6 minus S3",
+        "Subject c2c": 1.0
+      }
+    }
+  ]
+}

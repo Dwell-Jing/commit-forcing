@@ -66,4 +66,6 @@ See the [window controls](../analysis/commit_window/README.md) and
 - [Full VBench: 946 entries and 16 dimensions](vbench_full/README.md).
 - [120- and 240-second videos](long_horizon/README.md), including [six-frame LongLive at 240 seconds](long_horizon/longlive6_240/README.md).
 - [Human evaluation](human_evaluation/README.md).
+- [Separate denoising/committing KV construction and extra old history](../analysis/kv_construction/README.md): recorded aggregate contrasts and configurations.
+- [Released Rolling Forcing and WorldPlay transfer boundaries](../analysis/transfer_boundaries/README.md): aggregate results on their respective protocols and scales.
 - [Mechanism analyses](../README.md#mechanism-analyses).
