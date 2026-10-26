@@ -1440,6 +1440,24 @@ Source: [`results/tables/vbl60_seed1_b.txt`](results/tables/vbl60_seed1_b.txt) Â
 
 </details>
 
+## Human evaluation
+
+The 60-second and 120-second studies use separate prompt pools and sampling protocols. Win rates exclude ties.
+
+| Comparison | Duration | Subject and scene consistency | Overall preference |
+|:---|:---:|--:|--:|
+| SGF, 9-frame recent-context control vs. SGF | 60 s | 75% | 74% |
+| LongLive + Recent-Context Committing vs. LongLive | 60 s | 43% | 45% |
+| LongLive + Recent-Context Committing vs. LongLive | 120 s | 83.5% | 82.9% |
+| LongLive + Recent-Context Committing vs. ID-Forcing | 60 s | 90% | 88% |
+
+The new LongLive comparison uses 30 pairs from ID-Forcing's 128 MovieGen prompts, generation seed 0, with five
+non-project assessors responding independently. Consistency counts are 111 wins, 22 losses and 17 ties; overall
+preference counts are 107, 22 and 21. Reported prompt-cluster 95% intervals are [73.2%, 92.2%] and [72.6%, 92.1%],
+respectively. All five assessors are retained. The original three 60-second comparisons and their six count rows
+are preserved. Differences between the two studies do not isolate duration, and their participants are not pooled.
+[Complete protocols, counts and aggregate checks](results/human_evaluation/README.md).
+
 ## Longer videos
 
 CF and LongLive retain current-plus-previous-block (6-frame) committing at 120â€“240 seconds. SGF uses the

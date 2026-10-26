@@ -1,0 +1,77 @@
+{
+  "study_id": "v6l_longlive_120s",
+  "source": "Reported 120-second human-evaluation aggregates; manuscript Appendix B.11 and human_evaluation_counts.tex",
+  "source_overleaf_commit": "727782779988ca22cf79f3417a1ec033afa83d30",
+  "source_sha256": {
+    "sections/05-experiments.tex": "3a29aab946d85e466cb840b4277a5ef13efbe0b366fdc67d4cb382de6c100c32",
+    "appendix/result-details.tex": "05883b27984581035c1c4a02d5f3f6d0a4f4b91e5cc5f951139ee2bec540c767",
+    "tables/human_evaluation_counts.tex": "37c289b37e893d8e33da8a29677678e77b5629d327e9030e02a6dd98a2a7659b"
+  },
+  "comparison": "LongLive + Recent-Context Committing vs. base LongLive",
+  "duration_seconds": 120,
+  "prompt_pool": "ID-Forcing 128-prompt MovieGen list",
+  "prompt_pairs": 30,
+  "prompt_selection": "Fixed random seed, sampled without replacement before packaging",
+  "generation_seed": 0,
+  "participants_documented": 5,
+  "response_units": 5,
+  "joint_response_units": 0,
+  "participants_not_involved_in_project": true,
+  "responses_per_criterion": 150,
+  "participants_excluded": 0,
+  "presentation": {
+    "excerpt_seconds": 5,
+    "excerpts": [
+      "beginning",
+      "middle",
+      "end"
+    ],
+    "synchronized": true,
+    "method_identities_hidden": true,
+    "participant_order": "Separately randomized",
+    "recent_context_left_per_participant": 15,
+    "recent_context_right_per_participant": 15,
+    "additional_identical_video_check_pairs": 2,
+    "check_rule": "Exclude only if both identical-video consistency checks receive a non-tie response."
+  },
+  "interval_method": {
+    "draws": 4000,
+    "cluster": "prompt",
+    "all_five_responses_move_with_sampled_prompt": true,
+    "precision": "Endpoints retain the reported one-decimal percentage precision."
+  },
+  "results": {
+    "L120/consistency": {
+      "cf": 111,
+      "other": 22,
+      "tie": 17,
+      "share": 0.8345864661654135,
+      "reported_share_percent": 83.5,
+      "ci": [
+        0.732,
+        0.922
+      ],
+      "prompts": 30,
+      "response_units": 5,
+      "significant_vs_50_percent": true
+    },
+    "L120/overall": {
+      "cf": 107,
+      "other": 22,
+      "tie": 21,
+      "share": 0.8294573643410853,
+      "reported_share_percent": 82.9,
+      "ci": [
+        0.726,
+        0.921
+      ],
+      "prompts": 30,
+      "response_units": 5,
+      "significant_vs_50_percent": true
+    }
+  },
+  "raw_responses_included": false,
+  "per_prompt_values_included": false,
+  "statistics_recomputed": false,
+  "relationship_to_60s_study": "Separately sampled protocol and prompt pool; participant counts are not pooled and differences do not isolate duration."
+}

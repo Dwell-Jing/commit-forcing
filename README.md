@@ -133,17 +133,20 @@ The 240-second LongLive six-frame results are complete; the [12-frame control](r
 
 ## Human evaluation
 
-Blinded 60-second comparisons, with 18 prompt-matched pairs per comparison. Five people contributed 3 response
-units, including one joint response from 3 people. Win rates exclude ties.
+Blinded pairwise comparisons; win rates exclude ties. Durations and sampling protocols are reported separately.
 
-| Comparison | Subject and scene consistency | Overall preference |
-|:---|--:|--:|
-| SGF, 9-frame recent-context control vs. SGF | **75%** | **74%** |
-| LongLive + Recent-Context Committing vs. LongLive | 43% | 45% |
-| LongLive + Recent-Context Committing vs. ID-Forcing | **90%** | **88%** |
+| Comparison | Duration | Subject and scene consistency | Overall preference |
+|:---|:---:|--:|--:|
+| SGF, 9-frame recent-context control vs. SGF | 60 s | **75%** | **74%** |
+| LongLive + Recent-Context Committing vs. LongLive | 60 s | 43% | 45% |
+| LongLive + Recent-Context Committing vs. LongLive | 120 s | **83.5%** | **82.9%** |
+| LongLive + Recent-Context Committing vs. ID-Forcing | 60 s | **90%** | **88%** |
 
+The 60-second study uses 18 rollf200 pairs per comparison and 3 response units from 5 people, including one joint
+response. The separate 120-second study uses 30 pairs from ID-Forcing's 128 MovieGen prompts, answered independently
+by 5 non-project assessors. The studies use different prompts and sampling; their difference does not isolate duration.
 The SGF rates describe the 9-frame supporting control. LongLive uses the current and preceding blocks.
-[Counts, recorded intervals and evaluation protocol](results/human_evaluation/README.md).
+[Counts, recorded intervals and evaluation protocols](results/human_evaluation/README.md).
 
 ## Qualitative comparisons
 
