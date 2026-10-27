@@ -26,8 +26,9 @@
 
 ---
 
-Autoregressive video diffusion uses historical KV to denoise the current block and to construct clean KV for
-future blocks. On LongLive and SGF, sink access helps denoising but can increase drift during committing.
+Autoregressive video diffusion uses historical context to denoise the current block and to construct clean KV for
+future blocks. SGF shows that future-prediction losses in Self-Forcing supervise denoising but not clean committing.
+On LongLive and SGF, sink access helps denoising but can increase drift during committing.
 At fixed context size and temporal positions, older trajectory content produces lower mean long-range Subject
 Consistency on both generators. Across five configurations supporting longer histories, consistency rises,
 plateaus and then falls as the committing context expands. The plateau depends on the generator; SF with a sink
@@ -275,7 +276,7 @@ time in the generated trajectory; replaying an old frame into a nearby cache slo
 | What does recent context retain over self-only? | [Continuity and motion tradeoffs](analysis/commit_window/README.md) |
 | How does recent context work within ID-Forcing? | [Cache-construction comparisons](analysis/not_ood/README.md) |
 | How many frames should the commit pass read? | [Commit window](analysis/commit_window/README.md) |
-| Why does consistency rise, plateau and decline with window size? | [Window effects and correction controls](analysis/window_effects/README.md) |
+| Why does consistency rise, plateau and decline with window size? | [Committing window and correction controls](analysis/window_effects/README.md) |
 | What contributes to the score and computational cost? | [Quality decomposition and inference measurements](analysis/quality_cost/README.md) |
 
 <p align="center">
@@ -295,10 +296,15 @@ components. This control retains base denoising access and uses the earlier 9-fr
 [All four contrasts and LongLive extra-history controls](analysis/kv_construction/README.md).
 
 <p align="center">
-  <img src="assets/committing_correction_dose.png" width="78%" alt="Four LongLive spatial-averaging controls: independently measured attention-correction norm ratios versus retained consistency gain and motion suppression, with eight observed points.">
+  <img src="assets/committing_window_mechanisms.png" width="100%" alt="Left: LongLive Subject c2c relative to one preceding block, with a separate sink-plus-recent Base reference. Right: retained correction magnitude, consistency gain and motion suppression for four spatial-averaging controls.">
 </p>
 
-**Window mechanisms.** On LongLive, spatial averaging retains part of the history-induced attention correction,
+**Committing window.** On 200 rollf200 prompts at 60 seconds, LongLive consistency rises from current-only
+committing to one preceding block, changes little with two, and declines with three. The left panel counts
+preceding blocks, excluding the current block. Its separate Base reference uses sink 3 + latest 9 frames
+(including the current 3), with 15-frame physical storage.
+
+In the right panel, spatial averaging retains part of the history-induced attention correction,
 its consistency gain and its suppression of motion. The horizontal axis measures the correction's norm before
 the attention output projection. Four spatial-averaging controls support a smoothing interpretation of the
 consistency–motion tradeoff. SG16 departs from equal retention, preserving 0.42 of the consistency gain and 0.61
@@ -311,7 +317,7 @@ gain. Earlier dependencies can already travel through the preceding block's KV, 
 reading older blocks again. The fixed-latent SGF propagation probe offers cross-model corroboration of this
 indirect path. Wider-window declines are consistent with interference from outdated content:
 fixed-size recency controls and regionally averaged sink corrections retain consistency losses.
-[Definitions, normalization and deep-layer KV confirmation](analysis/window_effects/README.md).
+[Window scores, panel protocols, normalization and deep-layer KV control](analysis/window_effects/README.md).
 
 The supporting 9-frame [SGF equal-count control](analysis/sgf_committing_controls/README.md) compares 2 nine-frame contexts within the
 same physical cache. Recent context improves Quality by 1.25 and clip-to-clip Subject by 4.54 points over sink plus recent.

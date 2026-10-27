@@ -587,7 +587,14 @@ Framewise SGF also has an intermediate-window plateau, but its one-frame blocks 
 current-plus-previous-block setting; 6 frames is a separate temporal-span diagnostic.
 [Window levels, paired contrasts and protocol differences](results/current6_custom/README.md).
 
-### Window mechanisms
+### Committing window
+
+LongLive's 200-prompt rollf200 comparison at 60 seconds, seed 0, varies the number of preceding trajectory
+blocks h while always including the current block. Mean Subject c2c for h=0/1/2/3 is 86.21/87.21/87.23/86.93;
+relative to h=1, the changes are −1.00/0/+0.02/−0.28 points. Base scores 86.01 (−1.20 relative to h=1), using
+sink 3 + latest 9 trajectory frames, including the current 3, with 15-frame physical storage. It is a separate
+complete context, not h=4 or a sink-only intervention. The [combined figure](assets/committing_window_mechanisms.svg)
+shows this curve beside the correction controls below; its two panels retain their separate prompt sets and units.
 
 On LongLive, spatial averaging of the history-induced committing-attention correction retains part of its
 consistency gain and motion suppression. The correction is D = O(current + history) − O(current), measured

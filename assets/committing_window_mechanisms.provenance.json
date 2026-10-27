@@ -1,0 +1,169 @@
+{
+  "artifact": "committing_window_mechanisms",
+  "source": "assets/source/make_committing_window_mechanisms.py",
+  "source_sha256": "38587cfbca272c42cfb5e53dbaafcb075208c0f77321375a705a8783c7273b3b",
+  "aggregate_source": "analysis/window_effects/summary.json",
+  "aggregate_source_sha256": "354c1cb24ba7087294319465ac22e8ac469492498dbd8d7b8db5426f0f6d4fe0",
+  "source_overleaf_commit": "dcaa354abc61c646b1e8a130115ca7140f94a365",
+  "window_rows": [
+    {
+      "h": 0,
+      "latent_frames": 3,
+      "subject_c2c_mean": 86.21,
+      "change_from_h1": -1.0
+    },
+    {
+      "h": 1,
+      "latent_frames": 6,
+      "subject_c2c_mean": 87.21,
+      "change_from_h1": 0.0
+    },
+    {
+      "h": 2,
+      "latent_frames": 9,
+      "subject_c2c_mean": 87.23,
+      "change_from_h1": 0.02
+    },
+    {
+      "h": 3,
+      "latent_frames": 12,
+      "subject_c2c_mean": 86.93,
+      "change_from_h1": -0.28
+    }
+  ],
+  "base": {
+    "subject_c2c_mean": 86.01,
+    "change_from_h1": -1.2,
+    "sink_frames": 3,
+    "latest_trajectory_frames_including_current": 9,
+    "current_frames": 3,
+    "physical_cache_frames": 15,
+    "is_h_point": false,
+    "is_sink_only_intervention": false
+  },
+  "plotted_window": {
+    "h": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "relative_subject_c2c": [
+      -1.0,
+      0.0,
+      0.02,
+      -0.28
+    ],
+    "base_horizontal_reference": -1.2
+  },
+  "dose_rows": [
+    {
+      "code": "CG",
+      "definition": "Average the recent-history attention-output correction spatially within each current frame.",
+      "retained_correction": 0.36,
+      "retained_consistency_gain": 0.29,
+      "retained_motion_suppression": 0.37
+    },
+    {
+      "code": "CM16",
+      "definition": "Average the correction within 16 content regions in each current frame.",
+      "retained_correction": 0.47,
+      "retained_consistency_gain": 0.47,
+      "retained_motion_suppression": 0.48
+    },
+    {
+      "code": "SG16",
+      "definition": "Average the correction within a 4x4 spatial grid in each current frame.",
+      "retained_correction": 0.48,
+      "retained_consistency_gain": 0.42,
+      "retained_motion_suppression": 0.61
+    },
+    {
+      "code": "CM64",
+      "definition": "Average the correction within 64 content regions in each current frame.",
+      "retained_correction": 0.56,
+      "retained_consistency_gain": 0.55,
+      "retained_motion_suppression": 0.48
+    }
+  ],
+  "plotted_dose": [
+    {
+      "code": "CG",
+      "consistency": [
+        0.36,
+        0.29
+      ],
+      "motion_suppression": [
+        0.36,
+        0.37
+      ]
+    },
+    {
+      "code": "CM16",
+      "consistency": [
+        0.47,
+        0.47
+      ],
+      "motion_suppression": [
+        0.47,
+        0.48
+      ]
+    },
+    {
+      "code": "SG16",
+      "consistency": [
+        0.48,
+        0.42
+      ],
+      "motion_suppression": [
+        0.48,
+        0.61
+      ]
+    },
+    {
+      "code": "CM64",
+      "consistency": [
+        0.56,
+        0.55
+      ],
+      "motion_suppression": [
+        0.56,
+        0.48
+      ]
+    }
+  ],
+  "left_protocol": "LongLive, 200 rollf200 prompts, 60 seconds, generation seed 0. h counts preceding trajectory blocks, excluding the current block. h=0/1/2/3 correspond to 3/6/9/12 latent frames.",
+  "left_y_definition": "Reported Subject c2c differences in percentage points from h=1. No new uncertainty is estimated or plotted.",
+  "base_scope": "Base reads 3 sink plus latest 9 trajectory frames including the current 3, with 15-frame physical storage. It is a separate complete context, not h=4 and not an h=1-plus-sink-only intervention.",
+  "right_protocol": {
+    "variant_outcomes": "100 rollf200 prompts, 60 seconds, generation seed 0",
+    "effect_normalization": "Reported 200-prompt endpoints: self-only minus recent-context is Dynamic +3.63 and Subject c2c -1.00"
+  },
+  "correction_definition": "D = attention(q, current+previous K/V) - attention(q, current K/V), evaluated before the attention output projection. This is an attention-output correction, not a stored-KV difference.",
+  "correction_x_definition": "Reported ||pool(D)||_F / ||D||_F, measured independently of outcome scores.",
+  "norm_aggregation": "Compute the ratio at each committing attention call; average over 30 layers and 79 post-startup committing passes within each video, then average the 100 video means.",
+  "dose_normalization_formula": "retained effect = 1 - delta_variant / delta_self_only",
+  "dose_reference": "Dashed y=x is an equal-fraction reference, not a fit. The 0/1 plus markers define normalization, not additional observations.",
+  "panels_pool_samples": false,
+  "SG16_departure": "Retained consistency gain 0.42 differs from retained motion suppression 0.61.",
+  "size_mm": [
+    168,
+    78
+  ],
+  "minimum_font_pt": 8.5,
+  "no_new_generation_or_fitting_or_confidence_intervals": true,
+  "exports": {
+    "pdf": "ce29b26e0d4bdfbe8bb8225958a4c2d7d00daec773eee9389dc470bfb9bbbb3c",
+    "svg": "9f49dc1205b7433128d2692f10aa136d4116d11797d3fa0e49b0cfb7e1d56bb3"
+  },
+  "regeneration_validation": {
+    "rendered_size": [
+      2200,
+      1022
+    ],
+    "pdf_byte_equal": true,
+    "png_pixel_equal": true,
+    "svg_geometry_style_text_equal_after_ID_normalization": true
+  },
+  "regeneration_environment": "Matplotlib 3.10.8. Released PDF/SVG retain canonical manuscript bytes."
+}

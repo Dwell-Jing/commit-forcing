@@ -34,6 +34,25 @@ def main():
     summary = json.loads(parser.parse_args().summary.read_text())
     if summary["statistics_recomputed"] or summary["per_prompt_values_included"]:
         raise ValueError("Expected reported aggregate values only")
+    window = summary["committing_window"]
+    if (window["prompt_count"], window["duration_seconds"], window["generation_seed"], window["reference_h"]) != (200, 60, 0, 1):
+        raise ValueError("Window protocol differs from the reported comparison")
+    if not window["h_excludes_current_block"] or window["panels_pool_samples"] or window["error_bars_reconstructed"]:
+        raise ValueError("Window and correction panels must retain their separate definitions")
+    expected = [(0, 3, 86.21, -1.00), (1, 6, 87.21, 0.00), (2, 9, 87.23, 0.02), (3, 12, 86.93, -0.28)]
+    actual = [(r["h"], r["latent_frames"], r["subject_c2c_mean"], r["change_from_h1"]) for r in window["rows"]]
+    if actual != expected:
+        raise ValueError("Window aggregates differ from the frozen reported means")
+    base = window["base"]
+    if (base["subject_c2c_mean"], base["change_from_h1"], base["sink_frames"],
+        base["latest_trajectory_frames_including_current"], base["current_frames"], base["physical_cache_frames"]) != (86.01, -1.20, 3, 9, 3, 15):
+        raise ValueError("Base is a separate sink-plus-recent configuration")
+    if base["is_h_point"] or base["is_sink_only_intervention"]:
+        raise ValueError("Base must not be interpreted as an h point or sink-only intervention")
+    print("LongLive: preceding blocks / total frames / Subject c2c / change from h=1")
+    for h, frames, mean, change in actual:
+        print(f"  {h} / {frames} / {mean:.2f} / {change:+.2f}")
+    print("  Separate Base: 86.01 / -1.20; sink 3 + latest 9, physical storage 15")
     rows = summary["pooling_arms"]
     if len(rows) != 4 or {row["code"] for row in rows} != {"CG", "CM16", "SG16", "CM64"}:
         raise ValueError("Expected four distinct spatial-pooling arms")
@@ -69,6 +88,7 @@ def main():
     for name, metric in sink["improvement_over_unaveraged_FR"].items():
         check_metric(metric, name)
     print("\nChecked 12 retention fractions and 10 reported comparison values.")
+    print("Also checked four window means and their contrasts, plus the separate Base configuration.")
     print("No fractions, confidence intervals or evaluation statistics re-estimated.")
 
 

@@ -1,4 +1,29 @@
-# Window Mechanisms
+# Committing Window
+
+With denoising unchanged, LongLive committing reads h preceding trajectory blocks and the current block.
+The 200-prompt rollf200 comparison uses 60-second videos, generation seed 0 and 3 latent frames per block.
+
+| Preceding blocks h | Total latent frames | Mean Subject c2c | Change from h=1 |
+|:---|---:|---:|---:|
+| 0 | 3 | 86.21 | −1.00 |
+| 1 | 6 | 87.21 | 0.00 |
+| 2 | 9 | 87.23 | +0.02 |
+| 3 | 12 | 86.93 | −0.28 |
+
+Consistency rises up to h=1, changes little at h=2, and declines at h=3. The h=1 minus h=0 gain and h=3
+minus h=1 decline are significant; h=2 minus h=1 is not. The [original window table](../../results/tables/vbl60_longlive_commit_window.txt),
+[6-versus-12-frame contrast](../../results/tables/vbl60_longlive_commit6_vs_12.txt) and
+[two-seed means and paired intervals](../commit_window/README.md) remain available. No mean confidence intervals are reconstructed for the plot.
+
+The separate Base reference scores 86.01, or −1.20 points relative to h=1. It reads 3 sink frames plus the latest
+9 trajectory frames, including the current 3, with 15-frame physical storage. It is neither an h=4 point nor an
+h=1-plus-sink-only intervention.
+
+[Combined figure](../../assets/committing_window_mechanisms.svg) · [PDF](../../assets/committing_window_mechanisms.pdf)
+
+The left panel uses these 200-prompt window means. The right panel retains the four spatial-pooling arms below:
+100-prompt outcomes with effect normalization from the reported 200-prompt endpoints. The panels have different
+units and do not pool samples.
 
 The committing-window scans show rising consistency, a plateau, and a decline as more history is read.
 The controls below support a temporal-smoothing interpretation of the initial gain and an outdated-content
@@ -104,13 +129,13 @@ remain available, including negative results, nonsignificant results, positive c
 ## Aggregate record
 
 [`summary.json`](summary.json) transcribes reported aggregates from Overleaf commit
-`08c51ba1f76a28a9a1fddc2d02573147455aa5a1` and records the relevant source SHA-256 hashes.
+`dcaa354abc61c646b1e8a130115ca7140f94a365` and records the relevant source SHA-256 hashes.
 It contains no per-prompt numerical records, videos, personal answers or participant identifiers.
 
 ```bash
 python analysis/window_effects/readout.py
 ```
 
-The standard-library reader checks four distinct pooling arms, eight observed effect points, the measurement
-schema and reported comparison intervals. It prints the frozen fractions rather than deriving them anew from
+The standard-library reader checks the four window means and their contrasts, the separate Base configuration,
+four distinct pooling arms, eight observed effect points, the measurement schema and reported comparison intervals. It prints the frozen fractions rather than deriving them anew from
 rounded performance values. Missing interval endpoints are `null`; no bootstrap or new evaluation is run.

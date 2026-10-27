@@ -3,8 +3,8 @@
   "updated": "2026-10-27",
   "assets": {
     "assets/README.md": {
-      "sha256": "f726332d7b5609cc4e2b28edc652c70eeec86d8de7254976edb48c825e6fa17e",
-      "bytes": 7951
+      "sha256": "86048ffe05b11c81574b6bff868e1614d492e9090c24ab0f7d03c9eb67a912fa",
+      "bytes": 8842
     },
     "assets/archive/README.md": {
       "sha256": "e9d3eb8e85cf50ac29c779bcd17c582fb29ba3540e9e2cc81881c1b9f6e2c4f0",
@@ -571,12 +571,34 @@
       "height": 1409
     },
     "assets/committing_correction_dose.provenance.json": {
-      "sha256": "e75d51f134978f999ea42365cd76b4ffad0724b53529cd5bc13e1222ba271805",
+      "sha256": "d7d1fda6ceb51ec42a5e89ddbc975d263a5c2ddbf9149813c92bca3bfcd3f376",
       "bytes": 3316
     },
     "assets/source/make_committing_correction_dose.py": {
       "sha256": "8f6d18d6804729f6f381d3140e1704d64bb3e6d6edfc91c80656c2e852d1945d",
       "bytes": 7750
+    },
+    "assets/committing_window_mechanisms.pdf": {
+      "sha256": "ce29b26e0d4bdfbe8bb8225958a4c2d7d00daec773eee9389dc470bfb9bbbb3c",
+      "bytes": 26703
+    },
+    "assets/committing_window_mechanisms.png": {
+      "sha256": "2537db4e6744d6d1cc28afe947842eaf70e25dcd460e21ebc18d3922e599c273",
+      "bytes": 121222,
+      "width": 2200,
+      "height": 1022
+    },
+    "assets/committing_window_mechanisms.provenance.json": {
+      "sha256": "10bcefaf7872c6786ea8c0d276cdaf399864daf509bb75699812865f9e0bbaf2",
+      "bytes": 5370
+    },
+    "assets/committing_window_mechanisms.svg": {
+      "sha256": "9f49dc1205b7433128d2692f10aa136d4116d11797d3fa0e49b0cfb7e1d56bb3",
+      "bytes": 19964
+    },
+    "assets/source/make_committing_window_mechanisms.py": {
+      "sha256": "38587cfbca272c42cfb5e53dbaafcb075208c0f77321375a705a8783c7273b3b",
+      "bytes": 10226
     }
   },
   "teaser": {
@@ -636,7 +658,7 @@
     "provenance": "assets/committing_content_age.provenance.json",
     "per_video_data": "assets/source/committing_content_age_scores.csv",
     "means": "assets/source/committing_content_age_data.json",
-    "protocol": "rollf200 prompts 0\u201399, 60 s, generation seed 0; 3 historical plus 3 current latent frames at fixed assigned positions; base denoising retained.",
+    "protocol": "rollf200 prompts 0–99, 60 s, generation seed 0; 3 historical plus 3 current latent frames at fixed assigned positions; base denoising retained.",
     "reproduction": "python assets/source/make_committing_content_age.py",
     "content": "Ten finite-lag means on one recency-only axis. Both sink source controls remain verified and retained in the released data.",
     "plotted_lags": [
@@ -726,6 +748,14 @@
       "png": "Rendered from the released PDF at 2200 pixels wide",
       "pdf_sha256": "f49b6a470aaa7d5ca6901176c4be5e08572db63f5408183eddfea465a62c7181",
       "svg_sha256": "cfd786ff2cc35e8a786890e8e4aeac564be4544cce3ef9b8d6f1459f7aea11a7"
+    },
+    "committing_window_mechanisms": {
+      "manuscript_figure": "figures/committing_window_mechanisms",
+      "publication_asset": "assets/committing_window_mechanisms",
+      "pdf_svg_identity": "Byte-for-byte copies of current accepted manuscript figure exports",
+      "png": "Rendered from the released PDF at 2200 pixels wide",
+      "pdf_sha256": "ce29b26e0d4bdfbe8bb8225958a4c2d7d00daec773eee9389dc470bfb9bbbb3c",
+      "svg_sha256": "9f49dc1205b7433128d2692f10aa136d4116d11797d3fa0e49b0cfb7e1d56bb3"
     }
   },
   "dependencies": {
@@ -743,7 +773,7 @@
     "canonical_matplotlib": "3.10.8"
   },
   "canonical_snapshot": {
-    "accepted_revision": "85b6572eeaa51e55adb6fa153c69a8cb2a2fb313",
+    "accepted_revision": "dcaa354abc61c646b1e8a130115ca7140f94a365",
     "source_scope": "Approved individual figures and aggregate records only; no full manuscript, private sidecar, new per-prompt scores or videos."
   },
   "regeneration_validation": {
@@ -817,6 +847,15 @@
       "pixels_differ": 746,
       "svg_byte_equal": false,
       "svg_geometry_style_text_equal_after_ID_and_version_normalization": true
+    },
+    "committing_window_mechanisms": {
+      "rendered_size": [
+        2200,
+        1022
+      ],
+      "pdf_byte_equal": true,
+      "png_pixel_equal": true,
+      "svg_geometry_style_text_equal_after_ID_normalization": true
     }
   },
   "input_preservation": [
@@ -937,12 +976,25 @@
     "renderer": "assets/source/make_committing_correction_dose.py",
     "provenance": "assets/committing_correction_dose.provenance.json",
     "data": "analysis/window_effects/summary.json",
-    "manuscript_role": "Main-text Window Mechanisms figure",
+    "manuscript_role": "Original standalone correction panel; retained as a source and supplementary asset",
     "n_spatial_averaging_arms": 4,
     "n_empirical_effect_points": 8,
     "x_definition": "Reported pre-output-projection committing attention correction norm ratio; not a KV norm or inferred from scores.",
     "normalization_reference_points_are_observations": false,
     "reference_line_is_fit": false,
     "reproduction": "python assets/source/make_committing_correction_dose.py"
+  },
+  "committing_window_mechanisms": {
+    "renderer": "assets/source/make_committing_window_mechanisms.py",
+    "provenance": "assets/committing_window_mechanisms.provenance.json",
+    "data": "analysis/window_effects/summary.json",
+    "manuscript_role": "Main-text Committing Window figure",
+    "source_overleaf_commit": "dcaa354abc61c646b1e8a130115ca7140f94a365",
+    "left_protocol": "200 rollf200 prompts,60 s,seed 0; h counts preceding blocks only",
+    "right_protocol": "100-prompt outcomes; effect normalization from reported 200-prompt endpoints",
+    "panels_pool_samples": false,
+    "base_is_h_point": false,
+    "base_is_sink_only_intervention": false,
+    "reproduction": "python assets/source/make_committing_window_mechanisms.py"
   }
 }
