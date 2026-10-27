@@ -1538,9 +1538,9 @@ The 60-second and 120-second studies use separate prompt pools and sampling prot
 | LongLive + Commit Forcing vs. ID-Forcing | 60 s | 90% | 88% |
 
 The new LongLive comparison uses 30 pairs from ID-Forcing's 128 MovieGen prompts, generation seed 0, with five
-non-project assessors responding independently. Consistency counts are 111 wins, 22 losses and 17 ties; overall
+independent raters. Consistency counts are 111 wins, 22 losses and 17 ties; overall
 preference counts are 107, 22 and 21. Reported prompt-cluster 95% intervals are [73.2%, 92.2%] and [72.6%, 92.1%],
-respectively. All five assessors are retained. The original three 60-second comparisons and their six count rows
+respectively. All five raters are retained. The original three 60-second comparisons and their six count rows
 are preserved. Differences between the two studies do not isolate duration, and their participants are not pooled.
 The earlier SGF nine-frame evaluation (75% / 74%) is a supporting reference, with its original counts retained in
 the [complete human-evaluation record](results/human_evaluation/README.md).

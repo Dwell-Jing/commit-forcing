@@ -62,7 +62,7 @@ Frozen summary SHA-256: `872b367dad5abb6e84a19940f8646e7740669bac90dd8cf20539436
 
 This separately sampled study compares Commit Forcing with base LongLive on 30 paired
 120-second videos, drawn without replacement from ID-Forcing's 128-prompt MovieGen list using a fixed random seed
-before packaging. Generation seed is 0. Five people not involved in the project answer independently, giving
+before packaging. Generation seed is 0. Five independent raters provide
 150 judgments per criterion. These counts are not pooled with the 60-second study.
 
 | Criterion | Commit Forcing wins | Base wins | Ties | Win share | Reported 95% interval |

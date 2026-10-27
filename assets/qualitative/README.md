@@ -1,6 +1,6 @@
 # Paired long rollouts
 
-[← Repository home](../../README.md#qualitative-comparisons)
+[← Repository home](../../README.md#examples)
 
 ## Current paper cases
 
