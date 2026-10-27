@@ -45,15 +45,17 @@ KV-cached autoregressive video generators.
 
 ## Contributions
 
-- **Stage and source effects.** History that helps denoising can impair later generation through committing.
-  SGF cache controls link the larger losses to construction of the KV supplied to denoising.
+- **Stage effects.** Controlled interventions show that the same historical context can have opposing effects
+  during denoising and committing. On LongLive, the harm persists even though committing uses that context
+  during training.
   ([stage interventions](analysis/longlive_sink/README.md), [KV construction](analysis/kv_construction/README.md))
-- **Recency and window size.** Fixed-size controls show losses from older history; window scans reveal
-  generator-dependent plateaus followed by declines. Correction-strength controls link consistency gains to
-  motion suppression.
+- **Recency and window size.** At fixed context size and temporal positions, older history lowers consistency.
+  Window scans reveal a rise, plateau and decline, with generator-dependent plateaus. We relate these patterns
+  to temporal smoothing, indirect historical influence through recent KV, and outdated context.
   ([historical recency](analysis/committing_content_age/README.md), [window effects](analysis/window_effects/README.md))
-- **Commit Forcing.** On 60-second VBench, Quality and Total improve on all six generators, significantly on
-  5 of 6. Clip-to-clip Subject Consistency gains extend to 240-second videos, reaching 5.42 points on SGF
+- **Commit Forcing.** The training-free rule uses the current and immediately preceding blocks. On 60-second
+  VBench, Quality and Total improve on all six generators, significantly on 5 of 6. Clip-to-clip Subject
+  Consistency gains extend to 240-second videos, reaching 5.42 points on SGF
   (32 extended MovieGen prompts, seed 0), with favorable human judgments on 120-second LongLive videos.
   ([results](#results))
 
