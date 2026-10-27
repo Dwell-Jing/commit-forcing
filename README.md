@@ -29,10 +29,9 @@
 Autoregressive video diffusion uses historical context to denoise the current block and to construct clean KV for
 future blocks. SGF shows that future-prediction losses in Self-Forcing supervise denoising but not clean committing.
 On LongLive and SGF, sink access helps denoising but can increase drift during committing.
-At fixed context size and temporal positions, older trajectory content produces lower mean long-range Subject
-Consistency on both generators. Across five configurations supporting longer histories, consistency rises,
-plateaus and then falls as the committing context expands. The plateau depends on the generator; SF with a sink
-favors a wider window.
+At fixed context size and temporal positions, mean clip-to-clip Subject Consistency decreases with older
+trajectory content on SGF and LongLive. Across five configurations supporting longer histories, consistency
+rises, plateaus and then falls as the committing context expands.
 
 Based on these findings, we propose **Commit Forcing**, a training-free rule for long video generation.
 It preserves the base denoising policy and constructs new clean KV using the current
