@@ -52,9 +52,9 @@ KV-cached autoregressive video generators.
   generator-dependent plateaus followed by declines. Correction-strength controls link consistency gains to
   motion suppression.
   ([historical recency](analysis/committing_content_age/README.md), [window effects](analysis/window_effects/README.md))
-- **Training-free committing.** On 60-second VBench, current-plus-previous-block committing improves Quality and
-  Total significantly on 5 of 6 generators; all six paired point estimates are positive. LongLive gains in long-range
-  Subject Consistency extend to 240 seconds, with favorable human judgments on 120-second LongLive videos.
+- **Commit Forcing.** On 60-second VBench, Quality and Total improve on all six generators, significantly on
+  5 of 6. Clip-to-clip Subject Consistency gains extend to 240-second videos, reaching 5.42 points on SGF
+  (32 extended MovieGen prompts, seed 0), with favorable human judgments on 120-second LongLive videos.
   ([results](#results))
 
 <p align="center">
