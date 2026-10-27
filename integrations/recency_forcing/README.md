@@ -10,7 +10,7 @@ We pin [Self-Forcing](https://github.com/guandeh17/Self-Forcing) at `33593df` wi
 | `on` | `rf` | `on` | sink + newest 18, with TRB | newest 6 real frames |
 
 `--trb on/off` and `--reading rf/native` are two names for the same choice. With a full cache, denoising reads 21
-frames in total: the 3-frame sink and the newest 18 real frames. Recent-Context Committing (`--rule on`, default
+frames in total: the 3-frame sink and the newest 18 real frames. Commit Forcing (`--rule on`, default
 `--commit-profile recent6`) reads the current clean 3-frame block and its immediately preceding block. The first
 commit reads only its 3 available frames. We select post-RoPE keys and corresponding values without changing their
 positions, the 24-frame physical cache, or denoising. The historical 21-frame control remains available with
@@ -25,7 +25,7 @@ training. RF-TF here is distinct from Rolling Forcing and its trained checkpoint
 alternative SF implementation use different cache geometry. The table preserves the historical wider controls
 alongside the new main six-frame setting:
 
-| Implementation | Weights | Physical cache | Denoising reads | Base committing | Recent-context committing | Temporal positions |
+| Implementation | Weights | Physical cache | Denoising reads | Base committing | Adapted committing | Temporal positions |
 |---|---|---:|---|---|---|---|
 | Main RF-TF | SF DMD EMA | 24 | sink 3 + trajectory 18 | sink 3 + trajectory 18 | trajectory 6; historical control 21 | absolute trajectory RoPE; sink shifted before the recent window |
 | RF denoising on SGF | SGF chunkwise EMA | 21 | sink 3 + trajectory 18 | sink 3 + trajectory 18 | trajectory 6 by default; historical control 18 | `top_aligned`, positions 0–20; sink 0–2, steady-state trajectory 3–20 |

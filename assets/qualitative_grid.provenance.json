@@ -49,7 +49,7 @@
       "base_arm": "CF",
       "commit_arm": "CF_W",
       "configuration": "Native CF denoising; committing reads the current 3 and immediately preceding 3 latent frames, excluding direct sink and earlier-memory access.",
-      "visible_observation": "An external large hand is visible in Base at 120 s and multiple rake-like tools at 238 s; the Recent-Context Committing samples retain the small figure inside the sphere without that external hand.",
+      "visible_observation": "An external large hand is visible in Base at 120 s and multiple rake-like tools at 238 s; the Commit Forcing samples retain the small figure inside the sphere without that external hand.",
       "interpretation_limit": "The prompt requests the small figure raking sand inside the sphere; no external hand is requested. This readable visual contrast coincides with a negative per-video Quality change, not an overall metric improvement.",
       "seed": 0,
       "prompt": "A close-up view of a glass sphere containing a tranquil Zen garden. Inside, a small Eastern dwarf with weathered skin and a serene expression is raking the sand, meticulously creating intricate patterns with a bamboo rake. His movements are deliberate and meditative, enhancing the peaceful atmosphere of the scene. The background is blurred, revealing only hints of greenery and rocks, adding to the serene setting. The sphere itself is polished, reflecting the surroundings subtly. The camera angle captures the dwarf from a slightly elevated position, emphasizing his focused and contemplative pose."
@@ -226,14 +226,15 @@
     }
   ],
   "scope": "SGF and CF on Wan-based autoregressive long-video generation; no SF or RF result is relabeled or included.",
-  "label_edit": "Both SGF and CF method rows use genuine current-plus-previous six-frame outputs. Four transparent vector circles annotate the preserved frame pixels.",
-  "source_overleaf_commit": "6d6394380687d64fe505f050330f9118773a2e37",
+  "label_edit": "Both SGF and CF use current plus previous (6 frames). Four transparent yellow circles with dark outlines highlight paired comparison regions.",
+  "source_overleaf_commit": "3824b58e861e33406f041e17ac884f285d0c9330",
+  "method_scope": "Native denoising retained; current 3 plus immediately previous 3 latent frames during committing.",
   "rendering": {
-    "method_name": "Recent-Context Committing",
-    "visible_method_label": "Recent-context",
+    "method_name": "Commit Forcing",
+    "visible_method_label": "Commit Forcing",
     "visible_commit_row_labels": {
-      "sgf": "Recent-context (6 frames)",
-      "cf": "Recent-context (6 frames)"
+      "sgf": "Commit Forcing (6 frames)",
+      "cf": "Commit Forcing (6 frames)"
     },
     "case_role": {
       "sgf": "Adopted current-plus-previous six-frame method, actual SGF_W6 output",
@@ -416,21 +417,20 @@
     ]
   },
   "source": "assets/source/make_qualitative_grid.py",
+  "source_sha256": "a7089d5944f35476223002671d1bb1c2aa46d1d358b5243b5919b8c2a9050a19",
   "exports": {
-    "pdf": "a795c68d8a0bb58d9f3061f3a59bcbffc2de9c8b8dae50ff94a5edd5b8a3b8ad",
-    "svg": "0a51a31e98ea83c6587f14bbb49c4225f644aaf6315f04508ff785ceae233db7"
+    "pdf": "21b88b3577364798807dabcaf38e8ace0f406c4576455b0469007c5d87422876",
+    "svg": "a2e0e94559926ac419e363c2f0d5132443283f473a48dda1dc2435a4eda1ac9f"
   },
   "regeneration_validation": {
     "rendered_size": [
       2200,
       1625
     ],
-    "pdf_rgb_pixel_equal": false,
-    "mean_channel_difference": 0.004458554778554779,
-    "pixels_differ": 190,
-    "svg_byte_equal": false
+    "pdf_byte_equal": true,
+    "png_pixel_equal": true,
+    "svg_geometry_style_text_equal_after_ID_normalization": true
   },
-  "regeneration_environment": "Matplotlib 3.10.0; manuscript plot exports use 3.10.8. Released PDF/SVG retain manuscript bytes.",
-  "method_scope": "Native denoising retained; current 3 plus immediately previous 3 latent frames during committing.",
-  "source_sha256": "ac284fe2efc5034fc79e90bb5895377f4dc402d532521d8f1574e1b7acbed82f"
+  "regeneration_environment": "Matplotlib 3.10.8. Released PDF/SVG retain canonical manuscript bytes.",
+  "canonical_export_commit": "caba48c3776e46a2362f18cd626d7220e930dffa"
 }

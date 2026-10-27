@@ -1,6 +1,6 @@
 # Rolling Sink
 
-We apply Recent-Context Committing to [Rolling Sink](https://github.com/Rolling-Sink/Rolling-Sink) (arXiv 2602.07775, commit
+We apply Commit Forcing to [Rolling Sink](https://github.com/Rolling-Sink/Rolling-Sink) (arXiv 2602.07775, commit
 `e384dc7`) with the Self-Forcing DMD weights (EMA), as in its `inference.py`. Once the 21-frame KV cache is full,
 Rolling Sink writes replayed early frames into its history slots at every commit pass. We add a per-layer cache of the
 real committed K/V (same size and first-in-first-out eviction, about 6 GB more in bf16) and let the commit pass attend

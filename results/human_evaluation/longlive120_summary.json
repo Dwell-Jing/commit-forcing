@@ -1,13 +1,13 @@
 {
   "study_id": "v6l_longlive_120s",
   "source": "Reported 120-second human-evaluation aggregates; manuscript Appendix B.11 and human_evaluation_counts.tex",
-  "source_overleaf_commit": "727782779988ca22cf79f3417a1ec033afa83d30",
+  "source_overleaf_commit": "3824b58e861e33406f041e17ac884f285d0c9330",
   "source_sha256": {
-    "sections/05-experiments.tex": "3a29aab946d85e466cb840b4277a5ef13efbe0b366fdc67d4cb382de6c100c32",
-    "appendix/result-details.tex": "05883b27984581035c1c4a02d5f3f6d0a4f4b91e5cc5f951139ee2bec540c767",
-    "tables/human_evaluation_counts.tex": "37c289b37e893d8e33da8a29677678e77b5629d327e9030e02a6dd98a2a7659b"
+    "sections/05-experiments.tex": "71b27884b67a021568d25397780408faec331ca5dded2836443d4807ba348e4c",
+    "appendix/result-details.tex": "69c8454bccd957271846d108d5131c75bce32a1a48059143f7a19fcf2ffac12c",
+    "tables/human_evaluation_counts.tex": "e4d4ead62ec2df0643fa78d26c7fdadad3dda807185c7819063853502e171a8b"
   },
-  "comparison": "LongLive + Recent-Context Committing vs. base LongLive",
+  "comparison": "LongLive + Commit Forcing vs. base LongLive",
   "duration_seconds": 120,
   "prompt_pool": "ID-Forcing 128-prompt MovieGen list",
   "prompt_pairs": 30,

@@ -2,7 +2,7 @@
   "artifact": "method",
   "status": "Canonical Figure4; current-plus-previous committing",
   "source": "assets/source/make_method.py",
-  "source_sha256": "fa31db7d45b793f116f731611a71a13f472dac35b8c0fb32aef6ee664b8b501e",
+  "source_sha256": "8399ee35a8f291c14bb21ee8c6394eeef034b365788bd6a805de60a8fa3bb929",
   "physical_size_mm": [
     178,
     37.21818181818182
@@ -554,18 +554,18 @@
   "window_options_removed": true,
   "lettered_panel_labels": false,
   "export_sha256": {
-    "svg": "37782972e91f7e68ea16bf0c81ef351071a1642b5fec3e7a85ff1e75981aac7b",
+    "svg": "c3bbd25ae8eccb81405a8f11dc810c619cbd00730d7b79e26363dfdf049d58fa",
     "pdf": "bd71636b340139f6abc9f4233f5b76b307d8b737dce3fdf23c0fe885468ea2cb",
     "actual_pdf_png": "5afaf7c402afef3019c3ac9498a11d4b3c6a0a68342a16a7a1e4a50aa425630f"
   },
   "publication_exports": {
     "pdf": "bd71636b340139f6abc9f4233f5b76b307d8b737dce3fdf23c0fe885468ea2cb",
-    "svg": "37782972e91f7e68ea16bf0c81ef351071a1642b5fec3e7a85ff1e75981aac7b",
+    "svg": "c3bbd25ae8eccb81405a8f11dc810c619cbd00730d7b79e26363dfdf049d58fa",
     "png": "5afaf7c402afef3019c3ac9498a11d4b3c6a0a68342a16a7a1e4a50aa425630f"
   },
   "canonical_export_identity": {
-    "canonical_figure": "figures/method_overview",
-    "pdf_and_svg": "Copied byte-for-byte from the current accepted manuscript figure exports",
+    "canonical_figure": "figures/method_overview, computation-only layout",
+    "pdf_and_svg": "Previously accepted computation-only layout; SVG title metadata now uses Commit Forcing. Visible PDF and PNG remain byte-identical.",
     "png": "Rendered from the released PDF at 2200 pixels wide"
   },
   "regeneration_validation": {
@@ -573,9 +573,11 @@
       2200,
       460
     ],
-    "pdf_rgb_pixel_equal": true,
-    "mean_channel_difference": 0.0,
-    "pixels_differ": 0,
-    "svg_byte_equal": true
-  }
+    "pdf_byte_equal": false,
+    "png_pixel_equal": true,
+    "svg_geometry_style_text_equal_after_ID_normalization": true
+  },
+  "method_name": "Commit Forcing",
+  "source_overleaf_commit": "3824b58e861e33406f041e17ac884f285d0c9330",
+  "name_sync_scope": "Only the invisible SVG title and method metadata use the restored formal name. The visible computation-only layout is preserved."
 }

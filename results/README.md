@@ -1,7 +1,7 @@
 # Results
 
 Scores and reproduction data behind [RESULTS.md](../RESULTS.md). The [current common946 main evaluation](vbench_full/common946/README.md)
-contains six paired generators, each using **Recent-Context Committing** with the current and immediately preceding
+contains six paired generators, each using **Commit Forcing** with the current and immediately preceding
 blocks (6 latent frames after startup). Its [current6 summaries](vbench_full/common946/current6/) are separate from
 the preserved eight-pair historical package and its two 9-frame ID-Forcing framework adaptations.
 
@@ -54,7 +54,7 @@ all three. The alternative `rf_v2` Quality comparison, 81.89 → 82.38, uses 60-
 LongLive labels in `vbench_long_60s.csv` describe the historical window study: Base-policy and window arms retain
 15-frame physical storage. In particular, `longlive+rule` remains the 12-frame control and `longlive+commit6` the
 six-frame arm. The current common946 main pair uses six-frame committing with 12-frame physical storage in both
-Base and Recent-Context Committing. The public integration defaults to that read/storage policy; its explicit
+Base and Commit Forcing. The public integration defaults to that read/storage policy; its explicit
 `--commit-profile legacy12` preserves the previous configuration. These labels and their recorded scores are unchanged.
 Current integration defaults use the 6-frame method. To regenerate historical SGF/SGF+, RF-TF or Rolling Sink
 controls, retain the corresponding wider context documented in each integration.

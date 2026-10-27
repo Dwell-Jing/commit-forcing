@@ -4,7 +4,7 @@ This supplementary sweep accompanies the [window-effects analysis and correction
 The original 27 points, full table and separate confirmations are retained below.
 
 Changing committing can affect both long-range consistency and motion. This LongLive discovery sweep compares
-27 variants with the line joining recent-context and self-only committing. Twenty-two reported intervals for
+27 variants with the line joining Commit Forcing and self-only committing. Twenty-two reported intervals for
 vertical departure from that reference include zero; five are below zero. Separate attention-sharpening
 confirmations improve this comparison locally, with temporal-quality or motion costs.
 
@@ -13,7 +13,7 @@ confirmations improve this comparison locally, with temporal-quality or motion c
 ## Discovery protocol and reference
 
 All variants use the first 100 rollf200 prompts, 60-second videos and generation seed 0 on LongLive, preserving
-base denoising. Changes below are relative to committing with the current and immediately preceding blocks
+base denoising. Changes below are relative to Commit Forcing, which commits with the current and immediately preceding blocks
 (6 latent frames). DD is Dynamic Degree, SC c2c is clip-to-clip Subject Consistency, and Q is Quality; values use
 0–100 score points. Reported intervals use 4,000 paired prompt-bootstrap draws. An asterisk marks an interval
 excluding zero. DD and SC stars are preserved even where the source table supplies no interval endpoints.
@@ -23,7 +23,7 @@ G = Δ SC c2c − s × Δ DD
 s = −1.00 / 3.63
 ```
 
-The reference endpoints come from a separate 200-prompt comparison: self-only minus six-frame committing gives
+The reference endpoints come from a separate 200-prompt comparison: self-only minus Commit Forcing gives
 Δ DD = +3.63 and Δ SC c2c = −1.00. The line is defined by these endpoints rather than fitted to the 27 discovery
 means. An interval including zero does not establish equivalence or strict collinearity.
 
@@ -64,7 +64,7 @@ G intervals are retained; the plot does not project points onto the reference li
 
 ## Variant definitions
 
-The recent-history correction is the difference between the outputs of recent-context and self-only committing.
+The recent-history correction is the difference between the outputs of Commit Forcing and self-only committing.
 The sink correction is the contribution introduced by sink access.
 
 | ID | Intervention |
@@ -73,7 +73,7 @@ The sink correction is the contribution introduced by sink access.
 | P | Average the recent-history correction across the current block's three frames. |
 | M | Suppress the correction on the 30% of patches with greatest motion. |
 | Mr | Suppress the correction on a random 30% of patches. |
-| KR | Use K from recent-context committing and V from self-only committing. |
+| KR | Use K from Commit Forcing and V from self-only committing. |
 | SF0 | Allow history access only for the first frame of the current block. |
 | SF2 | Allow history access only for the last frame of the current block. |
 | ALT2 | Use self-only committing once every two blocks. |
@@ -108,8 +108,8 @@ spatial detail while retaining regional information; they do not remove all geom
 | Token relocation − random-direction control | LongLive, 100 prompts, seed 0 | +0.02 [−0.46, +0.51] |
 | 16 content regions − 4×4 spatial regions | LongLive, 100 prompts, seed 0 | +0.17 [−0.16, +0.50] |
 | Look-ahead windows − noise selection | LongLive, 40 prompts, seed 0 | −0.08 [−1.00, +0.88] |
-| Attention sharpening, τ=2 − six-frame committing | LongLive, 200 prompts, new seeds 2 and 3 | +0.44* [+0.06, +0.81] |
-| Attention sharpening, τ=2 − six-frame committing | CF, held-out prompts 100–199 | +0.97* [+0.29, +1.69] |
+| Attention sharpening, τ=2 − Commit Forcing | LongLive, 200 prompts, new seeds 2 and 3 | +0.44* [+0.06, +0.81] |
+| Attention sharpening, τ=2 − Commit Forcing | CF, held-out prompts 100–199 | +0.97* [+0.29, +1.69] |
 
 Look-ahead selection tests 3-, 6- and 12-frame windows by generating two future blocks and scoring DINO
 consistency plus weighted RAFT motion. Its matched-compute control keeps a 6-frame window and chooses among
@@ -139,7 +139,7 @@ These results remain separate from the 27 committing variants.
 ## Aggregate record
 
 [`summary.json`](summary.json) transcribes the manuscript table and appendix at Overleaf commit
-`6d6394380687d64fe505f050330f9118773a2e37`, with source SHA-256 hashes. Reported interval precision and
+`3824b58e861e33406f041e17ac884f285d0c9330`, with source SHA-256 hashes. Reported interval precision and
 significance are preserved; unreported endpoints are `null`. It contains no per-prompt values, videos or
 individual human responses.
 

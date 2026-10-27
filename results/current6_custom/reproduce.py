@@ -29,8 +29,8 @@ def render_tables(data):
     roll = data['rollf200_60s']['rows']
     for seed in (0, 1):
         parts += [f'### 60-second rollf200, generation seed {seed}', '',
-                  table(['Configuration', 'Quality: Base', 'Recent-context', 'Δ Quality',
-                         'Subject c2c: Base', 'Recent-context', 'Δ Subject c2c', 'Δ Dynamic'],
+                  table(['Configuration', 'Quality: Base', 'Modified', 'Δ Quality',
+                         'Subject c2c: Base', 'Modified', 'Δ Subject c2c', 'Δ Dynamic'],
                         [[r['configuration'], f"{r['quality_base']:.2f}", f"{r['quality_recent']:.2f}",
                           metric(r['quality_delta']), f"{r['subject_c2c_base']:.2f}",
                           f"{r['subject_c2c_recent']:.2f}", metric(r['subject_c2c_delta']),
@@ -41,7 +41,7 @@ def render_tables(data):
                     [[r['generator'], r['configuration'], f"{r['quality']:.2f}",
                       f"{r['subject_fused']:.2f}", f"{r['background_fused']:.2f}",
                       f"{r['dynamic']:.2f}"] for r in long['absolute_scores']]), '',
-              '### 240-second MovieGen: recent-context minus Base', '',
+              '### 240-second MovieGen: Commit Forcing minus Base', '',
               table(['Generator', 'Δ Quality', 'Δ Fused Subject', 'Δ Fused Background', 'Δ Subject c2c'],
                     [[r['generator']] + [metric(r[k]) for k in ('quality_delta', 'subject_fused_delta',
                       'background_fused_delta', 'subject_c2c_delta')] for r in long['paired_recent_minus_base']]), '',

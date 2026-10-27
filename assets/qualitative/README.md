@@ -8,22 +8,22 @@
 
 These are the current paper's SGF prompt 19 and Context Forcing prompt 10, generation seed 0, from the 32-prompt MovieGen extension at 240 seconds. Each model uses the same prompt and initial-noise seed across its two rows. The displayed initial frames can differ. Frames are sampled at 0, 120, and 238 seconds.
 
-The SGF recent row is the original 9-frame historical-source control, labeled “Recent (9 frames)”. The Context Forcing recent-context row uses the adopted 6-frame current-plus-previous rule. Four transparent yellow vector circles mark paired comparison regions; the twelve source PNGs are unchanged.
+Both SGF and Context Forcing compare Base with Commit Forcing using the current and preceding blocks (6 frames). Four transparent yellow vector circles mark paired comparison regions; the twelve source PNGs retain their original image content.
 
-The cases were selected for visible differences. The Context Forcing example has a negative per-video Quality change, despite the displayed visual contrast; it is retained as such. The complete selection record, source hashes, and per-case scores are in [`source.json`](../source/qualitative_grid_inputs/source.json).
+The cases were selected for visible differences. The Context Forcing example has a negative per-video Quality change, despite the displayed visual contrast; it is retained as such. The portable frame list and source hashes are in [`source.json`](../source/qualitative_grid_inputs/source.json).
 
 ## Additional historical examples
 
-The supplementary examples retain their original committing configurations. Each row shows one model without (Base) and with Recent-Context Committing, from the same prompt and initial noise. The two videos
+The supplementary examples retain their original committing configurations. Each row shows one model without (Base) and with the recent-context control, from the same prompt and initial noise. The two videos
 share the start frame (1 s); the Base and
-+ Recent-Context Committing frames are 2 s before the end. Each video plays the first and the last 4 seconds side by side. We
++ recent-context control frames are 2 s before the end. Each video plays the first and the last 4 seconds side by side. We
 generated the SGF and SGF+ examples with the code in this repository; the others come from the runs behind our tables.
 The LongLive example is the historical 12-frame committing control with 15-frame physical storage. It illustrates
 that longer-video ablation, while the current standard-suite main configuration commits from six frames with
 12-frame storage. This retained historical example does not supply a 240-second six-frame case.
 
 <table>
-<tr><th></th><th>Start (same in both)</th><th>Base</th><th>+ Recent-Context Committing</th></tr>
+<tr><th></th><th>Start (same in both)</th><th>Base</th><th>+ recent-context control</th></tr>
 <tr><td><b>SGF</b><br>240 s<br><sub>MovieGen #3</sub><br><a href="sgf/comparison.mp4">video</a></td><td><img src="sgf/start.jpg" width="250"></td><td><img src="sgf/end_base.jpg" width="250"></td><td><img src="sgf/end_commit_forcing.jpg" width="250"></td></tr>
 <tr><td><b>SGF+</b><br>60 s<br><sub>rollf200 #160</sub><br><a href="sgf-plus/comparison.mp4">video</a></td><td><img src="sgf-plus/start.jpg" width="250"></td><td><img src="sgf-plus/end_base.jpg" width="250"></td><td><img src="sgf-plus/end_commit_forcing.jpg" width="250"></td></tr>
 <tr><td><b>Recency Forcing</b><br>60 s<br><sub>rollf200 #24</sub><br><a href="recency-forcing/comparison.mp4">video</a></td><td><img src="recency-forcing/start.jpg" width="250"></td><td><img src="recency-forcing/end_base.jpg" width="250"></td><td><img src="recency-forcing/end_commit_forcing.jpg" width="250"></td></tr>
@@ -34,7 +34,7 @@ that longer-video ablation, while the current standard-suite main configuration 
 </table>
 
 VBench-Long scores of each pair, per video: the rows of the prompt index with labels `<arm>` (Base) and `<arm>+rule`
-(+ Recent-Context Committing), seed 0.
+(+ recent-context control), seed 0.
 
 | Examples | Per-video scores | Arms |
 |---|---|---|

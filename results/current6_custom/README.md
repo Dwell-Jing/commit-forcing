@@ -1,6 +1,6 @@
-# Current six-frame method: custom-prompt results and window diagnostics
+# Commit Forcing: custom-prompt results and window diagnostics
 
-The main method constructs KV from the current and immediately preceding 3-frame blocks (6 latent frames).
+Commit Forcing constructs KV from the current and immediately preceding 3-frame blocks (6 latent frames).
 These custom-prompt studies are separate from the [946-entry standard VBench suite](../vbench_full/common946/README.md).
 The 60-second comparisons use all 200 rollf200 prompts with generation seeds 0 and 1. Six full-rule configurations
 use 6-frame committing; the additional CF sink-exclusion row is a component control. The original
@@ -32,7 +32,7 @@ support generator-dependent window choices, rather than a universally optimal si
 
 [`summary.json`](summary.json) freezes all reported aggregate rows from the manuscript tables, including their
 original interval precision and source significance marks. Source file hashes refer to Overleaf commit
-`6d6394380687d64fe505f050330f9118773a2e37`. Source tables are `rollf200_seed_results.tex`,
+`3824b58e861e33406f041e17ac884f285d0c9330`. Source tables are `rollf200_seed_results.tex`,
 `committing_sources_240.tex`, `committing_window_plateaus.tex`, `sf_sink_committing_windows.tex`, and
 `framewise_committing_windows.tex`; the descriptive adjustment and 240-second SGF Dynamic interval come from
 `appendix/result-details.tex`. Scores and changes are on the 0–100 scale. Paired intervals use 4,000
@@ -52,7 +52,7 @@ responses, participant identifiers or video files.
 
 ### 60-second rollf200, generation seed 0
 
-| Configuration | Quality: Base | Recent-context | Δ Quality | Subject c2c: Base | Recent-context | Δ Subject c2c | Δ Dynamic |
+| Configuration | Quality: Base | Modified | Δ Quality | Subject c2c: Base | Modified | Δ Subject c2c | Δ Dynamic |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | SGF (6) | 83.58 | 84.51 | +0.93* [+0.55, +1.30] | 86.54 | 91.30 | +4.76* [+3.79, +5.73] | +11.33* [+6.53, +15.98] |
 | RF-TF (6) | 82.01 | 82.43 | +0.42* [+0.18, +0.66] | 75.02 | 81.38 | +6.36* [+5.46, +7.24] | -3.92* [-6.75, -1.17] |
@@ -64,7 +64,7 @@ responses, participant identifiers or video files.
 
 ### 60-second rollf200, generation seed 1
 
-| Configuration | Quality: Base | Recent-context | Δ Quality | Subject c2c: Base | Recent-context | Δ Subject c2c | Δ Dynamic |
+| Configuration | Quality: Base | Modified | Δ Quality | Subject c2c: Base | Modified | Δ Subject c2c | Δ Dynamic |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | SGF (6) | 83.85 | 84.42 | +0.57* [+0.24, +0.91] | 86.60 | 91.52 | +4.91* [+3.92, +5.90] | +8.55* [+3.98, +13.07] |
 | RF-TF (6) | 82.00 | 82.69 | +0.69* [+0.46, +0.92] | 74.42 | 80.99 | +6.57* [+5.71, +7.46] | -0.05 [-2.35, +2.23] |
@@ -81,11 +81,11 @@ responses, participant identifiers or video files.
 | CF | Base | 83.60 | 98.03 | 96.78 | 58.46 |
 | CF | Exclude slow memory only | 83.41 | 98.23 | 97.00 | 48.83 |
 | CF | Exclude sink only | 84.10 | 97.97 | 96.70 | 65.52 |
-| CF | Recent-context | 84.04 | 98.21 | 96.87 | 59.64 |
+| CF | Commit Forcing | 84.04 | 98.21 | 96.87 | 59.64 |
 | SGF | Base | 83.97 | 98.26 | 96.75 | 49.11 |
-| SGF | Recent-context | 84.87 | 98.59 | 97.17 | 60.62 |
+| SGF | Commit Forcing | 84.87 | 98.59 | 97.17 | 60.62 |
 
-### 240-second MovieGen: recent-context minus Base
+### 240-second MovieGen: Commit Forcing minus Base
 
 | Generator | Δ Quality | Δ Fused Subject | Δ Fused Background | Δ Subject c2c |
 | :--- | :--- | :--- | :--- | :--- |

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Self Gradient Forcing (chunkwise checkpoint) with or without Recent-Context Committing.
+"""Self Gradient Forcing (chunkwise checkpoint) with or without Commit Forcing.
 
     python integrations/sgf/generate.py --code /path/to/Self_Gradient_Forcing --rule on --reading native \
         --prompts eval/prompts/rollf200.txt --ids 0-199 --seconds 60 --seed 0 --out outputs/sgf
@@ -71,7 +71,7 @@ def check_counters(counts, blocks, layers, steps, rule_on, trb):
 
 
 def parse_args(argv=None):
-    parser = argparse.ArgumentParser(description="Self Gradient Forcing with or without Recent-Context Committing")
+    parser = argparse.ArgumentParser(description="Self Gradient Forcing with or without Commit Forcing")
     runner.add_common_args(parser)
     parser.add_argument("--reading", choices=sorted(READINGS), default="native",
                         help="native: SGF's own cache; rf: Recency Forcing reading")

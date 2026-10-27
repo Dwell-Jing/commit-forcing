@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Context Forcing (arXiv 2602.06028) with or without Recent-Context Committing.
+"""Context Forcing (arXiv 2602.06028) with or without Commit Forcing.
 
     python integrations/context_forcing/generate.py --code /path/to/Context-Forcing --rule on \
         --prompts eval/prompts/rollf200.txt --ids 0-199 --seconds 60 --seed 0 --out outputs/context_forcing

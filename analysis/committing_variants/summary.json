@@ -1,13 +1,13 @@
 {
   "export_kind": "reported aggregate values only",
-  "overleaf_source_commit": "6d6394380687d64fe505f050330f9118773a2e37",
+  "overleaf_source_commit": "3824b58e861e33406f041e17ac884f285d0c9330",
   "export_date": "2026-10-26",
   "statistics_recomputed": false,
   "per_prompt_values_included": false,
   "source_sha256": {
-    "tables/committing_variants_discovery.tex": "ca9ed22896c038af8df8313f090972e66c824e9a4226782d1c65a4d84e7543ed",
-    "appendix/result-details.tex": "ca5dae278ed1350b11aeea1be4119c2637d192fbc71c5af3e0e3143df768e914",
-    "sections/03-history-mechanisms.tex": "0d300cb68c07d46001e2de89ef5d328a60b05cce04dc9b959e1247cad04e5003"
+    "tables/committing_variants_discovery.tex": "f4cb137fefe1f8add736a09e19c5ac8fb01b3d6c3bcd77528442dd1914b65302",
+    "appendix/result-details.tex": "69c8454bccd957271846d108d5131c75bce32a1a48059143f7a19fcf2ffac12c",
+    "sections/03-history-mechanisms.tex": "379acd73802e081668b84cb4e97ad1efdeb181786a1cf3509e6279e0a909b612"
   },
   "interval_precision": "Intervals retain the displayed manuscript precision; reported significance is preserved. Missing interval endpoints are null.",
   "discovery_protocol": {
@@ -197,7 +197,7 @@
     {
       "id": "KR",
       "variant": "Mixed K/V",
-      "definition": "Use K from recent-context committing and V from self-only committing.",
+      "definition": "Use K from Commit Forcing and V from self-only committing.",
       "metrics": {
         "Dynamic Degree": {
           "delta": -1.53,

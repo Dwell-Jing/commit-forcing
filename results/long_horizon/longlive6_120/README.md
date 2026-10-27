@@ -1,4 +1,4 @@
-# LongLive: six-frame committing at 120 seconds
+# LongLive: Commit Forcing at 120 seconds
 
 We evaluate the six-frame committing context on ID-Forcing's 128 MovieGen prompts at 120 seconds, with generation
 seed 0. The context reads 3 recent and 3 current latent frames. Base denoising is retained. The base, six-frame and
@@ -14,7 +14,7 @@ clip-to-clip consistency is distinct from fused consistency.
 |---|---:|---:|---:|---:|
 | Base LongLive | 81.72 | 42.96 | 84.16 | 87.17 |
 | Commit Forcing, 6 frames | 82.05 | 46.37 | 86.03 | 89.06 |
-| Commit Forcing, 12-frame control | 81.93 | 46.42 | 85.25 | 88.36 |
+| Recent-context, 12-frame control | 81.93 | 46.42 | 85.25 | 88.36 |
 | ID-Forcing on LongLive | 82.27 | 57.37 | 78.72 | 83.57 |
 
 ## Paired changes

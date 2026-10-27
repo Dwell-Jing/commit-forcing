@@ -1,6 +1,6 @@
 {
   "protocol_id": "vbench-long-wan-full946-current-plus-previous-20261024",
-  "method": "Recent-Context Committing",
+  "method": "Commit Forcing",
   "primary_models": [
     "CF",
     "RS",

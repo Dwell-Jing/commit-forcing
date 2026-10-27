@@ -1,7 +1,7 @@
 # Common 60 s VBench evaluation
 
 The current main comparison contains six generators, 946 metadata entries, 944 distinct original prompts and all
-16 dimensions. Each adapted arm uses **Recent-Context Committing**: the clean current block and stored KV of the
+16 dimensions. Each adapted arm uses **Commit Forcing**: the clean current block and stored KV of the
 immediately preceding block, giving 6 latent frames after startup (3 + 3). Base denoising, cache storage and update
 remain in place; other history is excluded from direct committing reads but can still influence the generated block
 and preceding-block KV. Scores ×100; differences are computed before rounding.
@@ -9,7 +9,7 @@ and preceding-block KV. Scores ×100; differences are computed before rounding.
 <table>
 <thead>
 <tr><th rowspan="2" align="left">Model</th><th colspan="3">Quality</th><th colspan="3">Total</th></tr>
-<tr><th>Base</th><th>Recent-context</th><th>Δ</th><th>Base</th><th>Recent-context</th><th>Δ</th></tr>
+<tr><th>Base</th><th>Commit Forcing</th><th>Δ</th><th>Base</th><th>Commit Forcing</th><th>Δ</th></tr>
 </thead>
 <tbody>
 <tr><td>Context Forcing</td><td align="right">84.79</td><td align="right">85.25</td><td align="right"><b>+0.46</b></td><td align="right">82.24</td><td align="right">82.68</td><td align="right"><b>+0.44</b></td></tr>

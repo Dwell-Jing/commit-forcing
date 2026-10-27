@@ -2,8 +2,8 @@
   "artifact": "teaser",
   "status": "Adopted Figure1; actual current-plus-previous six-frame SGF example",
   "source": "assets/source/make_teaser.py",
-  "source_sha256": "31dbe3c74be7710d0213831b630064ef6d46b12fec8f497aad328b331144ad1d",
-  "method_name": "Recent-Context Committing",
+  "source_sha256": "3494c1546f68ed067b65f04adcb211f0e292b90d422c6b71e3a78027e78a36e3",
+  "method_name": "Commit Forcing",
   "canvas": [
     3200,
     1500
@@ -1599,16 +1599,15 @@
     "pdf": "0cdece4f2a553dd243af53dea2e1a7789c07c033d68992234ac2dcf47cd2865a",
     "svg": "2abd340f01f6a6e846ae936d6ed941b21dfc13de9a5cc3e731785c48145c4f66"
   },
-  "source_overleaf_commit": "6d6394380687d64fe505f050330f9118773a2e37",
+  "source_overleaf_commit": "3824b58e861e33406f041e17ac884f285d0c9330",
   "regeneration_validation": {
     "rendered_size": [
       2200,
       1032
     ],
-    "pdf_rgb_pixel_equal": true,
-    "mean_channel_difference": 0.0,
-    "pixels_differ": 0,
-    "svg_byte_equal": true
+    "pdf_byte_equal": false,
+    "png_pixel_equal": true,
+    "svg_geometry_style_text_equal_after_ID_normalization": true
   },
   "regeneration_environment": "Matplotlib 3.10.0; manuscript plot exports use 3.10.8. Released PDF/SVG retain manuscript bytes.",
   "input_preservation": "The archived native PNG is unchanged; actual SGF_W6 method PNG is added separately. Source pixels are not retouched."

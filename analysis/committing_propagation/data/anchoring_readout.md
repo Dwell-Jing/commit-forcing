@@ -1,4 +1,4 @@
-# Recent-context committing: anchor to the past, motion trend, and the seam motion of self-only committing
+# Recent-context control: anchor to the past, motion trend, and the seam motion of self-only committing
 
 ## SEAM: frame differences on existing rollf200 videos (luma, 0-255; from 4 s; 200 prompts x 2 seeds)
 

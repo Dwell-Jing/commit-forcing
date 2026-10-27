@@ -1,4 +1,4 @@
-"""CPU-only checks for Recent-Context Committing read counts (latent frames)."""
+"""CPU-only checks for Commit Forcing read counts (latent frames)."""
 from collections import Counter
 
 

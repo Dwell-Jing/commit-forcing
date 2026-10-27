@@ -1,7 +1,7 @@
 # Independent denoising study: historical read-locus figure
 
 This asset documents the independent denoising step, layer and content study. It is retained as historical research
-material, outside the current Recent-Context Committing paper's contributions. The full positive, negative and nonsignificant
+material, outside the current Commit Forcing paper's contributions. The full positive, negative and nonsignificant
 results, including motion and imaging quality costs, are preserved in
 [`analysis/read_locus`](../../analysis/read_locus/README.md).
 

@@ -69,10 +69,10 @@ SG16 departs from equal retention: its consistency-gain fraction is 0.42 and its
 
 ### Deep-layer KV mechanism control
 
-A separate LongLive diagnostic constructs recent-context and self-only KV versions for each block. At all four
-denoising steps, zero-indexed layers 15–29 read the recent-context version and layers 0–14 read the self-only
+A separate LongLive diagnostic constructs Commit Forcing and self-only KV versions for each block. At all four
+denoising steps, zero-indexed layers 15–29 read the Commit Forcing version and layers 0–14 read the self-only
 version. The confirmation uses 200 rollf200 prompts, new generation seeds 2 and 3, and 400 paired 60-second outputs.
-The reference is full recent-context committing (MOT_w6), using recent-context KV throughout denoising.
+The reference is full Commit Forcing (MOT_w6), using recent-context KV throughout denoising.
 
 | Metric | Layer-selective minus reference | Reported significance |
 |:---|---:|:---|
@@ -82,7 +82,7 @@ The reference is full recent-context committing (MOT_w6), using recent-context K
 | Temporal Flickering | −0.06 | Significant decrease |
 | G | +0.14 [−0.20, +0.48] | Not significant |
 
-The +0.257 change is an additional gain over full recent-context committing. In this same confirmation set,
+The +0.257 change is an additional gain over full Commit Forcing. In this same confirmation set,
 self-only committing scores 1.10 points below the full scheme. That seed-2/3 contrast is separate from the
 seed-0 self-only comparison used for effect normalization; their values are not combined.
 
@@ -116,8 +116,8 @@ Spatial pooling reduces the sink correction's loss but does not remove it. FP16 
 
 | FP16 comparison | Metric | Change |
 |:---|:---|---:|
-| FP16 − recent-context | Subject c2c | −1.76, significant |
-| FP16 − recent-context | G | −2.97 [−3.92, −2.07], significant |
+| FP16 − Commit Forcing | Subject c2c | −1.76, significant |
+| FP16 − Commit Forcing | G | −2.97 [−3.92, −2.07], significant |
 | FP16 − unaveraged sink correction (FR) | G | +0.72 [+0.05, +1.37], significant |
 
 The −2.97 value is departure from the consistency–motion reference, not the original Subject c2c change.
@@ -129,7 +129,7 @@ remain available, including negative results, nonsignificant results, positive c
 ## Aggregate record
 
 [`summary.json`](summary.json) transcribes reported aggregates from Overleaf commit
-`dcaa354abc61c646b1e8a130115ca7140f94a365` and records the relevant source SHA-256 hashes.
+`3824b58e861e33406f041e17ac884f285d0c9330` and records the relevant source SHA-256 hashes.
 It contains no per-prompt numerical records, videos, personal answers or participant identifiers.
 
 ```bash

@@ -114,7 +114,7 @@ def draw(rows):
         endpoint=ax.scatter(x,y,s=80,marker='+',color=INK,linewidths=1.7,zorder=6)
         endpoint.set_gid(f'endpoint-{name}-200-prompts')
         dx,dy,ha=(-9,24,'right') if name=='six-frame' else (-6,-21,'right')
-        label=ax.annotate('Recent-context' if name=='six-frame' else 'Self-only',
+        label=ax.annotate('Commit Forcing' if name=='six-frame' else 'Self-only',
                           (x,y),xytext=(dx,dy),textcoords='offset points',
                           fontsize=9.2,ha=ha,va='bottom',color=INK,
                           arrowprops={'arrowstyle':'-','color':MUTED,'linewidth':.55,
@@ -153,7 +153,7 @@ def main():
         'source_sha256':sha(Path(__file__).resolve()),
         'aggregate_source':SOURCE.relative_to(ROOT).as_posix(),
         'aggregate_source_sha256':sha(SOURCE),
-        'source_overleaf_commit':'6d6394380687d64fe505f050330f9118773a2e37',
+        'source_overleaf_commit':json.loads(SOURCE.read_text())['overleaf_source_commit'],
         'physical_size_mm':[WIDTH_MM,HEIGHT_MM],
         'axes':{'x':'Delta Dynamic Degree','y':'Delta Subject c2c',
                 'units':'points on 0-100 scales, relative to six-frame committing'},

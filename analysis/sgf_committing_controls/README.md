@@ -1,6 +1,6 @@
 # SGF committing contexts: source and self-only controls
 
-We compare four committing contexts on released SGF weights. At the same 9-frame read count, Commit Forcing improves
+We compare four committing contexts on released SGF weights. At the same 9-frame read count, recent-context committing improves
 Quality by **1.25 points** and clip-to-clip Subject Consistency by **4.54 points** over a context retaining the sink.
 Relative to self-only committing, neither Quality nor clip-to-clip Subject changes significantly; recent context
 reduces Dynamic Degree while improving Motion Smoothness and Temporal Flickering.
@@ -12,7 +12,7 @@ reduces Dynamic Degree while improving Motion Smoothness and Temporal Flickering
 | Group | Committing context | Latent frames read | Outputs |
 |---|---|---:|---|
 | A: Base SGF | 3 sink + 6 recent + 3 current | 12 | Existing seed-0/1 comparison |
-| B: Commit Forcing | 6 recent + 3 current | 9 | Existing seed-0/1 comparison |
+| B: Recent-context control | 6 recent + 3 current | 9 | Existing seed-0/1 comparison |
 | C: Self-only | 3 current | 3 | Newly generated control |
 | D: Sink retained, equal count | 3 sink + 3 recent + 3 current | 9 | Newly generated control |
 

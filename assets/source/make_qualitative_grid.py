@@ -58,7 +58,7 @@ CASES = (
         "heading": "SGF",
         "base_arm": "SGF_N", "commit_arm": "SGF_W6",
         "configuration": "Native SGF denoising; committing reads the current 3 and immediately preceding 3 latent frames, excluding direct sink access.",
-        "visible_observation": "Base changes the church/coast composition across these samples; Recent-Context Committing retains a more similar church/coast layout.",
+        "visible_observation": "Base changes the church/coast composition across these samples; Commit Forcing retains a more similar church/coast layout.",
         "interpretation_limit": "The prompt requests a circling drone view. Composition stability alone does not establish motion quality or prompt adherence; initial rendered frames are visibly different.",
     },
     {
@@ -66,7 +66,7 @@ CASES = (
         "heading": "Context Forcing",
         "base_arm": "CF", "commit_arm": "CF_W",
         "configuration": "Native CF denoising; committing reads the current 3 and immediately preceding 3 latent frames, excluding direct sink and earlier-memory access.",
-        "visible_observation": "An external large hand is visible in Base at 120 s and multiple rake-like tools at 238 s; the Recent-Context Committing samples retain the small figure inside the sphere without that external hand.",
+        "visible_observation": "An external large hand is visible in Base at 120 s and multiple rake-like tools at 238 s; the Commit Forcing samples retain the small figure inside the sphere without that external hand.",
         "interpretation_limit": "The prompt requests the small figure raking sand inside the sphere; no external hand is requested. This readable visual contrast coincides with a negative per-video Quality change, not an overall metric improvement.",
     },
 )
@@ -116,7 +116,7 @@ def render(frame_records: list[dict]) -> dict:
             x = left + col * (frame_w + h_gap)
             txt(x + frame_w / 2, top - .075, f"{sec} s", fontsize=9.0,
                 color=MUTED, ha="center", va="center")
-        commit_label = "Recent-\ncontext"
+        commit_label = "Commit\nForcing"
         for row_index, (arm, label) in enumerate((("base", "Base"), ("commit", commit_label))):
             y = top + row_index * (frame_h + v_gap)
             txt(left - .065, y + frame_h / 2, label, fontsize=9.0,
@@ -149,17 +149,17 @@ def render(frame_records: list[dict]) -> dict:
             destination = folder / f"{STEM}.{fmt}"
             temp = folder / f".{STEM}.render.{fmt}"
             temp_paths.append(temp)
-            metadata = ({"Title": "Recent-Context Committing: paired 240-second qualitative cases", "CreationDate": None,
+            metadata = ({"Title": "Commit Forcing: paired 240-second qualitative cases", "CreationDate": None,
                          "ModDate": None} if fmt == "pdf" else
-                        {"Title": "Recent-Context Committing: paired 240-second qualitative cases", "Date": None} if fmt == "svg" else None)
+                        {"Title": "Commit Forcing: paired 240-second qualitative cases", "Date": None} if fmt == "svg" else None)
             fig.savefig(temp, format=fmt, dpi=300, metadata=metadata)
             temp.replace(destination)
     finally:
         plt.close(fig)
         for temp in temp_paths:
             temp.unlink(missing_ok=True)
-    return {"method_name": "Recent-Context Committing", "visible_method_label": "Recent-context",
-            "visible_commit_row_labels": {"sgf": "Recent-context (6 frames)", "cf": "Recent-context (6 frames)"},
+    return {"method_name": "Commit Forcing", "visible_method_label": "Commit Forcing",
+            "visible_commit_row_labels": {"sgf": "Commit Forcing (6 frames)", "cf": "Commit Forcing (6 frames)"},
             "case_role": {"sgf": "Adopted current-plus-previous six-frame method, actual SGF_W6 output", "cf": "Adopted current-plus-previous committing"},
             "model_label_placement": "Left outer column, vertical, centered across each pair of rows",
             "figure_size_inches": [width, height], "frame_bounds": positions,

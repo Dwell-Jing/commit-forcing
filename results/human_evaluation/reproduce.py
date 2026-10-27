@@ -10,7 +10,7 @@ def main():
     parser.add_argument("--summary", type=Path, default=Path(__file__).with_name("summary.json"))
     args = parser.parse_args()
     summary = json.loads(args.summary.read_text())
-    print("Comparison/criterion\tCF\tOther\tTie\tWin share")
+    print("Comparison/criterion\tAdapted\tOther\tTie\tWin share")
     for name, result in summary["results"].items():
         wins, losses, ties = (result[k] for k in ("cf", "other", "tie"))
         expected = result["prompts"] * result["response_units"]

@@ -1,10 +1,9 @@
 # Results
 
-Scores ×100 unless stated otherwise. **Base** is the original generator. **Recent-context** in the current main evaluation means
-**Recent-Context Committing**: the clean current block plus stored KV of the immediately preceding block,
+Scores ×100 unless stated otherwise. **Base** is the original generator. **Commit Forcing** in the current main evaluation uses
+the clean current block plus stored KV of the immediately preceding block,
 3 + 3 latent frames after startup. Base denoising, cache storage and update remain in place. Other history is
 excluded from direct committing access but can still influence the generated block and preceding-block KV.
-Repository and CLI names retain their existing spelling for compatibility.
 
 **Δ** is the paired difference over prompts with its 95% bootstrap interval (4,000 draws); `*` marks an interval
 excluding 0. Differences are computed before rounding. **Consistency** is VBench-Long's clip-to-clip Subject
@@ -14,7 +13,7 @@ without an RF-trained checkpoint. Wider-context studies are labelled as supporti
 
 [Full VBench](#full-vbench) · [ID-Forcing framework comparisons](#id-forcing-framework-comparisons) ·
 [MovieGen 60 s](#60-s-videos) · [Longer videos](#longer-videos) · [Committing controls](#committing-controls) ·
-[Current six-frame custom-prompt results](#current-six-frame-custom-prompt-results) · [Window mechanisms](#window-mechanisms) · [Committing variants](#committing-variants) ·
+[Current six-frame custom-prompt results](#current-six-frame-custom-prompt-results) · [Committing window](#committing-window) · [Committing variants](#committing-variants) ·
 [KV construction](#kv-construction-controls) · [Transfer boundaries](#transfer-boundaries) ·
 [Human evaluation](results/human_evaluation/README.md) · [Quality and cost](analysis/quality_cost/README.md) ·
 [per-video data and commands](results/README.md) · [← Home](README.md)
@@ -31,7 +30,7 @@ and immediately preceding blocks. SGF+ uses its official 12-frame physical confi
 <table>
 <thead>
 <tr><th rowspan="2" align="left">Model</th><th colspan="3">Quality</th><th colspan="3">Total</th></tr>
-<tr><th>Base</th><th>Recent-context</th><th>Δ</th><th>Base</th><th>Recent-context</th><th>Δ</th></tr>
+<tr><th>Base</th><th>Commit Forcing</th><th>Δ</th><th>Base</th><th>Commit Forcing</th><th>Δ</th></tr>
 </thead>
 <tbody>
 <tr><td>Context Forcing</td><td align="right">84.79</td><td align="right">85.25</td><td align="right"><b>+0.46</b></td><td align="right">82.24</td><td align="right">82.68</td><td align="right"><b>+0.44</b></td></tr>
@@ -58,7 +57,7 @@ provide point-estimate checks for the current method and full bootstrap replay f
 
 **Context Forcing — 6-frame committing**
 
-| Metric | Base | Recent-context | Δ [95% CI] |
+| Metric | Base | Commit Forcing | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 84.79 | 85.25 | +0.46* [+0.09, +0.85] |
 | Semantic | 72.03 | 72.41 | +0.38 [−0.49, +1.25] |
@@ -82,7 +81,7 @@ provide point-estimate checks for the current method and full bootstrap replay f
 
 **Rolling Sink — 6-frame committing**
 
-| Metric | Base | Recent-context | Δ [95% CI] |
+| Metric | Base | Commit Forcing | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 84.84 | 85.25 | +0.41* [+0.15, +0.69] |
 | Semantic | 75.13 | 75.31 | +0.17 [−0.53, +0.88] |
@@ -106,7 +105,7 @@ provide point-estimate checks for the current method and full bootstrap replay f
 
 **RF-TF † — 6-frame committing**
 
-| Metric | Base | Recent-context | Δ [95% CI] |
+| Metric | Base | Commit Forcing | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 84.77 | 85.42 | +0.65* [+0.27, +1.01] |
 | Semantic | 72.10 | 75.00 | +2.90* [+1.97, +3.82] |
@@ -130,7 +129,7 @@ provide point-estimate checks for the current method and full bootstrap replay f
 
 **LongLive — 6-frame committing**
 
-| Metric | Base | Recent-context | Δ [95% CI] |
+| Metric | Base | Commit Forcing | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 84.70 | 84.99 | +0.29* [+0.05, +0.52] |
 | Semantic | 76.43 | 76.84 | +0.41 [−0.09, +0.91] |
@@ -154,7 +153,7 @@ provide point-estimate checks for the current method and full bootstrap replay f
 
 **SGF+ — 6-frame committing**
 
-| Metric | Base | Recent-context | Δ [95% CI] |
+| Metric | Base | Commit Forcing | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 86.32 | 86.63 | +0.32 [−0.15, +0.81] |
 | Semantic | 76.22 | 76.66 | +0.45 [−0.20, +1.13] |
@@ -178,7 +177,7 @@ provide point-estimate checks for the current method and full bootstrap replay f
 
 **SGF — 6-frame committing**
 
-| Metric | Base | Recent-context | Δ [95% CI] |
+| Metric | Base | Commit Forcing | Δ [95% CI] |
 |:---|---:|---:|:---|
 | Quality | 86.06 | 87.33 | +1.27* [+0.76, +1.88] |
 | Semantic | 74.99 | 74.78 | −0.21 [−1.62, +1.18] |
@@ -499,10 +498,10 @@ Neither interval excludes zero. [Original package](results/vbench_full/common946
 ## Current six-frame custom-prompt results
 
 These rollf200 comparisons use 200 paired prompts, 60-second videos and the current-plus-previous-block context.
-Each row gives Recent-context minus Base; scores and recorded intervals are ×100. The standard 946-entry suite
+Each row gives Commit Forcing minus Base; scores and recorded intervals are ×100. The standard 946-entry suite
 above uses a different prompt protocol and generator set.
 
-| Configuration | Seed | Quality: Base | Recent-context | Δ Quality [95% CI] | Δ Subject c2c [95% CI] | Δ Dynamic [95% CI] |
+| Configuration | Seed | Quality: Base | Commit Forcing | Δ Quality [95% CI] | Δ Subject c2c [95% CI] | Δ Dynamic [95% CI] |
 |:---|--:|--:|--:|:---|:---|:---|
 | SGF | 0 | 83.58 | 84.51 | +0.93* [+0.55, +1.30] | +4.76* [+3.79, +5.73] | +11.33* [+6.53, +15.98] |
 | RF-TF | 0 | 82.01 | 82.43 | +0.42* [+0.18, +0.66] | +6.36* [+5.46, +7.24] | −3.92* [−6.75, −1.17] |
@@ -522,7 +521,7 @@ On SGF, a descriptive regression adjustment for paired Dynamic Degree difference
 at 60 seconds gives a seed-0 intercept of +4.87 [+3.89, +5.95], using 2,000 prompt-bootstrap draws. This is an
 adjusted estimate from existing paired videos, rather than an experiment holding motion fixed or a statistic
 from the 946-entry standard suite.
-[Aggregate records, base and recent-context consistency scores, and the separate CF sink-exclusion component](results/current6_custom/README.md).
+[Aggregate records, base and Commit Forcing consistency scores, and the separate CF sink-exclusion component](results/current6_custom/README.md).
 
 ## Committing controls
 
@@ -620,7 +619,7 @@ The plateau may partly reflect indirect dependencies already carried in precedin
 preceding block changes LongLive consistency by +0.02 without a significant gain. The SGF fixed-latent propagation
 probe provides cross-model corroboration of the indirect path. Fixed-position recency controls
 support outdated-content interference in the decline. FP16, the regionally averaged sink correction, changes
-Subject c2c by −1.76 relative to recent-context committing; its separate G statistic is −2.97. Averaging preserves
+Subject c2c by −1.76 relative to Commit Forcing; its separate G statistic is −2.97. Averaging preserves
 regional information and does not remove all geometric structure.
 
 The deep-layer cache control links consistency to the recent KV used during denoising. Its G gain is not
@@ -1534,9 +1533,9 @@ The 60-second and 120-second studies use separate prompt pools and sampling prot
 
 | Comparison | Duration | Subject and scene consistency | Overall preference |
 |:---|:---:|--:|--:|
-| LongLive + Recent-Context Committing vs. LongLive | 60 s | 43% | 45% |
-| LongLive + Recent-Context Committing vs. LongLive | 120 s | 83.5% | 82.9% |
-| LongLive + Recent-Context Committing vs. ID-Forcing | 60 s | 90% | 88% |
+| LongLive + Commit Forcing vs. LongLive | 60 s | 43% | 45% |
+| LongLive + Commit Forcing vs. LongLive | 120 s | 83.5% | 82.9% |
+| LongLive + Commit Forcing vs. ID-Forcing | 60 s | 90% | 88% |
 
 The new LongLive comparison uses 30 pairs from ID-Forcing's 128 MovieGen prompts, generation seed 0, with five
 non-project assessors responding independently. Consistency counts are 111 wins, 22 losses and 17 ties; overall

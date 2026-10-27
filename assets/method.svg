@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="178mm" height="37.218182mm" viewBox="0 0 2200 460">
-<title>Recent-Context Committing: current and previous block</title>
+<title>Commit Forcing: current and previous block</title>
 <desc>The base denoising policy uses historical KV to generate the clean current block. Committing at t=0 receives that clean current block and the immediately preceding block through its KV. The nonrecent source, including sink KV and any earlier memory, remains stored and available under the base denoising policy but has no direct committing access. Separate old-cache and new-KV inputs feed the unchanged base update. Three-slab stacks and front grids are schematic and count neither latent frames nor layers. The current and immediately preceding blocks each contain three latent frames, making the committing context six latent frames once a previous block exists; the first block commits using current only. Falling diagonal strokes fade across denoising states to denote symbolic noise, not a measured magnitude. No extra model forward, new cache allocation, or eviction operation is introduced.</desc>
 <defs xmlns="http://www.w3.org/2000/svg">
 <marker id="arr-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.4" markerHeight="5.4" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#202B33" /></marker>

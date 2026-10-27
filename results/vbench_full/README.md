@@ -1,7 +1,7 @@
 # Full VBench
 
-**Current main results:** [common946: six paired generators](common946/README.md), each using Recent-Context
-Committing with the current and immediately preceding blocks (6 latent frames after startup). Updated summaries
+**Current main results:** [common946: six paired generators](common946/README.md), each using Commit Forcing
+with the current and immediately preceding blocks (6 latent frames after startup). Updated summaries
 live under [common946/current6](common946/current6/). The original eight-pair package remains a separate historical
 record, including the two 9-frame ID-Forcing framework adaptations.
 
@@ -30,4 +30,4 @@ python eval/vbench_full/compare.py --spec results/vbench_full/specs/sgf.json
 |---|---|
 | `sgf`, `sgf+rule` | SGF native denoising; Base / 9-frame recent-context control |
 | `rf`, `rf+rule` | RF-TF denoising; Base / 21-frame recent-context control |
-| `context_forcing`, `context_forcing+rule` | Context Forcing; Base / 6-frame recent-context committing |
+| `context_forcing`, `context_forcing+rule` | Context Forcing; Base / 6-frame Commit Forcing |

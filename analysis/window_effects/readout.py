@@ -78,10 +78,10 @@ def main():
     print("\nDeep-layer KV mechanism control")
     for name, metric in summary["deep_KV_confirmation"]["metrics"].items():
         check_metric(metric, name)
-    print("\nSelf-only minus full recent-context, same confirmation seeds 2/3")
+    print("\nSelf-only minus full Commit Forcing, same confirmation seeds 2/3")
     check_metric(summary["deep_KV_confirmation"]["self_only_minus_full_recent_context"], "Subject c2c")
     sink = summary["decline_controls"]["pooled_sink_variant"]
-    print("\nFP16 minus recent-context")
+    print("\nFP16 minus Commit Forcing")
     for name, metric in sink["metrics"].items():
         check_metric(metric, name)
     print("\nFP16 minus FR")

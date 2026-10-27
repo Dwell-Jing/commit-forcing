@@ -2,7 +2,7 @@
 
 <h1>What Helps Denoising Can Hurt Memory:<br>Rethinking History in Long Video Generation</h1>
 
-**Recent-Context Committing: construct new KV from the current and immediately preceding blocks.**
+**Commit Forcing: construct new KV from the current and immediately preceding blocks.**
 
 [![Paper](https://img.shields.io/badge/Paper-coming%20soon-b31b1b.svg)](#news)&nbsp;
 [![Models](https://img.shields.io/badge/models-6-orange.svg)](#supported-models)&nbsp;
@@ -34,13 +34,14 @@ Consistency on both generators. Across five configurations supporting longer his
 plateaus and then falls as the committing context expands. The plateau depends on the generator; SF with a sink
 favors a wider window.
 
-**Recent-Context Committing** preserves the base denoising policy and constructs new clean KV using the current
+Based on these findings, we propose **Commit Forcing**, a training-free rule for long video generation.
+It preserves the base denoising policy and constructs new clean KV using the current
 block and the immediately preceding block from the original generated trajectory. The current block supplies clean
 latents; the preceding block is accessed through its stored KV. With 3 latent frames per block, the committing
 context contains 6 frames after startup (3 at the first block). Direct access to other history, including sink KV, is
 excluded during committing. Base cache storage and update remain in place; earlier history can still affect new KV
-indirectly through the generated current block and the preceding block's KV. The scheme requires no training or
-additional DiT forwards. Repository names and CLI flags retain their existing spelling for compatibility.
+indirectly through the generated current block and the preceding block's KV. Commit Forcing requires no retraining or additional inference computation and can be directly applied to
+KV-cached autoregressive video generators.
 
 ## Contributions
 
@@ -57,7 +58,7 @@ additional DiT forwards. Repository names and CLI flags retain their existing sp
   ([results](#results))
 
 <p align="center">
-  <img src="assets/method.png" width="92%" alt="Recent-Context Committing: construct new KV from the current and immediately preceding blocks while preserving base denoising and storage.">
+  <img src="assets/method.png" width="92%" alt="Commit Forcing: construct new KV from the current and immediately preceding blocks while preserving base denoising and storage.">
 </p>
 
 <sub>The clean committing pass reads the current block and stored KV of the immediately preceding block: 3 + 3
@@ -66,14 +67,14 @@ latent frames. Base denoising and cache storage remain in place.</sub>
 ## Results
 
 **Main evaluation: full VBench, 60 s**, the common 946-entry suite, one video per entry (generation seed 0), all 16 dimensions.
-Each row compares the same released weights with and without Recent-Context Committing. Every adapted generator
+Each row compares the same released weights with and without Commit Forcing. Every adapted generator
 uses the current and immediately preceding blocks (6 latent frames after startup). Native denoising, sampler and
 physical-storage settings remain model-specific; prompts and scoring protocol are shared.
 
 <table>
 <thead>
 <tr><th rowspan="2" align="left">Model</th><th colspan="3">Quality</th><th colspan="3">Total</th></tr>
-<tr><th>Base</th><th>Recent-context</th><th>Δ</th><th>Base</th><th>Recent-context</th><th>Δ</th></tr>
+<tr><th>Base</th><th>Commit Forcing</th><th>Δ</th><th>Base</th><th>Commit Forcing</th><th>Δ</th></tr>
 </thead>
 <tbody>
 <tr><td>Context Forcing</td><td align="right">84.79</td><td align="right">85.25</td><td align="right"><b>+0.46</b></td><td align="right">82.24</td><td align="right">82.68</td><td align="right"><b>+0.44</b></td></tr>
@@ -85,7 +86,7 @@ physical-storage settings remain model-specific; prompts and scoring protocol ar
 </tbody>
 </table>
 
-Rows follow ascending Total with recent-context committing. Scores ×100; differences are computed before rounding.
+Rows follow ascending Total with Commit Forcing. Scores ×100; differences are computed before rounding.
 Bold Δ marks a paired 95% prompt-cluster interval excluding 0. Quality combines seven visual dimensions; Total
 also includes nine semantic dimensions. † RF-TF applies Recency Forcing's Temporal Response Bias to released
 Self-Forcing weights; it uses no RF-trained checkpoint.
@@ -101,7 +102,7 @@ The two 9-frame ID-Forcing adaptations are [separate framework comparisons](RESU
 **MovieGen, 60 s videos**, 200 fixed [MovieGen prompts](eval/prompts/README.md), generation seed 0.
 Quality combines VBench's seven visual dimensions using its official normalization and weights.
 
-| Configuration | Base | Recent-context, 6 frames | Δ Quality | Δ Consistency |
+| Configuration | Base | Commit Forcing, 6 frames | Δ Quality | Δ Consistency |
 |:---|--:|--:|--:|--:|
 | SGF | 83.58 | 84.51 | **+0.93** | **+4.76** |
 | RF-TF † | 82.01 | 82.43 | **+0.42** | **+6.36** |
@@ -146,7 +147,7 @@ LongLive uses 6-frame committing: 3 recent frames and the current 3-frame block.
 
 **Longer videos, 120–240 s**, VBench-Long Quality. Compare within each prompt set:
 
-| Model | Length | Prompts | Base | Recent-context | Δ Quality | Δ Consistency |
+| Model | Length | Prompts | Base | Adapted | Δ Quality | Δ Consistency |
 |:---|:---|:---|--:|--:|--:|--:|
 | SGF, 6 frames | 240 s | 32 MovieGen | 83.97 | 84.87 | +0.90 | **+5.42** |
 | SGF, 9-frame control | 240 s | 32 MovieGen | 83.97 | 84.69 | **+0.72** | **+5.07** |
@@ -166,9 +167,9 @@ Blinded pairwise comparisons; win rates exclude ties. Durations and sampling pro
 
 | Comparison | Duration | Subject and scene consistency | Overall preference |
 |:---|:---:|--:|--:|
-| LongLive + Recent-Context Committing vs. LongLive | 60 s | 43% | 45% |
-| LongLive + Recent-Context Committing vs. LongLive | 120 s | **83.5%** | **82.9%** |
-| LongLive + Recent-Context Committing vs. ID-Forcing | 60 s | **90%** | **88%** |
+| LongLive + Commit Forcing vs. LongLive | 60 s | 43% | 45% |
+| LongLive + Commit Forcing vs. LongLive | 120 s | **83.5%** | **82.9%** |
+| LongLive + Commit Forcing vs. ID-Forcing | 60 s | **90%** | **88%** |
 
 The 60-second study uses 18 rollf200 pairs per comparison and 3 response units from 5 people, including one joint
 response. The separate 120-second study uses 30 pairs from ID-Forcing's 128 MovieGen prompts, answered independently
@@ -179,7 +180,7 @@ All rows use current-plus-previous-block LongLive committing. The earlier SGF 9-
 ## Qualitative comparisons
 
 <p align="center">
-  <img src="assets/qualitative_grid.png" width="100%" alt="Paired SGF and Context Forcing frames at 0, 120 and 238 seconds, with base and recent-context rows.">
+  <img src="assets/qualitative_grid.png" width="100%" alt="Paired SGF and Context Forcing frames at 0, 120 and 238 seconds, with Base and Commit Forcing rows.">
 </p>
 
 Paired 240-second examples use the same prompt and initial-noise seed. Both SGF and Context Forcing use the

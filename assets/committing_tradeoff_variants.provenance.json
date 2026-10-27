@@ -1,10 +1,10 @@
 {
   "artifact": "committing_tradeoff_variants",
   "source": "assets/source/make_committing_tradeoff_variants.py",
-  "source_sha256": "9ce51ee9844dccce9436f9681f48445aee154ad374579a9bd811d297b27f0f9a",
+  "source_sha256": "9169793d6d3ae8ed791da40b228b0a3c71d92b3671cc746170b7b9ce764e38fe",
   "aggregate_source": "analysis/committing_variants/summary.json",
-  "aggregate_source_sha256": "94ab0090ad78e842bffb376a525493e138b3269000e7abd506e7c658a88da8fc",
-  "source_overleaf_commit": "6d6394380687d64fe505f050330f9118773a2e37",
+  "aggregate_source_sha256": "0d7a24b9bf4fbe08fe72237be3c621f0366ba7a82b1e3ff2add462e25be3fe20",
+  "source_overleaf_commit": "3824b58e861e33406f041e17ac884f285d0c9330",
   "physical_size_mm": [
     168,
     84
@@ -347,18 +347,18 @@
   },
   "scope": "All 27 discovery means are shown at reported coordinates. The dashed endpoint reference is not a fit or a universal causal law. Confirmation-set sharpening and its costs are reported separately.",
   "exports": {
-    "pdf": "7545098ddcf414585d42db69411c29e39b826fbfd6a8deb4a4392af2d99dc2b0",
-    "svg": "58feff1dc0defe18802561936bf262a8531af5e925856c0bd60d6eafc3a5468b"
+    "pdf": "6201733ff1f89521bcce24bcd7b733224644540b0e15f48c504844ee4ef846ad",
+    "svg": "7aac8d0bd6c3d96624200898c77f97dc345339afaec591917d71d18d222f2bd4"
   },
   "regeneration_validation": {
     "rendered_size": [
       2200,
       1101
     ],
-    "pdf_rgb_pixel_equal": false,
-    "mean_channel_difference": 1.8500608262461125,
-    "pixels_differ": 31753,
-    "svg_byte_equal": false
+    "pdf_byte_equal": true,
+    "png_pixel_equal": true,
+    "svg_geometry_style_text_equal_after_ID_normalization": true
   },
-  "regeneration_environment": "Matplotlib 3.10.0; manuscript plot exports use 3.10.8. Released PDF/SVG retain manuscript bytes."
+  "regeneration_environment": "Matplotlib 3.10.8. Released PDF/SVG retain canonical manuscript bytes.",
+  "canonical_export_commit": "caba48c3776e46a2362f18cd626d7220e930dffa"
 }

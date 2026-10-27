@@ -4,7 +4,7 @@ We pin [Context Forcing](https://arxiv.org/abs/2602.06028) at `github.com/chensh
 
 Its KV cache holds 21 latent frames: a 3-frame sink, a slow memory of up to 12 promoted keyframe copies, and a 6-frame fast window (the previous block and the block being written). After each 3-frame block is denoised, the commit pass re-encodes the clean block at timestep 0 and writes its K/V. We change only the cache rows the commit pass reads; the 4 denoising passes, the cache writes and the keyframe promotion run unchanged. The arms first differ at the commit of block 2, where the sink leaves the fast window and the first slow-memory copies can sit in it.
 
-Recent-Context Committing (`--rule on`) already uses the six-frame policy: the current clean 3-frame block and
+Commit Forcing (`--rule on`) already uses the six-frame policy: the current clean 3-frame block and
 the immediately preceding block in the fast FIFO, with no separate sink, slow-memory, or stale-slot reads. The first
 block reads only its 3 available frames. Selection happens after RoPE and preserves selected positions. The wrapper
 checks the actual 3/6-frame read sequence in every layer; storage, promotion, and denoising remain unchanged.

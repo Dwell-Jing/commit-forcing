@@ -1,12 +1,12 @@
 # Previous LongLive 12-frame committing control
 
 The main LongLive variant now commits from 6 latent frames and uses 12 physical cache frames. This archive retains
-the previous committing-12 comparison, whose Commit Forcing arm stored 15 physical frames versus the base arm's 12.
+the previous committing-12 comparison, whose recent-context arm stored 15 physical frames versus the base arm's 12.
 
 | Configuration | Quality | Semantic | Total |
 |---|---:|---:|---:|
 | Base | 84.70 | 76.43 | 83.05 |
-| Commit Forcing, 12-frame committing | 84.91 | 76.58 | 83.25 |
+| Recent-context, 12-frame control | 84.91 | 76.58 | 83.25 |
 | Paired change | +0.21 | +0.15 | +0.20 |
 
 Quality's interval spans zero; Total's interval excludes zero. The unchanged original package contains all eight

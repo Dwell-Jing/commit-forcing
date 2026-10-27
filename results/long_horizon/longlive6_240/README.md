@@ -1,4 +1,4 @@
-# LongLive: six-frame committing at 240 seconds
+# LongLive: Commit Forcing at 240 seconds
 
 128 ID-Forcing MovieGen prompts, generation seed 0, 240 seconds (960 latent frames) per video.
 Base, 6-frame and 12-frame committing retain base denoising and a **15-frame physical cache**. Denoising reads 12
@@ -13,7 +13,7 @@ Scores ×100. Quality is the seven-component VBench-Long custom-input aggregate.
 |---|---:|---:|---:|---:|
 | Base LongLive | 81.56 | 41.56 | 83.41 | 86.53 |
 | Commit Forcing, 6 frames | 81.84 | 45.38 | 85.96 | 89.12 |
-| Commit Forcing, 12-frame control | 81.84 | 45.98 | 85.36 | 88.50 |
+| Recent-context, 12-frame control | 81.84 | 45.98 | 85.36 | 88.50 |
 | ID-Forcing on LongLive | 82.18 | 58.11 | 77.75 | 82.61 |
 
 ## Paired changes

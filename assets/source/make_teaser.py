@@ -384,7 +384,8 @@ def main(draft=True):
     manifest={
         'artifact':stem, 'status':'Adopted Figure1; actual current-plus-previous six-frame SGF example',
         'source':'assets/source/make_teaser.py','source_sha256':sha(Path(__file__).resolve()),
-        'method_name':'Recent-Context Committing','canvas':[W,H],
+        'method_name':'Commit Forcing','canvas':[W,H],
+        'source_overleaf_commit':source_record['source_overleaf_commit'],
         'print_width_mm':178,'minimum_font_pt':FONT/W*178/25.4*72,
         'layout_anchors':source_record['layout_anchors'],
         'clean_latent':clean,'filmstrips':strips,'kv_sequences':sequences,

@@ -110,7 +110,7 @@ upper,glyph_records,upper_contract=build_upper_draft(upper,defs,{
     'accent':ACCENT,'accent_light':TENSOR_FILL if args.draft else ACCENT_LIGHT})
 
 svg=[f'<svg xmlns="{NS}" width="{WIDTH_MM}mm" height="{WIDTH_MM*H/W:.6f}mm" viewBox="0 0 {W} {H}">',
- '<title>Recent-Context Committing: current and previous block</title>',
+ '<title>Commit Forcing: current and previous block</title>',
  '<desc>The base denoising policy uses historical KV to generate the clean current block. Committing at t=0 receives that clean current block and the immediately preceding block through its KV. The nonrecent source, including sink KV and any earlier memory, remains stored and available under the base denoising policy but has no direct committing access. Separate old-cache and new-KV inputs feed the unchanged base update. Three-slab stacks and front grids are schematic and count neither latent frames nor layers. The current and immediately preceding blocks each contain three latent frames, making the committing context six latent frames once a previous block exists; the first block commits using current only. Falling diagonal strokes fade across denoising states to denote symbolic noise, not a measured magnitude. No extra model forward, new cache allocation, or eviction operation is introduced.</desc>',
  ET.tostring(defs,encoding='unicode'),f'<rect width="{W}" height="{H}" fill="white"/>',
  ET.tostring(upper,encoding='unicode'),'</svg>']
@@ -136,6 +136,8 @@ def sha(p):
 
 manifest={
   'artifact':STEM,
+  'method_name':'Commit Forcing',
+  'source_overleaf_commit':'3824b58e861e33406f041e17ac884f285d0c9330',
   'status':('Independent fill review of the adopted current-plus-previous rule' if args.draft else 'Canonical Figure4; current-plus-previous committing'),
   'source':'assets/source/make_method.py','source_sha256':sha(Path(__file__).resolve()),
   'physical_size_mm':[WIDTH_MM,WIDTH_MM*H/W],

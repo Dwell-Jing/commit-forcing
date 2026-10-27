@@ -37,7 +37,7 @@ scores ×100. Fused Subject is `subject_consistency`; Subject c2c is the separat
 |---|---|---:|---:|---:|---:|
 | SF + sink | sink 3 + newest 18 | 81.33 | 57.52 | 96.72 | 75.18 |
 | SF + sink | self-only (current 3) | 81.28 | 67.80 | 96.56 | 74.69 |
-| SF + sink | newest 21 trajectory frames (Commit Forcing) | 81.63 | 59.58 | 96.87 | 78.56 |
+| SF + sink | newest 21 trajectory frames (recent-context control) | 81.63 | 59.58 | 96.87 | 78.56 |
 | LongLive | sink 3 + newest 9 | 82.23 | 42.98 | 97.76 | 86.01 |
 | LongLive | self-only (current 3) | 82.73 | 53.03 | 97.69 | 86.21 |
 | LongLive | newest 12 trajectory frames (legacy control) | 82.65 | 49.38 | 97.70 | 86.93 |
@@ -95,13 +95,13 @@ the sink and the newest 18 frames; seed 0 / seed 1:
 |---|---|---|---|---|
 | sink 3 + newest 18, as the denoising passes | 81.33 / 81.35 | 57.52 / 58.22 | 75.18 / 74.71 | 80.64 / 80.31 |
 | newest 3 (the block itself) | 81.28 / – | 67.80 / – | 74.69 / – | 81.33 / – |
-| newest 21 (Commit Forcing) | 81.63 / 81.54 | 59.58 / 58.87 | 78.56 / 78.11 | 83.31 / 83.19 |
+| newest 21 (recent-context control) | 81.63 / 81.54 | 59.58 / 58.87 | 78.56 / 78.11 | 83.31 / 83.19 |
 
-The SF table uses seed 0 / seed 1. Commit Forcing − sink: Quality +0.31 [−0.30, +0.83] / +0.20 [−0.28, +0.59],
+The SF table uses seed 0 / seed 1. Recent-context control − sink: Quality +0.31 [−0.30, +0.83] / +0.20 [−0.28, +0.59],
 Consistency +3.38\* / +3.40\*, Dynamic +2.07 / +0.65. The SF self-only arm has only seed 0. LongLive has self-only and
 recent arms for both seeds, but the existing published specs contain the recent-minus-self-only contrast only for
 seed 0; no missing paired interval is inferred here. Reading only the block itself removes recent frames together
-with the sink; Commit Forcing retains recent trajectory context while excluding direct sink access.
+with the sink; the recent-context control retains trajectory context while excluding direct sink access.
 
 ## Self-only confirmation beyond 60-second rollf200
 

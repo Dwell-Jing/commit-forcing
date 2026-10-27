@@ -3,12 +3,12 @@
   "updated": "2026-10-27",
   "assets": {
     "assets/README.md": {
-      "sha256": "86048ffe05b11c81574b6bff868e1614d492e9090c24ab0f7d03c9eb67a912fa",
+      "sha256": "e23b0dbfbdb9e18c689fac13f2a7c27d93764c1287e75242740b908be5930116",
       "bytes": 8842
     },
     "assets/archive/README.md": {
-      "sha256": "e9d3eb8e85cf50ac29c779bcd17c582fb29ba3540e9e2cc81881c1b9f6e2c4f0",
-      "bytes": 964
+      "sha256": "fa67d10a8fbf7d6eea8ec63b96625bafa52d8a6415b70df0424f5df766225e71",
+      "bytes": 1158
     },
     "assets/archive/teaser_denoising_legacy.png": {
       "sha256": "fc00d576661ad43204571c6aacebd766cfaf3cbe5dad46a3a00c79f422c86c68",
@@ -71,8 +71,8 @@
       "bytes": 25932
     },
     "assets/mechanisms/README.md": {
-      "sha256": "d7e0490b8d06b75ea26855bb93cd054be5b05115ec8ccf69ac8538695a48d09f",
-      "bytes": 1447
+      "sha256": "cd138cbd3c8ed68bfe6642d45b2cff6a03c4f72902e3e3ec14f02b22a34eb33a",
+      "bytes": 1436
     },
     "assets/mechanisms/read_locus.pdf": {
       "sha256": "75e0926eaed93394e9515f8198064ce6e7a837d31ea09375ef4ffddc6c9620a6",
@@ -107,16 +107,16 @@
       "height": 460
     },
     "assets/method.provenance.json": {
-      "sha256": "ac7b6e3b1ec2d138398b8ae9b846f54509d936bbc3d43c99541c064036d54f29",
-      "bytes": 17431
+      "sha256": "1909063cf6bbe063743aa9645128b640f19643e976d726635e04c18f8a61a009",
+      "bytes": 17778
     },
     "assets/method.svg": {
-      "sha256": "37782972e91f7e68ea16bf0c81ef351071a1642b5fec3e7a85ff1e75981aac7b",
-      "bytes": 28794
+      "sha256": "c3bbd25ae8eccb81405a8f11dc810c619cbd00730d7b79e26363dfdf049d58fa",
+      "bytes": 28783
     },
     "assets/qualitative/README.md": {
-      "sha256": "bfeaf732e79702c0ffbba35b9f73ca9c3e41dac087c8e6b226cf647c79edf2c6",
-      "bytes": 5088
+      "sha256": "2170ad7eb16e1d20d206876cb155ecfb0c484b84c9398015d6f212862b23abbf",
+      "bytes": 4996
     },
     "assets/qualitative/context-forcing/comparison.mp4": {
       "sha256": "184f85b0396dc0d7211e7107bc04e2450501039a43b27116d8fa76d7e1789daa",
@@ -273,22 +273,22 @@
       "height": 369
     },
     "assets/qualitative_grid.pdf": {
-      "sha256": "a795c68d8a0bb58d9f3061f3a59bcbffc2de9c8b8dae50ff94a5edd5b8a3b8ad",
-      "bytes": 2027080
+      "sha256": "21b88b3577364798807dabcaf38e8ace0f406c4576455b0469007c5d87422876",
+      "bytes": 2026907
     },
     "assets/qualitative_grid.png": {
-      "sha256": "2d8ab3be507d5ba51a54b6a58a0da79e245e42778e5d2f967b2c63131a529e66",
-      "bytes": 3508171,
+      "sha256": "218572ac4933f36664c5fdea6f96f4108aebeb496978738ee3f25e51c1bebdeb",
+      "bytes": 3506787,
       "width": 2200,
       "height": 1625
     },
     "assets/qualitative_grid.provenance.json": {
-      "sha256": "0dfdfe2e96f28e79354e91779fe132665c3166353269d35806d9c3913fa2565e",
-      "bytes": 15374
+      "sha256": "2a962baaff2c927a5ef61c9de452b21ea849c4267d2dbc5df40678ca488445b2",
+      "bytes": 15372
     },
     "assets/qualitative_grid.svg": {
-      "sha256": "0a51a31e98ea83c6587f14bbb49c4225f644aaf6315f04508ff785ceae233db7",
-      "bytes": 3020074
+      "sha256": "a2e0e94559926ac419e363c2f0d5132443283f473a48dda1dc2435a4eda1ac9f",
+      "bytes": 3020054
     },
     "assets/sgf_committing_controls.pdf": {
       "sha256": "8533a89e724ca6ac4e7e32ea2170b8ac1b1391aa85b68349e4b0b17a43676b7d",
@@ -341,20 +341,20 @@
       "bytes": 6640
     },
     "assets/source/make_method.py": {
-      "sha256": "fa31db7d45b793f116f731611a71a13f472dac35b8c0fb32aef6ee664b8b501e",
-      "bytes": 9381
+      "sha256": "8399ee35a8f291c14bb21ee8c6394eeef034b365788bd6a805de60a8fa3bb929",
+      "bytes": 9475
     },
     "assets/source/make_qualitative_grid.py": {
-      "sha256": "ac284fe2efc5034fc79e90bb5895377f4dc402d532521d8f1574e1b7acbed82f",
-      "bytes": 10135
+      "sha256": "a7089d5944f35476223002671d1bb1c2aa46d1d358b5243b5919b8c2a9050a19",
+      "bytes": 10079
     },
     "assets/source/make_sgf_committing_controls.py": {
       "sha256": "caaf5cac5691b577be4948d3466142b0bf0317a5d95a32c534387bcf04983255",
       "bytes": 10892
     },
     "assets/source/make_teaser.py": {
-      "sha256": "31dbe3c74be7710d0213831b630064ef6d46b12fec8f497aad328b331144ad1d",
-      "bytes": 19943
+      "sha256": "3494c1546f68ed067b65f04adcb211f0e292b90d422c6b71e3a78027e78a36e3",
+      "bytes": 20006
     },
     "assets/source/method_glyphs.py": {
       "sha256": "374defd8a31b679d56e8d384adea72de9f26b6519d51094658545edd7fb32077",
@@ -445,8 +445,8 @@
       "height": 240
     },
     "assets/source/qualitative_grid_inputs/source.json": {
-      "sha256": "3f1b7ea8e788dc2a96556dba6dc617f6879952845db08ae603905b327706ff82",
-      "bytes": 9740
+      "sha256": "99259970b55a6b15dceda07c48b656d77f38ea4be47298872d265e52a0d6557b",
+      "bytes": 9746
     },
     "assets/source/teaser_drawing.py": {
       "sha256": "0168c80a88c8d6193c0e2ebbbd8568da26313b00a8d9605b93d5059b930b87de",
@@ -481,7 +481,7 @@
       "height": 240
     },
     "assets/source/teaser_inputs/source.json": {
-      "sha256": "a989a33f2a26e648da550a9b12dfc422f3c3cc163cd3009bf79caf7d0f8f4e0b",
+      "sha256": "733d4d893f5532fbd7e2864900c4b7ba8f99f491ef7eb00023fbd2be10c8037c",
       "bytes": 5583
     },
     "assets/teaser.pdf": {
@@ -495,30 +495,30 @@
       "height": 1032
     },
     "assets/teaser.provenance.json": {
-      "sha256": "246875a508f99c7661f51e92b9b79fb5c1b66e1188135abbd6e0cb7472d2c766",
-      "bytes": 56931
+      "sha256": "9f8fbb12f78b3e205e75b67b5deff7929e52c4ec6e52d895b565771568aceacc",
+      "bytes": 56923
     },
     "assets/teaser.svg": {
       "sha256": "2abd340f01f6a6e846ae936d6ed941b21dfc13de9a5cc3e731785c48145c4f66",
       "bytes": 651254
     },
     "assets/committing_tradeoff_variants.png": {
-      "sha256": "977dc847c7db238d80f426e1d643ca49b4508fcbbc9272355e64e592fc9a596c",
-      "bytes": 117000,
+      "sha256": "18d95a461668dc366ddcd19e6cb0c125c2a0fc989dc7da52bc67ec687d2ba9af",
+      "bytes": 117183,
       "width": 2200,
       "height": 1101
     },
     "assets/committing_tradeoff_variants.pdf": {
-      "sha256": "7545098ddcf414585d42db69411c29e39b826fbfd6a8deb4a4392af2d99dc2b0",
-      "bytes": 25908
+      "sha256": "6201733ff1f89521bcce24bcd7b733224644540b0e15f48c504844ee4ef846ad",
+      "bytes": 25458
     },
     "assets/committing_tradeoff_variants.svg": {
-      "sha256": "58feff1dc0defe18802561936bf262a8531af5e925856c0bd60d6eafc3a5468b",
-      "bytes": 22817
+      "sha256": "7aac8d0bd6c3d96624200898c77f97dc345339afaec591917d71d18d222f2bd4",
+      "bytes": 22818
     },
     "assets/committing_tradeoff_variants.provenance.json": {
-      "sha256": "595b7fcd2d1c1922c17488397cf2867dacad6e1a47e672bc9d5da0e53d170ee0",
-      "bytes": 7539
+      "sha256": "8a623e9b3c378a77abb02e5afaec7b6055d907678d830ae4e2922460e0777b0d",
+      "bytes": 7567
     },
     "assets/archive/sgf_nine_frame_qualitative_source.json": {
       "sha256": "9012bef46c37689a2d9ed8578475f620a1183d47f02b70860e324e370aed535c",
@@ -529,8 +529,8 @@
       "bytes": 4986
     },
     "assets/source/make_committing_tradeoff_variants.py": {
-      "sha256": "9ce51ee9844dccce9436f9681f48445aee154ad374579a9bd811d297b27f0f9a",
-      "bytes": 8830
+      "sha256": "9169793d6d3ae8ed791da40b228b0a3c71d92b3671cc746170b7b9ce764e38fe",
+      "bytes": 8844
     },
     "assets/source/qualitative_grid_inputs/sgf_p019_s0_commit6_000s.png": {
       "sha256": "1300034b26373d15a69bf4de804633cf753f268118fc448d0857428cfd70b0b4",
@@ -571,7 +571,7 @@
       "height": 1409
     },
     "assets/committing_correction_dose.provenance.json": {
-      "sha256": "d7d1fda6ceb51ec42a5e89ddbc975d263a5c2ddbf9149813c92bca3bfcd3f376",
+      "sha256": "c1c5e6f31cbd4b56d8c2c3dc5df78b453dca089f316588adc4a0a6bbb854612b",
       "bytes": 3316
     },
     "assets/source/make_committing_correction_dose.py": {
@@ -589,7 +589,7 @@
       "height": 1022
     },
     "assets/committing_window_mechanisms.provenance.json": {
-      "sha256": "10bcefaf7872c6786ea8c0d276cdaf399864daf509bb75699812865f9e0bbaf2",
+      "sha256": "602cea70406d3445c14ad6ad09fa00a675ef5a83ef5e8bcd6398b0ca59f12124",
       "bytes": 5370
     },
     "assets/committing_window_mechanisms.svg": {
@@ -704,10 +704,10 @@
     "method": {
       "manuscript_figure": "figures/method_overview",
       "publication_asset": "assets/method",
-      "pdf_svg_identity": "Byte-for-byte copies of current accepted manuscript figure exports",
+      "pdf_svg_identity": "Previously accepted computation-only layout; invisible SVG title now uses Commit Forcing. Visible PDF and PNG remain unchanged.",
       "png": "Rendered from the released PDF at 2200 pixels wide",
       "pdf_sha256": "bd71636b340139f6abc9f4233f5b76b307d8b737dce3fdf23c0fe885468ea2cb",
-      "svg_sha256": "37782972e91f7e68ea16bf0c81ef351071a1642b5fec3e7a85ff1e75981aac7b"
+      "svg_sha256": "c3bbd25ae8eccb81405a8f11dc810c619cbd00730d7b79e26363dfdf049d58fa"
     },
     "committing_impulse": {
       "manuscript_figure": "figures/committing_impulse",
@@ -730,16 +730,16 @@
       "publication_asset": "assets/qualitative_grid",
       "pdf_svg_identity": "Byte-for-byte copies of current accepted manuscript figure exports",
       "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "a795c68d8a0bb58d9f3061f3a59bcbffc2de9c8b8dae50ff94a5edd5b8a3b8ad",
-      "svg_sha256": "0a51a31e98ea83c6587f14bbb49c4225f644aaf6315f04508ff785ceae233db7"
+      "pdf_sha256": "21b88b3577364798807dabcaf38e8ace0f406c4576455b0469007c5d87422876",
+      "svg_sha256": "a2e0e94559926ac419e363c2f0d5132443283f473a48dda1dc2435a4eda1ac9f"
     },
     "committing_tradeoff_variants": {
       "manuscript_figure": "figures/committing_tradeoff_variants",
       "publication_asset": "assets/committing_tradeoff_variants",
       "pdf_svg_identity": "Byte-for-byte copies of current accepted manuscript figure exports",
       "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "7545098ddcf414585d42db69411c29e39b826fbfd6a8deb4a4392af2d99dc2b0",
-      "svg_sha256": "58feff1dc0defe18802561936bf262a8531af5e925856c0bd60d6eafc3a5468b"
+      "pdf_sha256": "6201733ff1f89521bcce24bcd7b733224644540b0e15f48c504844ee4ef846ad",
+      "svg_sha256": "7aac8d0bd6c3d96624200898c77f97dc345339afaec591917d71d18d222f2bd4"
     },
     "committing_correction_dose": {
       "manuscript_figure": "figures/committing_correction_dose",
@@ -773,7 +773,7 @@
     "canonical_matplotlib": "3.10.8"
   },
   "canonical_snapshot": {
-    "accepted_revision": "dcaa354abc61c646b1e8a130115ca7140f94a365",
+    "accepted_revision": "3824b58e861e33406f041e17ac884f285d0c9330",
     "source_scope": "Approved individual figures and aggregate records only; no full manuscript, private sidecar, new per-prompt scores or videos."
   },
   "regeneration_validation": {
@@ -782,20 +782,18 @@
         2200,
         1032
       ],
-      "pdf_rgb_pixel_equal": true,
-      "mean_channel_difference": 0.0,
-      "pixels_differ": 0,
-      "svg_byte_equal": true
+      "pdf_byte_equal": false,
+      "png_pixel_equal": true,
+      "svg_geometry_style_text_equal_after_ID_normalization": true
     },
     "method": {
       "rendered_size": [
         2200,
         460
       ],
-      "pdf_rgb_pixel_equal": true,
-      "mean_channel_difference": 0.0,
-      "pixels_differ": 0,
-      "svg_byte_equal": true
+      "pdf_byte_equal": false,
+      "png_pixel_equal": true,
+      "svg_geometry_style_text_equal_after_ID_normalization": true
     },
     "committing_content_age": {
       "rendered_size": [
@@ -822,20 +820,24 @@
         2200,
         1625
       ],
-      "pdf_rgb_pixel_equal": false,
-      "mean_channel_difference": 0.004458554778554779,
-      "pixels_differ": 190,
-      "svg_byte_equal": false
+      "pdf_byte_equal": true,
+      "png_pixel_equal": true,
+      "svg_geometry_style_text_equal_after_ID_normalization": true,
+      "matches_frozen_overleaf_pdf": true,
+      "canonical_svg_sha256": "a2e0e94559926ac419e363c2f0d5132443283f473a48dda1dc2435a4eda1ac9f",
+      "svg_source_scope": "Same canonical local export as matched PDF; SVG is not tracked in Overleaf."
     },
     "committing_tradeoff_variants": {
       "rendered_size": [
         2200,
         1101
       ],
-      "pdf_rgb_pixel_equal": false,
-      "mean_channel_difference": 1.8500608262461125,
-      "pixels_differ": 31753,
-      "svg_byte_equal": false
+      "pdf_byte_equal": true,
+      "png_pixel_equal": true,
+      "svg_geometry_style_text_equal_after_ID_normalization": true,
+      "matches_frozen_overleaf_pdf": true,
+      "canonical_svg_sha256": "7aac8d0bd6c3d96624200898c77f97dc345339afaec591917d71d18d222f2bd4",
+      "svg_source_scope": "Same canonical local export as matched PDF; SVG is not tracked in Overleaf."
     },
     "committing_correction_dose": {
       "rendered_size": [
@@ -989,7 +991,7 @@
     "provenance": "assets/committing_window_mechanisms.provenance.json",
     "data": "analysis/window_effects/summary.json",
     "manuscript_role": "Main-text Committing Window figure",
-    "source_overleaf_commit": "dcaa354abc61c646b1e8a130115ca7140f94a365",
+    "source_overleaf_commit": "3824b58e861e33406f041e17ac884f285d0c9330",
     "left_protocol": "200 rollf200 prompts,60 s,seed 0; h counts preceding blocks only",
     "right_protocol": "100-prompt outcomes; effect normalization from reported 200-prompt endpoints",
     "panels_pool_samples": false,

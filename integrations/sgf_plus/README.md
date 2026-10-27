@@ -12,7 +12,7 @@ use a 12-frame training-position range and contiguous temporal positions, while 
 cache and separate committing parameters. This entry point implements the six-frame read policy; its preserved
 21-frame/top-aligned geometry does not reproduce that complete standard-suite configuration.
 
-Recent-Context Committing uses `--commit-profile recent6` by default. The historical 9-frame control remains
+Commit Forcing uses `--commit-profile recent6` by default. The historical 9-frame control remains
 available through `--commit-profile legacy9`; choose a separate `--out` for each profile. `--rule off` keeps base
 reads, storage, and denoising regardless of the profile.
 

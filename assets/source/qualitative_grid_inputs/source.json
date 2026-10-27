@@ -49,7 +49,7 @@
       "base_arm": "CF",
       "commit_arm": "CF_W",
       "configuration": "Native CF denoising; committing reads the current 3 and immediately preceding 3 latent frames, excluding direct sink and earlier-memory access.",
-      "visible_observation": "An external large hand is visible in Base at 120 s and multiple rake-like tools at 238 s; the Recent-Context Committing samples retain the small figure inside the sphere without that external hand.",
+      "visible_observation": "An external large hand is visible in Base at 120 s and multiple rake-like tools at 238 s; the Commit Forcing samples retain the small figure inside the sphere without that external hand.",
       "interpretation_limit": "The prompt requests the small figure raking sand inside the sphere; no external hand is requested. This readable visual contrast coincides with a negative per-video Quality change, not an overall metric improvement.",
       "seed": 0,
       "prompt": "A close-up view of a glass sphere containing a tranquil Zen garden. Inside, a small Eastern dwarf with weathered skin and a serene expression is raking the sand, meticulously creating intricate patterns with a bamboo rake. His movements are deliberate and meditative, enhancing the peaceful atmosphere of the scene. The background is blurred, revealing only hints of greenery and rocks, adding to the serene setting. The sphere itself is polished, reflecting the surroundings subtly. The camera angle captures the dwarf from a slightly elevated position, emphasizing his focused and contemplative pose."
@@ -226,7 +226,7 @@
     }
   ],
   "scope": "SGF and CF on Wan-based autoregressive long-video generation; no SF or RF result is relabeled or included.",
-  "label_edit": "Both SGF and CF method rows use genuine current-plus-previous six-frame outputs. Four transparent vector circles annotate the preserved frame pixels.",
-  "source_overleaf_commit": "6d6394380687d64fe505f050330f9118773a2e37",
+  "label_edit": "Only the method name is restored to Commit Forcing. Both rows retain current-plus-previous six-frame committing; all twelve frame payloads and callouts are unchanged.",
+  "source_overleaf_commit": "3824b58e861e33406f041e17ac884f285d0c9330",
   "method_scope": "Native denoising retained; current 3 plus immediately previous 3 latent frames during committing."
 }

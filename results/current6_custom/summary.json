@@ -1,10 +1,10 @@
 {
   "schema": 1,
-  "source_overleaf_commit": "6d6394380687d64fe505f050330f9118773a2e37",
+  "source_overleaf_commit": "3824b58e861e33406f041e17ac884f285d0c9330",
   "source_sha256": {
-    "tables/rollf200_seed_results.tex": "3d580268980e34ab5b2a8d63d9a5781ea4e5a6bc2cec97a702efa6bb23b77108",
-    "tables/committing_sources_240.tex": "860320f144e795aad10d9f8232ebdcaf7eccb02ec260185644b8cc739e9848a7",
-    "appendix/result-details.tex": "ca5dae278ed1350b11aeea1be4119c2637d192fbc71c5af3e0e3143df768e914",
+    "tables/rollf200_seed_results.tex": "e0d8f003aa5584d41d5c64f38e4129ddb11ea59267d6d795d8470667a2edfdf9",
+    "tables/committing_sources_240.tex": "7cf8745f1b46aab404d214b94346c8f9acd3d1cab342f2db39fe09c9a51bc108",
+    "appendix/result-details.tex": "69c8454bccd957271846d108d5131c75bce32a1a48059143f7a19fcf2ffac12c",
     "tables/committing_window_plateaus.tex": "2dda0d99321820321aa9f4014d9e497763ce782f34b27050c5822b632841fbb2",
     "tables/sf_sink_committing_windows.tex": "961a9999190edb892df8d408ae1ad6f465925dfb44c61bace7286262c9a4aa9a",
     "tables/framewise_committing_windows.tex": "82599ea813aeb1e35c5d0959fde689679da036a06e2190a445a6f0391047be5f"
@@ -787,7 +787,7 @@
       },
       {
         "generator": "CF",
-        "configuration": "Recent-context",
+        "configuration": "Commit Forcing",
         "quality": 84.04,
         "subject_fused": 98.21,
         "background_fused": 96.87,
@@ -803,7 +803,7 @@
       },
       {
         "generator": "SGF",
-        "configuration": "Recent-context",
+        "configuration": "Commit Forcing",
         "quality": 84.87,
         "subject_fused": 98.59,
         "background_fused": 97.17,

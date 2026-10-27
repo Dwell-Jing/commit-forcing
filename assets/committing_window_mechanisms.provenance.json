@@ -3,8 +3,8 @@
   "source": "assets/source/make_committing_window_mechanisms.py",
   "source_sha256": "38587cfbca272c42cfb5e53dbaafcb075208c0f77321375a705a8783c7273b3b",
   "aggregate_source": "analysis/window_effects/summary.json",
-  "aggregate_source_sha256": "354c1cb24ba7087294319465ac22e8ac469492498dbd8d7b8db5426f0f6d4fe0",
-  "source_overleaf_commit": "dcaa354abc61c646b1e8a130115ca7140f94a365",
+  "aggregate_source_sha256": "67ec0d9f6e59bde404dad7c252d733493aa05ed182bd72b8034f8818d57f4b02",
+  "source_overleaf_commit": "3824b58e861e33406f041e17ac884f285d0c9330",
   "window_rows": [
     {
       "h": 0,
