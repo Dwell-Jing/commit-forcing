@@ -71,4 +71,4 @@ See the [window controls](../analysis/commit_window/README.md) and
 - [Human evaluation](human_evaluation/README.md).
 - [Separate denoising/committing KV construction and extra old history](../analysis/kv_construction/README.md): recorded aggregate contrasts and configurations.
 - [Released Rolling Forcing and WorldPlay transfer boundaries](../analysis/transfer_boundaries/README.md): aggregate results on their respective protocols and scales.
-- [Mechanism analyses](../README.md#mechanism-analyses).
+- [Mechanism analyses](../RESULTS.md#committing-controls).

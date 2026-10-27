@@ -5,7 +5,7 @@
 **Commit Forcing: construct new KV from the current and immediately preceding blocks.**
 
 [![Paper](https://img.shields.io/badge/Paper-coming%20soon-b31b1b.svg)](#news)&nbsp;
-[![Models](https://img.shields.io/badge/models-6-orange.svg)](#supported-models)&nbsp;
+[![Models](https://img.shields.io/badge/models-6-orange.svg)](integrations/)&nbsp;
 [![Videos](https://img.shields.io/badge/videos-60%E2%80%93240%20s-orange.svg)](RESULTS.md)&nbsp;
 [![Code](https://img.shields.io/badge/code-Apache--2.0-blue.svg)](LICENSE)
 
@@ -198,8 +198,8 @@ git clone https://github.com/Dwell-Jing/commit-forcing.git && cd commit-forcing
 bash setup/fetch.sh sgf     # upstream code at the tested commit, with our patch, in third_party/sgf
 ```
 
-Install the [tested environment](setup/README.md) and download the weights as described in each
-[integration README](#supported-models).
+Install the [tested environment](setup/README.md) and download the weights from the
+[SGF integration guide](integrations/sgf/README.md).
 
 ### 2. Generate
 
@@ -243,133 +243,3 @@ The default command validates current point estimates, normalization, component 
 frozen reported intervals; it does not recompute the updated arms' intervals. The historical profile replays the
 preserved package's paired bootstrap from public per-prompt contributions. The last command checks the supporting
 two-seed figure. Other comparisons and commands are listed in [RESULTS.md](RESULTS.md) and [results/](results/README.md).
-
-## Supported models
-
-The current main method uses the same 6-frame committing context on each of these generators. The released
-integration interfaces and historical controls are documented per model; a command reproducing a supporting
-control should retain that control's original context.
-
-| Model | Upstream code | Current main committing context |
-|:---|:---|:---|
-| [SGF](integrations/sgf/README.md) | [Self_Gradient_Forcing](https://github.com/zhuang2002/Self_Gradient_Forcing) | current block + immediately preceding block |
-| [SGF+](integrations/sgf_plus/README.md) | [Self_Gradient_Forcing_Plus](https://github.com/Zihan-Su/Self_Gradient_Forcing_Plus) | current block + immediately preceding block |
-| [Recency Forcing, training-free](integrations/recency_forcing/README.md) | [Self-Forcing](https://github.com/guandeh17/Self-Forcing) | current block + immediately preceding block |
-| [LongLive](integrations/longlive/README.md) | [LongLive](https://github.com/NVlabs/LongLive) | current block + immediately preceding block |
-| [Context Forcing](integrations/context_forcing/README.md) | [Context-Forcing](https://github.com/chenshuo20/Context-Forcing) | current block + immediately preceding block |
-| [Rolling Sink](integrations/rolling_sink/README.md) | [Rolling-Sink](https://github.com/Rolling-Sink/Rolling-Sink) | current block + immediately preceding block |
-
-[ID-Forcing](integrations/id_forcing/README.md) is retained as a separate framework comparison with 9-frame
-adaptations (6 historical + 3 current frames). On its Self-Forcing backbone, the adaptation also retains original
-handover KV and omits recurrent tail re-encoding.
-LongLive's standard-suite comparison uses 12 physical cache frames in both arms. Its custom-prompt runs retain
-15 physical frames in both arms; 12-frame committing remains a control. Recent history is defined by its original
-time in the generated trajectory; replaying an old frame into a nearby cache slot does not make it recent.
-
-## Mechanism analyses
-
-| Committing question | Analysis |
-|:---|:---|
-| How does sink access differ across stages? | [LongLive and SGF stage interventions](analysis/longlive_sink/README.md) |
-| Does the source or position of history matter? | [Source and position controls](analysis/committing_source/README.md) · [SGF equal-count control](analysis/sgf_committing_controls/README.md) |
-| Does historical age matter at a fixed context size? | [Fixed-position recency intervention](analysis/committing_content_age/README.md) |
-| Which constructed KV carries the larger generation losses? | [Separate denoising and committing caches](analysis/kv_construction/README.md) |
-| Does extra old KV during denoising reproduce the gain? | [LongLive extra-history controls](analysis/kv_construction/README.md#extra-old-kv-during-denoising) |
-| What does recent context retain over self-only? | [Continuity and motion tradeoffs](analysis/commit_window/README.md) |
-| How does recent context work within ID-Forcing? | [Cache-construction comparisons](analysis/not_ood/README.md) |
-| How many frames should the commit pass read? | [Commit window](analysis/commit_window/README.md) |
-| Why does consistency rise, plateau and decline with window size? | [Committing window and correction controls](analysis/window_effects/README.md) |
-| What contributes to the score and computational cost? | [Quality decomposition and inference measurements](analysis/quality_cost/README.md) |
-
-<p align="center">
-  <img src="assets/committing_content_age.png" width="100%" alt="At fixed committing-context size and temporal positions, mean clip-to-clip Subject Consistency decreases with historical age on SGF and LongLive.">
-</p>
-
-**Historical recency.** Both models commit with 3 historical and 3 current frames at fixed positions. Mean clip-to-clip
-Subject Consistency decreases across the tested lags of 1, 2, 4, 8 and 16 blocks. The oldest tested context loses
-0.69 points on SGF and 2.46 on LongLive relative to the newest; Dynamic Degree increases.
-[Scores, controls and protocol](analysis/committing_content_age/README.md).
-
-**KV construction.** A two-cache SGF control separates KV read by denoising (D) from history read by later committing
-(C); both KV versions are constructed using history from C. Native construction of D alone reduces Quality by
-1.12 and clip-to-clip Subject Consistency by 5.67 points relative to recent-only construction of both caches.
-Native construction of C alone changes these scores by −0.07 and −0.09, neither significant, while affecting other
-components. This control retains base denoising access and uses the earlier 9-frame recent context.
-[All four contrasts and LongLive extra-history controls](analysis/kv_construction/README.md).
-
-<p align="center">
-  <img src="assets/committing_window_mechanisms.png" width="100%" alt="Left: LongLive Subject c2c relative to one preceding block, with a separate sink-plus-recent Base reference. Right: retained correction magnitude, consistency gain and motion suppression for four spatial-averaging controls.">
-</p>
-
-**Committing window.** On 200 rollf200 prompts at 60 seconds, LongLive consistency rises from current-only
-committing to one preceding block, changes little with two, and declines with three. The left panel counts
-preceding blocks, excluding the current block. Its separate Base reference uses sink 3 + latest 9 frames
-(including the current 3), with 15-frame physical storage.
-
-In the right panel, spatial averaging retains part of the history-induced attention correction,
-its consistency gain and its suppression of motion. The horizontal axis measures the correction's norm before
-the attention output projection. Four spatial-averaging controls support a smoothing interpretation of the
-consistency–motion tradeoff. SG16 departs from equal retention, preserving 0.42 of the consistency gain and 0.61
-of the motion suppression. A separate deep-layer cache control links consistency to the recent KV used during
-denoising. It serves as a mechanistic control: G shows no significant improvement, and the Temporal Flickering
-score decreases.
-
-Adding a second preceding block gives only a 0.02-point consistency change on LongLive, without a significant
-gain. Earlier dependencies can already travel through the preceding block's KV, which may reduce the benefit of
-reading older blocks again. The fixed-latent SGF propagation probe offers cross-model corroboration of this
-indirect path. Wider-window declines are consistent with interference from outdated content:
-fixed-size recency controls and regionally averaged sink corrections retain consistency losses.
-[Window scores, panel protocols, normalization and deep-layer KV control](analysis/window_effects/README.md).
-
-The supporting 9-frame [SGF equal-count control](analysis/sgf_committing_controls/README.md) compares 2 nine-frame contexts within the
-same physical cache. Recent context improves Quality by 1.25 and clip-to-clip Subject by 4.54 points over sink plus recent.
-Relative to self-only, it improves smoothness and flicker while reducing Dynamic Degree, with no significant Quality
-or long-range Subject advantage. [Window comparisons](analysis/commit_window/README.md).
-
-Supplementary observations: [fixed-latent KV propagation](analysis/committing_propagation/README.md),
-[switching the committing context](analysis/commit_switch/README.md) and
-[SGF + RF-TF compatibility](RESULTS.md#sgf-rf-compatibility).
-[All 27 committing variants, scatter and separate confirmations](analysis/committing_variants/README.md) remain available.
-[DINOv2 Own/Sibling components](analysis/similarity_components/README.md) separate the appearance-similarity terms.
-
-### Transfer boundaries
-
-Released **Rolling Forcing** retains better clip-to-clip consistency with its native 21-frame recent context than
-with 6 frames. This is separate from the training-free Recency Forcing reproduction (RF-TF) in the main table.
-On **WorldPlay**, restricting older-context access during joint context re-encoding worsens some temporal measures
-at the default budget and lowers return similarity at the larger tested budget. Denoising still reads the constructed
-memory KV. [Protocols, aggregate results and intervals](analysis/transfer_boundaries/README.md).
-
-### Independent denoising studies
-
-[Step, layer and content interventions](analysis/read_locus/README.md),
-[SGF boundary controls](analysis/boundaries/sgf/README.md) and the [historical mechanism figure](assets/mechanisms/README.md)
-belong to the separate distant-history reading study. Their data, code, negative results and visual costs remain
-available. [Diagnostic metrics](analysis/metrics/README.md) defines the associated identity, color and motion readouts.
-
-## Scope
-
-We evaluate released Wan-based generators with persistent KV and a clean committing pass. Longer-history scans
-show consistency plateaus and declines on LongLive, RF-TF, Rolling Sink, SF with a sink and framewise SGF. SF with
-a sink favors 9–12 frames. Framewise SGF uses one-frame blocks, so its six-frame diagnostic spans six blocks.
-The main method fixes the context to the current and immediately preceding blocks. Training the committing
-rule and learned context selection are future work. The separate Rolling Forcing and WorldPlay tests characterize
-limits of shorter contexts and transfer to joint context re-encoding.
-
-## Read more
-
-| | |
-|---|---|
-| **[RESULTS.md](RESULTS.md)** | every result table: 60 s (2 seeds), full VBench, 120 s and 240 s |
-| [results/](results/README.md) | per-video score CSVs, table specs and exact outputs |
-| [eval/vbench_long](eval/vbench_long/README.md) · [eval/vbench_full](eval/vbench_full/README.md) | the two evaluation pipelines |
-| [analysis/](#mechanism-analyses) | the mechanism studies, their data and generators |
-| [assets/qualitative](assets/qualitative/README.md) | paired early / late frames and comparison videos |
-| [setup/](setup/README.md) | fetching upstream code and the tested environment |
-| [NOTICE](NOTICE) | upstream projects and their licenses |
-
-## License
-
-Code is Apache-2.0 ([LICENSE](LICENSE)), except `integrations/rolling_sink` (Adobe Research License) and
-`integrations/context_forcing` (CC BY-NC-SA 4.0), which are for non-commercial research ([NOTICE](NOTICE)).
-Questions: open an [issue](https://github.com/Dwell-Jing/commit-forcing/issues).
