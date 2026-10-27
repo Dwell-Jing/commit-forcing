@@ -46,8 +46,8 @@ and immediately preceding blocks. SGF+ uses its official 12-frame physical confi
 Rows follow ascending adapted Total. Bold Δ marks a paired 95% interval excluding 0. On this 60-second standard
 suite, Quality and Total improve significantly on 5 of 6 generators; all six point estimates are positive.
 RF-TF has the largest Total increase, +1.10 points. SGF has the largest Quality increase, +1.27 points.
-On the separate 200-prompt rollf200 evaluation, SGF's estimated Subject c2c gain after descriptive regression
-adjustment is +4.87 points. The adjustment uses paired Dynamic Degree differences; its protocol and interval are recorded below.
+On the separate 200-prompt rollf200 evaluation, SGF's raw Subject c2c gain is +4.76 points. The estimate after
+descriptive regression adjustment is +4.87 points. The adjustment uses paired Dynamic Degree differences; its protocol and interval are recorded below.
 Standard-suite intervals use 4,000 paired draws over 944 original-prompt clusters, retaining each arm's official surviving-record
 weights, including its own Flickering filter and omitted Color records.
 Current intervals are frozen as reported. The [current source summaries and historical raw package](results/vbench_full/common946/README.md)

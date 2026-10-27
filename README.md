@@ -90,7 +90,7 @@ also includes nine semantic dimensions. † RF-TF applies Recency Forcing's Temp
 Self-Forcing weights; it uses no RF-trained checkpoint.
 On the 60-second standard suite, Quality and Total improve significantly on 5 of 6 generators. RF-TF has the
 largest Total gain, +1.10 points, and SGF has the largest Quality gain, +1.27. On the separate 200-prompt rollf200
-evaluation, SGF's estimated clip-to-clip Subject gain is +4.87 points after descriptive regression adjustment for
+evaluation, SGF's raw clip-to-clip Subject gain is +4.76 points; the estimate is +4.87 after descriptive regression adjustment for
 paired Dynamic Degree differences. This estimate comes from the paired videos, rather than an experiment with
 motion held fixed. In the standard-suite Quality decomposition, Dynamic Degree contributes +1.01 points;
 Motion Smoothness decreases by 0.29 points.
