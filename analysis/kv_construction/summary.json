@@ -1,18 +1,135 @@
 {
   "export_kind": "reported aggregate values only",
-  "overleaf_source_commit": "aa824d948a805ba903da04dbe39473633b257309",
-  "export_date": "2026-10-26",
+  "export_date": "2026-10-30",
   "statistics_recomputed": false,
   "per_prompt_values_included": false,
   "interval_precision": "Intervals retain the displayed source precision; significance retains the original reported decision.",
   "source_sha256": {
-    "appendix/committing-pathways.tex": "090de678b5a23519a7ab06f24f496600fbb68bdabb6212a96792dd51d35c5fcc",
-    "tables/sgf_cache_pathways.tex": "bbff6dcb7f7d16cd4e967fd537a216e672f520e1e3b8011823ac305bb27d2536",
-    "tables/extra_old_history.tex": "bc8ef4796b0694f86182b5e2b5035b207b8ceaa99be10eb1ee4f0adcaf6ad4aa"
+    "main.tex": "43c7631fde0071c9d8479b335d13763c24e98715a36dbde361df9631214b066a",
+    "appendix/committing-pathways.tex": "e3d2c9d0eba44122601a56dfce634901408083ec862b9abeb80c95b02706490c",
+    "tables/sgf_cache_pathways.tex": "1a1d3cf075ed3e5029de77cf8b5b08351bf6dbc33b58a461a31386df2ec7a051",
+    "tables/extra_old_history.tex": "1303f654c3f88f30af56a34e107b5e566f379a4c4d23cdb5713e7ff82a5e5b0e"
   },
   "experiments": [
     {
       "id": "sgf_split_cache",
+      "scale": "0-100 score points",
+      "protocol": {
+        "prompts": "rollf200 indices 0-99",
+        "prompt_count": 100,
+        "seconds": 60,
+        "generation_seed": 0,
+        "bootstrap_draws": 4000,
+        "bootstrap_unit": "prompt",
+        "physical_frames_per_cache": 12,
+        "reference": "D=N12, C=N12 (base SGF)",
+        "D": "KV directly consumed by denoising with its base read policy",
+        "C": "historical KV used to construct both cache entries during subsequent committing",
+        "policies": {
+          "N12": "3 sink + 6 recent + 3 current",
+          "R9": "6 recent + 3 current",
+          "S3": "3 current"
+        },
+        "reference_predates_six_frame_main_method": true
+      },
+      "contrasts": [
+        {
+          "label": "D=R9, C=R9 minus D=N12, C=N12",
+          "metrics": {
+            "Quality": {
+              "delta": 0.59,
+              "interval_95": [
+                0.16,
+                1.04
+              ],
+              "reported_interval_excludes_zero": true
+            },
+            "Dynamic Degree": {
+              "delta": 10.37,
+              "interval_95": null,
+              "reported_interval_excludes_zero": true
+            },
+            "Subject c2c": {
+              "delta": 3.98,
+              "interval_95": null,
+              "reported_interval_excludes_zero": true
+            }
+          }
+        },
+        {
+          "label": "D=R9, C=N12 minus D=N12, C=N12",
+          "metrics": {
+            "Quality": {
+              "delta": 0.52,
+              "interval_95": [
+                0.11,
+                0.95
+              ],
+              "reported_interval_excludes_zero": true
+            },
+            "Dynamic Degree": {
+              "delta": 8.73,
+              "interval_95": null,
+              "reported_interval_excludes_zero": true
+            },
+            "Subject c2c": {
+              "delta": 3.89,
+              "interval_95": null,
+              "reported_interval_excludes_zero": true
+            }
+          }
+        },
+        {
+          "label": "D=N12, C=R9 minus D=N12, C=N12",
+          "metrics": {
+            "Quality": {
+              "delta": -0.53,
+              "interval_95": [
+                -0.75,
+                -0.31
+              ],
+              "reported_interval_excludes_zero": true
+            },
+            "Dynamic Degree": {
+              "delta": -3.47,
+              "interval_95": null,
+              "reported_interval_excludes_zero": true
+            },
+            "Subject c2c": {
+              "delta": -1.69,
+              "interval_95": null,
+              "reported_interval_excludes_zero": true
+            }
+          }
+        },
+        {
+          "label": "D=R9, C=S3 minus D=N12, C=N12",
+          "metrics": {
+            "Quality": {
+              "delta": 0.54,
+              "interval_95": [
+                0.18,
+                0.93
+              ],
+              "reported_interval_excludes_zero": true
+            },
+            "Dynamic Degree": {
+              "delta": 12.47,
+              "interval_95": null,
+              "reported_interval_excludes_zero": true
+            },
+            "Subject c2c": {
+              "delta": 0.99,
+              "interval_95": null,
+              "reported_interval_excludes_zero": false
+            }
+          }
+        }
+      ],
+      "readout_status": "Current manuscript readout; same experiment as the archived R9/R9-reference readout."
+    },
+    {
+      "id": "sgf_split_cache_alternate_reference",
       "scale": "0-100 score points",
       "protocol": {
         "prompts": "rollf200 indices 0-99",
@@ -140,7 +257,17 @@
             }
           }
         }
-      ]
+      ],
+      "readout_status": "Archived alternate-reference readout of the same experiment; not a new experiment.",
+      "reported_source": {
+        "overleaf_source_commit": "aa824d948a805ba903da04dbe39473633b257309",
+        "export_date": "2026-10-26",
+        "source_sha256": {
+          "appendix/committing-pathways.tex": "090de678b5a23519a7ab06f24f496600fbb68bdabb6212a96792dd51d35c5fcc",
+          "tables/sgf_cache_pathways.tex": "bbff6dcb7f7d16cd4e967fd537a216e672f520e1e3b8011823ac305bb27d2536",
+          "tables/extra_old_history.tex": "bc8ef4796b0694f86182b5e2b5035b207b8ceaa99be10eb1ee4f0adcaf6ad4aa"
+        }
+      }
     },
     {
       "id": "longlive_extra_old_kv",
@@ -369,5 +496,11 @@
         "Subject c2c": 1.0
       }
     }
-  ]
+  ],
+  "source_snapshot": {
+    "kind": "canonical manuscript working tree",
+    "snapshot_date": "2026-10-30",
+    "note": "Source content is identified by SHA-256, not by an Overleaf commit."
+  },
+  "reference_change_note": "The current native N12/N12-reference table and archived R9/R9-reference table describe the same SGF split-cache experiment. All values and intervals are transcribed from their respective source presentations, not obtained by subtracting rounded summaries or combining confidence intervals."
 }

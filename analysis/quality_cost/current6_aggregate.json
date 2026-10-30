@@ -1,0 +1,135 @@
+{
+  "export_kind": "reported aggregate values only",
+  "export_date": "2026-10-30",
+  "statistics_recomputed": false,
+  "per_prompt_values_included": false,
+  "source_snapshot": {
+    "kind": "canonical manuscript working tree",
+    "snapshot_date": "2026-10-30",
+    "note": "Source content is identified by SHA-256, not by an Overleaf commit."
+  },
+  "source_sha256": {
+    "tables/computational_cost.tex": "e48cb5168eea172f732686be9cf274719c85ed041b402a92bdc4cf6576feafe9",
+    "appendix/result-details.tex": "ebfefd286febeb441e7e2aa3c3a499c6d73707f368feb7378dfa05ab308bf01f"
+  },
+  "protocol": {
+    "gpu": "NVIDIA H20",
+    "dedicated_node_count": 1,
+    "video_seconds": 60,
+    "suite_prompt_indices": [
+      0,
+      1
+    ],
+    "warmup_prompt_index": 0,
+    "timed_prompt_index": 1,
+    "warmup_videos_per_condition": 1,
+    "timed_videos_per_condition": 1,
+    "pair_execution": "concurrent on neighbouring GPUs of the dedicated node",
+    "wall_time_units": "seconds",
+    "wall_time_includes": "VAE decoding",
+    "wall_time_excludes": "model loading",
+    "peak_memory_units": "GiB",
+    "peak_memory_sampling": "nvidia-smi once per second during the two-video run",
+    "peak_memory_includes": [
+      "weights",
+      "activations",
+      "allocator cache",
+      "CUDA context"
+    ],
+    "committing_context_latent_frames": 6,
+    "committing_context": "current clean 3-frame block and preceding block stored KV",
+    "all_rows_same_measurement_round": true,
+    "id_forcing_scope": "6-frame timing adaptations; the separate quality comparisons use 9-frame committing contexts",
+    "comparison_scope": "Separate measurement round from the historical 9/21-frame and LongLive four-repeat results; no pooling across rounds."
+  },
+  "measurements": [
+    {
+      "configuration": "SGF",
+      "wall_seconds": {
+        "base": 218.1,
+        "commit_forcing": 211.0
+      },
+      "peak_device_memory_gib": {
+        "base": 46.2,
+        "commit_forcing": 46.2
+      }
+    },
+    {
+      "configuration": "SGF+",
+      "wall_seconds": {
+        "base": 220.5,
+        "commit_forcing": 212.9
+      },
+      "peak_device_memory_gib": {
+        "base": 49.0,
+        "commit_forcing": 49.0
+      }
+    },
+    {
+      "configuration": "RF-TF",
+      "wall_seconds": {
+        "base": 287.4,
+        "commit_forcing": 269.0
+      },
+      "peak_device_memory_gib": {
+        "base": 48.9,
+        "commit_forcing": 48.9
+      }
+    },
+    {
+      "configuration": "Context Forcing",
+      "wall_seconds": {
+        "base": 158.4,
+        "commit_forcing": 146.9
+      },
+      "peak_device_memory_gib": {
+        "base": 26.2,
+        "commit_forcing": 26.2
+      }
+    },
+    {
+      "configuration": "LongLive",
+      "wall_seconds": {
+        "base": 229.2,
+        "commit_forcing": 224.1
+      },
+      "peak_device_memory_gib": {
+        "base": 47.0,
+        "commit_forcing": 47.0
+      }
+    },
+    {
+      "configuration": "Rolling Sink",
+      "wall_seconds": {
+        "base": 269.6,
+        "commit_forcing": 252.4
+      },
+      "peak_device_memory_gib": {
+        "base": 49.1,
+        "commit_forcing": 54.7
+      }
+    },
+    {
+      "configuration": "IDF-SF",
+      "wall_seconds": {
+        "base": 225.9,
+        "commit_forcing": 212.4
+      },
+      "peak_device_memory_gib": {
+        "base": 29.1,
+        "commit_forcing": 29.9
+      }
+    },
+    {
+      "configuration": "IDF-LL",
+      "wall_seconds": {
+        "base": 220.4,
+        "commit_forcing": 226.1
+      },
+      "peak_device_memory_gib": {
+        "base": 31.8,
+        "commit_forcing": 31.8
+      }
+    }
+  ]
+}

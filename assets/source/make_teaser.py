@@ -20,6 +20,9 @@ FIG = Path(os.environ.get('FIGURE_OUTPUT_DIR', ROOT / 'assets'))
 PREVIEW = FIG
 W, H = 3200, 1500
 FONT = 54
+HISTORICAL_KV_LABEL = 'Historical KV'
+PREVIOUS_KV_LABEL = 'Previous KV'
+CLEAN_LABEL_DX = 16
 # Exact native-shape coordinates from the user's 2026-10-21 PowerPoint edits.
 # Brackets include the current clean input; unedited vertical arrows stay put.
 COMMITTING_BRACKETS = {
@@ -156,9 +159,9 @@ def filmstrip(d,x,y,width,name,labels=False,masked_indices=(),noisy_current=Fals
         rects.append([xx,yy,cell,height])
     d.items.append('</g>')
     if labels:
-        d.text(rects[0][0]+cell/2,y-50,'Nonrecent',FONT,MUTED,'middle')
-        d.text((rects[1][0]+rects[2][0]+cell)/2,y-50,'Recent',FONT,BLUE,'middle')
-        d.text(rects[3][0]+cell/2,y-50,'Current',FONT,ACCENT,'middle')
+        history_center=(rects[0][0]+rects[2][0]+cell)/2
+        d.text(history_center,y-50,HISTORICAL_KV_LABEL,FONT,MUTED,'middle')
+        d.text(rects[3][0]+cell/2,y-50,'Noise',FONT,ACCENT,'middle')
     return {'id':name,'rect':[x,y,width,total],'cell_rects':rects,
             'roles':list(roles),'masked_indices':list(masked_indices),
             'noisy_current':noisy_current,'current_is_live_input_not_historical_KV':True,
@@ -208,7 +211,7 @@ def photo(d,key,x,y,width=610):
             'display_rect':[x,y,width,height],'source_frame_size':[416,240],
             'display_crop_xywh':roi,'same_crop_for_both_arms':True,
             'pixels_repainted_or_generated':False,
-            'crop_reason':'Tighter subject framing; removes the original upper-left illuminated shop sign from both display windows',
+            'crop_reason':'Fixed horizontal crop shared by both arms; no scene retouching.',
             'seconds':238,'prompt':0,'seed':0}
 
 
@@ -311,7 +314,7 @@ def new_kv(d,arm,x,cy,stage,marked):
             'label_position':'Immediately below the first front face' if stage==0 else None,
             'front_grid':[5,3],'grid_count_is_symbolic':True,
             'first_glyph_has_merged_label_cell':False,'overlay':overlay,
-            'blank_means':'No depicted direct Nonrecent source influence; not zero-valued KV or zero total drift',
+            'blank_means':'No depicted direct influence from additional older-history reads during committing; not zero-valued KV or zero total drift',
             'marks_mean':'Illustrative source-dependent influence carried through subsequent committing; not area-coded data'}
 
 
@@ -330,7 +333,7 @@ def main(draft=True):
     d.rect(350,690,340,120,INK,2,'white')
     d.text(520,773,'Denoising',FONT,INK,'middle')
     _arrow(d,520,830,520,900,INK,2.7)
-    clean=tensor(d,360,1000,320,'Clean latent')
+    clean=tensor(d,360,1000,320,'Clean block')
     line(d,'M715 1000 H1040 M1040 500 V1220',INK,2.7)
     _arrow(d,1040,500,1250,500,INK,2.7)
     _arrow(d,1040,1220,1250,1220,INK,2.7)
@@ -347,10 +350,11 @@ def main(draft=True):
         strip=filmstrip(d,1050,fy,1080,name,masked_indices=off)
         strips.append(strip)
         recent_center=strip['cell_rects'][2][0]+strip['cell_rects'][2][2]/2
+        history_label = HISTORICAL_KV_LABEL if name=='nonrecent' else PREVIOUS_KV_LABEL
         d.text(1450 if name=='nonrecent' else recent_center,fy-45,
-               'Nonrecent + Recent' if name=='nonrecent' else 'Recent',FONT,INK,'middle')
+               history_label,FONT,INK,'middle')
         current=strip['cell_rects'][3]
-        d.text(current[0]+current[2]/2,fy-45,'Current',FONT,ACCENT,'middle')
+        d.text(current[0]+current[2]/2+CLEAN_LABEL_DX,fy-45,'Clean block',FONT,ACCENT,'middle')
         by=selection_bracket(d,strip,name=='recent')
         _arrow(d,1450 if name=='nonrecent' else recent_center,by+10,1450,cy-85,
                BLUE if name=='recent' else MUTED,2.7)
@@ -385,7 +389,8 @@ def main(draft=True):
         'artifact':stem, 'status':'Adopted Figure1; actual current-plus-previous six-frame SGF example',
         'source':'assets/source/make_teaser.py','source_sha256':sha(Path(__file__).resolve()),
         'method_name':'Commit Forcing','canvas':[W,H],
-        'source_overleaf_commit':source_record['source_overleaf_commit'],
+        'photo_source_overleaf_commit':source_record['source_overleaf_commit'],
+        'manuscript_asset':{'version':'2026-10-30 manuscript assets','source':'figures/opening_teaser.svg','source_svg_sha256':'f3754e6988a567da4ecc831df68555cd1b0f33ec15328470169ca42092830d19'},
         'print_width_mm':178,'minimum_font_pt':FONT/W*178/25.4*72,
         'layout_anchors':source_record['layout_anchors'],
         'clean_latent':clean,'filmstrips':strips,'kv_sequences':sequences,

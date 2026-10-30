@@ -52,6 +52,8 @@ def load_points():
 
 def main():
     apply_style()
+    plt.rcParams.update({'mathtext.fontset': 'custom', 'mathtext.rm': 'Arial',
+                         'mathtext.it': 'Arial:italic', 'mathtext.bf': 'Arial:bold'})
     data, source_files = load_points()
     width, height = 86 / 25.4, 46 / 25.4
     fig = plt.figure(figsize=(width, height))
@@ -67,8 +69,8 @@ def main():
     age_axis.xaxis.set_major_locator(FixedLocator(AGES))
     age_axis.xaxis.set_major_formatter(ScalarFormatter())
     age_axis.xaxis.set_minor_locator(NullLocator())
-    age_axis.set_xlabel("History lag (blocks)", fontsize=10, labelpad=6)
-    age_axis.set_ylabel("Subject c2c", fontsize=10, labelpad=7)
+    age_axis.set_xlabel(r"Lag $d$ (blocks)", fontsize=10, labelpad=6)
+    age_axis.set_ylabel(r"Subject$_{\mathrm{c2c}}$", fontsize=10, labelpad=7)
     legend_handles = []
     for label, _, color, marker, linestyle in SERIES:
         record = data[label]
@@ -91,10 +93,10 @@ def main():
         "figure": "committing_content_age",
         "experiment": "rollf200 prompts 0--99, 60 s, generation seed 0",
         "metric": "mean per-video Subject_c2c × 100",
-        "axis_labels": {"x": "History lag (blocks)", "y": "Subject c2c",
+        "axis_labels": {"x": "Lag d (blocks)", "y": r"Subject$_{\mathrm{c2c}}$",
                         "caption_definition": "Official clip-to-clip Subject Consistency on a 0–100 scale; target lag along the original trajectory"},
         "palette": {"SGF": PLOT_PRIMARY, "LongLive": PLOT_SECONDARY,
-                    "source": "figures/src/paper_palette.py"},
+                    "source": "assets/source/paper_palette.py"},
         "data": data,
         "x_encoding": {"finite_age": "log2, target lags 1/2/4/8/16 blocks; actual source lag increases during startup until the target is available",
                        "sink": "not plotted; separate source category retained in manuscript text and Appendix A.8, without a numerical lag"},

@@ -45,7 +45,7 @@
       "alias": "cf",
       "pair": "Context Forcing",
       "prompt_index": 10,
-      "heading": "Context Forcing",
+      "heading": "CF",
       "base_arm": "CF",
       "commit_arm": "CF_W",
       "configuration": "Native CF denoising; committing reads the current 3 and immediately preceding 3 latent frames, excluding direct sink and earlier-memory access.",
@@ -226,8 +226,7 @@
     }
   ],
   "scope": "SGF and CF on Wan-based autoregressive long-video generation; no SF or RF result is relabeled or included.",
-  "label_edit": "Both SGF and CF use current plus previous (6 frames). Four transparent yellow circles with dark outlines highlight paired comparison regions.",
-  "source_overleaf_commit": "3824b58e861e33406f041e17ac884f285d0c9330",
+  "label_edit": "The Context Forcing model heading is CF. All twelve photograph payloads, callouts, positions and display times are unchanged.",
   "method_scope": "Native denoising retained; current 3 plus immediately previous 3 latent frames during committing.",
   "rendering": {
     "method_name": "Commit Forcing",
@@ -417,20 +416,18 @@
     ]
   },
   "source": "assets/source/make_qualitative_grid.py",
-  "source_sha256": "a7089d5944f35476223002671d1bb1c2aa46d1d358b5243b5919b8c2a9050a19",
-  "exports": {
-    "pdf": "21b88b3577364798807dabcaf38e8ace0f406c4576455b0469007c5d87422876",
-    "svg": "a2e0e94559926ac419e363c2f0d5132443283f473a48dda1dc2435a4eda1ac9f"
+  "manuscript_asset": {
+    "version": "2026-10-30 manuscript working-tree snapshot",
+    "source_pdf": "figures/qualitative_grid.pdf",
+    "source_svg": "figures/qualitative_grid.svg",
+    "source_pdf_sha256": "67c2bb09b44159b62280a96189c95b5ab3a35a9f5b2d3d4a2d3b829ee667353c",
+    "source_svg_sha256": "f1f6d46aeb42dbb02c03376768f4e2b4889f530d956926efeccf8f90f2faa12b",
+    "relation_to_overleaf": "Current local manuscript assets; not asserted to equal the earlier Overleaf commit."
   },
-  "regeneration_validation": {
-    "rendered_size": [
-      2200,
-      1625
-    ],
-    "pdf_byte_equal": true,
-    "png_pixel_equal": true,
-    "svg_geometry_style_text_equal_after_ID_normalization": true
-  },
-  "regeneration_environment": "Matplotlib 3.10.8. Released PDF/SVG retain canonical manuscript bytes.",
-  "canonical_export_commit": "caba48c3776e46a2362f18cd626d7220e930dffa"
+  "aggregate_source_overleaf_commit": "3824b58e861e33406f041e17ac884f285d0c9330",
+  "actual_pdf_png": {
+    "path": "assets/qualitative_grid.png",
+    "width_pixels": 2200,
+    "sha256": "a0501c7255bb39818d78522a44161e3aac229b662ada2fbba89432d1fb13c9df"
+  }
 }

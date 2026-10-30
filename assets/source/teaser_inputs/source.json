@@ -20,18 +20,18 @@
   "semantics": {
     "figure_type": "Conceptual source-dependency overview and authentic qualitative results, not a fixed-clean paired reconstruction",
     "shared_clean_role": "The shared operator path illustrates identical policies and tensor roles; the actual free trajectories each generate their own clean latents.",
-    "denoising_source_view": "Nonrecent and two Recent history cards remain fully visible. Current is a flat 5x3 grid filled only with illustrative noise, with no scene or person underneath. Denoising produces the clean latent; committing Current cards use the same full-cell flat grid without noise. Grid divisions are symbolic, not latent frames or model layers. Scene-card counts are role-level illustrations, not physical-cache frame counts.",
+    "denoising_source_view": "Three stored-history cards remain visible under Historical KV. Noise is the live current input, a flat 5×3 illustrative grid. Denoising produces a Clean block latent. Committing uses the same flat grid without noise. Card and grid counts are symbolic.",
     "native_committing": "sink 3 + recent 6 + current 3 = 12 latent frames",
     "recent_committing": "immediately preceding block3 + current 3 = 6 latent frames",
     "slabs": "Slab glyphs outside the filmstrip indicate tensor/block roles; their offsets do not assert the number of Transformer layers, latent frames, tensor channels or physical-cache frames. Inline Current instead uses a flat grid. Clean latents are not per-layer KV.",
     "persistent_sequence": "Distinct later blocks construct their own KV. Arrows denote further autoregressive generation, not direct KV decoding or copying the first KV.",
     "gray_marks": "Schematic source-dependent influence carried into subsequent KV; shape, area, number and density are not quantitative. Fragmentation/spatial spread is not a measured monotone increase or acceleration of drift.",
-    "unmarked_recent": "Gridded recent-context glyphs without gray patches omit the depicted direct Nonrecent dependency; they do not imply empty KV, zero values, zero indirect historical dependence or zero total drift.",
+    "unmarked_recent": "Unmarked gridded glyphs omit the direct influence from additional older-history reads during committing. They do not imply empty or zero-valued KV, zero indirect historical dependence, or zero total drift.",
     "no_lag_curve": "No b+1/b+3, numeric lag, measured KV norm or monotone growth/decay series is drawn.",
     "film_triangles": "Small rightward triangles mark temporal direction along the filmstrip, not an attention mask or a propagation wedge.",
     "no_extra_module_forward_or_storage": true,
-    "photos": "Same fixed prompt 0 and initial-noise seed 0 at 238 s; native 12 versus actual SGF_W6. Original baseline PNG bytes are preserved. The SGF_W6 display PNG is decoded from the existing video and resized to 416x240. Both use the same [90,0,326,240] crop; no scene retouching or inpainting.",
-    "lower_selection": "Only the newest Recent block and Current are directly visible; nonrecent and older recent cards remain stored but are masked from committing."
+    "photos": "Same fixed SGF prompt 0 and initial-noise seed 0 at 238 s: native-12 shows a white jacket and actual SGF_W6 shows a black jacket. Original baseline PNG bytes and the existing six-frame video decode are preserved. Both use the same [90,0,326,240] crop; no scene retouching or inpainting.",
+    "lower_selection": "Only the immediately preceding block stored as Previous KV and the current Clean block are directly visible during committing. Older cards remain stored but are masked from this committing read; the previous block is not re-encoded at this step."
   },
   "original_frames": [
     {
@@ -56,7 +56,7 @@
       ],
       "same_crop_for_both_arms": true,
       "pixels_repainted_or_generated": false,
-      "crop_reason": "Tighter subject framing; removes the original upper-left illuminated shop sign from both display windows",
+      "crop_reason": "Fixed horizontal crop shared by both arms; no scene retouching.",
       "seconds": 238,
       "prompt": 0,
       "seed": 0,
@@ -84,7 +84,7 @@
       ],
       "same_crop_for_both_arms": true,
       "pixels_repainted_or_generated": false,
-      "crop_reason": "Tighter subject framing; removes the original upper-left illuminated shop sign from both display windows",
+      "crop_reason": "Fixed horizontal crop shared by both arms; no scene retouching.",
       "seconds": 238,
       "prompt": 0,
       "seed": 0,

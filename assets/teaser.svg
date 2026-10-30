@@ -370,9 +370,8 @@
 <path d="M771.5 501.2692307692308 H988.0" fill="none" stroke="#202B33" stroke-width="1.6" stroke-linecap="butt" stroke-linejoin="miter"/>
 </g>
 </g>
-<text font-family="Helvetica" x="160.25" y="350" font-size="54" fill="#67717A" text-anchor="middle" font-weight="normal">Nonrecent</text>
-<text font-family="Helvetica" x="506.0" y="350" font-size="54" fill="#527F9D" text-anchor="middle" font-weight="normal">Recent</text>
-<text font-family="Helvetica" x="879.75" y="350" font-size="54" fill="#A64F35" text-anchor="middle" font-weight="normal">Current</text>
+<text font-family="Helvetica" x="390.75" y="350" font-size="54" fill="#67717A" text-anchor="middle" font-weight="normal">Historical KV</text>
+<text font-family="Helvetica" x="879.75" y="350" font-size="54" fill="#A64F35" text-anchor="middle" font-weight="normal">Noise</text>
 <path d="M49.0 567.9038461538462 V574.9038461538462 H732.5 V567.9038461538462" fill="none" stroke="#67717A" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="miter"/>
 <path class="open-arrow" d="M520 588.9038461538462 L520 670 M515.5 661.0 L520 670 L524.5 661.0" fill="none" stroke="#202B33" stroke-width="2.7" stroke-linecap="butt" stroke-linejoin="miter"/>
 <path class="open-arrow" d="M879.75 580.9038461538462 L710 750 M713.2003946486024 740.4602162449457 L710 750 L719.5520637932049 746.8364454658495" fill="none" stroke="#A64F35" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="miter"/>
@@ -383,7 +382,7 @@
 <rect x="374" y="916.0" width="320" height="140" rx="0" fill="#FAFCFD" stroke="#527F9D" stroke-width="1.9"/>
 <rect x="367" y="923.0" width="320" height="140" rx="0" fill="#F5F9FB" stroke="#527F9D" stroke-width="1.9"/>
 <rect x="360" y="930.0" width="320" height="140" rx="0" fill="#EDF3F6" stroke="#527F9D" stroke-width="1.9"/>
-<text font-family="Helvetica" x="520.0" y="1018" font-size="54" fill="#202B33" text-anchor="middle" font-weight="normal">Clean latent</text>
+<text font-family="Helvetica" x="520.0" y="1018" font-size="54" fill="#202B33" text-anchor="middle" font-weight="normal">Clean block</text>
 </g>
 <path d="M715 1000 H1040 M1040 500 V1220" fill="none" stroke="#202B33" stroke-width="2.7" stroke-linecap="butt" stroke-linejoin="miter"/>
 <path class="open-arrow" d="M1040 500 L1250 500 M1241.0 504.5 L1250 500 L1241.0 495.5" fill="none" stroke="#202B33" stroke-width="2.7" stroke-linecap="butt" stroke-linejoin="miter"/>
@@ -726,8 +725,8 @@
 <path d="M1871.5 242.80769230769232 H2118.0" fill="none" stroke="#527F9D" stroke-width="1.6" stroke-linecap="butt" stroke-linejoin="miter"/>
 </g>
 </g>
-<text font-family="Helvetica" x="1450" y="85" font-size="54" fill="#202B33" text-anchor="middle" font-weight="normal">Nonrecent + Recent</text>
-<text font-family="Helvetica" x="1994.75" y="85" font-size="54" fill="#A64F35" text-anchor="middle" font-weight="normal">Current</text>
+<text font-family="Helvetica" x="1450" y="85" font-size="54" fill="#202B33" text-anchor="middle" font-weight="normal">Historical KV</text>
+<text font-family="Helvetica" x="2010.75" y="85" font-size="54" fill="#A64F35" text-anchor="middle" font-weight="normal">Clean block</text>
 <path d="M1059 315.2 V328.2 H2124.133333333333 V315.2" fill="none" stroke="#67717A" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="miter"/>
 <path class="open-arrow" d="M1450 332.21153846153845 L1450 415 M1445.5 406.0 L1450 415 L1454.5 406.0" fill="none" stroke="#67717A" stroke-width="2.7" stroke-linecap="butt" stroke-linejoin="miter"/>
 <rect x="1280" y="435" width="340" height="130" rx="0" fill="#FCF9F6" stroke="#A64F35" stroke-width="2"/>
@@ -1216,8 +1215,8 @@
 <path d="M1871.5 962.8076923076923 H2118.0" fill="none" stroke="#527F9D" stroke-width="1.6" stroke-linecap="butt" stroke-linejoin="miter"/>
 </g>
 </g>
-<text font-family="Helvetica" x="1706.25" y="805" font-size="54" fill="#202B33" text-anchor="middle" font-weight="normal">Recent</text>
-<text font-family="Helvetica" x="1994.75" y="805" font-size="54" fill="#A64F35" text-anchor="middle" font-weight="normal">Current</text>
+<text font-family="Helvetica" x="1706.25" y="805" font-size="54" fill="#202B33" text-anchor="middle" font-weight="normal">Previous KV</text>
+<text font-family="Helvetica" x="2010.75" y="805" font-size="54" fill="#A64F35" text-anchor="middle" font-weight="normal">Clean block</text>
 <path d="M1580 1035.2 V1043.2 H2122 V1035.2" fill="none" stroke="#527F9D" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="miter"/>
 <path class="open-arrow" d="M1706.25 1052.2115384615386 L1450 1135 M1457.1806977120177 1127.9510582093037 L1450 1135 L1459.9475720597675 1136.5151930951963" fill="none" stroke="#527F9D" stroke-width="2.7" stroke-linecap="butt" stroke-linejoin="miter"/>
 <rect x="1280" y="1155" width="340" height="130" rx="0" fill="#FCF9F6" stroke="#A64F35" stroke-width="2"/>

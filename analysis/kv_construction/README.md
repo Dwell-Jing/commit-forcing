@@ -1,7 +1,7 @@
 # KV construction and committing pathways
 
 The SGF split-cache control separates KV directly read by denoising from the history used by later committing.
-In this experiment, the larger Quality and clip-to-clip Subject losses follow construction of the denoising-facing
+In this experiment, Quality and clip-to-clip Subject gains follow recent construction of the denoising-facing
 KV. [Recursive KV propagation](../committing_propagation/README.md) remains a separate supplementary observation.
 
 ## Two synchronized SGF caches
@@ -23,9 +23,30 @@ D, C = roll(D, new_D), roll(C, new_C)
 The extra committing pass belongs to this diagnostic. The main current-plus-previous-block method reuses one
 existing committing pass. This R9 reference also predates the six-frame main method.
 
-All contrasts below are relative to D=R9, C=R9, on rollf200 prompts 0–99 at 60 seconds with generation seed 0.
-Scores use 0–100 points. Quality brackets show reported 95% paired prompt-bootstrap intervals from 4,000 draws;
-asterisks retain the source's decisions for intervals excluding zero.
+### Current readout: relative to base SGF
+
+The current manuscript reports changes from base SGF, D=N12 and C=N12, on rollf200 prompts 0–99 at 60 seconds
+with generation seed 0. Scores use 0–100 points. Quality brackets retain the reported 95% paired prompt-bootstrap
+intervals from 4,000 draws; asterisks retain the source's decisions for intervals excluding zero.
+
+| D construction | C construction | Δ Quality [95% CI] | Δ Dynamic Degree | Δ Subject c2c |
+|:---|:---|---:|---:|---:|
+| R9 | R9 | +0.59* [+0.16, +1.04] | +10.37* | +3.98* |
+| R9 | N12 | +0.52* [+0.11, +0.95] | +8.73* | +3.89* |
+| N12 | R9 | −0.53* [−0.75, −0.31] | −3.47* | −1.69* |
+| R9 | S3 | +0.54* [+0.18, +0.93] | +12.47* | +0.99 |
+
+Recent construction of D alone gives Quality and consistency gains close to those from recent construction of
+both caches. Recent construction of C alone, with native D construction, lowers both measures. The self-only C
+condition remains below recurrent R9 construction in Subject c2c, as the alternate-reference contrasts below show.
+
+This comparison changes **construction of D**, while denoising continues to use its base read policy, including
+sink access. It does not identify denoising's direct use of the sink as harmful, or establish one pathway for all drift.
+
+### Archived alternate reference: D=R9, C=R9
+
+The previous presentation uses D=R9 and C=R9 as its reference. These are contrasts from the **same experiment**,
+retained with their original values and intervals. Changing the reference does not add another experiment.
 
 | D construction | C construction | Δ Quality [95% CI] | Δ Dynamic Degree | Δ Subject c2c |
 |:---|:---|---:|---:|---:|
@@ -34,13 +55,11 @@ asterisks retain the source's decisions for intervals excluding zero.
 | R9 | N12 | −0.07 [−0.24, +0.08] | −1.63 | −0.09 |
 | R9 | S3 | −0.05 [−0.28, +0.20] | +2.10 | −2.99* |
 
-Native construction of C alone has no significant Quality or Subject c2c change. It nevertheless changes other
-components: Aesthetic Quality −0.22, Motion Smoothness +0.10 and Temporal Flickering +0.13 points. Self-only C
-construction significantly reduces Subject c2c by 2.99 points. The nonsignificant aggregate changes are not an
-estimate of zero effect or equivalence.
-
-This comparison changes **construction of D**, while denoising continues to use its base read policy, including
-sink access. It does not identify denoising's direct use of the sink as harmful, or establish one pathway for all drift.
+Relative to R9/R9, native construction of C alone has no significant Quality or Subject c2c change. Other
+components change by −0.22 in Aesthetic Quality, +0.10 in Motion Smoothness and +0.13 in Temporal Flickering.
+Self-only C construction reduces Subject c2c by 2.99 points. Nonsignificant changes do not establish equivalence.
+Intervals in both tables are transcribed from their source presentations; none are reconstructed by combining
+intervals or subtracting rounded summaries.
 
 ## Extra old KV during denoising
 
@@ -78,8 +97,10 @@ Attention share is not a measurement of causal utility.
 
 ## Aggregate record
 
-[`summary.json`](summary.json) transcribes the supplied manuscript's aggregate values and reported intervals.
-It records the source commit and SHA-256 hashes of the two table sources and explanatory appendix. Missing
+[`summary.json`](summary.json) transcribes the canonical manuscript's October 30 working-tree aggregate values
+and reported intervals, identified by source SHA-256 hashes. The native-reference table is included by
+`main.tex` → `appendix/committing-pathways.tex` → `tables/sgf_cache_pathways.tex`. The archived alternate-reference
+readout retains its earlier source attribution. Missing
 interval endpoints are stored as `null`; component changes reported only in prose retain no invented significance
 label. No per-prompt measurements are added by this export.
 

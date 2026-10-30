@@ -2183,5 +2183,175 @@
         }
       }
     ]
+  },
+  "six_generator_descriptive_adjustment": {
+    "source_snapshot": {
+      "kind": "canonical manuscript working tree",
+      "snapshot_date": "2026-10-30",
+      "note": "This appended table is transcribed from the local October 30 working-tree manuscript. It is identified by content hashes and is not attributed to the older Overleaf commit governing the unchanged original tables."
+    },
+    "source_sha256": {
+      "tables/matched_motion.tex": "8f6b9a9c4e07cc7ee6edab9c3d78e618a60ac82c19800eec5fa02a6f158da891",
+      "appendix/result-details.tex": "ebfefd286febeb441e7e2aa3c3a499c6d73707f368feb7378dfa05ab308bf01f"
+    },
+    "prompts": 200,
+    "prompt_selection": "all rollf200 prompts",
+    "seconds": 60,
+    "generation_seed": 0,
+    "committing_frames": 6,
+    "prompt_bootstrap_draws": 2000,
+    "bootstrap_unit": "prompt",
+    "scale": "0-100 score points",
+    "contrast": "Commit Forcing minus Base within each generator",
+    "method": "OLS regression of paired clip-to-clip Subject Consistency changes on paired Dynamic Degree changes, reporting the fitted intercept at zero Dynamic Degree change. Descriptive adjustment; no experimental motion matching.",
+    "statistics_recomputed": false,
+    "per_prompt_values_included": false,
+    "scope": "The six main generators, including SGF+. The unchanged original seed-specific tables also contain SF with a sink; that separate configuration is not substituted for SGF+ here. This analysis is separate from the 946-entry standard-suite scores.",
+    "rows": [
+      {
+        "generator": "SGF",
+        "dynamic_delta": {
+          "mean": 11.33,
+          "reported_mean": "+11.33"
+        },
+        "subject_c2c_delta": {
+          "mean": 4.76,
+          "reported_mean": "+4.76"
+        },
+        "subject_c2c_intercept": {
+          "mean": 4.87,
+          "reported_mean": "+4.87",
+          "ci": [
+            3.89,
+            5.95
+          ],
+          "reported_ci": [
+            "+3.89",
+            "+5.95"
+          ],
+          "significant": true
+        }
+      },
+      {
+        "generator": "SGF+",
+        "dynamic_delta": {
+          "mean": 3.22,
+          "reported_mean": "+3.22"
+        },
+        "subject_c2c_delta": {
+          "mean": 2.76,
+          "reported_mean": "+2.76"
+        },
+        "subject_c2c_intercept": {
+          "mean": 2.78,
+          "reported_mean": "+2.78",
+          "ci": [
+            1.89,
+            3.64
+          ],
+          "reported_ci": [
+            "+1.89",
+            "+3.64"
+          ],
+          "significant": true
+        }
+      },
+      {
+        "generator": "RF-TF",
+        "dynamic_delta": {
+          "mean": -3.92,
+          "reported_mean": "-3.92"
+        },
+        "subject_c2c_delta": {
+          "mean": 6.36,
+          "reported_mean": "+6.36"
+        },
+        "subject_c2c_intercept": {
+          "mean": 5.99,
+          "reported_mean": "+5.99",
+          "ci": [
+            5.09,
+            6.84
+          ],
+          "reported_ci": [
+            "+5.09",
+            "+6.84"
+          ],
+          "significant": true
+        }
+      },
+      {
+        "generator": "Rolling Sink",
+        "dynamic_delta": {
+          "mean": 2.02,
+          "reported_mean": "+2.02"
+        },
+        "subject_c2c_delta": {
+          "mean": 2.45,
+          "reported_mean": "+2.45"
+        },
+        "subject_c2c_intercept": {
+          "mean": 2.52,
+          "reported_mean": "+2.52",
+          "ci": [
+            1.83,
+            3.17
+          ],
+          "reported_ci": [
+            "+1.83",
+            "+3.17"
+          ],
+          "significant": true
+        }
+      },
+      {
+        "generator": "LongLive",
+        "dynamic_delta": {
+          "mean": 6.42,
+          "reported_mean": "+6.42"
+        },
+        "subject_c2c_delta": {
+          "mean": 1.2,
+          "reported_mean": "+1.20"
+        },
+        "subject_c2c_intercept": {
+          "mean": 1.38,
+          "reported_mean": "+1.38",
+          "ci": [
+            0.95,
+            1.84
+          ],
+          "reported_ci": [
+            "+0.95",
+            "+1.84"
+          ],
+          "significant": true
+        }
+      },
+      {
+        "generator": "CF",
+        "dynamic_delta": {
+          "mean": -1.05,
+          "reported_mean": "-1.05"
+        },
+        "subject_c2c_delta": {
+          "mean": 3.23,
+          "reported_mean": "+3.23"
+        },
+        "subject_c2c_intercept": {
+          "mean": 3.2,
+          "reported_mean": "+3.20",
+          "ci": [
+            2.55,
+            3.89
+          ],
+          "reported_ci": [
+            "+2.55",
+            "+3.89"
+          ],
+          "significant": true
+        }
+      }
+    ]
   }
 }

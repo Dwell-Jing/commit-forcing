@@ -3,14 +3,14 @@
   "experiment": "rollf200 prompts 0--99, 60 s, generation seed 0",
   "metric": "mean per-video Subject_c2c × 100",
   "axis_labels": {
-    "x": "History lag (blocks)",
-    "y": "Subject c2c",
+    "x": "Lag d (blocks)",
+    "y": "Subject$_{\\mathrm{c2c}}$",
     "caption_definition": "Official clip-to-clip Subject Consistency on a 0–100 scale; target lag along the original trajectory"
   },
   "palette": {
     "SGF": "#202B33",
     "LongLive": "#A64F35",
-    "source": "figures/src/paper_palette.py"
+    "source": "assets/source/paper_palette.py"
   },
   "data": {
     "SGF": {
@@ -96,31 +96,23 @@
       "sha256": "921f215c19488f6ede85dcc59e2f9a4ba5eae49595390d738e7549bf802817e9"
     }
   ],
-  "script_sha256": "033dc8045bd9037d29e8da71a7b20f13feac4cc29fc54f0197b9d3a56157135b",
+  "script_sha256": "890233b20c2516fe6831fd97e4808468f752f62b002946483ec89fd3b550e318",
   "exports": {
-    "pdf": "b655267ddd6511fcb39f98d20d8e7137fd198e348f54d420fc0a0db09dbd7039",
-    "svg": "052b1e0c112afba55f00ed24c03a600d6c83d861c1f358c1ef134dd252bba1bc"
+    "pdf": "51d83923c7f839b18f40c47efa09ed5cc6e615ad0e06d551c35621a253e83663",
+    "svg": "ebc7f7c811cde06b3edf9440d98bc7401539f106529f91ab8eb65c2135f98962",
+    "actual_pdf_png": "701630de917282ef26b7b076052f4e904d65452d9acf6e26fa7ec3e22b723db8"
   },
-  "source": "assets/source/make_committing_content_age.py",
-  "source_sha256": "033dc8045bd9037d29e8da71a7b20f13feac4cc29fc54f0197b9d3a56157135b",
-  "publication_exports": {
-    "pdf": "b655267ddd6511fcb39f98d20d8e7137fd198e348f54d420fc0a0db09dbd7039",
-    "svg": "052b1e0c112afba55f00ed24c03a600d6c83d861c1f358c1ef134dd252bba1bc",
-    "png": "9e82e57a8e0e3ae1cdb0f729a2f243acdd17d0f7833996e5e858f9f9ebf4601b"
+  "manuscript_asset": {
+    "version": "2026-10-30 manuscript working-tree snapshot",
+    "source_pdf": "figures/committing_content_age.pdf",
+    "source_svg": "figures/committing_content_age.svg",
+    "source_pdf_sha256": "51d83923c7f839b18f40c47efa09ed5cc6e615ad0e06d551c35621a253e83663",
+    "source_svg_sha256": "ebc7f7c811cde06b3edf9440d98bc7401539f106529f91ab8eb65c2135f98962",
+    "relation_to_overleaf": "Current local manuscript assets; not asserted to equal the earlier Overleaf commit."
   },
-  "canonical_export_identity": {
-    "canonical_figure": "figures/committing_content_age",
-    "pdf_and_svg": "Copied byte-for-byte from the current accepted manuscript figure exports",
-    "png": "Rendered from the released PDF at 2200 pixels wide"
-  },
-  "regeneration_validation": {
-    "rendered_size": [
-      2200,
-      1143
-    ],
-    "pdf_rgb_pixel_equal": true,
-    "mean_channel_difference": 0.0,
-    "pixels_differ": 0,
-    "svg_byte_equal": false
+  "actual_pdf_png": {
+    "path": "assets/committing_content_age.png",
+    "width_pixels": 2200,
+    "sha256": "701630de917282ef26b7b076052f4e904d65452d9acf6e26fa7ec3e22b723db8"
   }
 }

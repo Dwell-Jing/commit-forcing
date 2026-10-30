@@ -15,6 +15,8 @@ A descriptive OLS adjustment of the seed-0 SGF 60-second paired consistency chan
 for paired Dynamic Degree changes gives an intercept of +4.87 [+3.89, +5.95] with 2,000 prompt-bootstrap draws.
 This custom-prompt estimate is separate from the 946-entry standard-suite Quality gain. The regression adjustment
 does not hold motion fixed experimentally; the unadjusted Dynamic Degree increase is +11.33 points.
+The current manuscript also reports this descriptive adjustment on all six main generators; its aggregate table
+is included below, with SGF+ distinguished from the original SF-with-sink seed comparisons.
 
 ## Window boundaries
 
@@ -31,13 +33,19 @@ support generator-dependent window choices, rather than a universally optimal si
 ## Data and reproduction
 
 [`summary.json`](summary.json) freezes all reported aggregate rows from the manuscript tables, including their
-original interval precision and source significance marks. Source file hashes refer to Overleaf commit
+original interval precision and source significance marks. The original tables and SGF-only descriptive record
+remain unchanged; their source file hashes refer to Overleaf commit
 `3824b58e861e33406f041e17ac884f285d0c9330`. Source tables are `rollf200_seed_results.tex`,
 `committing_sources_240.tex`, `committing_window_plateaus.tex`, `sf_sink_committing_windows.tex`, and
 `framewise_committing_windows.tex`; the descriptive adjustment and 240-second SGF Dynamic interval come from
 `appendix/result-details.tex`. Scores and changes are on the 0–100 scale. Paired intervals use 4,000
 prompt-bootstrap draws unless the OLS adjustment specifies 2,000. An asterisk in the tables below denotes an
 interval excluding zero. Missing intervals are left absent, and reference rows use an em dash.
+
+The appended six-generator OLS table comes from `tables/matched_motion.tex` and `appendix/result-details.tex` in
+the canonical manuscript's October 30 working-tree snapshot. Its separate source hashes are stored within
+`six_generator_descriptive_adjustment`; the older Overleaf attribution does not apply to this appended table.
+Only the reported aggregates are transcribed, with no fitting or bootstrap recomputation.
 
 ```bash
 python results/current6_custom/reproduce.py
@@ -73,6 +81,23 @@ responses, participant identifiers or video files.
 | Rolling Sink (6) | 82.40 | 82.66 | +0.26* [+0.07, +0.45] | 86.34 | 88.89 | +2.54* [+1.96, +3.18] | +4.05* [+1.83, +6.30] |
 | SF with sink (6) | 81.35 | 81.57 | +0.23 [-0.42, +0.80] | 74.71 | 78.87 | +4.16* [+3.33, +4.96] | +0.68 [-2.67, +4.07] |
 | CF, sink excluded | 82.70 | 83.19 | +0.50* [+0.31, +0.69] | 78.63 | 80.24 | +1.61* [+1.02, +2.22] | +7.18* [+4.87, +9.52] |
+
+### Six-generator descriptive Dynamic Degree adjustment
+
+| Generator | Δ Dynamic Degree | Δ Subject c2c | DD-adjusted Δ Subject c2c [95% CI] |
+| :--- | :--- | :--- | :--- |
+| SGF | +11.33 | +4.76 | +4.87* [+3.89, +5.95] |
+| SGF+ | +3.22 | +2.76 | +2.78* [+1.89, +3.64] |
+| RF-TF | -3.92 | +6.36 | +5.99* [+5.09, +6.84] |
+| Rolling Sink | +2.02 | +2.45 | +2.52* [+1.83, +3.17] |
+| LongLive | +6.42 | +1.20 | +1.38* [+0.95, +1.84] |
+| CF | -1.05 | +3.23 | +3.20* [+2.55, +3.89] |
+
+Commit Forcing minus Base on 200 rollf200 prompts at 60 seconds with generation seed 0.
+All six committing adaptations use 6 frames. OLS intercept intervals use 2,000 prompt-bootstrap draws.
+These are descriptive regression adjustments, not experiments with motion held fixed.
+This table includes SGF+; the original seed tables above retain the separate SF-with-sink configuration.
+It is separate from the 946-entry standard-suite scores.
 
 ### 240-second MovieGen: absolute scores
 

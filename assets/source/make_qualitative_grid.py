@@ -63,7 +63,7 @@ CASES = (
     },
     {
         "alias": "cf", "pair": "Context Forcing", "prompt_index": 10,
-        "heading": "Context Forcing",
+        "heading": "CF",
         "base_arm": "CF", "commit_arm": "CF_W",
         "configuration": "Native CF denoising; committing reads the current 3 and immediately preceding 3 latent frames, excluding direct sink and earlier-memory access.",
         "visible_observation": "An external large hand is visible in Base at 120 s and multiple rake-like tools at 238 s; the Commit Forcing samples retain the small figure inside the sphere without that external hand.",

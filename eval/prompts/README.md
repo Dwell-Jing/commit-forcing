@@ -1,8 +1,9 @@
 # Prompts
 
-`rollf200.txt` holds the 200 MovieGen prompts of Rolling Forcing App. B (arXiv 2509.25161), the evaluation set of
-Recency Forcing Tab. 3, one prompt per line. `rollf200_indices.txt` lists their 0-based line numbers in the extended
-MovieGen prompts that Self-Forcing ships (`prompts/MovieGenVideoBench_extended.txt`, Apache-2.0).
+`rollf200.txt` uses Rolling Forcing's 200-prompt selection, with the expanded MovieGen prompts released by
+Self-Forcing (`prompts/MovieGenVideoBench_extended.txt`, Apache-2.0), one prompt per line.
+`rollf200_indices.txt` records their 0-based line numbers in that file. This selection is not the first 200
+extended MovieGen prompts. The `rollf200` filenames are retained for compatibility with the evaluation scripts.
 `make_rollf200.py` rebuilds the list from a Self-Forcing checkout and checks it against `rollf200.txt`:
 
 ```bash

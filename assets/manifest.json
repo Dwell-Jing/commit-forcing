@@ -1,14 +1,22 @@
 {
-  "schema": 3,
-  "updated": "2026-10-27",
+  "schema": 4,
+  "updated": "2026-10-30",
   "assets": {
     "assets/README.md": {
-      "sha256": "e23b0dbfbdb9e18c689fac13f2a7c27d93764c1287e75242740b908be5930116",
-      "bytes": 8842
+      "sha256": "12b77a03c2c4ef668cbf0e214fdf7f811ed532e31adab085d8e9323105185b0b",
+      "bytes": 7729
     },
     "assets/archive/README.md": {
       "sha256": "fa67d10a8fbf7d6eea8ec63b96625bafa52d8a6415b70df0424f5df766225e71",
       "bytes": 1158
+    },
+    "assets/archive/sgf_nine_frame_qualitative_source.json": {
+      "sha256": "9012bef46c37689a2d9ed8578475f620a1183d47f02b70860e324e370aed535c",
+      "bytes": 19986
+    },
+    "assets/archive/sgf_nine_frame_teaser_source.json": {
+      "sha256": "02faa161e85c3bf336ad4fb7d965ab5dd64aa6c73832e76663bc598dfc73a84b",
+      "bytes": 4986
     },
     "assets/archive/teaser_denoising_legacy.png": {
       "sha256": "fc00d576661ad43204571c6aacebd766cfaf3cbe5dad46a3a00c79f422c86c68",
@@ -35,22 +43,58 @@
       "bytes": 30721
     },
     "assets/committing_content_age.pdf": {
-      "sha256": "b655267ddd6511fcb39f98d20d8e7137fd198e348f54d420fc0a0db09dbd7039",
-      "bytes": 21119
+      "sha256": "51d83923c7f839b18f40c47efa09ed5cc6e615ad0e06d551c35621a253e83663",
+      "bytes": 27005
     },
     "assets/committing_content_age.png": {
-      "sha256": "9e82e57a8e0e3ae1cdb0f729a2f243acdd17d0f7833996e5e858f9f9ebf4601b",
-      "bytes": 97620,
+      "sha256": "701630de917282ef26b7b076052f4e904d65452d9acf6e26fa7ec3e22b723db8",
+      "bytes": 95300,
       "width": 2200,
-      "height": 1143
+      "height": 1159
     },
     "assets/committing_content_age.provenance.json": {
-      "sha256": "cfc51b4c54303f54d923a1e4ab434a096f04adfd569a2873c6e297894ded4fe6",
-      "bytes": 3820
+      "sha256": "a0dedf7d29e20940f2100fe04b8a87e54995ad665e2af5d7620dffce28f6e92f",
+      "bytes": 3726
     },
     "assets/committing_content_age.svg": {
-      "sha256": "052b1e0c112afba55f00ed24c03a600d6c83d861c1f358c1ef134dd252bba1bc",
-      "bytes": 13556
+      "sha256": "ebc7f7c811cde06b3edf9440d98bc7401539f106529f91ab8eb65c2135f98962",
+      "bytes": 16116
+    },
+    "assets/committing_correction_controls.pdf": {
+      "sha256": "e485aee43ec9ef44e9cf2b7fcb4abf6c50983e2f3c2f149968c7c9d24dadfca2",
+      "bytes": 19661
+    },
+    "assets/committing_correction_controls.png": {
+      "sha256": "e2feee736ba327bc874280c062d2a34a5e4acf790ca133d481050675dae0f209",
+      "bytes": 49938,
+      "width": 2200,
+      "height": 1092
+    },
+    "assets/committing_correction_controls.provenance.json": {
+      "sha256": "5f35547b631b9b83be3641446cb3a6af46e6444d3b045a2ad42824f5d27014cd",
+      "bytes": 5811
+    },
+    "assets/committing_correction_controls.svg": {
+      "sha256": "b1f3d0335ba2619661501131d9e1b726185394d391fd13878f13fd55e1e05d04",
+      "bytes": 10227
+    },
+    "assets/committing_correction_dose.pdf": {
+      "sha256": "f49b6a470aaa7d5ca6901176c4be5e08572db63f5408183eddfea465a62c7181",
+      "bytes": 20540
+    },
+    "assets/committing_correction_dose.png": {
+      "sha256": "d07a5207585e7ade421717448644433344d6345ec80ce98f8426b397c3d53a0a",
+      "bytes": 106310,
+      "width": 2200,
+      "height": 1409
+    },
+    "assets/committing_correction_dose.provenance.json": {
+      "sha256": "c1c5e6f31cbd4b56d8c2c3dc5df78b453dca089f316588adc4a0a6bbb854612b",
+      "bytes": 3316
+    },
+    "assets/committing_correction_dose.svg": {
+      "sha256": "cfd786ff2cc35e8a786890e8e4aeac564be4544cce3ef9b8d6f1459f7aea11a7",
+      "bytes": 12757
     },
     "assets/committing_impulse.pdf": {
       "sha256": "58f0e003f9eb107696281451c610c30312d211719149e1a1392d2183bb91077a",
@@ -69,6 +113,60 @@
     "assets/committing_impulse.svg": {
       "sha256": "8dd957a9cd8d00331869bd505506f73ccb5849a9e57bf265ab71cfd92a6db29a",
       "bytes": 25932
+    },
+    "assets/committing_recurrence.pdf": {
+      "sha256": "8a8486be6a9a9ea96afd5c18d7c0408e253b6961728477b4f2d690fa38c94d11",
+      "bytes": 59574
+    },
+    "assets/committing_recurrence.png": {
+      "sha256": "929000027b454f3704b8fd5505c629f3f86ad35ee0521bc921abc5010859c6b7",
+      "bytes": 164859,
+      "width": 2200,
+      "height": 1468
+    },
+    "assets/committing_recurrence.provenance.json": {
+      "sha256": "25152aeb2c4492376f400f59bff40fd947a370d3bc0cb20d6272d42fc54459e7",
+      "bytes": 2270
+    },
+    "assets/committing_recurrence.svg": {
+      "sha256": "cb01f58d0548d1e75c2e4d1c14d6cd8a62f9d362c506b4a75d22cf20ad2e449e",
+      "bytes": 69750
+    },
+    "assets/committing_tradeoff_variants.pdf": {
+      "sha256": "2613fc8bce5d44774fbfda6c750c2922e0038cf40eb81efe698559ac410dcb1c",
+      "bytes": 25458
+    },
+    "assets/committing_tradeoff_variants.png": {
+      "sha256": "18d95a461668dc366ddcd19e6cb0c125c2a0fc989dc7da52bc67ec687d2ba9af",
+      "bytes": 117183,
+      "width": 2200,
+      "height": 1101
+    },
+    "assets/committing_tradeoff_variants.provenance.json": {
+      "sha256": "72e5423b705c93dc18d394fcb27ff6eb7479a7572176c711917acdccbb4e67ff",
+      "bytes": 7983
+    },
+    "assets/committing_tradeoff_variants.svg": {
+      "sha256": "f0e15d4586ecaadfd427990595fcc2dea30aeb0c662d0a4550c88c447986c218",
+      "bytes": 22818
+    },
+    "assets/committing_window_mechanisms.pdf": {
+      "sha256": "cda9d1b4ded944cf5a7f7ac5089420a79b755af3a5c4ea7e9a5ab38fe87678b7",
+      "bytes": 19606
+    },
+    "assets/committing_window_mechanisms.png": {
+      "sha256": "1d9fa4402070344d0013eef84263f8e58508cbe071d25787c6d195e3877e4c2c",
+      "bytes": 81292,
+      "width": 2200,
+      "height": 1157
+    },
+    "assets/committing_window_mechanisms.provenance.json": {
+      "sha256": "482ca52b57ebd408f4b3e785905c28086904da278cbd5bda266c43cf00d20fc8",
+      "bytes": 3057
+    },
+    "assets/committing_window_mechanisms.svg": {
+      "sha256": "51746927c6ad6bc08b30e8ba277e973733bf1327f7b8a10e38aeb67ac949321f",
+      "bytes": 9298
     },
     "assets/mechanisms/README.md": {
       "sha256": "cd138cbd3c8ed68bfe6642d45b2cff6a03c4f72902e3e3ec14f02b22a34eb33a",
@@ -97,22 +195,22 @@
       "bytes": 25682
     },
     "assets/method.pdf": {
-      "sha256": "bd71636b340139f6abc9f4233f5b76b307d8b737dce3fdf23c0fe885468ea2cb",
-      "bytes": 54260
+      "sha256": "54e66d5df7b7a44ab35a780abedf7fa20a56b76c2739e5de8324fa19b2893994",
+      "bytes": 31584
     },
     "assets/method.png": {
-      "sha256": "5afaf7c402afef3019c3ac9498a11d4b3c6a0a68342a16a7a1e4a50aa425630f",
-      "bytes": 53901,
+      "sha256": "25711818c471999e5bc9ae78b68889638188a01ce50cc0c7444233a62b3fa1a5",
+      "bytes": 84023,
       "width": 2200,
-      "height": 460
+      "height": 1120
     },
     "assets/method.provenance.json": {
-      "sha256": "1909063cf6bbe063743aa9645128b640f19643e976d726635e04c18f8a61a009",
-      "bytes": 17778
+      "sha256": "a5226b12cc8fe59767e03422c7f25506ef02fa111c2d395ea6b793f2dfed10fa",
+      "bytes": 34155
     },
     "assets/method.svg": {
-      "sha256": "c3bbd25ae8eccb81405a8f11dc810c619cbd00730d7b79e26363dfdf049d58fa",
-      "bytes": 28783
+      "sha256": "3502f42da24cbd6df1e6e3042d124e39331fd908544cd041fc79cea1642741b6",
+      "bytes": 52615
     },
     "assets/qualitative/README.md": {
       "sha256": "1be57f8123926d9f05ef64b8d2e82bfbb9308c44709dce4bd39ab2318951f615",
@@ -273,22 +371,22 @@
       "height": 369
     },
     "assets/qualitative_grid.pdf": {
-      "sha256": "21b88b3577364798807dabcaf38e8ace0f406c4576455b0469007c5d87422876",
-      "bytes": 2026907
+      "sha256": "67c2bb09b44159b62280a96189c95b5ab3a35a9f5b2d3d4a2d3b829ee667353c",
+      "bytes": 2026425
     },
     "assets/qualitative_grid.png": {
-      "sha256": "218572ac4933f36664c5fdea6f96f4108aebeb496978738ee3f25e51c1bebdeb",
-      "bytes": 3506787,
+      "sha256": "a0501c7255bb39818d78522a44161e3aac229b662ada2fbba89432d1fb13c9df",
+      "bytes": 3498030,
       "width": 2200,
       "height": 1625
     },
     "assets/qualitative_grid.provenance.json": {
-      "sha256": "2a962baaff2c927a5ef61c9de452b21ea849c4267d2dbc5df40678ca488445b2",
-      "bytes": 15372
+      "sha256": "efd73109469a180eb7132abaddc14c3c5299542a421f5a8c999df7be98d25b0c",
+      "bytes": 15369
     },
     "assets/qualitative_grid.svg": {
-      "sha256": "a2e0e94559926ac419e363c2f0d5132443283f473a48dda1dc2435a4eda1ac9f",
-      "bytes": 3020054
+      "sha256": "f1f6d46aeb42dbb02c03376768f4e2b4889f530d956926efeccf8f90f2faa12b",
+      "bytes": 3020041
     },
     "assets/sgf_committing_controls.pdf": {
       "sha256": "8533a89e724ca6ac4e7e32ea2170b8ac1b1391aa85b68349e4b0b17a43676b7d",
@@ -324,6 +422,22 @@
       "sha256": "921f215c19488f6ede85dcc59e2f9a4ba5eae49595390d738e7549bf802817e9",
       "bytes": 44184
     },
+    "assets/source/committing_recurrence_inputs/impulse6_own.csv": {
+      "sha256": "03d431dbfde13cd1f5e3e0fe58823d9c71a3a318644333c41b32fe98b411a0ae",
+      "bytes": 2024
+    },
+    "assets/source/committing_recurrence_inputs/sink_curves.csv": {
+      "sha256": "19db7c4777dfe69633ef599ab73fecadb5d4929fe8eb7bc0f9cc1dc4c8591a25",
+      "bytes": 1361
+    },
+    "assets/source/committing_recurrence_inputs/staircase_N.csv": {
+      "sha256": "de0d803a24de8eeb7a87ee4768b58fba7a921e533302c42ec1f59d94e099d06c",
+      "bytes": 7511
+    },
+    "assets/source/committing_recurrence_inputs/staircase_O.csv": {
+      "sha256": "f0327880bfe5a6c2393aaaca8012c3602a9e9fa319c9298d0e1fbbf71c05eb36",
+      "bytes": 5452
+    },
     "assets/source/kv_propagation.csv": {
       "sha256": "3e080baf47180cac76045ea928a2ba1813971f6a5c11455d2994e9e39ada5774",
       "bytes": 740
@@ -333,28 +447,48 @@
       "bytes": 8710
     },
     "assets/source/make_committing_content_age.py": {
-      "sha256": "033dc8045bd9037d29e8da71a7b20f13feac4cc29fc54f0197b9d3a56157135b",
-      "bytes": 6290
+      "sha256": "890233b20c2516fe6831fd97e4808468f752f62b002946483ec89fd3b550e318",
+      "bytes": 6476
+    },
+    "assets/source/make_committing_correction_controls.py": {
+      "sha256": "48063efcf849e41d2d80c2ddf100b8d6cb0cf3257a6919a47006d0dd18a559a5",
+      "bytes": 6011
+    },
+    "assets/source/make_committing_correction_dose.py": {
+      "sha256": "8f6d18d6804729f6f381d3140e1704d64bb3e6d6edfc91c80656c2e852d1945d",
+      "bytes": 7750
     },
     "assets/source/make_committing_impulse.py": {
       "sha256": "b22b5b0fbffaa1267d3362ef03e8be0a5e235d8a6a096ad08dd9fb6c8c49034d",
       "bytes": 6640
     },
+    "assets/source/make_committing_recurrence.py": {
+      "sha256": "420b9724143fcdad9e5ce503314820d2b5ade50403a1fa49b0151e1f9c660d66",
+      "bytes": 5948
+    },
+    "assets/source/make_committing_tradeoff_variants.py": {
+      "sha256": "3f78aeceeb2b8340ec3de28016850ed566f824fe39b795108e3c8b0e42279735",
+      "bytes": 8844
+    },
+    "assets/source/make_committing_window_mechanisms.py": {
+      "sha256": "780a8b2a53784f51301b4bf5b261d1d4dfa57b57144f9a55c4140891dd279d43",
+      "bytes": 6037
+    },
     "assets/source/make_method.py": {
-      "sha256": "8399ee35a8f291c14bb21ee8c6394eeef034b365788bd6a805de60a8fa3bb929",
-      "bytes": 9475
+      "sha256": "6c5f66a9cccdd37fc1f935b0636ddd57d0594fcf27f2d6a7fde14ef677176519",
+      "bytes": 18105
     },
     "assets/source/make_qualitative_grid.py": {
-      "sha256": "a7089d5944f35476223002671d1bb1c2aa46d1d358b5243b5919b8c2a9050a19",
-      "bytes": 10079
+      "sha256": "a6ae6af39d0e04431e903332809978a4d7c58b655057561ea41bd8aa6b868b9e",
+      "bytes": 10066
     },
     "assets/source/make_sgf_committing_controls.py": {
       "sha256": "caaf5cac5691b577be4948d3466142b0bf0317a5d95a32c534387bcf04983255",
       "bytes": 10892
     },
     "assets/source/make_teaser.py": {
-      "sha256": "3494c1546f68ed067b65f04adcb211f0e292b90d422c6b71e3a78027e78a36e3",
-      "bytes": 20006
+      "sha256": "d89a50b8f0950ab476f65799b4dd9cc527b3c866794b4102028831e724fc7bca",
+      "bytes": 20336
     },
     "assets/source/method_glyphs.py": {
       "sha256": "374defd8a31b679d56e8d384adea72de9f26b6519d51094658545edd7fb32077",
@@ -426,6 +560,24 @@
       "width": 416,
       "height": 240
     },
+    "assets/source/qualitative_grid_inputs/sgf_p019_s0_commit6_000s.png": {
+      "sha256": "1300034b26373d15a69bf4de804633cf753f268118fc448d0857428cfd70b0b4",
+      "bytes": 186845,
+      "width": 416,
+      "height": 240
+    },
+    "assets/source/qualitative_grid_inputs/sgf_p019_s0_commit6_120s.png": {
+      "sha256": "cf312adbeb9c6262c876eb982929cf1a14edfd1b1551b86a4adbbda76005a73f",
+      "bytes": 194965,
+      "width": 416,
+      "height": 240
+    },
+    "assets/source/qualitative_grid_inputs/sgf_p019_s0_commit6_238s.png": {
+      "sha256": "f07d61ce4970a80c65d618510106abc1d8050cdce3b22f74137099181f2cb1db",
+      "bytes": 196782,
+      "width": 416,
+      "height": 240
+    },
     "assets/source/qualitative_grid_inputs/sgf_p019_s0_commit_000s.png": {
       "sha256": "84cbec17c9454aa5c33a50d6def89a30193f5f71b96f25ee9f0e3d64232b6d26",
       "bytes": 181198,
@@ -468,6 +620,12 @@
       "sha256": "2f911853a21215938e2bbb2ce0ab2a7ad65fbda5bf4875598adb069b18bfd304",
       "bytes": 4786
     },
+    "assets/source/teaser_inputs/sgf_p000_s0_commit6_238s.png": {
+      "sha256": "321acd35033f6acc561943cec26fe27fdff8659505415ad9a0c632df82cc625c",
+      "bytes": 214496,
+      "width": 416,
+      "height": 240
+    },
     "assets/source/teaser_inputs/sgf_p000_s0_commit_238s.png": {
       "sha256": "9e39361944106808815f4d433155eab33c8ad5d833d79ac56997724ff96bf7db",
       "bytes": 196251,
@@ -481,124 +639,26 @@
       "height": 240
     },
     "assets/source/teaser_inputs/source.json": {
-      "sha256": "733d4d893f5532fbd7e2864900c4b7ba8f99f491ef7eb00023fbd2be10c8037c",
-      "bytes": 5583
+      "sha256": "7b946c7996fa6244cf885d49b077d463d2b6d7532ab14af3e3ffa7c785be7322",
+      "bytes": 5453
     },
     "assets/teaser.pdf": {
-      "sha256": "0cdece4f2a553dd243af53dea2e1a7789c07c033d68992234ac2dcf47cd2865a",
-      "bytes": 591467
+      "sha256": "1bfef8e4e14a2f142af6f873f5af24e5f282d163de18aee78298bb5fa230f053",
+      "bytes": 591952
     },
     "assets/teaser.png": {
-      "sha256": "8afdb6898de4d6dda3d536906faf583c794d2da6e640e9ffb7ac609a1c1f27c1",
-      "bytes": 548680,
+      "sha256": "3dfd92db1e9260e05c2860ef2260c7e28a6148d241802a5960f171bdab1a5cfb",
+      "bytes": 556937,
       "width": 2200,
       "height": 1032
     },
     "assets/teaser.provenance.json": {
-      "sha256": "9f8fbb12f78b3e205e75b67b5deff7929e52c4ec6e52d895b565771568aceacc",
-      "bytes": 56923
+      "sha256": "19ceede9a9a8455a5d3f7bf45c614ad713a7cbb230afff66081b285900b2feca",
+      "bytes": 57277
     },
     "assets/teaser.svg": {
-      "sha256": "2abd340f01f6a6e846ae936d6ed941b21dfc13de9a5cc3e731785c48145c4f66",
-      "bytes": 651254
-    },
-    "assets/committing_tradeoff_variants.png": {
-      "sha256": "18d95a461668dc366ddcd19e6cb0c125c2a0fc989dc7da52bc67ec687d2ba9af",
-      "bytes": 117183,
-      "width": 2200,
-      "height": 1101
-    },
-    "assets/committing_tradeoff_variants.pdf": {
-      "sha256": "6201733ff1f89521bcce24bcd7b733224644540b0e15f48c504844ee4ef846ad",
-      "bytes": 25458
-    },
-    "assets/committing_tradeoff_variants.svg": {
-      "sha256": "7aac8d0bd6c3d96624200898c77f97dc345339afaec591917d71d18d222f2bd4",
-      "bytes": 22818
-    },
-    "assets/committing_tradeoff_variants.provenance.json": {
-      "sha256": "8a623e9b3c378a77abb02e5afaec7b6055d907678d830ae4e2922460e0777b0d",
-      "bytes": 7567
-    },
-    "assets/archive/sgf_nine_frame_qualitative_source.json": {
-      "sha256": "9012bef46c37689a2d9ed8578475f620a1183d47f02b70860e324e370aed535c",
-      "bytes": 19986
-    },
-    "assets/archive/sgf_nine_frame_teaser_source.json": {
-      "sha256": "02faa161e85c3bf336ad4fb7d965ab5dd64aa6c73832e76663bc598dfc73a84b",
-      "bytes": 4986
-    },
-    "assets/source/make_committing_tradeoff_variants.py": {
-      "sha256": "9169793d6d3ae8ed791da40b228b0a3c71d92b3671cc746170b7b9ce764e38fe",
-      "bytes": 8844
-    },
-    "assets/source/qualitative_grid_inputs/sgf_p019_s0_commit6_000s.png": {
-      "sha256": "1300034b26373d15a69bf4de804633cf753f268118fc448d0857428cfd70b0b4",
-      "bytes": 186845,
-      "width": 416,
-      "height": 240
-    },
-    "assets/source/qualitative_grid_inputs/sgf_p019_s0_commit6_238s.png": {
-      "sha256": "f07d61ce4970a80c65d618510106abc1d8050cdce3b22f74137099181f2cb1db",
-      "bytes": 196782,
-      "width": 416,
-      "height": 240
-    },
-    "assets/source/qualitative_grid_inputs/sgf_p019_s0_commit6_120s.png": {
-      "sha256": "cf312adbeb9c6262c876eb982929cf1a14edfd1b1551b86a4adbbda76005a73f",
-      "bytes": 194965,
-      "width": 416,
-      "height": 240
-    },
-    "assets/source/teaser_inputs/sgf_p000_s0_commit6_238s.png": {
-      "sha256": "321acd35033f6acc561943cec26fe27fdff8659505415ad9a0c632df82cc625c",
-      "bytes": 214496,
-      "width": 416,
-      "height": 240
-    },
-    "assets/committing_correction_dose.svg": {
-      "sha256": "cfd786ff2cc35e8a786890e8e4aeac564be4544cce3ef9b8d6f1459f7aea11a7",
-      "bytes": 12757
-    },
-    "assets/committing_correction_dose.pdf": {
-      "sha256": "f49b6a470aaa7d5ca6901176c4be5e08572db63f5408183eddfea465a62c7181",
-      "bytes": 20540
-    },
-    "assets/committing_correction_dose.png": {
-      "sha256": "d07a5207585e7ade421717448644433344d6345ec80ce98f8426b397c3d53a0a",
-      "bytes": 106310,
-      "width": 2200,
-      "height": 1409
-    },
-    "assets/committing_correction_dose.provenance.json": {
-      "sha256": "c1c5e6f31cbd4b56d8c2c3dc5df78b453dca089f316588adc4a0a6bbb854612b",
-      "bytes": 3316
-    },
-    "assets/source/make_committing_correction_dose.py": {
-      "sha256": "8f6d18d6804729f6f381d3140e1704d64bb3e6d6edfc91c80656c2e852d1945d",
-      "bytes": 7750
-    },
-    "assets/committing_window_mechanisms.pdf": {
-      "sha256": "ce29b26e0d4bdfbe8bb8225958a4c2d7d00daec773eee9389dc470bfb9bbbb3c",
-      "bytes": 26703
-    },
-    "assets/committing_window_mechanisms.png": {
-      "sha256": "2537db4e6744d6d1cc28afe947842eaf70e25dcd460e21ebc18d3922e599c273",
-      "bytes": 121222,
-      "width": 2200,
-      "height": 1022
-    },
-    "assets/committing_window_mechanisms.provenance.json": {
-      "sha256": "602cea70406d3445c14ad6ad09fa00a675ef5a83ef5e8bcd6398b0ca59f12124",
-      "bytes": 5370
-    },
-    "assets/committing_window_mechanisms.svg": {
-      "sha256": "9f49dc1205b7433128d2692f10aa136d4116d11797d3fa0e49b0cfb7e1d56bb3",
-      "bytes": 19964
-    },
-    "assets/source/make_committing_window_mechanisms.py": {
-      "sha256": "38587cfbca272c42cfb5e53dbaafcb075208c0f77321375a705a8783c7273b3b",
-      "bytes": 10226
+      "sha256": "f3754e6988a567da4ecc831df68555cd1b0f33ec15328470169ca42092830d19",
+      "bytes": 651129
     }
   },
   "teaser": {
@@ -621,23 +681,36 @@
     ],
     "provenance": "assets/teaser.provenance.json",
     "source_role_categories": [
-      "nonrecent",
-      "recent",
-      "current live input"
+      "Historical KV",
+      "Previous KV",
+      "Clean block",
+      "Noise"
     ],
-    "window": "Lower branch masks nonrecent and older Recent, selecting newest Recent and Current; glyph counts are schematic.",
-    "source_record": "assets/source/teaser_inputs/source.json"
+    "window": "The lower branch masks older stored-history cards and directly selects Previous KV and the current Clean block; glyph counts are schematic.",
+    "source_record": "assets/source/teaser_inputs/source.json",
+    "photos": "Fixed prompt 0, seed 0, at 238 seconds. Native-12 shows a white jacket; actual SGF_W6 shows a black jacket.",
+    "display_crop_xywh": [
+      90,
+      0,
+      326,
+      240
+    ],
+    "crop_reason": "Fixed horizontal crop shared by both arms; no scene retouching."
   },
   "method": {
     "renderer": "assets/source/make_method.py",
     "provenance": "assets/method.provenance.json",
-    "content": "Compact upper computation only. Committing uses current 3 plus immediately previous 3 latent frames, six in total; current-only startup. Base denoising and cache update are retained.",
-    "reproduction": "python assets/source/make_method.py",
-    "window_options_removed": true,
+    "content": "Common base SGF denoising followed by three rows of committing dependencies: Base, Self-only, and Commit Forcing. Each committing call receives its own clean block. Sink remains stored while direct committing access is excluded in Self-only and Commit Forcing.",
     "canvas": [
       2200,
-      460
-    ]
+      1120
+    ],
+    "rows": [
+      "Base",
+      "Self-only",
+      "Commit Forcing"
+    ],
+    "reproduction": "python assets/source/make_method.py"
   },
   "sgf_committing_controls": {
     "renderer": "assets/source/make_sgf_committing_controls.py",
@@ -693,69 +766,85 @@
     "new_sgf_six_frame_inputs": 3
   },
   "manuscript_exports": {
-    "teaser": {
-      "manuscript_figure": "figures/opening_teaser",
-      "publication_asset": "assets/teaser",
-      "pdf_svg_identity": "Byte-for-byte copies of current accepted manuscript figure exports",
-      "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "0cdece4f2a553dd243af53dea2e1a7789c07c033d68992234ac2dcf47cd2865a",
-      "svg_sha256": "2abd340f01f6a6e846ae936d6ed941b21dfc13de9a5cc3e731785c48145c4f66"
-    },
     "method": {
       "manuscript_figure": "figures/method_overview",
       "publication_asset": "assets/method",
-      "pdf_svg_identity": "Previously accepted computation-only layout; invisible SVG title now uses Commit Forcing. Visible PDF and PNG remain unchanged.",
+      "snapshot": "2026-10-30 local manuscript working tree",
+      "pdf_svg_identity": "Exact copies of this local manuscript snapshot; not attributed to an earlier Overleaf commit.",
       "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "bd71636b340139f6abc9f4233f5b76b307d8b737dce3fdf23c0fe885468ea2cb",
-      "svg_sha256": "c3bbd25ae8eccb81405a8f11dc810c619cbd00730d7b79e26363dfdf049d58fa"
+      "pdf_sha256": "54e66d5df7b7a44ab35a780abedf7fa20a56b76c2739e5de8324fa19b2893994",
+      "svg_sha256": "3502f42da24cbd6df1e6e3042d124e39331fd908544cd041fc79cea1642741b6",
+      "portable_source_sha256": "6c5f66a9cccdd37fc1f935b0636ddd57d0594fcf27f2d6a7fde14ef677176519"
     },
-    "committing_impulse": {
-      "manuscript_figure": "figures/committing_impulse",
-      "publication_asset": "assets/committing_impulse",
-      "pdf_svg_identity": "Byte-for-byte copies of current accepted manuscript figure exports",
+    "teaser": {
+      "manuscript_figure": "figures/opening_teaser",
+      "publication_asset": "assets/teaser",
+      "snapshot": "2026-10-30 local manuscript working tree",
+      "pdf_svg_identity": "Exact copies of this local manuscript snapshot; not attributed to an earlier Overleaf commit.",
       "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "58f0e003f9eb107696281451c610c30312d211719149e1a1392d2183bb91077a",
-      "svg_sha256": "8dd957a9cd8d00331869bd505506f73ccb5849a9e57bf265ab71cfd92a6db29a"
-    },
-    "committing_content_age": {
-      "manuscript_figure": "figures/committing_content_age",
-      "publication_asset": "assets/committing_content_age",
-      "pdf_svg_identity": "Byte-for-byte copies of current accepted manuscript figure exports",
-      "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "b655267ddd6511fcb39f98d20d8e7137fd198e348f54d420fc0a0db09dbd7039",
-      "svg_sha256": "052b1e0c112afba55f00ed24c03a600d6c83d861c1f358c1ef134dd252bba1bc"
+      "pdf_sha256": "1bfef8e4e14a2f142af6f873f5af24e5f282d163de18aee78298bb5fa230f053",
+      "svg_sha256": "f3754e6988a567da4ecc831df68555cd1b0f33ec15328470169ca42092830d19",
+      "portable_source_sha256": "d89a50b8f0950ab476f65799b4dd9cc527b3c866794b4102028831e724fc7bca"
     },
     "qualitative_grid": {
       "manuscript_figure": "figures/qualitative_grid",
       "publication_asset": "assets/qualitative_grid",
-      "pdf_svg_identity": "Byte-for-byte copies of current accepted manuscript figure exports",
+      "snapshot": "2026-10-30 local manuscript working tree",
+      "pdf_svg_identity": "Exact copies of this local manuscript snapshot; not attributed to an earlier Overleaf commit.",
       "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "21b88b3577364798807dabcaf38e8ace0f406c4576455b0469007c5d87422876",
-      "svg_sha256": "a2e0e94559926ac419e363c2f0d5132443283f473a48dda1dc2435a4eda1ac9f"
+      "pdf_sha256": "67c2bb09b44159b62280a96189c95b5ab3a35a9f5b2d3d4a2d3b829ee667353c",
+      "svg_sha256": "f1f6d46aeb42dbb02c03376768f4e2b4889f530d956926efeccf8f90f2faa12b",
+      "portable_source_sha256": "a6ae6af39d0e04431e903332809978a4d7c58b655057561ea41bd8aa6b868b9e"
+    },
+    "committing_content_age": {
+      "manuscript_figure": "figures/committing_content_age",
+      "publication_asset": "assets/committing_content_age",
+      "snapshot": "2026-10-30 local manuscript working tree",
+      "pdf_svg_identity": "Exact copies of this local manuscript snapshot; not attributed to an earlier Overleaf commit.",
+      "png": "Rendered from the released PDF at 2200 pixels wide",
+      "pdf_sha256": "51d83923c7f839b18f40c47efa09ed5cc6e615ad0e06d551c35621a253e83663",
+      "svg_sha256": "ebc7f7c811cde06b3edf9440d98bc7401539f106529f91ab8eb65c2135f98962",
+      "portable_source_sha256": "890233b20c2516fe6831fd97e4808468f752f62b002946483ec89fd3b550e318"
     },
     "committing_tradeoff_variants": {
       "manuscript_figure": "figures/committing_tradeoff_variants",
       "publication_asset": "assets/committing_tradeoff_variants",
-      "pdf_svg_identity": "Byte-for-byte copies of current accepted manuscript figure exports",
+      "snapshot": "2026-10-30 local manuscript working tree",
+      "pdf_svg_identity": "Exact copies of this local manuscript snapshot; not attributed to an earlier Overleaf commit.",
       "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "6201733ff1f89521bcce24bcd7b733224644540b0e15f48c504844ee4ef846ad",
-      "svg_sha256": "7aac8d0bd6c3d96624200898c77f97dc345339afaec591917d71d18d222f2bd4"
-    },
-    "committing_correction_dose": {
-      "manuscript_figure": "figures/committing_correction_dose",
-      "publication_asset": "assets/committing_correction_dose",
-      "pdf_svg_identity": "Byte-for-byte copies of current accepted manuscript figure exports",
-      "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "f49b6a470aaa7d5ca6901176c4be5e08572db63f5408183eddfea465a62c7181",
-      "svg_sha256": "cfd786ff2cc35e8a786890e8e4aeac564be4544cce3ef9b8d6f1459f7aea11a7"
+      "pdf_sha256": "2613fc8bce5d44774fbfda6c750c2922e0038cf40eb81efe698559ac410dcb1c",
+      "svg_sha256": "f0e15d4586ecaadfd427990595fcc2dea30aeb0c662d0a4550c88c447986c218",
+      "portable_source_sha256": "3f78aeceeb2b8340ec3de28016850ed566f824fe39b795108e3c8b0e42279735"
     },
     "committing_window_mechanisms": {
       "manuscript_figure": "figures/committing_window_mechanisms",
       "publication_asset": "assets/committing_window_mechanisms",
-      "pdf_svg_identity": "Byte-for-byte copies of current accepted manuscript figure exports",
+      "snapshot": "2026-10-30 local manuscript working tree",
+      "pdf_svg_identity": "Exact copies of this local manuscript snapshot; not attributed to an earlier Overleaf commit.",
       "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "ce29b26e0d4bdfbe8bb8225958a4c2d7d00daec773eee9389dc470bfb9bbbb3c",
-      "svg_sha256": "9f49dc1205b7433128d2692f10aa136d4116d11797d3fa0e49b0cfb7e1d56bb3"
+      "pdf_sha256": "cda9d1b4ded944cf5a7f7ac5089420a79b755af3a5c4ea7e9a5ab38fe87678b7",
+      "svg_sha256": "51746927c6ad6bc08b30e8ba277e973733bf1327f7b8a10e38aeb67ac949321f",
+      "portable_source_sha256": "780a8b2a53784f51301b4bf5b261d1d4dfa57b57144f9a55c4140891dd279d43"
+    },
+    "committing_correction_controls": {
+      "manuscript_figure": "figures/committing_correction_controls",
+      "publication_asset": "assets/committing_correction_controls",
+      "snapshot": "2026-10-30 local manuscript working tree",
+      "pdf_svg_identity": "Exact copies of this local manuscript snapshot; not attributed to an earlier Overleaf commit.",
+      "png": "Rendered from the released PDF at 2200 pixels wide",
+      "pdf_sha256": "e485aee43ec9ef44e9cf2b7fcb4abf6c50983e2f3c2f149968c7c9d24dadfca2",
+      "svg_sha256": "b1f3d0335ba2619661501131d9e1b726185394d391fd13878f13fd55e1e05d04",
+      "portable_source_sha256": "48063efcf849e41d2d80c2ddf100b8d6cb0cf3257a6919a47006d0dd18a559a5"
+    },
+    "committing_recurrence": {
+      "manuscript_figure": "figures/committing_recurrence",
+      "publication_asset": "assets/committing_recurrence",
+      "snapshot": "2026-10-30 local manuscript working tree",
+      "pdf_svg_identity": "Exact copies of this local manuscript snapshot; not attributed to an earlier Overleaf commit.",
+      "png": "Rendered from the released PDF at 2200 pixels wide",
+      "pdf_sha256": "8a8486be6a9a9ea96afd5c18d7c0408e253b6961728477b4f2d690fa38c94d11",
+      "svg_sha256": "cb01f58d0548d1e75c2e4d1c14d6cd8a62f9d362c506b4a75d22cf20ad2e449e",
+      "portable_source_sha256": "420b9724143fcdad9e5ce503314820d2b5ade50403a1fa49b0151e1f9c660d66"
     }
   },
   "dependencies": {
@@ -769,95 +858,103 @@
       "pdftoppm (Poppler)"
     ],
     "typography": "Helvetica for the vector teaser/method; Arial with DejaVu Sans fallback for measured plots and qualitative labels. Fonts and renderer versions can change metadata and PDF text metrics.",
-    "canonical_propagation_matplotlib": "3.10.8",
-    "canonical_matplotlib": "3.10.8"
+    "canonical_propagation_matplotlib": "Historical committing_impulse source unchanged; see its provenance",
+    "canonical_matplotlib": "3.10.8 for the updated plots; 3.10.0 for committing_recurrence",
+    "canonical_recurrence_matplotlib": "3.10.0"
   },
   "canonical_snapshot": {
-    "accepted_revision": "3824b58e861e33406f041e17ac884f285d0c9330",
-    "source_scope": "Approved individual figures and aggregate records only; no full manuscript, private sidecar, new per-prompt scores or videos."
+    "date": "2026-10-30",
+    "version": "Local manuscript working-tree snapshot",
+    "source_scope": "Eight current individual figure exports. Earlier Overleaf revisions are not used as the identity reference for this snapshot. Historical assets retain their original source records."
   },
   "regeneration_validation": {
+    "method": {
+      "python_matplotlib": null,
+      "rendered_size": [
+        2200,
+        1120
+      ],
+      "pdf_byte_equal": false,
+      "png_pixel_equal": true,
+      "svg_byte_equal": true,
+      "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
+    },
     "teaser": {
+      "python_matplotlib": null,
       "rendered_size": [
         2200,
         1032
       ],
       "pdf_byte_equal": false,
       "png_pixel_equal": true,
-      "svg_geometry_style_text_equal_after_ID_normalization": true
-    },
-    "method": {
-      "rendered_size": [
-        2200,
-        460
-      ],
-      "pdf_byte_equal": false,
-      "png_pixel_equal": true,
-      "svg_geometry_style_text_equal_after_ID_normalization": true
-    },
-    "committing_content_age": {
-      "rendered_size": [
-        2200,
-        1143
-      ],
-      "pdf_rgb_pixel_equal": true,
-      "mean_channel_difference": 0.0,
-      "pixels_differ": 0,
-      "svg_byte_equal": false
-    },
-    "committing_impulse": {
-      "rendered_size": [
-        2200,
-        860
-      ],
-      "pdf_rgb_pixel_equal": true,
-      "mean_channel_difference": 0.0,
-      "pixels_differ": 0,
-      "svg_byte_equal": false
+      "svg_byte_equal": true,
+      "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
     },
     "qualitative_grid": {
+      "python_matplotlib": "3.10.8",
       "rendered_size": [
         2200,
         1625
       ],
-      "pdf_byte_equal": true,
+      "pdf_byte_equal": false,
       "png_pixel_equal": true,
-      "svg_geometry_style_text_equal_after_ID_normalization": true,
-      "matches_frozen_overleaf_pdf": true,
-      "canonical_svg_sha256": "a2e0e94559926ac419e363c2f0d5132443283f473a48dda1dc2435a4eda1ac9f",
-      "svg_source_scope": "Same canonical local export as matched PDF; SVG is not tracked in Overleaf."
+      "svg_byte_equal": false,
+      "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
+    },
+    "committing_content_age": {
+      "python_matplotlib": "3.10.8",
+      "rendered_size": [
+        2200,
+        1159
+      ],
+      "pdf_byte_equal": false,
+      "png_pixel_equal": false,
+      "svg_byte_equal": false,
+      "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
     },
     "committing_tradeoff_variants": {
+      "python_matplotlib": "3.10.8",
       "rendered_size": [
         2200,
         1101
       ],
       "pdf_byte_equal": true,
       "png_pixel_equal": true,
-      "svg_geometry_style_text_equal_after_ID_normalization": true,
-      "matches_frozen_overleaf_pdf": true,
-      "canonical_svg_sha256": "7aac8d0bd6c3d96624200898c77f97dc345339afaec591917d71d18d222f2bd4",
-      "svg_source_scope": "Same canonical local export as matched PDF; SVG is not tracked in Overleaf."
-    },
-    "committing_correction_dose": {
-      "rendered_size": [
-        2200,
-        1409
-      ],
-      "pdf_rgb_pixel_equal": false,
-      "mean_channel_difference": 0.019291352130244962,
-      "pixels_differ": 746,
       "svg_byte_equal": false,
-      "svg_geometry_style_text_equal_after_ID_and_version_normalization": true
+      "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
     },
     "committing_window_mechanisms": {
+      "python_matplotlib": "3.10.8",
       "rendered_size": [
         2200,
-        1022
+        1157
+      ],
+      "pdf_byte_equal": false,
+      "png_pixel_equal": false,
+      "svg_byte_equal": false,
+      "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
+    },
+    "committing_correction_controls": {
+      "python_matplotlib": "3.10.8",
+      "rendered_size": [
+        2200,
+        1092
       ],
       "pdf_byte_equal": true,
       "png_pixel_equal": true,
-      "svg_geometry_style_text_equal_after_ID_normalization": true
+      "svg_byte_equal": false,
+      "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
+    },
+    "committing_recurrence": {
+      "python_matplotlib": "3.10.0",
+      "rendered_size": [
+        2200,
+        1468
+      ],
+      "pdf_byte_equal": true,
+      "png_pixel_equal": true,
+      "svg_byte_equal": false,
+      "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
     }
   },
   "input_preservation": [
@@ -990,13 +1087,107 @@
     "renderer": "assets/source/make_committing_window_mechanisms.py",
     "provenance": "assets/committing_window_mechanisms.provenance.json",
     "data": "analysis/window_effects/summary.json",
-    "manuscript_role": "Main-text Committing Window figure",
-    "source_overleaf_commit": "3824b58e861e33406f041e17ac884f285d0c9330",
-    "left_protocol": "200 rollf200 prompts,60 s,seed 0; h counts preceding blocks only",
-    "right_protocol": "100-prompt outcomes; effect normalization from reported 200-prompt endpoints",
-    "panels_pool_samples": false,
+    "manuscript_role": "Main-text window curve; absolute Subject c2c means",
+    "protocol": "200 rollf200 prompts,60 s,seed 0; h counts preceding blocks only",
+    "h": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "subject_c2c_means": [
+      86.21,
+      87.21,
+      87.23,
+      86.93
+    ],
+    "base_reference": 86.01,
     "base_is_h_point": false,
     "base_is_sink_only_intervention": false,
+    "panels": 1,
     "reproduction": "python assets/source/make_committing_window_mechanisms.py"
+  },
+  "historical_exports": {
+    "committing_impulse": {
+      "manuscript_figure": "figures/committing_impulse",
+      "publication_asset": "assets/committing_impulse",
+      "pdf_svg_identity": "Historical export retained unchanged from the preceding release; original provenance is preserved.",
+      "png": "Rendered from the released PDF at 2200 pixels wide",
+      "pdf_sha256": "58f0e003f9eb107696281451c610c30312d211719149e1a1392d2183bb91077a",
+      "svg_sha256": "8dd957a9cd8d00331869bd505506f73ccb5849a9e57bf265ab71cfd92a6db29a"
+    },
+    "committing_correction_dose": {
+      "manuscript_figure": "figures/committing_correction_dose",
+      "publication_asset": "assets/committing_correction_dose",
+      "pdf_svg_identity": "Historical export retained unchanged from the preceding release; original provenance is preserved.",
+      "png": "Rendered from the released PDF at 2200 pixels wide",
+      "pdf_sha256": "f49b6a470aaa7d5ca6901176c4be5e08572db63f5408183eddfea465a62c7181",
+      "svg_sha256": "cfd786ff2cc35e8a786890e8e4aeac564be4544cce3ef9b8d6f1459f7aea11a7"
+    }
+  },
+  "historical_regeneration_validation": {
+    "committing_impulse": {
+      "rendered_size": [
+        2200,
+        860
+      ],
+      "pdf_rgb_pixel_equal": true,
+      "mean_channel_difference": 0.0,
+      "pixels_differ": 0,
+      "svg_byte_equal": false
+    },
+    "committing_correction_dose": {
+      "rendered_size": [
+        2200,
+        1409
+      ],
+      "pdf_rgb_pixel_equal": false,
+      "mean_channel_difference": 0.019291352130244962,
+      "pixels_differ": 746,
+      "svg_byte_equal": false,
+      "svg_geometry_style_text_equal_after_ID_and_version_normalization": true
+    }
+  },
+  "committing_correction_controls": {
+    "renderer": "assets/source/make_committing_correction_controls.py",
+    "provenance": "assets/committing_correction_controls.provenance.json",
+    "data": "analysis/window_effects/summary.json",
+    "manuscript_role": "Appendix spatial-averaging controls",
+    "arms": [
+      "CG",
+      "SG16",
+      "CM16",
+      "CM64"
+    ],
+    "n_arms": 4,
+    "n_series": 3,
+    "n_bars": 12,
+    "series": [
+      "retained correction magnitude",
+      "retained consistency gain",
+      "retained motion suppression"
+    ],
+    "protocol": "100-prompt outcomes; effect normalization uses reported 200-prompt endpoints",
+    "bar_scaling": "Reported retained fractions multiplied by 100",
+    "reproduction": "python assets/source/make_committing_correction_controls.py"
+  },
+  "committing_recurrence": {
+    "renderer": "assets/source/make_committing_recurrence.py",
+    "provenance": "assets/committing_recurrence.provenance.json",
+    "data": "assets/source/committing_recurrence_inputs",
+    "results": "analysis/committing_recurrence/README.md",
+    "content": "Fixed-latent own-entry layer/lag maps, changed-sink curves, and one-pass sink-read V responses. This is separate from the earlier SGF nine-frame impulse figure.",
+    "input_scope": "Reported aggregate CSV matrices and curves, without per-prompt values, latent tensors or KV tensors",
+    "matrix_shape": [
+      32,
+      30
+    ],
+    "input_files": [
+      "staircase_O.csv",
+      "staircase_N.csv",
+      "sink_curves.csv",
+      "impulse6_own.csv"
+    ],
+    "reproduction": "python assets/source/make_committing_recurrence.py"
   }
 }

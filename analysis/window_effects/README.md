@@ -19,11 +19,12 @@ The separate Base reference scores 86.01, or −1.20 points relative to h=1. It 
 9 trajectory frames, including the current 3, with 15-frame physical storage. It is neither an h=4 point nor an
 h=1-plus-sink-only intervention.
 
-[Combined figure](../../assets/committing_window_mechanisms.svg) · [PDF](../../assets/committing_window_mechanisms.pdf)
+[Window figure](../../assets/committing_window_mechanisms.svg) · [PDF](../../assets/committing_window_mechanisms.pdf)
 
-The left panel uses these 200-prompt window means. The right panel retains the four spatial-pooling arms below:
-100-prompt outcomes with effect normalization from the reported 200-prompt endpoints. The panels have different
-units and do not pool samples.
+The current window figure plots the absolute Subject c2c means above. The separate
+[spatial-averaging figure](../../assets/committing_correction_controls.svg) shows four arms and three retained
+fractions per arm. Its outcomes use 100 prompts and effect normalization from the reported 200-prompt endpoints.
+The figures have different units and do not pool samples.
 
 The committing-window scans show rising consistency, a plateau, and a decline as more history is read.
 The controls below support a temporal-smoothing interpretation of the initial gain and an outdated-content
@@ -35,7 +36,8 @@ and framewise SGF has a different block size. [Complete window scans](../../resu
 On LongLive, adding the preceding block improves clip-to-clip Subject Consistency while reducing Dynamic Degree.
 Spatial pooling retains part of this history-induced attention correction and part of both effects.
 
-[Figure](../../assets/committing_correction_dose.svg) · [PDF](../../assets/committing_correction_dose.pdf)
+[Current control bars](../../assets/committing_correction_controls.svg) · [PDF](../../assets/committing_correction_controls.pdf) ·
+[Original dose scatter](../../assets/committing_correction_dose.svg)
 
 | Spatial averaging | Retained correction | Retained consistency gain | Retained motion suppression |
 |:---|---:|---:|---:|

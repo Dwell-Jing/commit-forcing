@@ -316,5 +316,32 @@
       "../../results/tables/vbl60_longlive_commit6_vs_12.txt"
     ],
     "base_comparison_scope": "Separate complete context; not h=4 or an h=1-plus-sink-only contrast."
+  },
+  "current_figure_layouts": {
+    "snapshot": "2026-10-30 local manuscript working tree",
+    "window": {
+      "asset": "assets/committing_window_mechanisms.svg",
+      "y": "Absolute Subject c2c mean, 0-100 scale",
+      "data": "committing_window",
+      "base_is_h_point": false
+    },
+    "spatial_averaging_controls": {
+      "asset": "assets/committing_correction_controls.svg",
+      "arms": 4,
+      "bars": 12,
+      "series": [
+        "retained_correction_norm",
+        "retained_consistency_gain",
+        "retained_motion_suppression"
+      ],
+      "independent_outcomes_per_arm": 2,
+      "data": "pooling_arms",
+      "statistics_recomputed": false
+    },
+    "original_dose_scatter": {
+      "asset": "assets/committing_correction_dose.svg",
+      "semantics": "plot_semantics",
+      "status": "Unchanged supplementary asset; four arms and eight effect points."
+    }
   }
 }

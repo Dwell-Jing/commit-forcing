@@ -141,9 +141,9 @@ def main():
     FIG.mkdir(parents=True,exist_ok=True)
     try:
         fig.savefig(FIG/f'{STEM}.pdf',format='pdf',metadata={
-            'Title':'LongLive committing variants','CreationDate':None,'ModDate':None})
+            'Title':'LongLive committing controls','CreationDate':None,'ModDate':None})
         fig.savefig(FIG/f'{STEM}.svg',format='svg',metadata={
-            'Title':'LongLive committing variants','Date':None})
+            'Title':'LongLive committing controls','Date':None})
         subprocess.run(['pdftoppm','-singlefile','-png','-scale-to','2200',
                         str(FIG/f'{STEM}.pdf'),str(FIG/STEM)],check=True)
     finally:

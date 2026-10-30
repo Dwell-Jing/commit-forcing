@@ -24,6 +24,22 @@ def table(headers, rows):
                      ['| ' + ' | '.join(str(v) for v in row) + ' |' for row in rows])
 
 
+def render_descriptive_adjustment(data):
+    adjustment = data['six_generator_descriptive_adjustment']
+    return '\n'.join([
+        '### Six-generator descriptive Dynamic Degree adjustment', '',
+        table(['Generator', 'Δ Dynamic Degree', 'Δ Subject c2c',
+               'DD-adjusted Δ Subject c2c [95% CI]'],
+              [[row['generator'], metric(row['dynamic_delta']),
+                metric(row['subject_c2c_delta']), metric(row['subject_c2c_intercept'])]
+               for row in adjustment['rows']]), '',
+        'Commit Forcing minus Base on 200 rollf200 prompts at 60 seconds with generation seed 0.',
+        'All six committing adaptations use 6 frames. OLS intercept intervals use 2,000 prompt-bootstrap draws.',
+        'These are descriptive regression adjustments, not experiments with motion held fixed.',
+        'This table includes SGF+; the original seed tables above retain the separate SF-with-sink configuration.',
+        'It is separate from the 946-entry standard-suite scores.', ''])
+
+
 def render_tables(data):
     parts = []
     roll = data['rollf200_60s']['rows']
@@ -35,6 +51,7 @@ def render_tables(data):
                           metric(r['quality_delta']), f"{r['subject_c2c_base']:.2f}",
                           f"{r['subject_c2c_recent']:.2f}", metric(r['subject_c2c_delta']),
                           metric(r['dynamic_delta'])] for r in roll if r['generation_seed'] == seed]), '']
+    parts += [render_descriptive_adjustment(data)]
     long = data['moviegen32_240s']
     parts += ['### 240-second MovieGen: absolute scores', '',
               table(['Generator', 'Committing configuration', 'Quality', 'Fused Subject', 'Fused Background', 'Dynamic'],
@@ -122,6 +139,22 @@ def check(data):
     assert data['framewise_sgf_windows']['block_frames'] == 1
     assert data['framewise_sgf_windows']['current_plus_previous_frames'] == 2
     assert data['sgf60_descriptive_adjustment']['subject_c2c_intercept']['mean'] == 4.87
+    adjustment = data['six_generator_descriptive_adjustment']
+    assert adjustment['source_snapshot']['kind'] == 'canonical manuscript working tree'
+    assert all(len(h) == 64 and all(c in '0123456789abcdef' for c in h)
+               for h in adjustment['source_sha256'].values())
+    assert adjustment['prompts'] == 200 and adjustment['seconds'] == 60
+    assert adjustment['generation_seed'] == 0 and adjustment['committing_frames'] == 6
+    assert adjustment['prompt_bootstrap_draws'] == 2000
+    assert adjustment['statistics_recomputed'] is False
+    names = [row['generator'] for row in adjustment['rows']]
+    assert len(names) == 6 and len(set(names)) == 6
+    assert set(names) == {'SGF', 'SGF+', 'RF-TF', 'Rolling Sink', 'LongLive', 'CF'}
+    sgf_adjusted = next(row['subject_c2c_intercept'] for row in adjustment['rows']
+                        if row['generator'] == 'SGF')
+    legacy = data['sgf60_descriptive_adjustment']['subject_c2c_intercept']
+    assert all(sgf_adjusted[key] == legacy[key]
+               for key in ('mean', 'reported_mean', 'ci', 'reported_ci'))
     return counts
 
 
@@ -135,6 +168,7 @@ def main():
         print(render_tables(data))
     else:
         print(f"Validated {counts['aggregate_metrics']} reported aggregate means and their stored intervals; no bootstrap recomputed.")
+        print(render_descriptive_adjustment(data))
 
 
 if __name__ == '__main__':

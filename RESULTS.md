@@ -15,6 +15,7 @@ without an RF-trained checkpoint. Wider-context studies are labelled as supporti
 [MovieGen 60 s](#60-s-videos) · [Longer videos](#longer-videos) · [Committing controls](#committing-controls) ·
 [Current six-frame custom-prompt results](#current-six-frame-custom-prompt-results) · [Committing window](#committing-window) · [Committing variants](#committing-variants) ·
 [KV construction](#kv-construction-controls) · [Transfer boundaries](#transfer-boundaries) ·
+[Fixed-block recurrence](#fixed-block-recurrence) ·
 [Human evaluation](results/human_evaluation/README.md) · [Quality and cost](analysis/quality_cost/README.md) ·
 [per-video data and commands](results/README.md) · [← Home](README.md)
 
@@ -517,10 +518,20 @@ above uses a different prompt protocol and generator set.
 | SF with sink | 1 | 81.35 | 81.57 | +0.23 [−0.42, +0.80] | +4.16* [+3.33, +4.96] | +0.68 [−2.67, +4.07] |
 
 All six clip-to-clip Subject gains are significant with both seeds. Dynamic Degree changes differ across generators.
-On SGF, a descriptive regression adjustment for paired Dynamic Degree differences on these 200 rollf200 prompts
-at 60 seconds gives a seed-0 intercept of +4.87 [+3.89, +5.95], using 2,000 prompt-bootstrap draws. This is an
-adjusted estimate from existing paired videos, rather than an experiment holding motion fixed or a statistic
-from the 946-entry standard suite.
+The separate seed-0 analysis below covers the six main generators, including SGF+ in place of SF with sink.
+It regresses paired Subject c2c changes on paired Dynamic Degree changes and reports the intercept, with
+2,000 prompt-bootstrap draws. This is a descriptive adjustment of existing paired videos, not an experiment
+holding motion fixed or a statistic from the 946-entry standard suite.
+
+| Generator | Δ Dynamic | Raw Δ Subject c2c | DD-adjusted Δ Subject c2c [95% CI] |
+|:---|--:|--:|:---|
+| SGF | +11.33 | +4.76 | +4.87* [+3.89, +5.95] |
+| SGF+ | +3.22 | +2.76 | +2.78* [+1.89, +3.64] |
+| RF-TF | −3.92 | +6.36 | +5.99* [+5.09, +6.84] |
+| Rolling Sink | +2.02 | +2.45 | +2.52* [+1.83, +3.17] |
+| LongLive | +6.42 | +1.20 | +1.38* [+0.95, +1.84] |
+| Context Forcing | −1.05 | +3.23 | +3.20* [+2.55, +3.89] |
+
 [Aggregate records, base and Commit Forcing consistency scores, and the separate CF sink-exclusion component](results/current6_custom/README.md).
 
 ## Committing controls
@@ -592,8 +603,8 @@ LongLive's 200-prompt rollf200 comparison at 60 seconds, seed 0, varies the numb
 blocks h while always including the current block. Mean Subject c2c for h=0/1/2/3 is 86.21/87.21/87.23/86.93;
 relative to h=1, the changes are −1.00/0/+0.02/−0.28 points. Base scores 86.01 (−1.20 relative to h=1), using
 sink 3 + latest 9 trajectory frames, including the current 3, with 15-frame physical storage. It is a separate
-complete context, not h=4 or a sink-only intervention. The [combined figure](assets/committing_window_mechanisms.svg)
-shows this curve beside the correction controls below; its two panels retain their separate prompt sets and units.
+complete context, not h=4 or a sink-only intervention. The [window figure](assets/committing_window_mechanisms.svg)
+plots these absolute scores. The [spatial-averaging controls](assets/committing_correction_controls.svg) are a separate figure.
 
 On LongLive, spatial averaging of the history-induced committing-attention correction retains part of its
 consistency gain and motion suppression. The correction is D = O(current + history) − O(current), measured
@@ -608,17 +619,18 @@ ratio ‖pool(D)‖ / max(‖D‖, 10⁻¹²), in float32 over current tokens, h
 | SG16: 4×4 spatial grid | 0.48 | 0.42 | 0.61 |
 | CM64: 64 content regions | 0.56 | 0.55 | 0.48 |
 
-The four variants supply eight outcome points. Retained effects use 1 − Δvariant / Δself for each metric,
+The control figure shows three retained fractions for each of four variants. Retained effects use 1 − Δvariant / Δself for each metric,
 with the reported paired variant changes on 100 prompts and the original 200-prompt self-only reference.
-The horizontal axis is an attention-output correction ratio, not a KV tensor norm or an outcome-derived value.
-The figure's y=x line and endpoints define equal-fraction retention and normalization. These controls support
+The retained-correction bars use an attention-output correction ratio, not a KV tensor norm or an outcome-derived value.
+The original [dose scatter](assets/committing_correction_dose.svg) retains its eight outcome points and equal-fraction reference line. These controls support
 a smoothing interpretation without isolating correction magnitude from all structural changes. SG16 departs
 from equal retention: it preserves 0.42 of the consistency gain and 0.61 of the motion suppression.
 
 The plateau may partly reflect indirect dependencies already carried in preceding-block KV; adding a second
 preceding block changes LongLive consistency by +0.02 without a significant gain. The SGF fixed-latent propagation
-probe provides cross-model corroboration of the indirect path. Fixed-position recency controls
-support outdated-content interference in the decline. FP16, the regionally averaged sink correction, changes
+probe provides cross-model corroboration of the indirect path. The separate
+[fixed-trajectory recency diagnostic](analysis/committing_content_age/README.md#fixed-trajectory-recency-diagnostic)
+holds clean latents and positions fixed while varying history age. FP16, the regionally averaged sink correction, changes
 Subject c2c by −1.76 relative to Commit Forcing; its separate G statistic is −2.97. Averaging preserves
 regional information and does not remove all geometric structure.
 
@@ -646,11 +658,31 @@ excludes zero. [All components, saved feature arrays and CPU replay](analysis/si
 ### Quality decomposition and inference cost
 
 For the current 6-frame SGF arm, Dynamic Degree contributes +1.01 of the +1.27 Quality points; Motion Smoothness
-decreases by 0.29 points. The [historical decomposition and cost tables](analysis/quality_cost/README.md) retain
+decreases by 0.29 points. The current six-frame cost measurements are:
+
+| Configuration | Time: Base (s) | Commit Forcing (s) | Peak memory: Base (GiB) | Commit Forcing (GiB) |
+|:---|--:|--:|--:|--:|
+| SGF | 218.1 | 211.0 | 46.2 | 46.2 |
+| SGF+ | 220.5 | 212.9 | 49.0 | 49.0 |
+| RF-TF | 287.4 | 269.0 | 48.9 | 48.9 |
+| Context Forcing | 158.4 | 146.9 | 26.2 | 26.2 |
+| LongLive | 229.2 | 224.1 | 47.0 | 47.0 |
+| Rolling Sink | 269.6 | 252.4 | 49.1 | 54.7 |
+| ID-Forcing on Self-Forcing | 225.9 | 212.4 | 29.1 | 29.9 |
+| ID-Forcing on LongLive | 220.4 | 226.1 | 31.8 | 31.8 |
+
+Each arm runs two consecutive 60-second videos on one H20; the first warms up the model and the second is
+timed, including VAE decoding and excluding model loading. Peak device memory is sampled every second across
+both videos and includes weights, activations and runtime allocations. Paired arms run on neighboring GPUs
+of one dedicated H20 node. These are single timed observations per arm. Rolling Sink uses 5.6 GiB more peak memory;
+the six-frame ID-Forcing/LongLive timing is slower. These cost-only adaptations are distinct from the earlier
+nine-frame ID-Forcing quality comparisons. [Aggregate values and measurement protocol](analysis/quality_cost/README.md#current-six-frame-time-and-memory).
+
+The [historical decomposition and cost tables](analysis/quality_cost/README.md) retain
 the original eight configurations, including SGF's 9-frame +1.16 Quality control (+1.10 from Dynamic Degree).
 Those earlier component and timing records do not measure the updated 6-frame SGF, SGF+, RF-TF or Rolling Sink arms.
 
-LongLive cost uses four technical repeats of the same 60-second prompt after warm-up: mean wall time is
+The historical LongLive cost uses four technical repeats of the same 60-second prompt after warm-up: mean wall time is
 231.1 s for Base and 223.8 s for 6-frame committing, an observed 3.2% reduction. Peak device memory is 35.9 GiB
 in both arms. The other configurations each use one warmed-up video per arm. Rolling Sink peak device memory
 is 41.9 GiB for Base and 48.1 GiB with recent-context control; IDF-SF reduces clean forward calls from 155 to 80.
@@ -661,6 +693,24 @@ The [LongLive quick-window confirmation](analysis/commit_window/README.md#quick-
 over 12 frames; motion-based adaptive selection adds no benefit over the fixed 6-frame window. The 6-frame
 choice is then evaluated on the separate 946-entry suite above. Its standard-suite physical cache remains 12 frames.
 
+## Fixed-block recurrence
+
+With clean blocks, prompt and temporal positions fixed, each new entry reads only its predecessor's stored KV.
+Its dependence on an earlier entry follows the product of the intervening committing Jacobians. Because KV is
+projected before each layer's attention, layer ℓ can depend only on clean blocks b−ℓ through b, with startup
+clipping at block 0. Reading h preceding blocks extends this bound to b−hℓ. Free generation can also carry
+older information into the clean block through denoising; this is a bound on the fixed-block committing computation.
+
+The SGF diagnostic fixes 60-second latent trajectories for 20 prompts, seed 0, then rebuilds KV without denoising
+or VAE decoding. Across 8,580 content- and sink-change entry comparisons, each covering 30 layers, no excluded
+layer differs and the first changed layer matches the bound. After a content change, the six-frame chain has
+exactly zero difference from lag 30; native committing still differs by 0.0052 at lag 32. After a single sink read,
+the six-frame chain reaches exactly zero from lag 29, while the two-predecessor control retains a V difference
+of 0.007 at lag 32. Self-only committing leaves all subsequent entries unchanged in all three interventions.
+
+[Figure](assets/committing_recurrence.svg) · [Protocol, equations and aggregate readout](analysis/committing_recurrence/README.md).
+This is separate from the earlier [nine-frame, 48-second propagation probe](analysis/committing_propagation/README.md).
+
 ## KV construction controls
 
 ### SGF: separate KV for denoising and later committing
@@ -669,9 +719,24 @@ D is the cache read by denoising; C supplies history to later committing passes.
 constructed by reading C. Each clean block has two committing forwards in this diagnostic, with a separate context
 choice for each output. Base denoising access remains unchanged. Both caches store 12 latent frames.
 
-The reference constructs both D and C with recent-only 9-frame access. N12 denotes sink 3 + recent 6 + current 3;
+The reference constructs both D and C with native 12-frame access. N12 denotes sink 3 + recent 6 + current 3;
 R9 denotes recent 6 + current 3; S3 denotes the current block. This is the earlier nine-frame control, separate
 from the six-frame current-plus-previous main method. All rows use rollf200 prompts 0–99, 60 seconds and generation seed 0.
+
+| D construction | C construction | Δ Quality [95% interval] | Δ Dynamic | Δ Subject c2c |
+|:---|:---|--:|--:|--:|
+| R9 | R9 | +0.59* [+0.16, +1.04] | +10.37* | +3.98* |
+| R9 | N12 | +0.52* [+0.11, +0.95] | +8.73* | +3.89* |
+| N12 | R9 | −0.53* [−0.75, −0.31] | −3.47* | −1.69* |
+| R9 | S3 | +0.54* [+0.18, +0.93] | +12.47* | +0.99 |
+
+Recent-only construction of D retains most of the gain from constructing both caches with recent history.
+Changing only C lowers Quality and Subject c2c relative to native construction of both. This diagnostic uses
+two committing forwards and compares native 12-frame, recent 9-frame and self-only 3-frame read policies,
+separately from the one-pass six-frame main method.
+
+<details>
+<summary>Same study with R9/R9 as the reference</summary>
 
 | D construction | C construction | Δ Quality [95% interval] | Δ Dynamic | Δ Subject c2c |
 |:---|:---|--:|--:|--:|
@@ -684,6 +749,8 @@ The larger Quality and long-range consistency losses follow native construction 
 alone has nonsignificant Quality and Subject changes, while Aesthetic Quality changes by −0.22, Motion Smoothness
 by +0.10 and Temporal Flickering by +0.13 points. Self-only construction of C reduces Subject c2c by 2.99 points.
 [Configurations and recorded aggregates](analysis/kv_construction/README.md).
+
+</details>
 
 The separate [fixed-latent propagation study](analysis/committing_propagation/README.md), retained as supplementary
 material, measures decaying KV differences. It does not by itself attribute these performance losses or all drift

@@ -2,12 +2,21 @@
   "artifact": "teaser",
   "status": "Adopted Figure1; actual current-plus-previous six-frame SGF example",
   "source": "assets/source/make_teaser.py",
-  "source_sha256": "3494c1546f68ed067b65f04adcb211f0e292b90d422c6b71e3a78027e78a36e3",
+  "source_sha256": "d89a50b8f0950ab476f65799b4dd9cc527b3c866794b4102028831e724fc7bca",
   "method_name": "Commit Forcing",
   "canvas": [
     3200,
     1500
   ],
+  "photo_source_overleaf_commit": "3824b58e861e33406f041e17ac884f285d0c9330",
+  "manuscript_asset": {
+    "version": "2026-10-30 manuscript working-tree snapshot",
+    "source_pdf": "figures/opening_teaser.pdf",
+    "source_svg": "figures/opening_teaser.svg",
+    "source_pdf_sha256": "1bfef8e4e14a2f142af6f873f5af24e5f282d163de18aee78298bb5fa230f053",
+    "source_svg_sha256": "f3754e6988a567da4ecc831df68555cd1b0f33ec15328470169ca42092830d19",
+    "relation_to_overleaf": "Current local manuscript assets; not asserted to equal the earlier Overleaf commit."
+  },
   "print_width_mm": 178,
   "minimum_font_pt": 8.514566929133858,
   "layout_anchors": {
@@ -55,7 +64,7 @@
         140
       ]
     ],
-    "label": "Clean latent",
+    "label": "Clean block",
     "text_inside": true,
     "slab_count_is_symbolic": true,
     "slabs_are_not_transformer_layers": true
@@ -486,7 +495,7 @@
             "no_triangle_or_band": true,
             "clipped_inside_kv_glyph": true
           },
-          "blank_means": "No depicted direct Nonrecent source influence; not zero-valued KV or zero total drift",
+          "blank_means": "No depicted direct influence from additional older-history reads during committing; not zero-valued KV or zero total drift",
           "marks_mean": "Illustrative source-dependent influence carried through subsequent committing; not area-coded data"
         },
         {
@@ -875,7 +884,7 @@
             "no_triangle_or_band": true,
             "clipped_inside_kv_glyph": true
           },
-          "blank_means": "No depicted direct Nonrecent source influence; not zero-valued KV or zero total drift",
+          "blank_means": "No depicted direct influence from additional older-history reads during committing; not zero-valued KV or zero total drift",
           "marks_mean": "Illustrative source-dependent influence carried through subsequent committing; not area-coded data"
         },
         {
@@ -1331,7 +1340,7 @@
             "no_triangle_or_band": true,
             "clipped_inside_kv_glyph": true
           },
-          "blank_means": "No depicted direct Nonrecent source influence; not zero-valued KV or zero total drift",
+          "blank_means": "No depicted direct influence from additional older-history reads during committing; not zero-valued KV or zero total drift",
           "marks_mean": "Illustrative source-dependent influence carried through subsequent committing; not area-coded data"
         }
       ],
@@ -1380,7 +1389,7 @@
           "grid_count_is_symbolic": true,
           "first_glyph_has_merged_label_cell": false,
           "overlay": null,
-          "blank_means": "No depicted direct Nonrecent source influence; not zero-valued KV or zero total drift",
+          "blank_means": "No depicted direct influence from additional older-history reads during committing; not zero-valued KV or zero total drift",
           "marks_mean": "Illustrative source-dependent influence carried through subsequent committing; not area-coded data"
         },
         {
@@ -1422,7 +1431,7 @@
           "grid_count_is_symbolic": true,
           "first_glyph_has_merged_label_cell": false,
           "overlay": null,
-          "blank_means": "No depicted direct Nonrecent source influence; not zero-valued KV or zero total drift",
+          "blank_means": "No depicted direct influence from additional older-history reads during committing; not zero-valued KV or zero total drift",
           "marks_mean": "Illustrative source-dependent influence carried through subsequent committing; not area-coded data"
         },
         {
@@ -1464,7 +1473,7 @@
           "grid_count_is_symbolic": true,
           "first_glyph_has_merged_label_cell": false,
           "overlay": null,
-          "blank_means": "No depicted direct Nonrecent source influence; not zero-valued KV or zero total drift",
+          "blank_means": "No depicted direct influence from additional older-history reads during committing; not zero-valued KV or zero total drift",
           "marks_mean": "Illustrative source-dependent influence carried through subsequent committing; not area-coded data"
         }
       ],
@@ -1495,7 +1504,7 @@
       ],
       "same_crop_for_both_arms": true,
       "pixels_repainted_or_generated": false,
-      "crop_reason": "Tighter subject framing; removes the original upper-left illuminated shop sign from both display windows",
+      "crop_reason": "Fixed horizontal crop shared by both arms; no scene retouching.",
       "seconds": 238,
       "prompt": 0,
       "seed": 0
@@ -1522,7 +1531,7 @@
       ],
       "same_crop_for_both_arms": true,
       "pixels_repainted_or_generated": false,
-      "crop_reason": "Tighter subject framing; removes the original upper-left illuminated shop sign from both display windows",
+      "crop_reason": "Fixed horizontal crop shared by both arms; no scene retouching.",
       "seconds": 238,
       "prompt": 0,
       "seed": 0
@@ -1581,34 +1590,28 @@
   "semantics": {
     "figure_type": "Conceptual source-dependency overview and authentic qualitative results, not a fixed-clean paired reconstruction",
     "shared_clean_role": "The shared operator path illustrates identical policies and tensor roles; the actual free trajectories each generate their own clean latents.",
-    "denoising_source_view": "Nonrecent and two Recent history cards remain fully visible. Current is a flat 5x3 grid filled only with illustrative noise, with no scene or person underneath. Denoising produces the clean latent; committing Current cards use the same full-cell flat grid without noise. Grid divisions are symbolic, not latent frames or model layers. Scene-card counts are role-level illustrations, not physical-cache frame counts.",
+    "denoising_source_view": "Three stored-history cards remain visible under Historical KV. Noise is the live current input, a flat 5×3 illustrative grid. Denoising produces a Clean block latent. Committing uses the same flat grid without noise. Card and grid counts are symbolic.",
     "native_committing": "sink 3 + recent 6 + current 3 = 12 latent frames",
     "recent_committing": "immediately preceding block3 + current 3 = 6 latent frames",
     "slabs": "Slab glyphs outside the filmstrip indicate tensor/block roles; their offsets do not assert the number of Transformer layers, latent frames, tensor channels or physical-cache frames. Inline Current instead uses a flat grid. Clean latents are not per-layer KV.",
     "persistent_sequence": "Distinct later blocks construct their own KV. Arrows denote further autoregressive generation, not direct KV decoding or copying the first KV.",
     "gray_marks": "Schematic source-dependent influence carried into subsequent KV; shape, area, number and density are not quantitative. Fragmentation/spatial spread is not a measured monotone increase or acceleration of drift.",
-    "unmarked_recent": "Gridded recent-context glyphs without gray patches omit the depicted direct Nonrecent dependency; they do not imply empty KV, zero values, zero indirect historical dependence or zero total drift.",
+    "unmarked_recent": "Unmarked gridded glyphs omit the direct influence from additional older-history reads during committing. They do not imply empty or zero-valued KV, zero indirect historical dependence, or zero total drift.",
     "no_lag_curve": "No b+1/b+3, numeric lag, measured KV norm or monotone growth/decay series is drawn.",
     "film_triangles": "Small rightward triangles mark temporal direction along the filmstrip, not an attention mask or a propagation wedge.",
     "no_extra_module_forward_or_storage": true,
-    "photos": "Same fixed prompt 0 and initial-noise seed 0 at 238 s; native 12 versus actual SGF_W6. Original baseline PNG bytes are preserved. The SGF_W6 display PNG is decoded from the existing video and resized to 416x240. Both use the same [90,0,326,240] crop; no scene retouching or inpainting.",
-    "lower_selection": "Only the newest Recent block and Current are directly visible; nonrecent and older recent cards remain stored but are masked from committing."
+    "photos": "Same fixed SGF prompt 0 and initial-noise seed 0 at 238 s: native-12 shows a white jacket and actual SGF_W6 shows a black jacket. Original baseline PNG bytes and the existing six-frame video decode are preserved. Both use the same [90,0,326,240] crop; no scene retouching or inpainting.",
+    "lower_selection": "Only the immediately preceding block stored as Previous KV and the current Clean block are directly visible during committing. Older cards remain stored but are masked from this committing read; the previous block is not re-encoded at this step."
   },
-  "source_frames_unchanged": false,
+  "source_frames_unchanged": true,
   "exports": {
-    "pdf": "0cdece4f2a553dd243af53dea2e1a7789c07c033d68992234ac2dcf47cd2865a",
-    "svg": "2abd340f01f6a6e846ae936d6ed941b21dfc13de9a5cc3e731785c48145c4f66"
+    "pdf": "1bfef8e4e14a2f142af6f873f5af24e5f282d163de18aee78298bb5fa230f053",
+    "svg": "f3754e6988a567da4ecc831df68555cd1b0f33ec15328470169ca42092830d19",
+    "actual_pdf_png": "3dfd92db1e9260e05c2860ef2260c7e28a6148d241802a5960f171bdab1a5cfb"
   },
-  "source_overleaf_commit": "3824b58e861e33406f041e17ac884f285d0c9330",
-  "regeneration_validation": {
-    "rendered_size": [
-      2200,
-      1032
-    ],
-    "pdf_byte_equal": false,
-    "png_pixel_equal": true,
-    "svg_geometry_style_text_equal_after_ID_normalization": true
-  },
-  "regeneration_environment": "Matplotlib 3.10.0; manuscript plot exports use 3.10.8. Released PDF/SVG retain manuscript bytes.",
-  "input_preservation": "The archived native PNG is unchanged; actual SGF_W6 method PNG is added separately. Source pixels are not retouched."
+  "actual_pdf_png": {
+    "path": "assets/teaser.png",
+    "width_pixels": 2200,
+    "sha256": "3dfd92db1e9260e05c2860ef2260c7e28a6148d241802a5960f171bdab1a5cfb"
+  }
 }

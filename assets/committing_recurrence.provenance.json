@@ -1,0 +1,49 @@
+{
+  "artifact": "committing_recurrence",
+  "source": "assets/source/make_committing_recurrence.py",
+  "source_sha256": "420b9724143fcdad9e5ce503314820d2b5ade50403a1fa49b0151e1f9c660d66",
+  "inputs": [
+    {
+      "path": "assets/source/committing_recurrence_inputs/impulse6_own.csv",
+      "sha256": "03d431dbfde13cd1f5e3e0fe58823d9c71a3a318644333c41b32fe98b411a0ae"
+    },
+    {
+      "path": "assets/source/committing_recurrence_inputs/sink_curves.csv",
+      "sha256": "19db7c4777dfe69633ef599ab73fecadb5d4929fe8eb7bc0f9cc1dc4c8591a25"
+    },
+    {
+      "path": "assets/source/committing_recurrence_inputs/staircase_N.csv",
+      "sha256": "de0d803a24de8eeb7a87ee4768b58fba7a921e533302c42ec1f59d94e099d06c"
+    },
+    {
+      "path": "assets/source/committing_recurrence_inputs/staircase_O.csv",
+      "sha256": "f0327880bfe5a6c2393aaaca8012c3602a9e9fa319c9298d0e1fbbf71c05eb36"
+    }
+  ],
+  "input_scope": "Reported aggregate matrices and curves only; no latent, KV tensor, video or per-prompt records.",
+  "layers": 30,
+  "matrix_shape": [
+    32,
+    30
+  ],
+  "display": "Top panels show log10 of positive aggregate own-entry K/V relative L2; exact zeros are masked white. Lower panels use the reported layer-mean sink response and own-entry V impulse means and intervals.",
+  "new_statistics_computed": false,
+  "exports": {
+    "pdf": "8a8486be6a9a9ea96afd5c18d7c0408e253b6961728477b4f2d690fa38c94d11",
+    "svg": "cb01f58d0548d1e75c2e4d1c14d6cd8a62f9d362c506b4a75d22cf20ad2e449e",
+    "actual_pdf_png": "929000027b454f3704b8fd5505c629f3f86ad35ee0521bc921abc5010859c6b7"
+  },
+  "manuscript_asset": {
+    "version": "2026-10-30 manuscript working-tree snapshot",
+    "source_pdf": "figures/committing_recurrence.pdf",
+    "source_svg": "figures/committing_recurrence.svg",
+    "source_pdf_sha256": "8a8486be6a9a9ea96afd5c18d7c0408e253b6961728477b4f2d690fa38c94d11",
+    "source_svg_sha256": "cb01f58d0548d1e75c2e4d1c14d6cd8a62f9d362c506b4a75d22cf20ad2e449e",
+    "relation_to_overleaf": "Current local manuscript assets; not asserted to equal the earlier Overleaf commit."
+  },
+  "actual_pdf_png": {
+    "path": "assets/committing_recurrence.png",
+    "width_pixels": 2200,
+    "sha256": "929000027b454f3704b8fd5505c629f3f86ad35ee0521bc921abc5010859c6b7"
+  }
+}

@@ -16,7 +16,7 @@
 - **2026-10-09**: Initial release: code and evaluation results.
 - arXiv preprint coming soon.
 
-Commit Forcing updates the KV cache using the current and immediately preceding blocks, while preserving
+Commit Forcing constructs KV from the clean current block and the preceding block's stored KV, while preserving
 base denoising. It requires no training or additional DiT forward passes.
 
 ## Results

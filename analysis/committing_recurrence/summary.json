@@ -1,0 +1,323 @@
+{
+  "schema_version": 1,
+  "title": "Committing as a recurrence: fixed-latent SGF verification",
+  "export_scope": "reported aggregate values only",
+  "source_kind": "local manuscript working-tree snapshot",
+  "source_date": "2026-10-30",
+  "source_version_note": "Current local manuscript source; not an Overleaf revision or a claim about a remote commit.",
+  "source_files": [
+    {
+      "path": "main.tex",
+      "sha256": "43c7631fde0071c9d8479b335d13763c24e98715a36dbde361df9631214b066a"
+    },
+    {
+      "path": "appendix/committing-recurrence.tex",
+      "sha256": "8e454f00bd2cbf46007c927c2d7e46fc90741ba7ef8fbb29a24ca62e7ba36c45"
+    },
+    {
+      "path": "sections/03-method.tex",
+      "sha256": "eed8aa4783d18b4be76af9d38e706ae47d66a1ad76180906030316ed8b7e3313"
+    },
+    {
+      "path": "appendix/committing-content-age.tex",
+      "sha256": "8025c26ea6db1d1ef24be4c7e540c33c1a4bc53295543a9d923c5859ec9453c6"
+    }
+  ],
+  "active_input": {
+    "file": "main.tex",
+    "input": "appendix/committing-recurrence"
+  },
+  "statistics_recomputed": false,
+  "per_prompt_values_included": false,
+  "latent_or_kv_arrays_included": false,
+  "theorem": {
+    "fixed_inputs": [
+      "generated clean blocks",
+      "prompt",
+      "temporal-position assignments"
+    ],
+    "recurrence": "KV_b = F_theta^c(x_b; KV_(b-1)), b >= 1",
+    "first_block_historical_input": null,
+    "predecessor_is_stored_kv_not_reencoded": true,
+    "chain_rule": "d KV_b / d KV_j = J_b J_(b-1) ... J_(j+1), j < b",
+    "jacobian": "J_k = d F_theta^c(x_k; KV_(k-1)) / d KV_(k-1)",
+    "layer_indices": [
+      0,
+      29
+    ],
+    "kv_projection": "From the layer input, before that layer attention",
+    "single_predecessor_layer_bound": "KV_b^(ell) depends only on x_max(0,b-ell), ..., x_b",
+    "h_predecessor_layer_bound": "With h_0 preceding blocks, earliest possible source is max(0,b-h_0*ell)",
+    "layer_zero_depends_only_on_current_clean_block": true,
+    "startup_uses_only_available_entries": true,
+    "self_only_historical_derivatives": "exactly zero under the fixed-input condition",
+    "base_persistent_sink": "Direct dependence on block 0 from layer 1 onward",
+    "magnitude": "Determined by the trained weights, within the permitted dependence",
+    "free_generation_forgetting_bound": false,
+    "free_generation_note": "Older history can also affect clean latents through denoising."
+  },
+  "protocol": {
+    "generator": "Released SGF EMA weights",
+    "prompt_count": 20,
+    "prompt_source": "Self-Forcing expanded MovieGen list; separate diagnostic list shared with the fixed-trajectory recency probe",
+    "prompt_indexing": "zero-based",
+    "prompt_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "generation_seed": 0,
+    "duration_seconds": 60,
+    "trajectory_blocks": 80,
+    "reference_generation": "Base denoising and six-frame Commit Forcing",
+    "layers": 30,
+    "physical_cache_frames": 12,
+    "cache_slots": {
+      "sink": 3,
+      "recent": 6,
+      "current": 3
+    },
+    "temporal_positions": "top-aligned",
+    "committing_timestep": 0,
+    "reconstruction": "Committing alone with the clean latents fixed; no denoising or VAE decoding",
+    "content_and_single_read_positions": [
+      20,
+      40
+    ],
+    "content_and_single_read_lags": [
+      1,
+      32
+    ],
+    "sink_change_blocks": [
+      1,
+      79
+    ],
+    "directly_modified_entry_in_readout": false,
+    "two_position_averaging": "Average the two intervention positions within each prompt, then average prompts",
+    "bootstrap_draws": 4000,
+    "bootstrap_unit": "prompt, keeping both intervention positions together",
+    "intervals": "Reported prompt-bootstrap interval endpoints are retained in the aggregate plot inputs; no interval is recomputed here."
+  },
+  "policies": [
+    {
+      "name": "Commit Forcing",
+      "frames": 6,
+      "preceding_blocks": 1,
+      "persistent_sink_read": false
+    },
+    {
+      "name": "Two-block control",
+      "frames": 9,
+      "preceding_blocks": 2,
+      "persistent_sink_read": false
+    },
+    {
+      "name": "Base",
+      "frames": 12,
+      "preceding_blocks": 2,
+      "persistent_sink_read": true
+    },
+    {
+      "name": "Self-only",
+      "frames": 3,
+      "preceding_blocks": 0,
+      "persistent_sink_read": false
+    }
+  ],
+  "interventions": {
+    "content_change": {
+      "policies": [
+        "Commit Forcing",
+        "Base",
+        "Self-only"
+      ],
+      "replacement": "Commit block b* from the latent of block (b*+40) mod 80 in the same video",
+      "replacement_offset_blocks": 40,
+      "replacement_modulus_blocks": 80,
+      "all_other_clean_block_inputs_unchanged": true,
+      "paired_caches_copied_immediately_before_intervention": true
+    },
+    "sink_change": {
+      "policies": [
+        "Commit Forcing",
+        "Base",
+        "Self-only"
+      ],
+      "changed_block": 0,
+      "replacement_source_block": 40,
+      "replacement": "Commit block 0, which also supplies the persistent sink, from block 40 latent"
+    },
+    "single_sink_read": {
+      "policies": [
+        "Commit Forcing",
+        "Two-block control",
+        "Self-only"
+      ],
+      "resume_selected_policy_after_intervention": true,
+      "paired_caches_copied_immediately_before_intervention": true,
+      "intervened_context_frames": {
+        "Commit Forcing": {
+          "sink": 3,
+          "recent": 0,
+          "current": 3,
+          "normal_total": 6,
+          "intervened_total": 6
+        },
+        "Two-block control": {
+          "sink": 3,
+          "recent": 3,
+          "current": 3,
+          "normal_total": 9,
+          "intervened_total": 9
+        },
+        "Self-only": {
+          "sink": 3,
+          "recent": 0,
+          "current": 3,
+          "normal_total": 3,
+          "intervened_total": 6
+        }
+      },
+      "context_size_control": "Fixed for Commit Forcing and the two-block control; increases for self-only."
+    }
+  },
+  "measurement": {
+    "scale": "dimensionless relative L2 difference",
+    "tensor_scope": "Block m own KV slots in layer ell; all selected tokens, heads and channels",
+    "formula": "delta^T_(m,ell) = ||T^B_(m,ell)-T^A_(m,ell)||_2 / max(||T^A_(m,ell)||_2, 1e-12), T in {K,V}",
+    "comparison_dtype": "float32",
+    "denominator_floor": "1e-12",
+    "k_v_normalization": "Separate denominators for K and V",
+    "layer_mean_kv": "Average K and V differences across all 30 layers",
+    "single_sink_read_curve": "Layer-mean V difference only"
+  },
+  "entry_comparisons": {
+    "content_change_per_policy": 1280,
+    "content_count_factors": [
+      20,
+      2,
+      32
+    ],
+    "sink_change_per_policy": 1580,
+    "sink_count_factors": [
+      20,
+      79
+    ],
+    "policies_per_counted_intervention": 3,
+    "total": 8580,
+    "layers_per_entry_comparison": 30,
+    "includes_single_sink_read": false,
+    "reported_layer_verification": "No excluded layer differs from control; the first changed layer agrees with the bound where a change is present.",
+    "verification_scope": "The manuscript reports the individual-entry check. This public reader checks only the reported aggregate plot inputs."
+  },
+  "reported_results": {
+    "precision": "Strings preserve the prose rounding in the current appendix; plot CSVs retain their recorded aggregate precision.",
+    "content_change": {
+      "commit_forcing": {
+        "first_changed_layer_at_lag_d": "d",
+        "exact_zero_from_lag": 30
+      },
+      "base": {
+        "first_changed_layer_at_lag_d": "ceil(d/2)",
+        "lag32_mean_kv_difference": "0.0052"
+      }
+    },
+    "sink_change": {
+      "commit_forcing": {
+        "means_by_block": {
+          "1": "0.42",
+          "5": "0.023",
+          "10": "0.0088"
+        },
+        "exact_zero_from_block": 30
+      },
+      "base": {
+        "mean_over_blocks_1_to_79": "0.29",
+        "sink_reread_in_every_block": true
+      }
+    },
+    "single_sink_read": {
+      "commit_forcing": {
+        "means_by_lag": {
+          "1": "0.28",
+          "2": "0.13",
+          "3": "0.055",
+          "4": "0.028"
+        },
+        "exact_zero_from_lag": 29
+      },
+      "two_block_control": {
+        "lag32_mean_v_difference": "0.007"
+      },
+      "cutoff_difference_reason": "Changing a committing read leaves the intervened block layer-0 KV unchanged; changing clean content does not."
+    },
+    "self_only": {
+      "all_subsequent_entries_exact_zero": true,
+      "interventions": [
+        "content_change",
+        "sink_change",
+        "single_sink_read"
+      ],
+      "directly_modified_entry_excluded": true
+    }
+  },
+  "aggregate_plot_inputs": [
+    {
+      "path": "assets/source/committing_recurrence_inputs/staircase_O.csv",
+      "sha256": "f0327880bfe5a6c2393aaaca8012c3602a9e9fa319c9298d0e1fbbf71c05eb36"
+    },
+    {
+      "path": "assets/source/committing_recurrence_inputs/staircase_N.csv",
+      "sha256": "de0d803a24de8eeb7a87ee4768b58fba7a921e533302c42ec1f59d94e099d06c"
+    },
+    {
+      "path": "assets/source/committing_recurrence_inputs/sink_curves.csv",
+      "sha256": "19db7c4777dfe69633ef599ab73fecadb5d4929fe8eb7bc0f9cc1dc4c8591a25"
+    },
+    {
+      "path": "assets/source/committing_recurrence_inputs/impulse6_own.csv",
+      "sha256": "03d431dbfde13cd1f5e3e0fe58823d9c71a3a318644333c41b32fe98b411a0ae"
+    }
+  ],
+  "figure": {
+    "path": "assets/committing_recurrence.png",
+    "top_panels": "Content-change layer maps, log10 positive mean relative KV differences; white cells are exact zeros",
+    "bottom_left": "Changed sink block: layer-mean KV difference",
+    "bottom_right": "One sink-reading pass: layer-mean V difference with reported prompt-bootstrap intervals",
+    "source_aliases": {
+      "O": "Commit Forcing, six frames",
+      "N": "Base, twelve frames",
+      "R9": "Two-block control, nine frames"
+    }
+  },
+  "limitations": [
+    "The proposition conditions on clean latents, prompt and temporal-position assignments; it is not a forgetting upper bound in free generation.",
+    "Older historical context can affect the clean latents through denoising during free generation.",
+    "The empirical diagnostic uses released SGF, twenty prompts and generation seed zero.",
+    "Relative KV differences measure dependence, not whether that dependence improves generated video.",
+    "Self-only single-sink-read intervention changes its read count from three to six frames.",
+    "The sixty-second own-entry/layer diagnostic is independent of the older forty-eight-second SGF newest-nine propagation study.",
+    "No individual-entry, per-prompt, latent or KV-tensor measurements are exported or rerun here."
+  ],
+  "related_public_pages": {
+    "fixed_trajectory_recency": "analysis/committing_content_age/README.md#fixed-trajectory-recency-diagnostic",
+    "older_sgf9_propagation": "analysis/committing_propagation/README.md"
+  }
+}

@@ -21,7 +21,41 @@ SGF's +1.27 Quality gain includes +1.01 from Dynamic Degree; Motion Smoothness c
 python eval/vbench_full/reproduce_common946.py
 ```
 
-The measurements below retain their original contexts: SGF/SGF+9 frames, RF-TF/Rolling Sink21, CF/LongLive6, and ID-framework adaptations9. Their costs are not new six-frame timing runs for every generator.
+The historical measurements below retain their original contexts: SGF/SGF+9 frames, RF-TF/Rolling Sink21, CF/LongLive6, and ID-framework adaptations9. The separate current six-frame timing round is reported next.
+
+## Current six-frame time and memory
+
+The current manuscript reports one measurement round on a dedicated H20 node. Paired arms run concurrently on
+neighboring GPUs. Each condition generates two consecutive 60-second videos using standard-suite prompts 0 and 1:
+the first is warm-up, and the second is timed. There is one timed video per condition. Wall time includes VAE
+decoding and excludes model loading. Peak whole-device memory is the maximum `nvidia-smi` reading sampled once
+per second during the two-video run, including weights, activations, allocator cache and CUDA context.
+
+All adaptations in this table use the current 3-frame block and the preceding block's stored KV (6 latent frames),
+including the ID-Forcing timing adaptations. Their separate quality comparisons retain 9-frame contexts.
+
+| Configuration | Wall Base (s) | Commit Forcing (s) | Device peak Base (GiB) | Commit Forcing (GiB) |
+|:---|---:|---:|---:|---:|
+| SGF | 218.1 | 211.0 | 46.2 | 46.2 |
+| SGF+ | 220.5 | 212.9 | 49.0 | 49.0 |
+| RF-TF | 287.4 | 269.0 | 48.9 | 48.9 |
+| Context Forcing | 158.4 | 146.9 | 26.2 | 26.2 |
+| LongLive | 229.2 | 224.1 | 47.0 | 47.0 |
+| Rolling Sink | 269.6 | 252.4 | 49.1 | 54.7 |
+| IDF-SF | 225.9 | 212.4 | 29.1 | 29.9 |
+| IDF-LL | 220.4 | 226.1 | 31.8 | 31.8 |
+
+Rolling Sink uses 5.6 GiB more peak device memory and IDF-SF uses 0.8 GiB more in this round. IDF-LL takes longer;
+the other seven configurations take less time. These single-video observations are separate from the historical
+measurements below, including LongLive's four technical repeats, and are not pooled with them.
+
+[`current6_aggregate.json`](current6_aggregate.json) preserves the reported values, protocol and SHA-256 hashes of
+the canonical manuscript's October 30 working-tree table and explanatory appendix. The standard-library reader
+checks and prints these aggregate values without recomputing statistics:
+
+```bash
+python analysis/quality_cost/read_current6.py
+```
 
 ## Historical context-control Quality decomposition
 
@@ -66,10 +100,10 @@ intervals. The original report remains unchanged and describes the previous 12-f
 derived CSVs are preserved in [data/ablation12](data/ablation12/README.md). All other seven decomposition rows retain
 their original values.
 
-## Measured time and memory
+## Historical time and memory
 
 The other seven configurations use one measured 60-second video after one warm-up video, on neighbouring dedicated
-H20 GPUs (96 GB) of one node. The current LongLive committing-6 comparison uses **four repeats of the same prompt**:
+H20 GPUs (96 GB) of one node. The earlier LongLive committing-6 comparison uses **four repeats of the same prompt**:
 four Base and four +CF jobs ran concurrently on eight dedicated H20 GPUs of one node. Each job warms up on entry 0
 and measures entry 1 of the common 946-entry suite (240 latent frames). Its table entries are arithmetic means;
 the wall-time ratio is the ratio of the two means. Each device peak is the maximum recorded `nvidia-smi

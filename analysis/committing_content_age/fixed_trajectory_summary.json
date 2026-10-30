@@ -1,0 +1,898 @@
+{
+  "schema_version": 1,
+  "export_kind": "reported aggregate values only",
+  "source_kind": "manuscript working-tree snapshot",
+  "source_date": "2026-10-30",
+  "source_sha256": {
+    "tables/committing_recency_fixed_trajectory.tex": "1f47abfc07382df04b80937d4eab0891fb962934ead4863a889437b23c044f74",
+    "appendix/committing-content-age.tex": "8025c26ea6db1d1ef24be4c7e540c33c1a4bc53295543a9d923c5859ec9453c6"
+  },
+  "statistics_recomputed": false,
+  "per_prompt_values_included": false,
+  "individual_human_responses_included": false,
+  "study": "Historical recency with a fixed SGF trajectory",
+  "generator": "Released chunkwise SGF",
+  "protocol": {
+    "prompt_pool": "Self-Forcing's released expanded MovieGen prompt file",
+    "prompt_selection": "Zero-based indices 0–20 except 5; separate diagnostic list",
+    "prompt_count": 20,
+    "generation_seeds": [
+      0,
+      1
+    ],
+    "reference_duration_seconds": 48,
+    "reference_committing_context_latent_frames": 6,
+    "reference_target_lag_blocks": 1,
+    "probe_after_blocks": [
+      20,
+      28,
+      36,
+      44,
+      52
+    ],
+    "probe_generation": "Generate block m+1 after copying the reconstructed cache; probe outputs do not enter subsequent reconstruction.",
+    "target_lag_blocks": [
+      1,
+      2,
+      4,
+      8,
+      16
+    ],
+    "separate_sink_source": true,
+    "fixed_clean_latent_trajectory_across_conditions": true,
+    "historical_selection": "Reconstruct one cache per condition from the same fixed latent blocks, using the target-lag selection and fixed assigned positions from the recency intervention.",
+    "denoising_context": "Base 12-frame context including sink KV",
+    "matched_initial_and_intermediate_renoising": true,
+    "generated_probe_decoded_frames": [
+      0,
+      5,
+      11
+    ],
+    "reference_opening_seconds": {
+      "start_inclusive": 0.5,
+      "stop_exclusive": 2.0,
+      "step": 0.25
+    },
+    "within_prompt_aggregation": "Average the two seeds and five probe positions within each prompt.",
+    "interval_method": "Reported 95% paired prompt-bootstrap intervals from 4,000 draws; not recomputed in this release.",
+    "slope_method": "Fit slopes against log2(target lag) within each prompt before averaging.",
+    "distinct_from_SGF9_fixed_clean_propagation_probe": true
+  },
+  "scale": "Original diagnostic scales; not the ×100 VBench scale",
+  "metric_definitions": {
+    "Opening similarity": {
+      "unit": "dimensionless",
+      "definition": "Mean cosine similarity of three generated-frame DINOv2 embeddings to the normalized mean opening embedding of the fixed reference; full-frame similarity, distinct from own-minus-other-seed Consistency."
+    },
+    "Absolute saturation change": {
+      "unit": "dimensionless",
+      "definition": "Absolute relative saturation change from the preceding fixed block to the generated probe block."
+    },
+    "Absolute brightness change": {
+      "unit": "dimensionless",
+      "definition": "Absolute relative change in mean HSV value from the preceding fixed block to the generated probe block."
+    },
+    "Latent distance": {
+      "unit": "dimensionless",
+      "definition": "L2 distance from the complete preceding fixed three-frame latent block to the generated three-frame probe, divided by the norm of the preceding fixed block."
+    },
+    "Luma boundary ratio": {
+      "unit": "dimensionless",
+      "definition": "Adjacent-frame luma difference at the generation boundary divided by the mean difference at the two latent-frame boundaries inside the generated block."
+    },
+    "Within-latent luma motion": {
+      "unit": "0–255 luma scale",
+      "definition": "Mean of the remaining adjacent-frame luma differences within latent-frame intervals."
+    }
+  },
+  "condition_order": [
+    "d=1",
+    "d=2",
+    "d=4",
+    "d=8",
+    "d=16",
+    "Sink"
+  ],
+  "condition_means": [
+    {
+      "metric": "Opening similarity",
+      "means": {
+        "d=1": {
+          "mean": 0.9347,
+          "reported_mean": "0.9347"
+        },
+        "d=2": {
+          "mean": 0.9351,
+          "reported_mean": "0.9351"
+        },
+        "d=4": {
+          "mean": 0.9344,
+          "reported_mean": "0.9344"
+        },
+        "d=8": {
+          "mean": 0.9339,
+          "reported_mean": "0.9339"
+        },
+        "d=16": {
+          "mean": 0.9338,
+          "reported_mean": "0.9338"
+        },
+        "Sink": {
+          "mean": 0.9295,
+          "reported_mean": "0.9295"
+        }
+      }
+    },
+    {
+      "metric": "Absolute saturation change",
+      "means": {
+        "d=1": {
+          "mean": 0.0388,
+          "reported_mean": "0.0388"
+        },
+        "d=2": {
+          "mean": 0.0394,
+          "reported_mean": "0.0394"
+        },
+        "d=4": {
+          "mean": 0.0389,
+          "reported_mean": "0.0389"
+        },
+        "d=8": {
+          "mean": 0.0389,
+          "reported_mean": "0.0389"
+        },
+        "d=16": {
+          "mean": 0.0387,
+          "reported_mean": "0.0387"
+        },
+        "Sink": {
+          "mean": 0.0378,
+          "reported_mean": "0.0378"
+        }
+      }
+    },
+    {
+      "metric": "Absolute brightness change",
+      "means": {
+        "d=1": {
+          "mean": 0.0256,
+          "reported_mean": "0.0256"
+        },
+        "d=2": {
+          "mean": 0.0269,
+          "reported_mean": "0.0269"
+        },
+        "d=4": {
+          "mean": 0.0271,
+          "reported_mean": "0.0271"
+        },
+        "d=8": {
+          "mean": 0.0264,
+          "reported_mean": "0.0264"
+        },
+        "d=16": {
+          "mean": 0.027,
+          "reported_mean": "0.0270"
+        },
+        "Sink": {
+          "mean": 0.024,
+          "reported_mean": "0.0240"
+        }
+      }
+    },
+    {
+      "metric": "Latent distance",
+      "means": {
+        "d=1": {
+          "mean": 0.4511,
+          "reported_mean": "0.4511"
+        },
+        "d=2": {
+          "mean": 0.4531,
+          "reported_mean": "0.4531"
+        },
+        "d=4": {
+          "mean": 0.4557,
+          "reported_mean": "0.4557"
+        },
+        "d=8": {
+          "mean": 0.4546,
+          "reported_mean": "0.4546"
+        },
+        "d=16": {
+          "mean": 0.4563,
+          "reported_mean": "0.4563"
+        },
+        "Sink": {
+          "mean": 0.4823,
+          "reported_mean": "0.4823"
+        }
+      }
+    },
+    {
+      "metric": "Luma boundary ratio",
+      "means": {
+        "d=1": {
+          "mean": 1.7313,
+          "reported_mean": "1.7313"
+        },
+        "d=2": {
+          "mean": 1.7558,
+          "reported_mean": "1.7558"
+        },
+        "d=4": {
+          "mean": 1.7704,
+          "reported_mean": "1.7704"
+        },
+        "d=8": {
+          "mean": 1.7431,
+          "reported_mean": "1.7431"
+        },
+        "d=16": {
+          "mean": 1.7439,
+          "reported_mean": "1.7439"
+        },
+        "Sink": {
+          "mean": 1.3866,
+          "reported_mean": "1.3866"
+        }
+      }
+    },
+    {
+      "metric": "Within-latent luma motion",
+      "means": {
+        "d=1": {
+          "mean": 7.2064,
+          "reported_mean": "7.2064"
+        },
+        "d=2": {
+          "mean": 7.2852,
+          "reported_mean": "7.2852"
+        },
+        "d=4": {
+          "mean": 7.3132,
+          "reported_mean": "7.3132"
+        },
+        "d=8": {
+          "mean": 7.3332,
+          "reported_mean": "7.3332"
+        },
+        "d=16": {
+          "mean": 7.333,
+          "reported_mean": "7.3330"
+        },
+        "Sink": {
+          "mean": 7.3881,
+          "reported_mean": "7.3881"
+        }
+      }
+    }
+  ],
+  "trajectory_context_contrasts": [
+    {
+      "metric": "Opening similarity",
+      "contrasts": {
+        "d=2 minus d=1": {
+          "mean": 0.0004,
+          "reported_mean": "+0.0004",
+          "interval_95": [
+            -0.0001,
+            0.0009
+          ],
+          "reported_interval_95": [
+            "-0.0001",
+            "+0.0009"
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "d=4 minus d=1": {
+          "mean": -0.0003,
+          "reported_mean": "-0.0003",
+          "interval_95": [
+            -0.0011,
+            0.0003
+          ],
+          "reported_interval_95": [
+            "-0.0011",
+            "+0.0003"
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "d=8 minus d=1": {
+          "mean": -0.0008,
+          "reported_mean": "-0.0008",
+          "interval_95": [
+            -0.0019,
+            0.0001
+          ],
+          "reported_interval_95": [
+            "-0.0019",
+            "+0.0001"
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "d=16 minus d=1": {
+          "mean": -0.001,
+          "reported_mean": "-0.0010",
+          "interval_95": [
+            -0.002,
+            -3.5e-05
+          ],
+          "reported_interval_95": [
+            "-0.0020",
+            "-3.5e-5"
+          ],
+          "reported_interval_excludes_zero": true
+        }
+      }
+    },
+    {
+      "metric": "Absolute saturation change",
+      "contrasts": {
+        "d=2 minus d=1": {
+          "mean": 0.0006,
+          "reported_mean": "+0.0006",
+          "interval_95": [
+            1.4e-05,
+            0.0012
+          ],
+          "reported_interval_95": [
+            "+0.000014",
+            "+0.0012"
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "d=4 minus d=1": {
+          "mean": 0.0001,
+          "reported_mean": "+0.0001",
+          "interval_95": [
+            -0.0009,
+            0.0011
+          ],
+          "reported_interval_95": [
+            "-0.0009",
+            "+0.0011"
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "d=8 minus d=1": {
+          "mean": 0.0001,
+          "reported_mean": "+0.0001",
+          "interval_95": [
+            -0.0005,
+            0.0007
+          ],
+          "reported_interval_95": [
+            "-0.0005",
+            "+0.0007"
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "d=16 minus d=1": {
+          "mean": -0.0001,
+          "reported_mean": "-0.0001",
+          "interval_95": [
+            -0.0007,
+            0.0004
+          ],
+          "reported_interval_95": [
+            "-0.0007",
+            "+0.0004"
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "metric": "Absolute brightness change",
+      "contrasts": {
+        "d=2 minus d=1": {
+          "mean": 0.0013,
+          "reported_mean": "+0.0013",
+          "interval_95": [
+            0.0003,
+            0.0026
+          ],
+          "reported_interval_95": [
+            "+0.0003",
+            "+0.0026"
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "d=4 minus d=1": {
+          "mean": 0.0015,
+          "reported_mean": "+0.0015",
+          "interval_95": [
+            0.0001,
+            0.0036
+          ],
+          "reported_interval_95": [
+            "+0.0001",
+            "+0.0036"
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "d=8 minus d=1": {
+          "mean": 0.0009,
+          "reported_mean": "+0.0009",
+          "interval_95": [
+            -0.0004,
+            0.0028
+          ],
+          "reported_interval_95": [
+            "-0.0004",
+            "+0.0028"
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "d=16 minus d=1": {
+          "mean": 0.0014,
+          "reported_mean": "+0.0014",
+          "interval_95": [
+            -0.0003,
+            0.0038
+          ],
+          "reported_interval_95": [
+            "-0.0003",
+            "+0.0038"
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "metric": "Latent distance",
+      "contrasts": {
+        "d=2 minus d=1": {
+          "mean": 0.002,
+          "reported_mean": "+0.0020",
+          "interval_95": [
+            0.0001,
+            0.0039
+          ],
+          "reported_interval_95": [
+            "+0.0001",
+            "+0.0039"
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "d=4 minus d=1": {
+          "mean": 0.0046,
+          "reported_mean": "+0.0046",
+          "interval_95": [
+            0.0025,
+            0.0069
+          ],
+          "reported_interval_95": [
+            "+0.0025",
+            "+0.0069"
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "d=8 minus d=1": {
+          "mean": 0.0035,
+          "reported_mean": "+0.0035",
+          "interval_95": [
+            0.0017,
+            0.0053
+          ],
+          "reported_interval_95": [
+            "+0.0017",
+            "+0.0053"
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "d=16 minus d=1": {
+          "mean": 0.0052,
+          "reported_mean": "+0.0052",
+          "interval_95": [
+            0.0037,
+            0.0068
+          ],
+          "reported_interval_95": [
+            "+0.0037",
+            "+0.0068"
+          ],
+          "reported_interval_excludes_zero": true
+        }
+      }
+    },
+    {
+      "metric": "Luma boundary ratio",
+      "contrasts": {
+        "d=2 minus d=1": {
+          "mean": 0.0245,
+          "reported_mean": "+0.0245",
+          "interval_95": [
+            -0.008,
+            0.0603
+          ],
+          "reported_interval_95": [
+            "-0.0080",
+            "+0.0603"
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "d=4 minus d=1": {
+          "mean": 0.0391,
+          "reported_mean": "+0.0391",
+          "interval_95": [
+            0.0015,
+            0.0825
+          ],
+          "reported_interval_95": [
+            "+0.0015",
+            "+0.0825"
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "d=8 minus d=1": {
+          "mean": 0.0119,
+          "reported_mean": "+0.0119",
+          "interval_95": [
+            -0.0186,
+            0.0424
+          ],
+          "reported_interval_95": [
+            "-0.0186",
+            "+0.0424"
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "d=16 minus d=1": {
+          "mean": 0.0126,
+          "reported_mean": "+0.0126",
+          "interval_95": [
+            -0.0166,
+            0.0428
+          ],
+          "reported_interval_95": [
+            "-0.0166",
+            "+0.0428"
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "metric": "Within-latent luma motion",
+      "contrasts": {
+        "d=2 minus d=1": {
+          "mean": 0.0788,
+          "reported_mean": "+0.0788",
+          "interval_95": [
+            0.0427,
+            0.1163
+          ],
+          "reported_interval_95": [
+            "+0.0427",
+            "+0.1163"
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "d=4 minus d=1": {
+          "mean": 0.1068,
+          "reported_mean": "+0.1068",
+          "interval_95": [
+            0.0606,
+            0.1564
+          ],
+          "reported_interval_95": [
+            "+0.0606",
+            "+0.1564"
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "d=8 minus d=1": {
+          "mean": 0.1267,
+          "reported_mean": "+0.1267",
+          "interval_95": [
+            0.0787,
+            0.1775
+          ],
+          "reported_interval_95": [
+            "+0.0787",
+            "+0.1775"
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "d=16 minus d=1": {
+          "mean": 0.1266,
+          "reported_mean": "+0.1266",
+          "interval_95": [
+            0.0479,
+            0.2039
+          ],
+          "reported_interval_95": [
+            "+0.0479",
+            "+0.2039"
+          ],
+          "reported_interval_excludes_zero": true
+        }
+      }
+    }
+  ],
+  "sink_contrasts_and_target_lag_slopes": [
+    {
+      "metric": "Opening similarity",
+      "contrasts": {
+        "Sink minus d=1": {
+          "mean": -0.0053,
+          "reported_mean": "-0.0053",
+          "interval_95": [
+            -0.0072,
+            -0.0034
+          ],
+          "reported_interval_95": [
+            "-0.0072",
+            "-0.0034"
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "Sink minus d=16": {
+          "mean": -0.0043,
+          "reported_mean": "-0.0043",
+          "interval_95": [
+            -0.0063,
+            -0.0025
+          ],
+          "reported_interval_95": [
+            "-0.0063",
+            "-0.0025"
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "Slope per doubling of d": {
+          "mean": -0.0003,
+          "reported_mean": "-0.0003",
+          "interval_95": [
+            -0.0006,
+            -0.0001
+          ],
+          "reported_interval_95": [
+            "-0.0006",
+            "-0.0001"
+          ],
+          "reported_interval_excludes_zero": true
+        }
+      }
+    },
+    {
+      "metric": "Absolute saturation change",
+      "contrasts": {
+        "Sink minus d=1": {
+          "mean": -0.0011,
+          "reported_mean": "-0.0011",
+          "interval_95": [
+            -0.0038,
+            0.0017
+          ],
+          "reported_interval_95": [
+            "-0.0038",
+            "+0.0017"
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Sink minus d=16": {
+          "mean": -0.0009,
+          "reported_mean": "-0.0009",
+          "interval_95": [
+            -0.0036,
+            0.0017
+          ],
+          "reported_interval_95": [
+            "-0.0036",
+            "+0.0017"
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Slope per doubling of d": {
+          "mean": -0.0001,
+          "reported_mean": "-0.0001",
+          "interval_95": [
+            -0.0002,
+            0.0001
+          ],
+          "reported_interval_95": [
+            "-0.0002",
+            "+0.0001"
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "metric": "Absolute brightness change",
+      "contrasts": {
+        "Sink minus d=1": {
+          "mean": -0.0016,
+          "reported_mean": "-0.0016",
+          "interval_95": [
+            -0.0059,
+            0.0026
+          ],
+          "reported_interval_95": [
+            "-0.0059",
+            "+0.0026"
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Sink minus d=16": {
+          "mean": -0.003,
+          "reported_mean": "-0.0030",
+          "interval_95": [
+            -0.0091,
+            0.0015
+          ],
+          "reported_interval_95": [
+            "-0.0091",
+            "+0.0015"
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Slope per doubling of d": {
+          "mean": 0.0002,
+          "reported_mean": "+0.0002",
+          "interval_95": [
+            -0.0002,
+            0.0008
+          ],
+          "reported_interval_95": [
+            "-0.0002",
+            "+0.0008"
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "metric": "Latent distance",
+      "contrasts": {
+        "Sink minus d=1": {
+          "mean": 0.0312,
+          "reported_mean": "+0.0312",
+          "interval_95": [
+            0.025,
+            0.0374
+          ],
+          "reported_interval_95": [
+            "+0.0250",
+            "+0.0374"
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "Sink minus d=16": {
+          "mean": 0.026,
+          "reported_mean": "+0.0260",
+          "interval_95": [
+            0.0198,
+            0.0321
+          ],
+          "reported_interval_95": [
+            "+0.0198",
+            "+0.0321"
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "Slope per doubling of d": {
+          "mean": 0.0012,
+          "reported_mean": "+0.0012",
+          "interval_95": [
+            0.0008,
+            0.0016
+          ],
+          "reported_interval_95": [
+            "+0.0008",
+            "+0.0016"
+          ],
+          "reported_interval_excludes_zero": true
+        }
+      }
+    },
+    {
+      "metric": "Luma boundary ratio",
+      "contrasts": {
+        "Sink minus d=1": {
+          "mean": -0.3447,
+          "reported_mean": "-0.3447",
+          "interval_95": [
+            -0.5114,
+            -0.2185
+          ],
+          "reported_interval_95": [
+            "-0.5114",
+            "-0.2185"
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "Sink minus d=16": {
+          "mean": -0.3573,
+          "reported_mean": "-0.3573",
+          "interval_95": [
+            -0.5317,
+            -0.2204
+          ],
+          "reported_interval_95": [
+            "-0.5317",
+            "-0.2204"
+          ],
+          "reported_interval_excludes_zero": true
+        },
+        "Slope per doubling of d": {
+          "mean": 0.0013,
+          "reported_mean": "+0.0013",
+          "interval_95": [
+            -0.0061,
+            0.0082
+          ],
+          "reported_interval_95": [
+            "-0.0061",
+            "+0.0082"
+          ],
+          "reported_interval_excludes_zero": false
+        }
+      }
+    },
+    {
+      "metric": "Within-latent luma motion",
+      "contrasts": {
+        "Sink minus d=1": {
+          "mean": 0.1817,
+          "reported_mean": "+0.1817",
+          "interval_95": [
+            -0.0516,
+            0.394
+          ],
+          "reported_interval_95": [
+            "-0.0516",
+            "+0.3940"
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Sink minus d=16": {
+          "mean": 0.0551,
+          "reported_mean": "+0.0551",
+          "interval_95": [
+            -0.1176,
+            0.2216
+          ],
+          "reported_interval_95": [
+            "-0.1176",
+            "+0.2216"
+          ],
+          "reported_interval_excludes_zero": false
+        },
+        "Slope per doubling of d": {
+          "mean": 0.0301,
+          "reported_mean": "+0.0301",
+          "interval_95": [
+            0.0124,
+            0.0475
+          ],
+          "reported_interval_95": [
+            "+0.0124",
+            "+0.0475"
+          ],
+          "reported_interval_excludes_zero": true
+        }
+      }
+    }
+  ],
+  "interpretation": {
+    "opening_similarity_means_strictly_monotonic": false,
+    "reported_opening_similarity_slope_is_negative_and_significant": true,
+    "saturation_and_brightness_slope_intervals_include_zero": true,
+    "sink_lowers_opening_similarity_and_luma_boundary_ratio": true,
+    "all_readouts_move_in_one_direction": false
+  },
+  "precision": "Reported decimal and scientific-notation strings are retained. The d=16 opening-similarity upper bound is -3.5e-5, not zero.",
+  "coverage": {
+    "metrics": 6,
+    "conditions": 6,
+    "condition_means": 36,
+    "contrasts_and_slopes": 42,
+    "reported_change_and_endpoint_values": 126,
+    "total_reported_numerical_values": 162
+  }
+}
