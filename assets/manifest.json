@@ -1,10 +1,10 @@
 {
   "schema": 4,
-  "updated": "2026-10-30",
+  "updated": "2026-11-09",
   "assets": {
     "assets/README.md": {
-      "sha256": "12b77a03c2c4ef668cbf0e214fdf7f811ed532e31adab085d8e9323105185b0b",
-      "bytes": 7729
+      "sha256": "b6cb2d833b129e71f571df8c32702dafaf8fddb00903ac54505eaca03572e4ac",
+      "bytes": 6266
     },
     "assets/archive/README.md": {
       "sha256": "fa67d10a8fbf7d6eea8ec63b96625bafa52d8a6415b70df0424f5df766225e71",
@@ -43,22 +43,22 @@
       "bytes": 30721
     },
     "assets/committing_content_age.pdf": {
-      "sha256": "51d83923c7f839b18f40c47efa09ed5cc6e615ad0e06d551c35621a253e83663",
-      "bytes": 27005
+      "sha256": "922d43732523d3a938d6eaacb97439068b73727e8f607d5b6a9b3ece99a19bf7",
+      "bytes": 28506
     },
     "assets/committing_content_age.png": {
-      "sha256": "701630de917282ef26b7b076052f4e904d65452d9acf6e26fa7ec3e22b723db8",
-      "bytes": 95300,
+      "sha256": "33ebb1b5d6e95b691d4210c452ab91fa90f9cc512c535a960c778d5a4b029c43",
+      "bytes": 97592,
       "width": 2200,
-      "height": 1159
+      "height": 1177
     },
     "assets/committing_content_age.provenance.json": {
       "sha256": "a0dedf7d29e20940f2100fe04b8a87e54995ad665e2af5d7620dffce28f6e92f",
       "bytes": 3726
     },
     "assets/committing_content_age.svg": {
-      "sha256": "ebc7f7c811cde06b3edf9440d98bc7401539f106529f91ab8eb65c2135f98962",
-      "bytes": 16116
+      "sha256": "821ef0c341a8594b5daeb73932ffcf6677a3a4a2c35e9326091da13c6a68c7bf",
+      "bytes": 18318
     },
     "assets/committing_correction_controls.pdf": {
       "sha256": "e485aee43ec9ef44e9cf2b7fcb4abf6c50983e2f3c2f149968c7c9d24dadfca2",
@@ -151,12 +151,12 @@
       "bytes": 22818
     },
     "assets/committing_window_mechanisms.pdf": {
-      "sha256": "cda9d1b4ded944cf5a7f7ac5089420a79b755af3a5c4ea7e9a5ab38fe87678b7",
-      "bytes": 19606
+      "sha256": "c14b0a57648c64b215cfbd8320f83968da3082fd7450e3dac2511a2c476b8355",
+      "bytes": 19776
     },
     "assets/committing_window_mechanisms.png": {
-      "sha256": "1d9fa4402070344d0013eef84263f8e58508cbe071d25787c6d195e3877e4c2c",
-      "bytes": 81292,
+      "sha256": "cd054cad53aea4c6b26012501159cba4b537fd348b7d6c1eb3ce2f8253fa18d5",
+      "bytes": 78850,
       "width": 2200,
       "height": 1157
     },
@@ -165,8 +165,22 @@
       "bytes": 3057
     },
     "assets/committing_window_mechanisms.svg": {
-      "sha256": "51746927c6ad6bc08b30e8ba277e973733bf1327f7b8a10e38aeb67ac949321f",
-      "bytes": 9298
+      "sha256": "4eca21205afd4e6616b7e05f1876d9b3884f299b5a6db95b9765a78b6a0eb059",
+      "bytes": 9457
+    },
+    "assets/gain_over_time.pdf": {
+      "sha256": "af1a2e04f9cf0604f3131e15b6c012318d89e875219ed98fb66ba46ce1bd8029",
+      "bytes": 38243
+    },
+    "assets/gain_over_time.png": {
+      "sha256": "77057b7a53e67d0d4f79e66ee685ec4ac2b4ecd255fab99b125b748ac6e99fd8",
+      "bytes": 202931,
+      "width": 2200,
+      "height": 1528
+    },
+    "assets/gain_over_time.svg": {
+      "sha256": "8556bdd3dcb0c19c64905f7ab2297a362966126909ac65209bfdef051587d910",
+      "bytes": 62151
     },
     "assets/mechanisms/README.md": {
       "sha256": "cd138cbd3c8ed68bfe6642d45b2cff6a03c4f72902e3e3ec14f02b22a34eb33a",
@@ -195,22 +209,22 @@
       "bytes": 25682
     },
     "assets/method.pdf": {
-      "sha256": "54e66d5df7b7a44ab35a780abedf7fa20a56b76c2739e5de8324fa19b2893994",
-      "bytes": 31584
+      "sha256": "d309eab23ecaf20ccf77c4952d2282edb57d9519c48b5a2dc8480c42c8878050",
+      "bytes": 72633
     },
     "assets/method.png": {
-      "sha256": "25711818c471999e5bc9ae78b68889638188a01ce50cc0c7444233a62b3fa1a5",
-      "bytes": 84023,
+      "sha256": "4fbd8ee53aa7f4ccfaa70e275d938415a2b0c5ebf0e1d3aaddeb2b8fcdbd1c0d",
+      "bytes": 104904,
       "width": 2200,
-      "height": 1120
+      "height": 796
     },
     "assets/method.provenance.json": {
       "sha256": "a5226b12cc8fe59767e03422c7f25506ef02fa111c2d395ea6b793f2dfed10fa",
       "bytes": 34155
     },
     "assets/method.svg": {
-      "sha256": "3502f42da24cbd6df1e6e3042d124e39331fd908544cd041fc79cea1642741b6",
-      "bytes": 52615
+      "sha256": "f2673e648cfa31488db53189745bb6926ced6689a85728b662b78ac4f9b55663",
+      "bytes": 91862
     },
     "assets/qualitative/README.md": {
       "sha256": "1be57f8123926d9f05ef64b8d2e82bfbb9308c44709dce4bd39ab2318951f615",
@@ -371,12 +385,12 @@
       "height": 369
     },
     "assets/qualitative_grid.pdf": {
-      "sha256": "67c2bb09b44159b62280a96189c95b5ab3a35a9f5b2d3d4a2d3b829ee667353c",
-      "bytes": 2026425
+      "sha256": "2fcb369bf3f21fd861ec4f7ad7f2a7c8cee38845d17fb6bf19e61da31881262a",
+      "bytes": 2026415
     },
     "assets/qualitative_grid.png": {
-      "sha256": "a0501c7255bb39818d78522a44161e3aac229b662ada2fbba89432d1fb13c9df",
-      "bytes": 3498030,
+      "sha256": "ed66b1a083bb88558dd62d4962ffe87aa78cf187ceeee866752b213c7c67e9e4",
+      "bytes": 3498099,
       "width": 2200,
       "height": 1625
     },
@@ -385,7 +399,7 @@
       "bytes": 15369
     },
     "assets/qualitative_grid.svg": {
-      "sha256": "f1f6d46aeb42dbb02c03376768f4e2b4889f530d956926efeccf8f90f2faa12b",
+      "sha256": "138ea87c985ffd155eed5b2b14a456d11261b133f15c5abc6bdced9f737d5969",
       "bytes": 3020041
     },
     "assets/sgf_committing_controls.pdf": {
@@ -643,22 +657,22 @@
       "bytes": 5453
     },
     "assets/teaser.pdf": {
-      "sha256": "1bfef8e4e14a2f142af6f873f5af24e5f282d163de18aee78298bb5fa230f053",
-      "bytes": 591952
+      "sha256": "44760308c7c4e974a18a309b8c56f95bf38bb5a355edc178f5f426fba95f7bfd",
+      "bytes": 591850
     },
     "assets/teaser.png": {
-      "sha256": "3dfd92db1e9260e05c2860ef2260c7e28a6148d241802a5960f171bdab1a5cfb",
-      "bytes": 556937,
+      "sha256": "8c5167ba58434f876cb9380d09cadf9b6056b76bdb1b4ea2c86b33eda6ec1a89",
+      "bytes": 502379,
       "width": 2200,
-      "height": 1032
+      "height": 788
     },
     "assets/teaser.provenance.json": {
       "sha256": "19ceede9a9a8455a5d3f7bf45c614ad713a7cbb230afff66081b285900b2feca",
       "bytes": 57277
     },
     "assets/teaser.svg": {
-      "sha256": "f3754e6988a567da4ecc831df68555cd1b0f33ec15328470169ca42092830d19",
-      "bytes": 651129
+      "sha256": "5dce4619bda8281fbd9b720461d767f52ed20c6540083a279996aa4ccbae4210",
+      "bytes": 647685
     }
   },
   "teaser": {
@@ -671,22 +685,22 @@
       "rollout_seconds": 240,
       "frame_seconds": 238
     },
-    "roles": "Editable schematic source roles and actual SGF_W6 case, with original baseline image and common crop preserved.",
+    "roles": "Shared denoising policy, separate committing contexts, and two SGF frames at 238 seconds.",
     "intervention": "Native SGF committing uses sink 3 + recent 6 + current 3=12 frames; adopted current-plus-previous committing uses previous 3 + current 3=6.",
     "previous_figure": "assets/archive/teaser_denoising_legacy.png",
-    "reproduction": "python assets/source/make_teaser.py",
+    "reproduction": "FIGURE_OUTPUT_DIR=figure-build python assets/source/make_teaser.py",
     "canvas": [
       3200,
-      1500
+      1145
     ],
     "provenance": "assets/teaser.provenance.json",
     "source_role_categories": [
-      "Historical KV",
-      "Previous KV",
+      "Sink KV",
+      "Preceding KV",
       "Clean block",
       "Noise"
     ],
-    "window": "The lower branch masks older stored-history cards and directly selects Previous KV and the current Clean block; glyph counts are schematic.",
+    "window": "The lower branch masks the sink and older KV, then commits using the preceding KV and clean current block.",
     "source_record": "assets/source/teaser_inputs/source.json",
     "photos": "Fixed prompt 0, seed 0, at 238 seconds. Native-12 shows a white jacket; actual SGF_W6 shows a black jacket.",
     "display_crop_xywh": [
@@ -695,22 +709,26 @@
       326,
       240
     ],
-    "crop_reason": "Fixed horizontal crop shared by both arms; no scene retouching."
+    "crop_reason": "Fixed horizontal crop shared by both arms; no scene retouching.",
+    "renderer_scope": "October 30, 2026 layout",
+    "provenance_scope": "October 30, 2026 export"
   },
   "method": {
     "renderer": "assets/source/make_method.py",
     "provenance": "assets/method.provenance.json",
-    "content": "Common base SGF denoising followed by three rows of committing dependencies: Base, Self-only, and Commit Forcing. Each committing call receives its own clean block. Sink remains stored while direct committing access is excluded in Self-only and Commit Forcing.",
+    "content": "Denoising and two consecutive committing calls for Base, Self-only, and Commit Forcing. Green marks the new KV entry reused during the next committing call.",
     "canvas": [
-      2200,
-      1120
+      2064,
+      746
     ],
     "rows": [
       "Base",
       "Self-only",
       "Commit Forcing"
     ],
-    "reproduction": "python assets/source/make_method.py"
+    "reproduction": "FIGURE_OUTPUT_DIR=figure-build python assets/source/make_method.py",
+    "renderer_scope": "October 30, 2026 layout",
+    "provenance_scope": "October 30, 2026 export"
   },
   "sgf_committing_controls": {
     "renderer": "assets/source/make_sgf_committing_controls.py",
@@ -731,8 +749,8 @@
     "provenance": "assets/committing_content_age.provenance.json",
     "per_video_data": "assets/source/committing_content_age_scores.csv",
     "means": "assets/source/committing_content_age_data.json",
-    "protocol": "rollf200 prompts 0–99, 60 s, generation seed 0; 3 historical plus 3 current latent frames at fixed assigned positions; base denoising retained.",
-    "reproduction": "python assets/source/make_committing_content_age.py",
+    "protocol": "rollf200 prompts 0\u201399, 60 s, generation seed 0; 3 historical plus 3 current latent frames at fixed assigned positions; base denoising retained.",
+    "reproduction": "FIGURE_OUTPUT_DIR=figure-build python assets/source/make_committing_content_age.py",
     "content": "Ten finite-lag means on one recency-only axis. Both sink source controls remain verified and retained in the released data.",
     "plotted_lags": [
       1,
@@ -741,7 +759,9 @@
       8,
       16
     ],
-    "sink_control_plotted": false
+    "sink_control_plotted": false,
+    "renderer_scope": "October 30, 2026 layout",
+    "provenance_scope": "October 30, 2026 export"
   },
   "committing_impulse": {
     "renderer": "assets/source/make_committing_impulse.py",
@@ -755,7 +775,7 @@
     "provenance": "assets/qualitative_grid.provenance.json",
     "protocol": "240 s, 32-prompt MovieGen extension, generation seed 0; SGF prompt 19 and Context Forcing prompt 10; frames at 0/120/238 s.",
     "selection": "Fixed original prompts, seed and display times. SGF method images use actual SGF_W6 outputs; baseline and CF bytes remain unchanged. CF retains its negative previously reported per-video Quality result.",
-    "reproduction": "python assets/source/make_qualitative_grid.py",
+    "reproduction": "FIGURE_OUTPUT_DIR=figure-build python assets/source/make_qualitative_grid.py",
     "selection_record": "assets/source/qualitative_grid_inputs/source.json",
     "case_roles": {
       "SGF": "Actual six-frame current-plus-previous method",
@@ -763,48 +783,50 @@
     },
     "transparent_yellow_circles": 4,
     "source_pngs_preserved": 12,
-    "new_sgf_six_frame_inputs": 3
+    "new_sgf_six_frame_inputs": 3,
+    "renderer_scope": "October 30, 2026 layout",
+    "provenance_scope": "October 30, 2026 export"
   },
   "manuscript_exports": {
     "method": {
       "manuscript_figure": "figures/method_overview",
       "publication_asset": "assets/method",
-      "snapshot": "2026-10-30 local manuscript working tree",
-      "pdf_svg_identity": "Exact copies of this local manuscript snapshot; not attributed to an earlier Overleaf commit.",
+      "snapshot": "2026-11-09 figure release",
+      "pdf_svg_identity": "Exact copies of the frozen figure exports",
       "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "54e66d5df7b7a44ab35a780abedf7fa20a56b76c2739e5de8324fa19b2893994",
-      "svg_sha256": "3502f42da24cbd6df1e6e3042d124e39331fd908544cd041fc79cea1642741b6",
-      "portable_source_sha256": "6c5f66a9cccdd37fc1f935b0636ddd57d0594fcf27f2d6a7fde14ef677176519"
+      "pdf_sha256": "d309eab23ecaf20ccf77c4952d2282edb57d9519c48b5a2dc8480c42c8878050",
+      "svg_sha256": "f2673e648cfa31488db53189745bb6926ced6689a85728b662b78ac4f9b55663",
+      "png_sha256": "4fbd8ee53aa7f4ccfaa70e275d938415a2b0c5ebf0e1d3aaddeb2b8fcdbd1c0d"
     },
     "teaser": {
       "manuscript_figure": "figures/opening_teaser",
       "publication_asset": "assets/teaser",
-      "snapshot": "2026-10-30 local manuscript working tree",
-      "pdf_svg_identity": "Exact copies of this local manuscript snapshot; not attributed to an earlier Overleaf commit.",
+      "snapshot": "2026-11-09 figure release",
+      "pdf_svg_identity": "Exact copies of the frozen figure exports",
       "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "1bfef8e4e14a2f142af6f873f5af24e5f282d163de18aee78298bb5fa230f053",
-      "svg_sha256": "f3754e6988a567da4ecc831df68555cd1b0f33ec15328470169ca42092830d19",
-      "portable_source_sha256": "d89a50b8f0950ab476f65799b4dd9cc527b3c866794b4102028831e724fc7bca"
+      "pdf_sha256": "44760308c7c4e974a18a309b8c56f95bf38bb5a355edc178f5f426fba95f7bfd",
+      "svg_sha256": "5dce4619bda8281fbd9b720461d767f52ed20c6540083a279996aa4ccbae4210",
+      "png_sha256": "8c5167ba58434f876cb9380d09cadf9b6056b76bdb1b4ea2c86b33eda6ec1a89"
     },
     "qualitative_grid": {
       "manuscript_figure": "figures/qualitative_grid",
       "publication_asset": "assets/qualitative_grid",
-      "snapshot": "2026-10-30 local manuscript working tree",
-      "pdf_svg_identity": "Exact copies of this local manuscript snapshot; not attributed to an earlier Overleaf commit.",
+      "snapshot": "2026-11-09 figure release",
+      "pdf_svg_identity": "Exact copies of the frozen figure exports",
       "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "67c2bb09b44159b62280a96189c95b5ab3a35a9f5b2d3d4a2d3b829ee667353c",
-      "svg_sha256": "f1f6d46aeb42dbb02c03376768f4e2b4889f530d956926efeccf8f90f2faa12b",
-      "portable_source_sha256": "a6ae6af39d0e04431e903332809978a4d7c58b655057561ea41bd8aa6b868b9e"
+      "pdf_sha256": "2fcb369bf3f21fd861ec4f7ad7f2a7c8cee38845d17fb6bf19e61da31881262a",
+      "svg_sha256": "138ea87c985ffd155eed5b2b14a456d11261b133f15c5abc6bdced9f737d5969",
+      "png_sha256": "ed66b1a083bb88558dd62d4962ffe87aa78cf187ceeee866752b213c7c67e9e4"
     },
     "committing_content_age": {
       "manuscript_figure": "figures/committing_content_age",
       "publication_asset": "assets/committing_content_age",
-      "snapshot": "2026-10-30 local manuscript working tree",
-      "pdf_svg_identity": "Exact copies of this local manuscript snapshot; not attributed to an earlier Overleaf commit.",
+      "snapshot": "2026-11-09 figure release",
+      "pdf_svg_identity": "Exact copies of the frozen figure exports",
       "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "51d83923c7f839b18f40c47efa09ed5cc6e615ad0e06d551c35621a253e83663",
-      "svg_sha256": "ebc7f7c811cde06b3edf9440d98bc7401539f106529f91ab8eb65c2135f98962",
-      "portable_source_sha256": "890233b20c2516fe6831fd97e4808468f752f62b002946483ec89fd3b550e318"
+      "pdf_sha256": "922d43732523d3a938d6eaacb97439068b73727e8f607d5b6a9b3ece99a19bf7",
+      "svg_sha256": "821ef0c341a8594b5daeb73932ffcf6677a3a4a2c35e9326091da13c6a68c7bf",
+      "png_sha256": "33ebb1b5d6e95b691d4210c452ab91fa90f9cc512c535a960c778d5a4b029c43"
     },
     "committing_tradeoff_variants": {
       "manuscript_figure": "figures/committing_tradeoff_variants",
@@ -819,12 +841,12 @@
     "committing_window_mechanisms": {
       "manuscript_figure": "figures/committing_window_mechanisms",
       "publication_asset": "assets/committing_window_mechanisms",
-      "snapshot": "2026-10-30 local manuscript working tree",
-      "pdf_svg_identity": "Exact copies of this local manuscript snapshot; not attributed to an earlier Overleaf commit.",
+      "snapshot": "2026-11-09 figure release",
+      "pdf_svg_identity": "Exact copies of the frozen figure exports",
       "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "cda9d1b4ded944cf5a7f7ac5089420a79b755af3a5c4ea7e9a5ab38fe87678b7",
-      "svg_sha256": "51746927c6ad6bc08b30e8ba277e973733bf1327f7b8a10e38aeb67ac949321f",
-      "portable_source_sha256": "780a8b2a53784f51301b4bf5b261d1d4dfa57b57144f9a55c4140891dd279d43"
+      "pdf_sha256": "c14b0a57648c64b215cfbd8320f83968da3082fd7450e3dac2511a2c476b8355",
+      "svg_sha256": "4eca21205afd4e6616b7e05f1876d9b3884f299b5a6db95b9765a78b6a0eb059",
+      "png_sha256": "cd054cad53aea4c6b26012501159cba4b537fd348b7d6c1eb3ce2f8253fa18d5"
     },
     "committing_correction_controls": {
       "manuscript_figure": "figures/committing_correction_controls",
@@ -845,6 +867,16 @@
       "pdf_sha256": "8a8486be6a9a9ea96afd5c18d7c0408e253b6961728477b4f2d690fa38c94d11",
       "svg_sha256": "cb01f58d0548d1e75c2e4d1c14d6cd8a62f9d362c506b4a75d22cf20ad2e449e",
       "portable_source_sha256": "420b9724143fcdad9e5ce503314820d2b5ade50403a1fa49b0151e1f9c660d66"
+    },
+    "gain_over_time": {
+      "manuscript_figure": "figures/gain_over_time",
+      "publication_asset": "assets/gain_over_time",
+      "snapshot": "2026-11-09 figure release",
+      "pdf_svg_identity": "Exact copies of the frozen figure exports",
+      "png": "Rendered from the released PDF at 2200 pixels wide",
+      "pdf_sha256": "af1a2e04f9cf0604f3131e15b6c012318d89e875219ed98fb66ba46ce1bd8029",
+      "svg_sha256": "8556bdd3dcb0c19c64905f7ab2297a362966126909ac65209bfdef051587d910",
+      "png_sha256": "77057b7a53e67d0d4f79e66ee685ec4ac2b4ecd255fab99b125b748ac6e99fd8"
     }
   },
   "dependencies": {
@@ -863,54 +895,38 @@
     "canonical_recurrence_matplotlib": "3.10.0"
   },
   "canonical_snapshot": {
-    "date": "2026-10-30",
-    "version": "Local manuscript working-tree snapshot",
-    "source_scope": "Eight current individual figure exports. Earlier Overleaf revisions are not used as the identity reference for this snapshot. Historical assets retain their original source records."
+    "date": "2026-11-09",
+    "version": "November 9 figure exports",
+    "source_scope": "Six updated figure exports. Other figures retain their recorded snapshots."
   },
   "regeneration_validation": {
     "method": {
-      "python_matplotlib": null,
       "rendered_size": [
         2200,
-        1120
+        796
       ],
-      "pdf_byte_equal": false,
-      "png_pixel_equal": true,
-      "svg_byte_equal": true,
-      "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
+      "png_pixel_equal_to_pdf_render": true
     },
     "teaser": {
-      "python_matplotlib": null,
       "rendered_size": [
         2200,
-        1032
+        788
       ],
-      "pdf_byte_equal": false,
-      "png_pixel_equal": true,
-      "svg_byte_equal": true,
-      "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
+      "png_pixel_equal_to_pdf_render": true
     },
     "qualitative_grid": {
-      "python_matplotlib": "3.10.8",
       "rendered_size": [
         2200,
         1625
       ],
-      "pdf_byte_equal": false,
-      "png_pixel_equal": true,
-      "svg_byte_equal": false,
-      "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
+      "png_pixel_equal_to_pdf_render": true
     },
     "committing_content_age": {
-      "python_matplotlib": "3.10.8",
       "rendered_size": [
         2200,
-        1159
+        1177
       ],
-      "pdf_byte_equal": false,
-      "png_pixel_equal": false,
-      "svg_byte_equal": false,
-      "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
+      "png_pixel_equal_to_pdf_render": true
     },
     "committing_tradeoff_variants": {
       "python_matplotlib": "3.10.8",
@@ -924,15 +940,11 @@
       "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
     },
     "committing_window_mechanisms": {
-      "python_matplotlib": "3.10.8",
       "rendered_size": [
         2200,
         1157
       ],
-      "pdf_byte_equal": false,
-      "png_pixel_equal": false,
-      "svg_byte_equal": false,
-      "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
+      "png_pixel_equal_to_pdf_render": true
     },
     "committing_correction_controls": {
       "python_matplotlib": "3.10.8",
@@ -955,6 +967,13 @@
       "png_pixel_equal": true,
       "svg_byte_equal": false,
       "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
+    },
+    "gain_over_time": {
+      "rendered_size": [
+        2200,
+        1528
+      ],
+      "png_pixel_equal_to_pdf_render": true
     }
   },
   "input_preservation": [
@@ -1105,7 +1124,9 @@
     "base_is_h_point": false,
     "base_is_sink_only_intervention": false,
     "panels": 1,
-    "reproduction": "python assets/source/make_committing_window_mechanisms.py"
+    "reproduction": "FIGURE_OUTPUT_DIR=figure-build python assets/source/make_committing_window_mechanisms.py",
+    "renderer_scope": "October 30, 2026 layout",
+    "provenance_scope": "October 30, 2026 export"
   },
   "historical_exports": {
     "committing_impulse": {
@@ -1123,6 +1144,56 @@
       "png": "Rendered from the released PDF at 2200 pixels wide",
       "pdf_sha256": "f49b6a470aaa7d5ca6901176c4be5e08572db63f5408183eddfea465a62c7181",
       "svg_sha256": "cfd786ff2cc35e8a786890e8e4aeac564be4544cce3ef9b8d6f1459f7aea11a7"
+    },
+    "teaser_2026-10-30": {
+      "manuscript_figure": "figures/opening_teaser",
+      "publication_asset": "assets/teaser",
+      "snapshot": "2026-10-30 local manuscript working tree",
+      "pdf_svg_identity": "Exact copies of this local manuscript snapshot; not attributed to an earlier Overleaf commit.",
+      "png": "Rendered from the released PDF at 2200 pixels wide",
+      "pdf_sha256": "1bfef8e4e14a2f142af6f873f5af24e5f282d163de18aee78298bb5fa230f053",
+      "svg_sha256": "f3754e6988a567da4ecc831df68555cd1b0f33ec15328470169ca42092830d19",
+      "portable_source_sha256": "d89a50b8f0950ab476f65799b4dd9cc527b3c866794b4102028831e724fc7bca"
+    },
+    "method_2026-10-30": {
+      "manuscript_figure": "figures/method_overview",
+      "publication_asset": "assets/method",
+      "snapshot": "2026-10-30 local manuscript working tree",
+      "pdf_svg_identity": "Exact copies of this local manuscript snapshot; not attributed to an earlier Overleaf commit.",
+      "png": "Rendered from the released PDF at 2200 pixels wide",
+      "pdf_sha256": "54e66d5df7b7a44ab35a780abedf7fa20a56b76c2739e5de8324fa19b2893994",
+      "svg_sha256": "3502f42da24cbd6df1e6e3042d124e39331fd908544cd041fc79cea1642741b6",
+      "portable_source_sha256": "6c5f66a9cccdd37fc1f935b0636ddd57d0594fcf27f2d6a7fde14ef677176519"
+    },
+    "committing_content_age_2026-10-30": {
+      "manuscript_figure": "figures/committing_content_age",
+      "publication_asset": "assets/committing_content_age",
+      "snapshot": "2026-10-30 local manuscript working tree",
+      "pdf_svg_identity": "Exact copies of this local manuscript snapshot; not attributed to an earlier Overleaf commit.",
+      "png": "Rendered from the released PDF at 2200 pixels wide",
+      "pdf_sha256": "51d83923c7f839b18f40c47efa09ed5cc6e615ad0e06d551c35621a253e83663",
+      "svg_sha256": "ebc7f7c811cde06b3edf9440d98bc7401539f106529f91ab8eb65c2135f98962",
+      "portable_source_sha256": "890233b20c2516fe6831fd97e4808468f752f62b002946483ec89fd3b550e318"
+    },
+    "committing_window_mechanisms_2026-10-30": {
+      "manuscript_figure": "figures/committing_window_mechanisms",
+      "publication_asset": "assets/committing_window_mechanisms",
+      "snapshot": "2026-10-30 local manuscript working tree",
+      "pdf_svg_identity": "Exact copies of this local manuscript snapshot; not attributed to an earlier Overleaf commit.",
+      "png": "Rendered from the released PDF at 2200 pixels wide",
+      "pdf_sha256": "cda9d1b4ded944cf5a7f7ac5089420a79b755af3a5c4ea7e9a5ab38fe87678b7",
+      "svg_sha256": "51746927c6ad6bc08b30e8ba277e973733bf1327f7b8a10e38aeb67ac949321f",
+      "portable_source_sha256": "780a8b2a53784f51301b4bf5b261d1d4dfa57b57144f9a55c4140891dd279d43"
+    },
+    "qualitative_grid_2026-10-30": {
+      "manuscript_figure": "figures/qualitative_grid",
+      "publication_asset": "assets/qualitative_grid",
+      "snapshot": "2026-10-30 local manuscript working tree",
+      "pdf_svg_identity": "Exact copies of this local manuscript snapshot; not attributed to an earlier Overleaf commit.",
+      "png": "Rendered from the released PDF at 2200 pixels wide",
+      "pdf_sha256": "67c2bb09b44159b62280a96189c95b5ab3a35a9f5b2d3d4a2d3b829ee667353c",
+      "svg_sha256": "f1f6d46aeb42dbb02c03376768f4e2b4889f530d956926efeccf8f90f2faa12b",
+      "portable_source_sha256": "a6ae6af39d0e04431e903332809978a4d7c58b655057561ea41bd8aa6b868b9e"
     }
   },
   "historical_regeneration_validation": {
@@ -1146,6 +1217,61 @@
       "pixels_differ": 746,
       "svg_byte_equal": false,
       "svg_geometry_style_text_equal_after_ID_and_version_normalization": true
+    },
+    "teaser_2026-10-30": {
+      "python_matplotlib": null,
+      "rendered_size": [
+        2200,
+        1032
+      ],
+      "pdf_byte_equal": false,
+      "png_pixel_equal": true,
+      "svg_byte_equal": true,
+      "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
+    },
+    "method_2026-10-30": {
+      "python_matplotlib": null,
+      "rendered_size": [
+        2200,
+        1120
+      ],
+      "pdf_byte_equal": false,
+      "png_pixel_equal": true,
+      "svg_byte_equal": true,
+      "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
+    },
+    "committing_content_age_2026-10-30": {
+      "python_matplotlib": "3.10.8",
+      "rendered_size": [
+        2200,
+        1159
+      ],
+      "pdf_byte_equal": false,
+      "png_pixel_equal": false,
+      "svg_byte_equal": false,
+      "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
+    },
+    "committing_window_mechanisms_2026-10-30": {
+      "python_matplotlib": "3.10.8",
+      "rendered_size": [
+        2200,
+        1157
+      ],
+      "pdf_byte_equal": false,
+      "png_pixel_equal": false,
+      "svg_byte_equal": false,
+      "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
+    },
+    "qualitative_grid_2026-10-30": {
+      "python_matplotlib": "3.10.8",
+      "rendered_size": [
+        2200,
+        1625
+      ],
+      "pdf_byte_equal": false,
+      "png_pixel_equal": true,
+      "svg_byte_equal": false,
+      "svg_geometry_style_text_equal_after_ID_and_metadata_normalization": true
     }
   },
   "committing_correction_controls": {
@@ -1189,5 +1315,9 @@
       "impulse6_own.csv"
     ],
     "reproduction": "python assets/source/make_committing_recurrence.py"
+  },
+  "gain_over_time": {
+    "content": "Paired differences in DINOv2 similarity to the opening window, scaled by 100. Bands show 95% prompt-bootstrap intervals and dashed lines mark training horizons.",
+    "details": "RESULTS.md#gain-over-time"
   }
 }

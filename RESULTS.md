@@ -12,7 +12,7 @@ combined Subject score. † RF-TF applies the public Recency Forcing Temporal Re
 without an RF-trained checkpoint. Wider-context studies are labelled as supporting controls below.
 
 [Full VBench](#full-vbench) · [ID-Forcing framework comparisons](#id-forcing-framework-comparisons) ·
-[MovieGen 60 s](#60-s-videos) · [Longer videos](#longer-videos) · [Committing controls](#committing-controls) ·
+[MovieGen 60 s](#60-s-videos) · [Longer videos](#longer-videos) · [Gain over time](#gain-over-time) · [Committing controls](#committing-controls) ·
 [Current six-frame custom-prompt results](#current-six-frame-custom-prompt-results) · [Committing window](#committing-window) · [Committing variants](#committing-variants) ·
 [KV construction](#kv-construction-controls) · [Transfer boundaries](#transfer-boundaries) ·
 [Fixed-block recurrence](#fixed-block-recurrence) ·
@@ -44,8 +44,9 @@ and immediately preceding blocks. SGF+ uses its official 12-frame physical confi
 </table>
 
 Rows follow ascending adapted Total. Bold Δ marks a paired 95% interval excluding 0. On this 60-second standard
-suite, Quality and Total improve significantly on 5 of 6 generators; all six point estimates are positive.
-RF-TF has the largest Total increase, +1.10 points. SGF has the largest Quality increase, +1.27 points.
+suite, Quality and Total rise on all six generators, by 0.57 and 0.59 points on average, respectively. Both gains
+are significant on five generators. SGF has the largest Quality gain (+1.27 points), and RF-TF has the largest
+Total gain (+1.10 points).
 On the separate 200-prompt rollf200 evaluation, SGF's raw Subject c2c gain is +4.76 points. The estimate after
 descriptive regression adjustment is +4.87 points. The adjustment uses paired Dynamic Degree differences; its protocol and interval are recorded below.
 Standard-suite intervals use 4,000 paired draws over 944 original-prompt clusters, retaining each arm's official surviving-record
@@ -1647,6 +1648,25 @@ Dynamic Degree is 49.11 → 60.62. These are distinct from the historical nine-f
 | LongLive, 12-frame control | 240 s | 81.56 | 81.84 | +0.28*&nbsp;[+0.10,&nbsp;+0.46] | +1.96*&nbsp;[+1.49,&nbsp;+2.44] |
 | ID-Forcing on Self-Forcing | 120 s | 81.62 | 81.68 | +0.06&nbsp;[−0.15,&nbsp;+0.26] | +3.05*&nbsp;[+2.33,&nbsp;+3.78] |
 | ID-Forcing on Self-Forcing | 240 s | 81.32 | 81.65 | +0.34*&nbsp;[+0.05,&nbsp;+0.70] | +3.58*&nbsp;[+2.86,&nbsp;+4.30] |
+
+### Gain over time
+
+For each video, we sample frames at 2 fps and average their DINOv2 features within 5-second windows. We compute
+each later window's cosine similarity to the opening window in the same video. The diagnostic reports the
+paired gain in this opening similarity (Commit Forcing minus Base, ×100), with 95% bootstrap intervals over
+paired prompts. The figure marks each generator's training horizon. The before and after means use windows
+entirely on each side of that horizon.
+
+On the 946-entry 60-second VBench suite, the gain has a positive time slope on all six generators, ranging
+from +1.10 points per minute for Context Forcing to +16.10 for RF-TF. The 240-second panels use 32 extended
+MovieGen prompts each for SGF and Context Forcing, and ID-Forcing's 128-prompt MovieGen list for LongLive.
+
+For LongLive at 240 seconds, the mean gain is +2.14 [+1.46, +2.81] before its 60-second training horizon and
++5.00 [+4.20, +5.82] after it. For Context Forcing, the after-minus-before difference around its approximately
+26-second horizon is +0.62 [+0.12, +1.15] on 60-second videos. On its 240-second videos, the corresponding
+difference is −1.01 [−4.38, +2.09], with an interval spanning zero.
+
+[Opening similarity over time](assets/gain_over_time.svg)
 
 <details>
 <summary>All metrics, longer videos</summary>

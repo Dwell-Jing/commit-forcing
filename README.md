@@ -4,7 +4,7 @@
 
 **Commit Forcing: construct new KV from the current and immediately preceding blocks.**
 
-[![Paper](https://img.shields.io/badge/Paper-coming%20soon-b31b1b.svg)](#news)&nbsp;
+[![arXiv v1](https://img.shields.io/badge/arXiv-2611.00937v1-b31b1b.svg)](https://arxiv.org/abs/2611.00937v1)&nbsp;
 [![Models](https://img.shields.io/badge/models-6-orange.svg)](integrations/)&nbsp;
 [![Videos](https://img.shields.io/badge/videos-60%E2%80%93240%20s-orange.svg)](RESULTS.md)&nbsp;
 [![Code](https://img.shields.io/badge/code-Apache--2.0-blue.svg)](LICENSE)
@@ -14,10 +14,14 @@
 ## News
 
 - **2026-10-09**: Initial release: code and evaluation results.
-- arXiv preprint coming soon.
+- The [arXiv preprint (v1)](https://arxiv.org/abs/2611.00937v1) is available.
 
 Commit Forcing constructs KV from the clean current block and the preceding block's stored KV, while preserving
 base denoising. It requires no training or additional DiT forward passes.
+
+<p align="center">
+  <img src="assets/teaser.png" width="100%" alt="SGF and Commit Forcing use different committing reads, with paired SGF frames at 238 seconds.">
+</p>
 
 ## Results
 
@@ -38,6 +42,7 @@ base denoising. It requires no training or additional DiT forward passes.
 </tbody>
 </table>
 
+Quality and Total improve by 0.57 and 0.59 points on average across six generators, with significant gains on five.
 Scores ×100. Bold Δ indicates a significant paired gain. † RF-TF uses released Self-Forcing weights with
 Recency Forcing's Temporal Response Bias. [Full results and evaluation protocols](RESULTS.md).
 
@@ -49,12 +54,8 @@ Recency Forcing's Temporal Response Bias. [Full results and evaluation protocols
 
 ## Examples
 
-<p align="center">
-  <img src="assets/qualitative_grid.png" width="100%" alt="Base and Commit Forcing on SGF and Context Forcing at 0, 120 and 238 seconds.">
-</p>
-
-Paired 240-second videos, using the same prompt and initial-noise seed.
-[Cases and source frames](assets/README.md).
+The [240-second comparison gallery](assets/qualitative_grid.png) shows paired SGF and Context Forcing frames at 0, 120, and 238 seconds.
+[Source frames and figures](assets/README.md).
 
 ## Quickstart
 
@@ -97,6 +98,8 @@ To score generated videos, follow the [VBench-Long](eval/vbench_long/README.md) 
   author = {Jing, Yubin and Zhang, Ziyang and Chen, Meng and
             Li, Yuyao and Wang, Haofan and Gong, Yichen},
   year   = {2026},
-  url    = {https://github.com/Dwell-Jing/commit-forcing}
+  eprint = {2611.00937},
+  archivePrefix = {arXiv},
+  url    = {https://arxiv.org/abs/2611.00937v1}
 }
 ```
