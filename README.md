@@ -4,7 +4,7 @@
 
 **Commit Forcing: construct new KV from the current and immediately preceding blocks.**
 
-[![arXiv v1](https://img.shields.io/badge/arXiv-2611.00937v1-b31b1b.svg)](https://arxiv.org/abs/2611.00937v1)&nbsp;
+[![arXiv](https://img.shields.io/badge/arXiv-2611.00937-b31b1b.svg)](https://arxiv.org/abs/2611.00937)&nbsp;
 [![Models](https://img.shields.io/badge/models-6-orange.svg)](integrations/)&nbsp;
 [![Videos](https://img.shields.io/badge/videos-60%E2%80%93240%20s-orange.svg)](RESULTS.md)&nbsp;
 [![Code](https://img.shields.io/badge/code-Apache--2.0-blue.svg)](LICENSE)
@@ -14,7 +14,7 @@
 ## News
 
 - **2026-10-09**: Initial release: code and evaluation results.
-- The [arXiv preprint (v1)](https://arxiv.org/abs/2611.00937v1) is available.
+- The [paper](https://arxiv.org/abs/2611.00937) is available on arXiv.
 
 Commit Forcing constructs KV from the clean current block and the preceding block's stored KV, while preserving
 base denoising. It requires no training or additional DiT forward passes.
@@ -73,15 +73,15 @@ Install the [environment](setup/README.md) and download the weights following th
 ### Generate
 
 ```bash
-python integrations/sgf/generate.py --code third_party/sgf --reading native --rule on \
+python integrations/sgf/generate.py --code third_party/sgf --reading native --rule on --commit-profile recent6 \
     --prompts eval/prompts/rollf200.txt --ids 0-199 --seconds 60 --seed 0 --out outputs/sgf
 ```
 
-Use `--rule off` for the base model.
+Use `--rule off` for the base model. `recent6` reads the current block and the preceding block's stored KV.
 
 ### Evaluate
 
-Reproduce the reported VBench table:
+Check the reported VBench scores and saved intervals from the published aggregate results:
 
 ```bash
 python eval/vbench_full/reproduce_common946.py
@@ -100,6 +100,6 @@ To score generated videos, follow the [VBench-Long](eval/vbench_long/README.md) 
   year   = {2026},
   eprint = {2611.00937},
   archivePrefix = {arXiv},
-  url    = {https://arxiv.org/abs/2611.00937v1}
+  url    = {https://arxiv.org/abs/2611.00937}
 }
 ```

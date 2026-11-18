@@ -1,6 +1,6 @@
 # Figures
 
-The six figures updated on November 9, 2026 are listed below. The PDF and SVG files preserve the figure exports, and each PNG is rendered from its PDF at 2200 pixels wide.
+The final paper figure exports, updated on November 18, 2026, are listed below. The PDF and SVG files preserve the figure exports, and each PNG is rendered from its PDF at 2200 pixels wide.
 
 | Asset | Content | Downloads |
 |:---|:---|:---|
@@ -8,10 +8,11 @@ The six figures updated on November 9, 2026 are listed below. The PDF and SVG fi
 | [`method.png`](method.png) | Denoising and committing dependencies for Base, Self-only, and Commit Forcing | [PDF](method.pdf) · [SVG](method.svg) |
 | [`qualitative_grid.png`](qualitative_grid.png) | SGF and Context Forcing cases at 0, 120, and 238 s | [PDF](qualitative_grid.pdf) · [SVG](qualitative_grid.svg) |
 | [`committing_content_age.png`](committing_content_age.png) | Ten finite-lag Subject c2c means for SGF and LongLive | [PDF](committing_content_age.pdf) · [SVG](committing_content_age.svg) |
-| [`committing_window_mechanisms.png`](committing_window_mechanisms.png) | LongLive Subject c2c by the number of preceding committing blocks | [PDF](committing_window_mechanisms.pdf) · [SVG](committing_window_mechanisms.svg) |
-| [`gain_over_time.png`](gain_over_time.png) | Paired DINOv2 similarity gains to the opening window | [PDF](gain_over_time.pdf) · [SVG](gain_over_time.svg) |
+| [`committing_window_mechanisms.png`](committing_window_mechanisms.png) | LongLive committing-window curve and fixed-latent SGF response after one sink read | [PDF](committing_window_mechanisms.pdf) · [SVG](committing_window_mechanisms.svg) |
+| [`gain_over_time.png`](gain_over_time.png) | Paired DINOv2 similarity gains to the opening window in 60-second videos | [PDF](gain_over_time.pdf) · [SVG](gain_over_time.svg) |
+| [`gain_over_time_240s.png`](gain_over_time_240s.png) | The corresponding 240-second similarity curves | [PDF](gain_over_time_240s.pdf) · [SVG](gain_over_time_240s.svg) |
 
-Commit Forcing uses three current latent frames and the stored KV from the immediately preceding three frames during committing. The first block uses only its current latents. In the method diagram, crosses mark entries excluded from direct committing access. Green marks the KV produced at block *b* and read when committing block *b* + 1.
+Commit Forcing uses three current latent frames and the stored KV from the immediately preceding three frames during committing. The first block uses only its current latents. In the method diagram, crosses mark entries excluded from direct committing access. Arrows connect stored KV produced at block *b* to its use at block *b* + 1.
 
 The teaser compares native 12-frame SGF committing with six-frame Commit Forcing. The paired frames come from SGF prompt 0 with seed 0, at 238 s. Each uses the same `[90,0,326,240]` crop from its 416×240 frame. [Input hashes](source/teaser_inputs/source.json)
 
@@ -19,13 +20,15 @@ The qualitative grid uses SGF prompt 19 and Context Forcing prompt 10, seed 0, a
 
 LongLive Subject c2c is 86.21, 87.21, 87.23, and 86.93 with zero to three preceding blocks, respectively, on 200 rollf200 prompts at 60 s with seed 0. Each context also includes the current block. The dashed line shows Base at 86.01. Base reads three sink frames and the latest nine trajectory frames, including the current three, in a 15-frame physical cache. [Paired comparisons](../analysis/window_effects/README.md)
 
+In the window figure's separate SGF panel, clean latents are fixed and the oldest historical input is replaced by the sink in one committing pass. The subsequent layer-mean value-tensor change is shown for one- and two-preceding-block policies. This panel has a different generator and protocol from the LongLive window curve.
+
 The separate appendix controls show twelve bars: retained correction magnitude, consistency gain, and motion suppression for frame averaging, a 4×4 grid, and 16/64 content regions. The correction is measured before the attention output projection. Outcomes use 100 prompts; normalization uses the reported 200-prompt self-only/current-plus-previous endpoints. All fractions, including SG16's 0.42 consistency and 0.61 motion-suppression retention, are preserved. These controls change spatial structure as well as magnitude.
 
 The gain-over-time plot shows the paired difference in DINOv2 similarity between each five-second window and the opening window, scaled by 100. The shaded bands show 95% prompt-bootstrap intervals and the dashed lines mark training horizons. [Protocol and results](../RESULTS.md#gain-over-time)
 
 ## Reproduction
 
-The portable scripts and provenance for the teaser, method, qualitative grid, content age, and window figures describe the October 30 layouts. The November 9 layouts and gain-over-time plot are provided as frozen exports. Python dependencies are NumPy, Matplotlib, and Pillow. Vector export also uses `rsvg-convert` and `pdftoppm` (Poppler). Set `FIGURE_OUTPUT_DIR` to render into a separate directory.
+The portable scripts and provenance for the teaser, method, qualitative grid, content age, and window figures describe the October 30 layouts. The final layouts and gain-over-time plots are provided as frozen exports. Python dependencies are NumPy, Matplotlib, and Pillow. Vector export also uses `rsvg-convert` and `pdftoppm` (Poppler). Set `FIGURE_OUTPUT_DIR` to render into a separate directory.
 
 ```bash
 FIGURE_OUTPUT_DIR=figure-build python assets/source/make_method.py

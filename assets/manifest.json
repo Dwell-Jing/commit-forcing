@@ -1,10 +1,10 @@
 {
   "schema": 4,
-  "updated": "2026-11-09",
+  "updated": "2026-11-18",
   "assets": {
     "assets/README.md": {
-      "sha256": "b6cb2d833b129e71f571df8c32702dafaf8fddb00903ac54505eaca03572e4ac",
-      "bytes": 6266
+      "sha256": "8068da13e294f7158acfd831cb6b23aa0296af3e08e09f4b762427e7347490e7",
+      "bytes": 6813
     },
     "assets/archive/README.md": {
       "sha256": "fa67d10a8fbf7d6eea8ec63b96625bafa52d8a6415b70df0424f5df766225e71",
@@ -151,36 +151,36 @@
       "bytes": 22818
     },
     "assets/committing_window_mechanisms.pdf": {
-      "sha256": "c14b0a57648c64b215cfbd8320f83968da3082fd7450e3dac2511a2c476b8355",
-      "bytes": 19776
+      "sha256": "1df231da93ceba41653137f9abf9f0f2f2591ba98f76fcf250f40167adc41c09",
+      "bytes": 30808
     },
     "assets/committing_window_mechanisms.png": {
-      "sha256": "cd054cad53aea4c6b26012501159cba4b537fd348b7d6c1eb3ce2f8253fa18d5",
-      "bytes": 78850,
+      "sha256": "88bce3538b38516e173004d822448dd89d4e6cbd4f311b74652cc722e6c2c228",
+      "bytes": 76263,
       "width": 2200,
-      "height": 1157
+      "height": 552
     },
     "assets/committing_window_mechanisms.provenance.json": {
       "sha256": "482ca52b57ebd408f4b3e785905c28086904da278cbd5bda266c43cf00d20fc8",
       "bytes": 3057
     },
     "assets/committing_window_mechanisms.svg": {
-      "sha256": "4eca21205afd4e6616b7e05f1876d9b3884f299b5a6db95b9765a78b6a0eb059",
-      "bytes": 9457
+      "sha256": "cc270185af82680826af28876a109569942a2ef7f54141d2512106c949d62f8c",
+      "bytes": 25866
     },
     "assets/gain_over_time.pdf": {
-      "sha256": "af1a2e04f9cf0604f3131e15b6c012318d89e875219ed98fb66ba46ce1bd8029",
-      "bytes": 38243
+      "sha256": "a6f41c102962534a6f633930c2d2073c08477d1afbba1887b85638204000bbc4",
+      "bytes": 32666
     },
     "assets/gain_over_time.png": {
-      "sha256": "77057b7a53e67d0d4f79e66ee685ec4ac2b4ecd255fab99b125b748ac6e99fd8",
-      "bytes": 202931,
+      "sha256": "48abb5742fc67aa07d89395cbab0cce8c4b707534ee8ab96eee1e5e641395a24",
+      "bytes": 94434,
       "width": 2200,
-      "height": 1528
+      "height": 1031
     },
     "assets/gain_over_time.svg": {
-      "sha256": "8556bdd3dcb0c19c64905f7ab2297a362966126909ac65209bfdef051587d910",
-      "bytes": 62151
+      "sha256": "63fb71516a381849da6ba1f278a27c278c3e4136b2e9b94a566e8a6af7606092",
+      "bytes": 35823
     },
     "assets/mechanisms/README.md": {
       "sha256": "cd138cbd3c8ed68bfe6642d45b2cff6a03c4f72902e3e3ec14f02b22a34eb33a",
@@ -385,22 +385,22 @@
       "height": 369
     },
     "assets/qualitative_grid.pdf": {
-      "sha256": "2fcb369bf3f21fd861ec4f7ad7f2a7c8cee38845d17fb6bf19e61da31881262a",
-      "bytes": 2026415
+      "sha256": "37b8a260a297479729325c258f83c9d96e9305a21153080bc321efbf5560ee62",
+      "bytes": 2808181
     },
     "assets/qualitative_grid.png": {
-      "sha256": "ed66b1a083bb88558dd62d4962ffe87aa78cf187ceeee866752b213c7c67e9e4",
-      "bytes": 3498099,
+      "sha256": "043a7e8251ece75008d93f72c3f19211e15dfd06cf0b308427f8558787e04a5c",
+      "bytes": 3035901,
       "width": 2200,
-      "height": 1625
+      "height": 1525
     },
     "assets/qualitative_grid.provenance.json": {
       "sha256": "efd73109469a180eb7132abaddc14c3c5299542a421f5a8c999df7be98d25b0c",
       "bytes": 15369
     },
     "assets/qualitative_grid.svg": {
-      "sha256": "138ea87c985ffd155eed5b2b14a456d11261b133f15c5abc6bdced9f737d5969",
-      "bytes": 3020041
+      "sha256": "96b0ae18829d6314ff902aed9fbc011e0d73c7f7f18d0af81274ea39f62e7f60",
+      "bytes": 2729634
     },
     "assets/sgf_committing_controls.pdf": {
       "sha256": "8533a89e724ca6ac4e7e32ea2170b8ac1b1391aa85b68349e4b0b17a43676b7d",
@@ -673,6 +673,20 @@
     "assets/teaser.svg": {
       "sha256": "5dce4619bda8281fbd9b720461d767f52ed20c6540083a279996aa4ccbae4210",
       "bytes": 647685
+    },
+    "assets/gain_over_time_240s.pdf": {
+      "sha256": "be430b3c2913b4cf780b1af9f76a8c99d06332b308988650f589585dcd9825ff",
+      "bytes": 33831
+    },
+    "assets/gain_over_time_240s.svg": {
+      "sha256": "4c36d39960ce9459b887d353e4032e0958a092d29482ea7c300b2f2267a507af",
+      "bytes": 29627
+    },
+    "assets/gain_over_time_240s.png": {
+      "sha256": "ca3fdf7541d5bdeddf7326c6d10fc440ee8d2ecf0043ca54e79a557bcff121c2",
+      "bytes": 92921,
+      "width": 2200,
+      "height": 717
     }
   },
   "teaser": {
@@ -749,7 +763,7 @@
     "provenance": "assets/committing_content_age.provenance.json",
     "per_video_data": "assets/source/committing_content_age_scores.csv",
     "means": "assets/source/committing_content_age_data.json",
-    "protocol": "rollf200 prompts 0\u201399, 60 s, generation seed 0; 3 historical plus 3 current latent frames at fixed assigned positions; base denoising retained.",
+    "protocol": "rollf200 prompts 0–99, 60 s, generation seed 0; 3 historical plus 3 current latent frames at fixed assigned positions; base denoising retained.",
     "reproduction": "FIGURE_OUTPUT_DIR=figure-build python assets/source/make_committing_content_age.py",
     "content": "Ten finite-lag means on one recency-only axis. Both sink source controls remain verified and retained in the released data.",
     "plotted_lags": [
@@ -791,8 +805,8 @@
     "method": {
       "manuscript_figure": "figures/method_overview",
       "publication_asset": "assets/method",
-      "snapshot": "2026-11-09 figure release",
-      "pdf_svg_identity": "Exact copies of the frozen figure exports",
+      "snapshot": "Final paper figure exports, updated 2026-11-18",
+      "pdf_svg_identity": "Exact copies of the final figure exports",
       "png": "Rendered from the released PDF at 2200 pixels wide",
       "pdf_sha256": "d309eab23ecaf20ccf77c4952d2282edb57d9519c48b5a2dc8480c42c8878050",
       "svg_sha256": "f2673e648cfa31488db53189745bb6926ced6689a85728b662b78ac4f9b55663",
@@ -801,8 +815,8 @@
     "teaser": {
       "manuscript_figure": "figures/opening_teaser",
       "publication_asset": "assets/teaser",
-      "snapshot": "2026-11-09 figure release",
-      "pdf_svg_identity": "Exact copies of the frozen figure exports",
+      "snapshot": "Final paper figure exports, updated 2026-11-18",
+      "pdf_svg_identity": "Exact copies of the final figure exports",
       "png": "Rendered from the released PDF at 2200 pixels wide",
       "pdf_sha256": "44760308c7c4e974a18a309b8c56f95bf38bb5a355edc178f5f426fba95f7bfd",
       "svg_sha256": "5dce4619bda8281fbd9b720461d767f52ed20c6540083a279996aa4ccbae4210",
@@ -811,18 +825,18 @@
     "qualitative_grid": {
       "manuscript_figure": "figures/qualitative_grid",
       "publication_asset": "assets/qualitative_grid",
-      "snapshot": "2026-11-09 figure release",
-      "pdf_svg_identity": "Exact copies of the frozen figure exports",
+      "snapshot": "Final paper figure exports, updated 2026-11-18",
+      "pdf_svg_identity": "Exact copies of the final figure exports",
       "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "2fcb369bf3f21fd861ec4f7ad7f2a7c8cee38845d17fb6bf19e61da31881262a",
-      "svg_sha256": "138ea87c985ffd155eed5b2b14a456d11261b133f15c5abc6bdced9f737d5969",
-      "png_sha256": "ed66b1a083bb88558dd62d4962ffe87aa78cf187ceeee866752b213c7c67e9e4"
+      "pdf_sha256": "37b8a260a297479729325c258f83c9d96e9305a21153080bc321efbf5560ee62",
+      "svg_sha256": "96b0ae18829d6314ff902aed9fbc011e0d73c7f7f18d0af81274ea39f62e7f60",
+      "png_sha256": "043a7e8251ece75008d93f72c3f19211e15dfd06cf0b308427f8558787e04a5c"
     },
     "committing_content_age": {
       "manuscript_figure": "figures/committing_content_age",
       "publication_asset": "assets/committing_content_age",
-      "snapshot": "2026-11-09 figure release",
-      "pdf_svg_identity": "Exact copies of the frozen figure exports",
+      "snapshot": "Final paper figure exports, updated 2026-11-18",
+      "pdf_svg_identity": "Exact copies of the final figure exports",
       "png": "Rendered from the released PDF at 2200 pixels wide",
       "pdf_sha256": "922d43732523d3a938d6eaacb97439068b73727e8f607d5b6a9b3ece99a19bf7",
       "svg_sha256": "821ef0c341a8594b5daeb73932ffcf6677a3a4a2c35e9326091da13c6a68c7bf",
@@ -839,14 +853,14 @@
       "portable_source_sha256": "3f78aeceeb2b8340ec3de28016850ed566f824fe39b795108e3c8b0e42279735"
     },
     "committing_window_mechanisms": {
-      "manuscript_figure": "figures/committing_window_mechanisms",
+      "manuscript_figure": "figures/committing_window_and_sink_read",
       "publication_asset": "assets/committing_window_mechanisms",
-      "snapshot": "2026-11-09 figure release",
-      "pdf_svg_identity": "Exact copies of the frozen figure exports",
+      "snapshot": "Final paper figure exports, updated 2026-11-18",
+      "pdf_svg_identity": "Exact copies of the final figure exports",
       "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "c14b0a57648c64b215cfbd8320f83968da3082fd7450e3dac2511a2c476b8355",
-      "svg_sha256": "4eca21205afd4e6616b7e05f1876d9b3884f299b5a6db95b9765a78b6a0eb059",
-      "png_sha256": "cd054cad53aea4c6b26012501159cba4b537fd348b7d6c1eb3ce2f8253fa18d5"
+      "pdf_sha256": "1df231da93ceba41653137f9abf9f0f2f2591ba98f76fcf250f40167adc41c09",
+      "svg_sha256": "cc270185af82680826af28876a109569942a2ef7f54141d2512106c949d62f8c",
+      "png_sha256": "88bce3538b38516e173004d822448dd89d4e6cbd4f311b74652cc722e6c2c228"
     },
     "committing_correction_controls": {
       "manuscript_figure": "figures/committing_correction_controls",
@@ -869,14 +883,24 @@
       "portable_source_sha256": "420b9724143fcdad9e5ce503314820d2b5ade50403a1fa49b0151e1f9c660d66"
     },
     "gain_over_time": {
-      "manuscript_figure": "figures/gain_over_time",
+      "manuscript_figure": "figures/gain_over_time_60s",
       "publication_asset": "assets/gain_over_time",
-      "snapshot": "2026-11-09 figure release",
-      "pdf_svg_identity": "Exact copies of the frozen figure exports",
+      "snapshot": "Final paper figure exports, updated 2026-11-18",
+      "pdf_svg_identity": "Exact copies of the final figure exports",
       "png": "Rendered from the released PDF at 2200 pixels wide",
-      "pdf_sha256": "af1a2e04f9cf0604f3131e15b6c012318d89e875219ed98fb66ba46ce1bd8029",
-      "svg_sha256": "8556bdd3dcb0c19c64905f7ab2297a362966126909ac65209bfdef051587d910",
-      "png_sha256": "77057b7a53e67d0d4f79e66ee685ec4ac2b4ecd255fab99b125b748ac6e99fd8"
+      "pdf_sha256": "a6f41c102962534a6f633930c2d2073c08477d1afbba1887b85638204000bbc4",
+      "svg_sha256": "63fb71516a381849da6ba1f278a27c278c3e4136b2e9b94a566e8a6af7606092",
+      "png_sha256": "48abb5742fc67aa07d89395cbab0cce8c4b707534ee8ab96eee1e5e641395a24"
+    },
+    "gain_over_time_240s": {
+      "manuscript_figure": "figures/gain_over_time_240s",
+      "publication_asset": "assets/gain_over_time_240s",
+      "snapshot": "Final paper figure exports, updated 2026-11-18",
+      "pdf_svg_identity": "Exact copies of the final figure exports",
+      "png": "Rendered from the released PDF at 2200 pixels wide",
+      "pdf_sha256": "be430b3c2913b4cf780b1af9f76a8c99d06332b308988650f589585dcd9825ff",
+      "svg_sha256": "4c36d39960ce9459b887d353e4032e0958a092d29482ea7c300b2f2267a507af",
+      "png_sha256": "ca3fdf7541d5bdeddf7326c6d10fc440ee8d2ecf0043ca54e79a557bcff121c2"
     }
   },
   "dependencies": {
@@ -1126,7 +1150,8 @@
     "panels": 1,
     "reproduction": "FIGURE_OUTPUT_DIR=figure-build python assets/source/make_committing_window_mechanisms.py",
     "renderer_scope": "October 30, 2026 layout",
-    "provenance_scope": "October 30, 2026 export"
+    "provenance_scope": "October 30, 2026 export",
+    "content": "LongLive consistency by preceding blocks, alongside fixed-latent SGF value-tensor response after one sink read. The two panels use separate generators and protocols."
   },
   "historical_exports": {
     "committing_impulse": {
@@ -1317,7 +1342,11 @@
     "reproduction": "python assets/source/make_committing_recurrence.py"
   },
   "gain_over_time": {
-    "content": "Paired differences in DINOv2 similarity to the opening window, scaled by 100. Bands show 95% prompt-bootstrap intervals and dashed lines mark training horizons.",
+    "content": "60-second paired DINOv2 similarity gains to the opening window. The separate gain_over_time_240s exports cover 240-second videos.",
+    "details": "RESULTS.md#gain-over-time"
+  },
+  "gain_over_time_240s": {
+    "content": "Paired DINOv2 similarity gains to the opening window in 240-second SGF, CF and LongLive videos.",
     "details": "RESULTS.md#gain-over-time"
   }
 }
